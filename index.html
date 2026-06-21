@@ -3,1150 +3,1500 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Cortex Panel</title>
+  <title>Cortex</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
-
   <style>
-    :root{
-      --bg: var(--tg-theme-bg-color, #070A14);
-      --sec: var(--tg-theme-secondary-bg-color, #0C1226);
-      --text: var(--tg-theme-text-color, #EAF0FF);
-      --hint: var(--tg-theme-hint-color, #92A5D6);
-      --btn: var(--tg-theme-button-color, #6D5EFC);
-      --btnText: var(--tg-theme-button-text-color, #fff);
-
-      --glass: rgba(255,255,255,.06);
-      --border: rgba(255,255,255,.12);
-      --shadow: 0 18px 60px rgba(0,0,0,.45);
-
-      --r: 18px;
-      --rs: 14px;
-
-      --danger: #FF4D6D;
-      --ok: #2ED573;
-      --warn: #FFB020;
-      --info: #4DA3FF;
-      --violet: #A78BFA;
+    :root {
+      --bg:       #080B14;
+      --surface:  #0E1220;
+      --card:     rgba(255,255,255,.042);
+      --border:   rgba(255,255,255,.08);
+      --border2:  rgba(255,255,255,.14);
+      --text:     #EDF2FF;
+      --muted:    #6B7A99;
+      --accent:   #7C6EFA;
+      --accent2:  #5AAFFF;
+      --danger:   #FF4D6D;
+      --ok:       #34D399;
+      --warn:     #FBBF24;
+      --r:        16px;
     }
 
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{
-      background:
-        radial-gradient(1100px 800px at 8% -10%, rgba(167,139,250,.18), transparent 55%),
-        radial-gradient(900px 700px at 92% -6%, rgba(77,163,255,.14), transparent 55%),
-        radial-gradient(1100px 900px at 50% 120%, rgba(109,94,252,.10), transparent 58%),
-        var(--bg);
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
       color: var(--text);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
       min-height: 100vh;
-      padding-bottom: 94px;
       overflow-x: hidden;
+      padding-bottom: 80px;
     }
 
-    /* Top */
-    .top{
-      position: sticky; top:0; z-index:120;
-      padding: 14px 16px 12px;
-      background: rgba(255,255,255,.04);
+    /* ── Noise texture overlay ── */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── Ambient glows ── */
+    .glow-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .glow-bg span {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(90px);
+      opacity: .18;
+    }
+    .glow-bg span:nth-child(1) {
+      width: 500px; height: 500px;
+      background: var(--accent);
+      top: -180px; left: -120px;
+    }
+    .glow-bg span:nth-child(2) {
+      width: 400px; height: 400px;
+      background: var(--accent2);
+      top: -100px; right: -150px;
+    }
+    .glow-bg span:nth-child(3) {
+      width: 600px; height: 400px;
+      background: var(--accent);
+      bottom: -200px; left: 50%;
+      transform: translateX(-50%);
+      opacity: .10;
+    }
+
+    /* ── Header ── */
+    .header {
+      position: sticky; top: 0; z-index: 100;
+      padding: 14px 18px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(8,11,20,.72);
       border-bottom: 1px solid var(--border);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap: 12px;
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
     }
-    .brand{min-width:0}
-    .title{
-      font-weight: 950;
-      font-size: 18px;
-      letter-spacing:.2px;
-      background: linear-gradient(135deg, var(--violet), #60A5FA);
-      -webkit-background-clip:text;
-      -webkit-text-fill-color:transparent;
-      background-clip:text;
-      white-space: nowrap;
-      overflow:hidden;
-      text-overflow: ellipsis;
+
+    .header-left { display: flex; flex-direction: column; gap: 2px; }
+
+    .logo {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -.5px;
+      background: linear-gradient(120deg, #A78BFA, #60A5FA);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
-    .subtitle{
-      color: var(--hint);
-      font-size: 12px;
-      margin-top: 2px;
-      white-space: nowrap;
-      overflow:hidden;
-      text-overflow: ellipsis;
+
+    .status-line {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      color: var(--muted);
+      font-weight: 500;
     }
-    .topRight{display:flex; align-items:center; gap:10px; flex-shrink:0;}
-    .pill{
-      display:flex; align-items:center; gap:8px;
-      padding: 8px 10px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.06);
-      border: 1px solid var(--border);
-      font-size: 12px;
-      font-weight: 900;
-      color: var(--hint);
-    }
-    .dot{
-      width:10px; height:10px; border-radius:999px;
+
+    .status-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
       background: var(--danger);
-      box-shadow: 0 0 12px rgba(255,77,109,.45);
+      box-shadow: 0 0 8px var(--danger);
+      flex-shrink: 0;
+      transition: background .3s, box-shadow .3s;
     }
-    .dot.ok{ background: var(--ok); box-shadow: 0 0 12px rgba(46,213,115,.45); }
+    .status-dot.online {
+      background: var(--ok);
+      box-shadow: 0 0 8px var(--ok);
+    }
 
-    .iconBtn{
-      width: 38px; height: 38px;
-      border-radius: 12px;
-      background: rgba(255,255,255,.06);
+    .header-right { display: flex; gap: 8px; align-items: center; }
+
+    .icon-btn {
+      width: 36px; height: 36px;
+      border-radius: 10px;
       border: 1px solid var(--border);
-      display:flex; align-items:center; justify-content:center;
-      cursor:pointer; user-select:none;
-      transition: transform .12s ease, background .12s ease;
+      background: var(--card);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      color: var(--muted);
+      transition: all .15s ease;
     }
-    .iconBtn:active{ transform: scale(.96); background: rgba(255,255,255,.10); }
-    .iconBtn svg{ width:18px; height:18px; }
+    .icon-btn:active { transform: scale(.93); background: rgba(255,255,255,.08); }
+    .icon-btn svg { width: 16px; height: 16px; }
 
-    /* Pages */
-    .page{display:none; padding: 14px 16px;}
-    .page.active{display:block;}
+    /* ── Pages ── */
+    .page { display: none; padding: 16px; position: relative; z-index: 1; }
+    .page.active { display: block; }
 
-    /* Cards */
-    .card{
-      background: rgba(255,255,255,.06);
+    /* ── Section label ── */
+    .section-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 10px 2px;
+    }
+
+    /* ── Card ── */
+    .card {
+      background: var(--card);
       border: 1px solid var(--border);
       border-radius: var(--r);
-      padding: 14px;
-      margin-bottom: 12px;
-      box-shadow: 0 12px 46px rgba(0,0,0,.26);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
+      overflow: hidden;
+      margin-bottom: 14px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
     }
-    .cardHeader{
-      display:flex; align-items:center; justify-content:space-between; gap:10px;
-      margin-bottom: 12px;
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px 0;
     }
-    .cardTitle{
+
+    .card-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -.1px;
+    }
+
+    .card-body { padding: 14px 16px; }
+    .card-body + .card-body { padding-top: 0; }
+
+    /* ── Divider ── */
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 0 16px;
+    }
+
+    /* ── Buttons ── */
+    .btn-grid { display: grid; gap: 8px; }
+    .btn-grid.col2 { grid-template-columns: 1fr 1fr; }
+    .btn-grid.col3 { grid-template-columns: 1fr 1fr 1fr; }
+    .btn-grid.col4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+
+    .btn {
+      border: none;
+      cursor: pointer;
+      border-radius: 12px;
+      padding: 13px 10px;
       font-size: 12px;
-      font-weight: 950;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      color: var(--hint);
-    }
-    .muted{ color: var(--hint); font-size: 12px; line-height: 1.35; }
-    .hr{ height:1px; background: rgba(255,255,255,.10); margin: 12px 0; border-radius:99px; }
-
-    /* Buttons */
-    .grid2{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
-    .grid3{display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px;}
-
-    .btn{
-      border:none; cursor:pointer;
-      border-radius: 14px;
-      padding: 13px 12px;
-      background: rgba(255,255,255,.06);
-      border: 1px solid var(--border);
+      font-weight: 700;
       color: var(--text);
-      font-weight: 950;
-      font-size: 13px;
-      min-height: 48px;
-      display:flex; align-items:center; justify-content:center;
-      user-select:none;
-      transition: transform .12s ease, background .12s ease;
-      text-align:center;
-    }
-    .btn:active{ transform: scale(.97); background: rgba(255,255,255,.10); }
-
-    .btnRow{
-      width:100%;
-      border:none; cursor:pointer;
-      border-radius: 14px;
-      padding: 14px 12px;
-      background: rgba(255,255,255,.06);
+      background: rgba(255,255,255,.05);
       border: 1px solid var(--border);
-      color: var(--text);
-      font-weight: 950;
-      font-size: 14px;
-      display:flex; align-items:center; justify-content:center;
-      gap: 10px;
-      user-select:none;
-      transition: transform .12s ease, background .12s ease;
-      margin-bottom: 12px;
-    }
-    .btnRow:active{ transform: scale(.98); background: rgba(255,255,255,.10); }
-
-    .danger{ border-color: rgba(255,77,109,.35)!important; background: rgba(255,77,109,.12)!important; }
-    .warn{ border-color: rgba(255,176,32,.35)!important; background: rgba(255,176,32,.12)!important; }
-    .ok{ border-color: rgba(46,213,115,.35)!important; background: rgba(46,213,115,.12)!important; }
-    .info{ border-color: rgba(77,163,255,.35)!important; background: rgba(77,163,255,.12)!important; }
-    .violet{ border-color: rgba(167,139,250,.35)!important; background: rgba(167,139,250,.12)!important; }
-
-    /* Inputs */
-    .row{ display:flex; gap:10px; align-items:center; }
-    .inp, .ta, .sel{
-      width:100%;
-      border: 1px solid var(--border);
-      background: rgba(12, 18, 38, .70);
-      color: var(--text);
-      border-radius: 14px;
-      padding: 11px 12px;
-      outline:none;
-      font-size: 13px;
-      font-weight: 850;
-    }
-    .ta{ min-height: 90px; resize:none; }
-    .mono{ font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
-    .inp::placeholder,.ta::placeholder{ color: rgba(146,165,214,.9); }
-
-    /* Range */
-    .bigNum{
-      text-align:center;
-      font-size: 48px;
-      font-weight: 950;
-      line-height: 1;
-      background: linear-gradient(135deg, var(--violet), #60A5FA);
-      -webkit-background-clip:text;
-      -webkit-text-fill-color:transparent;
-    }
-    .sub{ text-align:center; margin-top: 4px; color: var(--hint); font-size: 12px; margin-bottom: 10px; }
-    input[type="range"]{
-      -webkit-appearance:none;
-      width:100%;
-      height:6px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.14);
-      outline:none;
-      margin: 10px 0 14px;
-    }
-    input[type="range"]::-webkit-slider-thumb{
-      -webkit-appearance:none;
-      width: 22px; height: 22px;
-      border-radius: 999px;
-      background: var(--btn);
-      box-shadow: 0 0 16px rgba(109,94,252,.55);
-      cursor:pointer;
-    }
-    .quick{ display:flex; gap:8px; }
-    .quick button{
-      flex:1;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,.06);
-      color: var(--text);
-      border-radius: 14px;
-      padding: 10px 6px;
-      font-weight: 950;
-      cursor:pointer;
-      user-select:none;
-    }
-    .quick button:active{ transform: scale(.97); background: rgba(255,255,255,.10); }
-
-    /* Stats */
-    .stats{display:flex; flex-direction:column; gap:10px;}
-    .statRow{
-      display:flex; align-items:center; justify-content:space-between; gap:12px;
-      padding: 10px 12px;
-      border-radius: 14px;
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.10);
-    }
-    .k{ color: var(--hint); font-size: 12px; font-weight: 900; }
-    .v{ color: var(--text); font-size: 12px; font-weight: 950; text-align:right; }
-    .v.mono{ font-size: 12px; }
-
-    /* Log */
-    .log{display:flex; flex-direction:column; gap:8px;}
-    .logItem{
-      padding: 10px 12px;
-      border-radius: 14px;
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.10);
-    }
-    .logTop{display:flex; justify-content:space-between; gap:10px; align-items:center;}
-    .logCmd{font-weight: 950; font-size: 13px;}
-    .logTime{color: var(--hint); font-size: 11px; font-weight: 850;}
-    .logMsg{color: var(--hint); font-size: 12px; margin-top: 4px; line-height: 1.35;}
-    .tagOk{color: #bfffe0;}
-    .tagErr{color: #ffd1db;}
-
-    /* Gallery */
-    .gallery{
-      display:flex; gap:10px;
-      overflow-x:auto;
-      padding-bottom: 4px;
-      scroll-snap-type: x mandatory;
-    }
-    .thumb{
-      min-width: 150px;
-      max-width: 150px;
-      height: 104px;
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.06);
-      position: relative;
-      overflow:hidden;
-      scroll-snap-align: start;
-      cursor:pointer; user-select:none;
-    }
-    .thumb img, .thumb video{
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display:block;
-    }
-    .thumbMeta{
-      position:absolute;
-      left: 8px; right: 8px; bottom: 8px;
-      display:flex;
-      justify-content:space-between;
-      gap:8px;
-      align-items:center;
-      font-size: 10px;
-      font-weight: 950;
-      color: rgba(255,255,255,.92);
-      text-shadow: 0 1px 8px rgba(0,0,0,.55);
-    }
-    .thumbBadge{
-      padding: 4px 8px;
-      border-radius: 999px;
-      background: rgba(0,0,0,.35);
-      border: 1px solid rgba(255,255,255,.14);
-      backdrop-filter: blur(10px);
-    }
-
-    /* Tabs */
-    .tabs{
-      position: fixed;
-      left:0; right:0; bottom:0;
-      background: rgba(12,18,38,.78);
-      border-top: 1px solid rgba(255,255,255,.10);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      padding-bottom: env(safe-area-inset-bottom);
-      display:flex;
-      z-index: 150;
-    }
-    .tab{
-      flex:1;
-      border:none;
-      background: transparent;
-      color: var(--hint);
-      padding: 10px 0 8px;
-      cursor:pointer;
-      user-select:none;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       gap: 6px;
-      font-size: 10px;
-      font-weight: 950;
+      min-height: 64px;
+      user-select: none;
+      transition: transform .12s ease, background .12s ease, border-color .12s ease;
+      text-align: center;
+      line-height: 1.2;
     }
-    .tab svg{ width: 20px; height: 20px; }
-    .tab.active{ color: var(--btn); }
+    .btn:active { transform: scale(.95); }
 
-    /* Toast */
-    .toast{
-      position: fixed;
-      left:50%;
-      bottom: 98px;
-      transform: translateX(-50%) translateY(16px);
-      opacity:0;
-      pointer-events:none;
-      transition: .22s ease;
-      max-width: 92%;
-      z-index: 999;
-    }
-    .toast.show{ opacity:1; transform: translateX(-50%) translateY(0); }
-    .toastBox{
-      padding: 10px 14px;
-      border-radius: 999px;
-      background: rgba(10, 14, 26, .92);
-      border: 1px solid rgba(255,255,255,.14);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      color: var(--text);
-      font-weight: 950;
+    .btn-icon { font-size: 22px; line-height: 1; }
+
+    .btn.accent  { border-color: rgba(124,110,250,.35); background: rgba(124,110,250,.12); }
+    .btn.accent:active { background: rgba(124,110,250,.22); }
+
+    .btn.blue    { border-color: rgba(90,175,255,.35); background: rgba(90,175,255,.12); }
+    .btn.blue:active { background: rgba(90,175,255,.22); }
+
+    .btn.danger  { border-color: rgba(255,77,109,.35); background: rgba(255,77,109,.10); }
+    .btn.danger:active { background: rgba(255,77,109,.20); }
+
+    .btn.warn    { border-color: rgba(251,191,36,.35); background: rgba(251,191,36,.10); }
+    .btn.warn:active { background: rgba(251,191,36,.20); }
+
+    .btn.ok      { border-color: rgba(52,211,153,.35); background: rgba(52,211,153,.10); }
+    .btn.ok:active { background: rgba(52,211,153,.20); }
+
+    /* Wide button */
+    .btn-row {
+      width: 100%;
+      border: none;
+      cursor: pointer;
+      border-radius: 12px;
+      padding: 13px 16px;
       font-size: 13px;
-      white-space: nowrap;
-      overflow:hidden;
-      text-overflow: ellipsis;
-      box-shadow: var(--shadow);
+      font-weight: 700;
+      color: var(--text);
+      background: rgba(255,255,255,.05);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      user-select: none;
+      transition: transform .12s ease, background .12s ease;
+      margin-bottom: 8px;
+    }
+    .btn-row:last-child { margin-bottom: 0; }
+    .btn-row:active { transform: scale(.98); background: rgba(255,255,255,.09); }
+    .btn-row .btn-row-icon { font-size: 18px; }
+    .btn-row .btn-row-text { flex: 1; text-align: left; }
+    .btn-row .btn-row-arrow { color: var(--muted); font-size: 14px; }
+
+    .btn-row.accent  { border-color: rgba(124,110,250,.35); background: rgba(124,110,250,.10); }
+    .btn-row.danger  { border-color: rgba(255,77,109,.35);  background: rgba(255,77,109,.10); }
+    .btn-row.ok      { border-color: rgba(52,211,153,.35);  background: rgba(52,211,153,.10); }
+    .btn-row.blue    { border-color: rgba(90,175,255,.35);  background: rgba(90,175,255,.10); }
+
+    /* Primary CTA */
+    .btn-primary {
+      width: 100%;
+      border: none;
+      cursor: pointer;
+      border-radius: 12px;
+      padding: 15px;
+      font-size: 14px;
+      font-weight: 800;
+      color: #fff;
+      background: linear-gradient(135deg, #7C6EFA, #5AAFFF);
+      box-shadow: 0 8px 32px rgba(124,110,250,.35);
+      user-select: none;
+      transition: transform .12s ease, box-shadow .12s ease;
+      letter-spacing: -.1px;
+    }
+    .btn-primary:active {
+      transform: scale(.97);
+      box-shadow: 0 4px 16px rgba(124,110,250,.25);
     }
 
-    /* Sheet */
-    .sheetBg{
-      position: fixed;
-      inset:0;
-      background: rgba(0,0,0,.56);
-      display:none;
-      align-items:flex-end;
-      z-index: 500;
+    /* ── Stat rows ── */
+    .stat-list { display: flex; flex-direction: column; }
+    .stat-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 11px 16px;
+      border-bottom: 1px solid var(--border);
     }
-    .sheetBg.open{display:flex;}
-    .sheet{
-      width:100%;
-      background: rgba(12,18,38,.95);
-      border: 1px solid rgba(255,255,255,.12);
-      border-top-left-radius: 22px;
-      border-top-right-radius: 22px;
-      box-shadow: var(--shadow);
-      padding: 14px 14px 16px;
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      animation: up .18s ease-out;
+    .stat-row:last-child { border-bottom: none; }
+    .stat-key {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
-    @keyframes up{ from{ transform: translateY(30px); opacity:.5 } to{ transform: translateY(0); opacity:1 } }
-    .handle{
-      width:44px; height:4px;
-      border-radius:99px;
-      background: rgba(255,255,255,.20);
-      margin: 2px auto 12px;
+    .stat-key-icon { width: 28px; height: 28px; border-radius: 8px; background: rgba(255,255,255,.06); display: flex; align-items: center; justify-content: center; font-size: 14px; }
+    .stat-val {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text);
+      font-variant-numeric: tabular-nums;
     }
-    .sheetTitle{ font-weight: 950; font-size: 16px; margin-bottom: 6px; }
-    .sheetDesc{ color: var(--hint); font-size: 13px; line-height:1.35; margin-bottom: 12px; word-break: break-word; }
-    .sheetRow{ display:flex; gap: 10px; flex-wrap: wrap; }
-    .sheetRow .btn{ flex: 1; min-width: 120px; }
 
-    .viewer{
-      border-radius: 18px;
-      border: 1px solid rgba(255,255,255,.12);
-      overflow:auto;
-      background: rgba(0,0,0,.22);
-      max-height: 58vh;
-      touch-action: pan-x pan-y pinch-zoom;
+    /* ── Volume ── */
+    .vol-display {
+      text-align: center;
+      padding: 8px 0 4px;
+    }
+    .vol-num {
+      font-size: 52px;
+      font-weight: 900;
+      letter-spacing: -3px;
+      background: linear-gradient(135deg, #A78BFA, #60A5FA);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+    }
+    .vol-unit {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--muted);
+      margin-top: 2px;
+      letter-spacing: .5px;
+      text-transform: uppercase;
+    }
+
+    input[type="range"] {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 4px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.1);
+      outline: none;
+      margin: 12px 0;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #7C6EFA, #5AAFFF);
+      box-shadow: 0 0 20px rgba(124,110,250,.6);
+      cursor: pointer;
+      border: 2px solid rgba(255,255,255,.3);
+    }
+
+    .quick-vol {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 6px;
+    }
+    .quick-vol button {
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.04);
+      color: var(--muted);
+      border-radius: 10px;
+      padding: 9px 4px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all .12s;
+    }
+    .quick-vol button:active { background: rgba(255,255,255,.10); color: var(--text); }
+
+    /* ── Inputs ── */
+    .inp, .ta, .sel {
+      width: 100%;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+      border-radius: 12px;
+      padding: 12px 14px;
+      outline: none;
+      font-size: 13px;
+      font-weight: 600;
+      transition: border-color .15s;
+    }
+    .inp:focus, .ta:focus, .sel:focus {
+      border-color: var(--accent);
+    }
+    .ta { min-height: 80px; resize: none; }
+    .inp::placeholder, .ta::placeholder { color: var(--muted); font-weight: 500; }
+    .sel option { background: #0E1220; }
+
+    /* ── Gallery ── */
+    .gallery {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 0 16px 16px;
+      scroll-snap-type: x mandatory;
       -webkit-overflow-scrolling: touch;
     }
-    .viewer img, .viewer video{
+    .gallery::-webkit-scrollbar { display: none; }
+
+    .thumb {
+      min-width: 130px;
+      height: 90px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.04);
+      position: relative;
+      overflow: hidden;
+      scroll-snap-align: start;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .thumb img, .thumb video {
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+    .thumb-label {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 6px 8px;
+      background: linear-gradient(to top, rgba(0,0,0,.7), transparent);
+      font-size: 9px;
+      font-weight: 700;
+      color: rgba(255,255,255,.9);
+      letter-spacing: .3px;
+    }
+    .thumb-video-icon {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: rgba(0,0,0,.5);
+      border: 1px solid rgba(255,255,255,.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px;
+    }
+
+    /* ── Log ── */
+    .log-list { display: flex; flex-direction: column; }
+    .log-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 11px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .log-item:last-child { border-bottom: none; }
+    .log-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      margin-top: 5px;
+      flex-shrink: 0;
+    }
+    .log-dot.ok  { background: var(--ok); box-shadow: 0 0 6px var(--ok); }
+    .log-dot.err { background: var(--danger); box-shadow: 0 0 6px var(--danger); }
+    .log-body { flex: 1; min-width: 0; }
+    .log-cmd { font-size: 12px; font-weight: 700; color: var(--text); }
+    .log-msg { font-size: 11px; color: var(--muted); margin-top: 2px; line-height: 1.35; word-break: break-word; }
+    .log-time { font-size: 10px; color: var(--muted); flex-shrink: 0; margin-top: 3px; }
+
+    /* ── WinLock status chip ── */
+    .lock-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.04);
+    }
+
+    /* ── Tabs ── */
+    .tabs {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      display: flex;
+      background: rgba(8,11,20,.85);
+      border-top: 1px solid var(--border);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      padding-bottom: env(safe-area-inset-bottom);
+      z-index: 200;
+    }
+    .tab {
+      flex: 1;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      padding: 10px 4px 8px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: .4px;
+      text-transform: uppercase;
+      transition: color .15s;
+      user-select: none;
+    }
+    .tab-icon { font-size: 20px; line-height: 1; }
+    .tab.active { color: var(--accent); }
+
+    /* ── Toast ── */
+    .toast {
+      position: fixed;
+      bottom: 90px;
+      left: 50%;
+      transform: translateX(-50%) translateY(12px);
+      opacity: 0;
+      pointer-events: none;
+      transition: .2s ease;
+      z-index: 999;
+      max-width: calc(100vw - 32px);
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+    .toast-box {
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: rgba(14,18,32,.95);
+      border: 1px solid var(--border2);
+      backdrop-filter: blur(20px);
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      box-shadow: 0 16px 48px rgba(0,0,0,.5);
+    }
+
+    /* ── Sheet ── */
+    .sheet-bg {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.6);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: flex-end;
+      z-index: 500;
+    }
+    .sheet-bg.open { display: flex; }
+    .sheet {
       width: 100%;
-      height: auto;
-      display:block;
+      background: rgba(12,16,28,.98);
+      border: 1px solid var(--border);
+      border-top-left-radius: 24px;
+      border-top-right-radius: 24px;
+      border-bottom: none;
+      box-shadow: 0 -24px 80px rgba(0,0,0,.6);
+      padding: 0 0 24px;
+      animation: sheet-up .22s cubic-bezier(.16,1,.3,1);
+    }
+    @keyframes sheet-up {
+      from { transform: translateY(40px); opacity: .5; }
+      to   { transform: translateY(0);    opacity: 1; }
+    }
+    .sheet-handle {
+      width: 36px; height: 4px;
+      border-radius: 99px;
+      background: rgba(255,255,255,.15);
+      margin: 14px auto 0;
+    }
+    .sheet-header {
+      padding: 16px 20px 12px;
+    }
+    .sheet-title { font-size: 17px; font-weight: 800; letter-spacing: -.3px; }
+    .sheet-desc  { font-size: 13px; color: var(--muted); margin-top: 4px; line-height: 1.4; }
+    .sheet-body  { padding: 0 16px; }
+    .sheet-body > * + * { margin-top: 10px; }
+    .sheet-actions {
+      display: flex;
+      gap: 10px;
+      padding: 16px 16px 0;
+      flex-wrap: wrap;
+    }
+    .sheet-actions .btn { flex: 1; min-width: 100px; min-height: 48px; }
+
+    /* ── Viewer ── */
+    .viewer {
+      border-radius: 14px;
+      overflow: auto;
+      background: rgba(0,0,0,.3);
+      max-height: 55vh;
+      touch-action: pan-x pan-y pinch-zoom;
+      -webkit-overflow-scrolling: touch;
+      border: 1px solid var(--border);
+    }
+    .viewer img, .viewer video { width: 100%; height: auto; display: block; }
+
+    /* ── Label ── */
+    .field-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--muted);
+      letter-spacing: .5px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    /* ── Row ── */
+    .row { display: flex; gap: 8px; align-items: center; }
+    .row .inp { flex: 1; }
+
+    .mt8  { margin-top: 8px; }
+    .mt12 { margin-top: 12px; }
+    .mt16 { margin-top: 16px; }
+
+    /* ── Empty state ── */
+    .empty {
+      padding: 32px 16px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .empty-icon { font-size: 32px; margin-bottom: 10px; opacity: .5; }
+
+    /* ── Chip ── */
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 700;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.04);
+      color: var(--muted);
+      cursor: pointer;
+      user-select: none;
+      transition: all .12s;
+    }
+    .chip:active { background: rgba(255,255,255,.1); }
+
+    pre.code {
+      font-family: "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+      font-size: 11px;
+      line-height: 1.6;
+      color: var(--text);
+      white-space: pre-wrap;
+      word-break: break-word;
+      background: transparent;
     }
   </style>
 </head>
-
 <body>
 
-  <div class="top">
-    <div class="brand">
-      <div class="title">Cortex Panel</div>
-      <div class="subtitle" id="topSub">Загрузка…</div>
-    </div>
+<div class="glow-bg">
+  <span></span><span></span><span></span>
+</div>
 
-    <div class="topRight">
-      <div class="pill">
-        <div class="dot" id="dot"></div>
-        <div id="connText">offline</div>
-      </div>
-
-      <div class="iconBtn" onclick="openSettings()" title="Настройки">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="3"/>
-          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V22a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.6 1.65 1.65 0 0 0 10.51 3H11a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09A1.65 1.65 0 0 0 16 4.6a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09A1.65 1.65 0 0 0 19.4 15Z"/>
-        </svg>
-      </div>
+<!-- ── HEADER ── -->
+<div class="header">
+  <div class="header-left">
+    <div class="logo">Cortex</div>
+    <div class="status-line">
+      <div class="status-dot" id="dot"></div>
+      <span id="statusText">Подключение…</span>
     </div>
   </div>
+  <div class="header-right">
+    <div class="icon-btn" onclick="openSettings()" title="Настройки">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="3"/>
+        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+      </svg>
+    </div>
+  </div>
+</div>
 
-  <!-- HOME -->
-  <div class="page active" id="page-home">
-    <div class="card">
-      <div class="cardHeader">
-        <div class="cardTitle">Система</div>
-      </div>
-      <div class="grid2">
-        <button class="btn danger" onclick="confirmDanger('off')">🛑 Выключить</button>
-        <button class="btn warn" onclick="confirmDanger('restart')">♻️ Перезагрузка</button>
-        <button class="btn violet" onclick="execCmd('lock')">🔒 Lock</button>
-        <button class="btn info" onclick="execCmd('sleep')">🌙 Сон</button>
-      </div>
+<!-- ══════════════════════════════════════════════
+     PAGE: HOME
+══════════════════════════════════════════════ -->
+<div class="page active" id="page-home">
 
-      <div class="hr"></div>
-
-      <div class="cardHeader" style="margin-bottom:8px">
-        <div class="cardTitle">Таймер выключения</div>
+  <!-- System actions -->
+  <div class="section-label">Управление</div>
+  <div class="card">
+    <div class="card-body">
+      <div class="btn-grid col4">
+        <button class="btn danger" onclick="confirmAction('shutdown','Выключить ПК?')">
+          <span class="btn-icon">⏻</span>Выкл
+        </button>
+        <button class="btn warn" onclick="confirmAction('reboot','Перезагрузить?')">
+          <span class="btn-icon">↺</span>Ребут
+        </button>
+        <button class="btn accent" onclick="execCmd('lock')">
+          <span class="btn-icon">🔒</span>Lock
+        </button>
+        <button class="btn blue" onclick="execCmd('sleep')">
+          <span class="btn-icon">🌙</span>Сон
+        </button>
       </div>
+    </div>
+    <div class="divider"></div>
+    <div class="card-body">
+      <div class="field-label">Таймер выключения (мин)</div>
       <div class="row">
-        <input class="inp" id="timerMinutes" type="number" min="1" max="1440" placeholder="Минуты (например 30)" />
-        <button class="btn info" style="min-width:120px" onclick="startShutdownTimer()">⏳ Старт</button>
+        <input class="inp" id="timerMin" type="number" min="1" max="1440" placeholder="Например: 30" />
+        <button class="btn blue" style="min-width:88px;min-height:44px;" onclick="startTimer()">⏳ Старт</button>
       </div>
-      <div style="height:10px"></div>
-      <button class="btnRow" onclick="execCmd('cancel')">⛔ Отмена таймера</button>
-    </div>
-
-    <div class="card">
-      <div class="cardHeader">
-        <div class="cardTitle">Лог (последние действия)</div>
-        <button class="miniBtn" onclick="clearLog()">Очистить</button>
-      </div>
-      <div class="log" id="logList"></div>
-      <div class="muted" id="logEmpty">Пока пусто.</div>
+      <div style="height:8px"></div>
+      <button class="btn-row" onclick="execCmd('cancel')">
+        <span class="btn-row-icon">⛔</span>
+        <span class="btn-row-text">Отменить таймер</span>
+        <span class="btn-row-arrow">›</span>
+      </button>
     </div>
   </div>
 
-  <!-- MEDIA -->
-  <div class="page" id="page-media">
-    <div class="card">
-      <div class="cardHeader">
-        <div class="cardTitle">Громкость</div>
-        <button class="miniBtn" onclick="execCmd('mute_unmute')">🔇 Mute</button>
-      </div>
+  <!-- Log -->
+  <div class="section-label">Последние действия</div>
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">Лог</div>
+      <span class="chip" onclick="clearLog()">Очистить</span>
+    </div>
+    <div style="height:10px"></div>
+    <div class="log-list" id="logList"></div>
+    <div class="empty" id="logEmpty" style="display:none">
+      <div class="empty-icon">📋</div>
+      Пока пусто
+    </div>
+  </div>
 
-      <div class="bigNum" id="volNum">50</div>
-      <div class="sub">процентов</div>
-      <input id="vol" type="range" min="0" max="100" value="50" oninput="volPreview(this.value)" onchange="setVolume(this.value)" />
-      <div class="quick">
+</div>
+
+<!-- ══════════════════════════════════════════════
+     PAGE: MEDIA
+══════════════════════════════════════════════ -->
+<div class="page" id="page-media">
+
+  <!-- Volume -->
+  <div class="section-label">Громкость</div>
+  <div class="card">
+    <div class="card-body">
+      <div class="vol-display">
+        <div class="vol-num" id="volNum">50</div>
+        <div class="vol-unit">Percent</div>
+      </div>
+      <input id="volRange" type="range" min="0" max="100" value="50"
+             oninput="volPreview(this.value)"
+             onchange="setVolume(this.value)" />
+      <div class="quick-vol">
         <button onclick="setVolume(0)">0</button>
         <button onclick="setVolume(25)">25</button>
         <button onclick="setVolume(50)">50</button>
         <button onclick="setVolume(75)">75</button>
         <button onclick="setVolume(100)">100</button>
       </div>
-
-      <div class="hr"></div>
-
-      <div class="grid3">
-        <button class="btn info" onclick="execCmd('media_prev')">⏮</button>
-        <button class="btn ok" onclick="execCmd('play')">⏯</button>
-        <button class="btn info" onclick="execCmd('media_next')">⏭</button>
+    </div>
+    <div class="divider"></div>
+    <div class="card-body">
+      <div class="btn-grid col4">
+        <button class="btn blue" onclick="execCmd('media_prev')">⏮</button>
+        <button class="btn ok"   onclick="execCmd('media_play')">⏯</button>
+        <button class="btn blue" onclick="execCmd('media_next')">⏭</button>
+        <button class="btn warn" onclick="execCmd('mute_unmute')">🔇</button>
       </div>
     </div>
+  </div>
 
-    <div class="card">
-      <div class="cardHeader">
-        <div class="cardTitle">Клавиатура / Текст</div>
-      </div>
-
+  <!-- Keyboard -->
+  <div class="section-label">Клавиатура</div>
+  <div class="card">
+    <div class="card-body">
+      <div class="field-label">Клавиша / Комбинация</div>
       <div class="row">
         <select class="sel" id="keySelect">
-          <option value="ENTER">ENTER</option>
-          <option value="ESC">ESC</option>
-          <option value="TAB">TAB</option>
-          <option value="SPACE">SPACE</option>
-          <option value="UP">UP</option>
-          <option value="DOWN">DOWN</option>
-          <option value="LEFT">LEFT</option>
-          <option value="RIGHT">RIGHT</option>
-          <option value="ctrl+c">CTRL+C</option>
-          <option value="ctrl+v">CTRL+V</option>
-          <option value="ctrl+a">CTRL+A</option>
-          <option value="alt+tab">ALT+TAB</option>
-          <option value="win+d">WIN+D</option>
+          <option value="enter">Enter</option>
+          <option value="esc">Esc</option>
+          <option value="tab">Tab</option>
+          <option value="space">Space</option>
+          <option value="up">↑</option>
+          <option value="down">↓</option>
+          <option value="left">←</option>
+          <option value="right">→</option>
+          <option value="ctrl+c">Ctrl+C</option>
+          <option value="ctrl+v">Ctrl+V</option>
+          <option value="ctrl+a">Ctrl+A</option>
+          <option value="ctrl+z">Ctrl+Z</option>
+          <option value="alt+tab">Alt+Tab</option>
+          <option value="win+d">Win+D</option>
         </select>
-        <button class="btn ok" style="min-width:140px" onclick="pressKey()">Отправить</button>
+        <button class="btn ok" style="min-width:88px;min-height:44px;" onclick="pressKey()">Отправить</button>
       </div>
-
-      <div style="height:10px"></div>
-      <textarea class="ta" id="typeText" placeholder="Текст для печати на ПК..."></textarea>
-      <div style="height:10px"></div>
-      <button class="btnRow" onclick="typeText()">⌨️ Напечатать</button>
+      <div class="mt12"></div>
+      <div class="field-label">Напечатать текст на ПК</div>
+      <textarea class="ta" id="typeText" placeholder="Введите текст…"></textarea>
+      <div class="mt8"></div>
+      <button class="btn-primary" onclick="typeText()">⌨️ Напечатать</button>
     </div>
   </div>
 
-  <!-- CAPTURE -->
-  <div class="page" id="page-capture">
-    <div class="card">
-      <div class="cardHeader">
-        <div class="cardTitle">Галерея (эта сессия)</div>
-        <button class="miniBtn" onclick="clearCaptures()">Очистить</button>
-      </div>
-      <div class="gallery" id="gallery"></div>
-      <div class="muted" id="galleryEmpty">Пока нет скриншотов/фото/видео.</div>
-    </div>
-
-    <div class="card">
-      <div class="cardHeader">
-        <div class="cardTitle">Скрин / Камера / Видео</div>
-      </div>
-      <div class="grid2">
-        <button class="btn ok" onclick="execCmd('screenshot')">📸 Скриншот</button>
-        <button class="btn violet" onclick="execCmd('camera_photo')">📷 Фото с камеры</button>
-        <button class="btn info" onclick="openRecordPicker('screen')">🎥 Запись экрана</button>
-        <button class="btn info" onclick="openRecordPicker('camera')">🎥 Запись камеры</button>
-      </div>
-      <div class="hr"></div>
-      <div class="muted">
-        Скрины/фото вставляются прямо в сайт. Видео — в виде файла (можно открыть/скачать), и оно тоже сохраняется в галерею этой сессии.
-      </div>
-    </div>
-  </div>
-
-  <!-- TOOLS -->
-  <div class="page" id="page-tools">
-    <div class="card">
-      <div class="cardHeader">
-        <div class="cardTitle">Информация (авто каждые 60 сек)</div>
-        <button class="miniBtn" onclick="updateInfo(true)">Обновить</button>
-      </div>
-
-      <div class="stats">
-        <div class="statRow"><div class="k">🌐 Public IP</div><div class="v mono" id="publicIp">—</div></div>
-        <div class="statRow"><div class="k">🏠 Local IP</div><div class="v mono" id="localIp">—</div></div>
-        <div class="statRow"><div class="k">🧠 CPU</div><div class="v" id="cpu">—</div></div>
-        <div class="statRow"><div class="k">💾 RAM</div><div class="v" id="ram">—</div></div>
-        <div class="statRow"><div class="k">📦 Disk C</div><div class="v" id="disk">—</div></div>
-        <div class="statRow"><div class="k">⏱ Uptime</div><div class="v" id="uptime">—</div></div>
-      </div>
-
-      <div class="muted" style="margin-top:10px" id="infoUpdated">—</div>
-    </div>
-
-    <div class="card">
-      <div class="cardHeader">
-        <div class="cardTitle">Инструменты</div>
-      </div>
-      <div class="grid2">
-        <button class="btn info" onclick="execCmd('status')">💻 Status</button>
-        <button class="btn info" onclick="execCmd('ip')">🌐 IP (детали)</button>
-        <button class="btn info" onclick="execCmd('speedtest')">⏱ Speedtest</button>
-        <button class="btn warn" onclick="execCmd('disk_cleanup')">🧹 Очистка</button>
-      </div>
-
-      <div class="hr"></div>
-
-      <div class="cardHeader" style="margin-bottom:8px">
-        <div class="cardTitle">Команда вручную</div>
-      </div>
+  <!-- Raw command -->
+  <div class="section-label">Произвольная команда</div>
+  <div class="card">
+    <div class="card-body">
+      <div class="field-label">Команда</div>
       <div class="row">
-        <input class="inp mono" id="rawCmd" placeholder="Например: download:C:\file.txt или kill:1234" />
-        <button class="btn ok" style="min-width:120px" onclick="runRaw()">▶</button>
-      </div>
-      <div class="muted" style="margin-top:10px">
-        Если в UI нет кнопки — можно выполнить команду напрямую.
+        <input class="inp" id="rawCmd" placeholder="Например: kill:1234 или open:C:\file.txt" />
+        <button class="btn accent" style="min-width:56px;min-height:44px;" onclick="runRaw()">▶</button>
       </div>
     </div>
   </div>
 
-  <!-- TABS -->
-  <div class="tabs">
-    <button class="tab active" onclick="openTab('home', this)">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M3 10.5 12 3l9 7.5V21a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 23V13h6v10"/>
-      </svg>
-      Дом
-    </button>
-    <button class="tab" onclick="openTab('media', this)">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
-      </svg>
-      Медиа
-    </button>
-    <button class="tab" onclick="openTab('capture', this)">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="12" cy="12" r="3"/>
-      </svg>
-      Камера
-    </button>
-    <button class="tab" onclick="openTab('tools', this)">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/>
-      </svg>
-      Ещё
-    </button>
-  </div>
+</div>
 
-  <!-- TOAST -->
-  <div class="toast" id="toast"><div class="toastBox" id="toastBox">...</div></div>
+<!-- ══════════════════════════════════════════════
+     PAGE: CAPTURE
+══════════════════════════════════════════════ -->
+<div class="page" id="page-capture">
 
-  <!-- SHEET -->
-  <div class="sheetBg" id="sheetBg" onclick="sheetBgClick(event)">
-    <div class="sheet">
-      <div class="handle"></div>
-      <div class="sheetTitle" id="sheetTitle">...</div>
-      <div class="sheetDesc" id="sheetDesc">...</div>
-      <div id="sheetBody"></div>
-      <div class="hr"></div>
-      <div class="sheetRow" id="sheetActions"></div>
+  <!-- Gallery -->
+  <div class="section-label">Галерея сессии</div>
+  <div class="card" style="padding-bottom:0">
+    <div class="card-header">
+      <div class="card-title">Медиа</div>
+      <span class="chip" onclick="clearCaptures()">Очистить</span>
+    </div>
+    <div style="height:10px"></div>
+    <div class="gallery" id="gallery"></div>
+    <div class="empty" id="galleryEmpty">
+      <div class="empty-icon">🖼</div>
+      Нет скриншотов и видео
     </div>
   </div>
+
+  <!-- Actions -->
+  <div class="section-label">Снять</div>
+  <div class="card">
+    <div class="card-body">
+      <div class="btn-grid col2">
+        <button class="btn ok"     onclick="execCmd('screenshot')">
+          <span class="btn-icon">📸</span>Скриншот
+        </button>
+        <button class="btn accent" onclick="execCmd('camera_photo')">
+          <span class="btn-icon">📷</span>Фото
+        </button>
+        <button class="btn blue"   onclick="openRecordPicker('screen')">
+          <span class="btn-icon">🎥</span>Запись экрана
+        </button>
+        <button class="btn blue"   onclick="openRecordPicker('camera')">
+          <span class="btn-icon">🎬</span>Запись камеры
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════════════════
+     PAGE: TOOLS
+══════════════════════════════════════════════ -->
+<div class="page" id="page-tools">
+
+  <!-- System info -->
+  <div class="section-label">Система</div>
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">Информация</div>
+      <span class="chip" onclick="updateInfo(true)">↻ Обновить</span>
+    </div>
+    <div class="stat-list">
+      <div class="stat-row">
+        <div class="stat-key"><div class="stat-key-icon">🌐</div>Public IP</div>
+        <div class="stat-val" id="publicIp">—</div>
+      </div>
+      <div class="stat-row">
+        <div class="stat-key"><div class="stat-key-icon">🏠</div>Local IP</div>
+        <div class="stat-val" id="localIp">—</div>
+      </div>
+      <div class="stat-row">
+        <div class="stat-key"><div class="stat-key-icon">🧠</div>CPU</div>
+        <div class="stat-val" id="cpu">—</div>
+      </div>
+      <div class="stat-row">
+        <div class="stat-key"><div class="stat-key-icon">💾</div>RAM</div>
+        <div class="stat-val" id="ram">—</div>
+      </div>
+      <div class="stat-row">
+        <div class="stat-key"><div class="stat-key-icon">💿</div>Disk C</div>
+        <div class="stat-val" id="disk">—</div>
+      </div>
+      <div class="stat-row">
+        <div class="stat-key"><div class="stat-key-icon">⏱</div>Uptime</div>
+        <div class="stat-val" id="uptime">—</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WinLock -->
+  <div class="section-label">Блокировка</div>
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">WinLock</div>
+      <div class="lock-chip" id="winlockChip">
+        <div class="status-dot" id="winlockDot"></div>
+        <span id="winlockStatus">…</span>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="btn-grid col2">
+        <button class="btn danger" onclick="openWinlockSheet()">
+          <span class="btn-icon">🔒</span>Заблокировать
+        </button>
+        <button class="btn ok" onclick="winlockUnlock()">
+          <span class="btn-icon">🔓</span>Разблокировать
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tools -->
+  <div class="section-label">Утилиты</div>
+  <div class="card">
+    <div class="card-body">
+      <div class="btn-grid col2">
+        <button class="btn blue"   onclick="execCmd('status')">
+          <span class="btn-icon">💻</span>Статус
+        </button>
+        <button class="btn blue"   onclick="execCmd('ip')">
+          <span class="btn-icon">🌐</span>IP-адрес
+        </button>
+        <button class="btn accent" onclick="execCmd('speedtest')">
+          <span class="btn-icon">⚡</span>Speedtest
+        </button>
+        <button class="btn warn"   onclick="execCmd('disk_cleanup')">
+          <span class="btn-icon">🧹</span>Очистка
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ── TABS ── -->
+<div class="tabs">
+  <button class="tab active" onclick="openTab('home',this)">
+    <span class="tab-icon">🏠</span>Дом
+  </button>
+  <button class="tab" onclick="openTab('media',this)">
+    <span class="tab-icon">🎵</span>Медиа
+  </button>
+  <button class="tab" onclick="openTab('capture',this)">
+    <span class="tab-icon">📷</span>Камера
+  </button>
+  <button class="tab" onclick="openTab('tools',this)">
+    <span class="tab-icon">🛠</span>Ещё
+  </button>
+</div>
+
+<!-- ── TOAST ── -->
+<div class="toast" id="toast"><div class="toast-box" id="toastBox"></div></div>
+
+<!-- ── SHEET ── -->
+<div class="sheet-bg" id="sheetBg" onclick="sheetBgClick(event)">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+      <div class="sheet-title" id="sheetTitle"></div>
+      <div class="sheet-desc"  id="sheetDesc"></div>
+    </div>
+    <div class="sheet-body" id="sheetBody"></div>
+    <div class="sheet-actions" id="sheetActions"></div>
+  </div>
+</div>
 
 <script>
-  const tg = window.Telegram?.WebApp;
+// ══════════════════════════════════════════════════════
+//  Bootstrap
+// ══════════════════════════════════════════════════════
+const tg = window.Telegram?.WebApp;
+const params = new URLSearchParams(location.search);
+let API_BASE = (params.get("api") || localStorage.getItem("api_base") || "").trim().replace(/\/$/, "");
+if (API_BASE) localStorage.setItem("api_base", API_BASE);
 
-  // API_BASE
-  const params = new URLSearchParams(location.search);
-  let API_BASE = (params.get("api") || localStorage.getItem("api_base") || "").trim();
-  if (API_BASE.endsWith("/")) API_BASE = API_BASE.slice(0, -1);
-  if (API_BASE) localStorage.setItem("api_base", API_BASE);
+const inTG = !!(tg && tg.initData);
+if (inTG) { tg.ready(); tg.expand(); }
 
-  const inTelegram = !!(tg && tg.initData);
-  if (inTelegram) { tg.ready(); tg.expand(); }
+// ══════════════════════════════════════════════════════
+//  Tabs
+// ══════════════════════════════════════════════════════
+function openTab(name, el) {
+  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+  document.querySelectorAll(".tab").forEach(b => b.classList.remove("active"));
+  document.getElementById("page-" + name).classList.add("active");
+  el.classList.add("active");
+}
 
-  // top ui
-  const dot = document.getElementById("dot");
-  const connText = document.getElementById("connText");
-  const topSub = document.getElementById("topSub");
+// ══════════════════════════════════════════════════════
+//  Toast
+// ══════════════════════════════════════════════════════
+let _toastTimer = null;
+function showToast(msg, ms = 2600) {
+  document.getElementById("toastBox").textContent = msg;
+  const el = document.getElementById("toast");
+  el.classList.add("show");
+  clearTimeout(_toastTimer);
+  _toastTimer = setTimeout(() => el.classList.remove("show"), ms);
+}
 
-  // toast
-  let toastTimer = null;
-  function showToast(msg, ms=2600){
-    const t = document.getElementById('toast');
-    document.getElementById('toastBox').textContent = msg;
-    t.classList.add('show');
-    clearTimeout(toastTimer);
-    toastTimer = setTimeout(()=>t.classList.remove('show'), ms);
-  }
+// ══════════════════════════════════════════════════════
+//  Sheet
+// ══════════════════════════════════════════════════════
+function openSheet({ title = "", desc = "", bodyHtml = "", actions = [] }) {
+  document.getElementById("sheetTitle").textContent = title;
+  document.getElementById("sheetDesc").textContent  = desc;
+  document.getElementById("sheetBody").innerHTML    = bodyHtml;
 
-  function nowTime(){
-    const d = new Date();
-    return d.toLocaleTimeString([], {hour:"2-digit", minute:"2-digit", second:"2-digit"});
-  }
+  const act = document.getElementById("sheetActions");
+  act.innerHTML = "";
+  actions.forEach(a => {
+    const b = document.createElement("button");
+    b.className = "btn " + (a.kind || "blue");
+    b.textContent = a.text || "OK";
+    b.onclick = a.onClick || closeSheet;
+    act.appendChild(b);
+  });
 
-  function esc(s){
-    return String(s ?? "")
-      .replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
-      .replaceAll('"',"&quot;").replaceAll("'","&#039;");
-  }
+  document.getElementById("sheetBg").classList.add("open");
+}
+function closeSheet() { document.getElementById("sheetBg").classList.remove("open"); }
+function sheetBgClick(e) { if (e.target.id === "sheetBg") closeSheet(); }
 
-  // tabs
-  function openTab(name, el){
-    document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
-    document.querySelectorAll(".tab").forEach(b=>b.classList.remove("active"));
-    document.getElementById("page-"+name).classList.add("active");
-    el.classList.add("active");
-  }
+async function copyText(s) {
+  try {
+    await navigator.clipboard.writeText(s);
+    showToast("✅ Скопировано", 1400);
+  } catch { showToast("❌ Ошибка копирования"); }
+}
 
-  // sheet
-  function openSheet({title, desc, bodyHtml, actions}){
-    document.getElementById("sheetTitle").textContent = title || "";
-    document.getElementById("sheetDesc").textContent = desc || "";
-    document.getElementById("sheetBody").innerHTML = bodyHtml || "";
+function esc(s) {
+  return String(s ?? "")
+    .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;").replace(/'/g,"&#039;");
+}
 
-    const a = document.getElementById("sheetActions");
-    a.innerHTML = "";
-    (actions || []).forEach(x=>{
-      const b = document.createElement("button");
-      b.className = "btn " + (x.kind || "info");
-      b.textContent = x.text || "OK";
-      b.onclick = x.onClick || closeSheet;
-      a.appendChild(b);
-    });
+// ══════════════════════════════════════════════════════
+//  API
+// ══════════════════════════════════════════════════════
+async function apiPost(path, payload) {
+  if (!API_BASE)
+    throw new Error("API URL не задан — открой панель кнопкой бота (?api=…)");
 
-    document.getElementById("sheetBg").classList.add("open");
-  }
-  function closeSheet(){ document.getElementById("sheetBg").classList.remove("open"); }
-  function sheetBgClick(e){ if (e.target.id === "sheetBg") closeSheet(); }
+  const headers = { "Content-Type": "application/json" };
+  if (tg && tg.initData) headers["X-Tg-Init-Data"] = tg.initData;
 
-  async function copyText(s){
-    try{ await navigator.clipboard.writeText(s); showToast("✅ Скопировано", 1400); }
-    catch{ showToast("❌ Не удалось скопировать", 2500); }
-  }
+  const r = await fetch(API_BASE + path, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(payload || {})
+  });
 
-  // API
-  async function apiPost(path, payload){
-    if (!API_BASE) throw new Error("API URL не задан. Открой панель через кнопку бота (там будет ?api=...).");
+  let data = null;
+  try { data = await r.json(); } catch {}
+  if (!r.ok) throw new Error(data?.message || "HTTP " + r.status);
+  return data;
+}
 
-    const headers = {"Content-Type":"application/json"};
-    if (tg && tg.initData) headers["X-Tg-Init-Data"] = tg.initData;
+// ══════════════════════════════════════════════════════
+//  Activity log
+// ══════════════════════════════════════════════════════
+const LOG_KEY = "cortex_log_v3";
+let logItems = [];
 
-    const r = await fetch(API_BASE + path, {
-      method: "POST",
-      headers,
-      body: JSON.stringify(payload || {})
-    });
-
-    let data = null;
-    try{ data = await r.json(); }catch{}
-
-    if (!r.ok){
-      const msg = data?.message || ("HTTP " + r.status);
-      throw new Error(msg);
-    }
-    return data;
-  }
-
-  // Activity log (localStorage)
-  const LOG_KEY = "cortex_log_v2";
-  let logItems = [];
-  function loadLog(){
-    try{ logItems = JSON.parse(localStorage.getItem(LOG_KEY) || "[]"); }catch{ logItems = []; }
-    renderLog();
-  }
-  function saveLog(){
-    localStorage.setItem(LOG_KEY, JSON.stringify(logItems.slice(0, 30)));
-  }
-  function addLog({cmd, ok, message}){
-    logItems.unshift({t: Date.now(), cmd, ok: !!ok, message: String(message || "")});
-    logItems = logItems.slice(0, 30);
-    saveLog();
-    renderLog();
-  }
-  function clearLog(){
-    logItems = [];
-    saveLog();
-    renderLog();
-  }
-  function renderLog(){
-    const list = document.getElementById("logList");
-    const empty = document.getElementById("logEmpty");
-    if (!logItems.length){
-      list.innerHTML = "";
-      empty.style.display = "block";
-      return;
-    }
-    empty.style.display = "none";
+function loadLog() {
+  try { logItems = JSON.parse(localStorage.getItem(LOG_KEY) || "[]"); } catch { logItems = []; }
+  renderLog();
+}
+function saveLog() { localStorage.setItem(LOG_KEY, JSON.stringify(logItems.slice(0,30))); }
+function addLog({ cmd, ok, message }) {
+  logItems.unshift({ t: Date.now(), cmd, ok: !!ok, message: String(message || "") });
+  logItems = logItems.slice(0, 30);
+  saveLog();
+  renderLog();
+}
+function clearLog() { logItems = []; saveLog(); renderLog(); }
+function renderLog() {
+  const list  = document.getElementById("logList");
+  const empty = document.getElementById("logEmpty");
+  if (!logItems.length) {
     list.innerHTML = "";
-    for (const it of logItems){
-      const time = new Date(it.t).toLocaleTimeString([], {hour:"2-digit", minute:"2-digit", second:"2-digit"});
-      const div = document.createElement("div");
-      div.className = "logItem";
-      div.innerHTML = `
-        <div class="logTop">
-          <div class="logCmd">${esc(it.cmd)} <span class="${it.ok ? "tagOk":"tagErr"}">${it.ok ? "✓":"×"}</span></div>
-          <div class="logTime">${time}</div>
-        </div>
-        <div class="logMsg">${esc(it.message).slice(0, 600)}</div>
-      `;
-      list.appendChild(div);
-    }
+    empty.style.display = "block";
+    return;
   }
+  empty.style.display = "none";
+  list.innerHTML = "";
+  for (const it of logItems) {
+    const t = new Date(it.t).toLocaleTimeString([], { hour:"2-digit", minute:"2-digit", second:"2-digit" });
+    const d = document.createElement("div");
+    d.className = "log-item";
+    d.innerHTML = `
+      <div class="log-dot ${it.ok ? "ok" : "err"}"></div>
+      <div class="log-body">
+        <div class="log-cmd">${esc(it.cmd)}</div>
+        <div class="log-msg">${esc(it.message).slice(0,200)}</div>
+      </div>
+      <div class="log-time">${t}</div>
+    `;
+    list.appendChild(d);
+  }
+}
 
-  // Captures (sessionStorage)
-  const CAP_KEY = "cortex_caps_v2";
-  let captures = [];
-  function loadCaps(){
-    try{ captures = JSON.parse(sessionStorage.getItem(CAP_KEY) || "[]"); }catch{ captures = []; }
-    renderCaps();
-  }
-  function saveCaps(){
-    sessionStorage.setItem(CAP_KEY, JSON.stringify(captures.slice(0, 30)));
-  }
-  function clearCaptures(){
-    captures = [];
-    saveCaps();
-    renderCaps();
-    showToast("✅ Галерея очищена", 1500);
-  }
-  function addCapture(cap){
-    captures.unshift(cap);
-    captures = captures.slice(0, 30);
-    saveCaps();
-    renderCaps();
-  }
+// ══════════════════════════════════════════════════════
+//  Gallery
+// ══════════════════════════════════════════════════════
+const CAP_KEY = "cortex_caps_v3";
+let captures = [];
 
-  function renderCaps(){
-    const g = document.getElementById("gallery");
-    const empty = document.getElementById("galleryEmpty");
-    if (!captures.length){
-      g.innerHTML = "";
-      empty.style.display = "block";
-      return;
-    }
-    empty.style.display = "none";
+function loadCaps() {
+  try { captures = JSON.parse(sessionStorage.getItem(CAP_KEY) || "[]"); } catch { captures = []; }
+  renderCaps();
+}
+function saveCaps() { sessionStorage.setItem(CAP_KEY, JSON.stringify(captures.slice(0,30))); }
+function clearCaptures() { captures = []; saveCaps(); renderCaps(); showToast("Галерея очищена"); }
+function addCapture(cap) { captures.unshift(cap); captures = captures.slice(0,30); saveCaps(); renderCaps(); }
+
+function renderCaps() {
+  const g     = document.getElementById("gallery");
+  const empty = document.getElementById("galleryEmpty");
+  if (!captures.length) {
     g.innerHTML = "";
-
-    for (const c of captures){
-      const div = document.createElement("div");
-      div.className = "thumb";
-      const time = new Date(c.t).toLocaleTimeString([], {hour:"2-digit", minute:"2-digit"});
-      const badge = c.kind === "screenshot" ? "Скрин" : (c.kind === "camera_photo" ? "Камера" : "Видео");
-
-      if (c.type === "image"){
-        const src = `data:${c.mime};base64,${c.b64}`;
-        div.innerHTML = `
-          <img src="${src}" />
-          <div class="thumbMeta">
-            <div class="thumbBadge">${badge}</div>
-            <div class="thumbBadge">${time}</div>
-          </div>
-        `;
-        div.onclick = ()=> openImageViewer(c);
-      } else if (c.type === "file"){
-        div.innerHTML = `
-          <div style="height:100%;display:flex;align-items:center;justify-content:center;font-weight:950;color:var(--hint)">
-            🎬 ${esc(c.filename || "video.mp4")}
-          </div>
-          <div class="thumbMeta">
-            <div class="thumbBadge">${badge}</div>
-            <div class="thumbBadge">${time}</div>
-          </div>
-        `;
-        div.onclick = ()=> openFileViewer(c);
-      }
-
-      g.appendChild(div);
-    }
+    empty.style.display = "block";
+    return;
   }
+  empty.style.display = "none";
+  g.innerHTML = "";
+  for (const c of captures) {
+    const div = document.createElement("div");
+    div.className = "thumb";
+    const label = c.kind === "screenshot" ? "Скрин" : c.kind === "camera_photo" ? "Камера" : "Видео";
+    const t = new Date(c.t).toLocaleTimeString([], { hour:"2-digit", minute:"2-digit" });
 
-  async function downloadB64({b64, mime, filename}){
-    const bin = atob(b64);
-    const bytes = new Uint8Array(bin.length);
-    for (let i=0;i<bin.length;i++) bytes[i] = bin.charCodeAt(i);
-    const blob = new Blob([bytes], {type: mime || "application/octet-stream"});
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = filename || "file";
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    setTimeout(()=>URL.revokeObjectURL(url), 1500);
-  }
-
-  function openImageViewer(c){
-    const src = `data:${c.mime};base64,${c.b64}`;
-    openSheet({
-      title: c.kind === "screenshot" ? "Скриншот" : "Фото с камеры",
-      desc: new Date(c.t).toLocaleString(),
-      bodyHtml: `
-        <div class="viewer"><img src="${src}"/></div>
-        <div class="muted" style="margin-top:10px">Pinch-to-zoom работает.</div>
-      `,
-      actions: [
-        {text:"Скачать", kind:"ok", onClick: async()=>{ await downloadB64({b64:c.b64, mime:c.mime, filename:c.filename}); }},
-        {text:"Закрыть", kind:"info", onClick: closeSheet},
-      ]
-    });
-  }
-
-  function openFileViewer(c){
-    openSheet({
-      title: c.filename || "Файл",
-      desc: c.url || "",
-      bodyHtml: `
-        ${(c.mime || "").includes("video") ? `
-          <div class="viewer"><video controls src="${c.url}"></video></div>
-        ` : ""}
-        <div class="muted" style="margin-top:10px;word-break:break-all">${esc(c.url || "")}</div>
-      `,
-      actions: [
-        {text:"Скачать", kind:"ok", onClick: ()=>window.open(c.url, "_blank")},
-        {text:"Копировать ссылку", kind:"info", onClick: async()=>{ await copyText(c.url || ""); }},
-        {text:"Закрыть", kind:"info", onClick: closeSheet},
-      ]
-    });
-  }
-
-  // записи: выбор длительности
-  function openRecordPicker(kind){
-    const presets = [5, 10, 15, 30, 60];
-    const title = (kind === "screen") ? "🎥 Запись экрана" : "🎥 Запись камеры";
-    const cmd = (kind === "screen") ? "record_start_buttons" : "camera_record";
-
-    openSheet({
-      title,
-      desc: "Выбери длительность записи",
-      bodyHtml: `
-        <div class="sheetRow" style="margin-bottom:10px">
-          ${presets.map(s => `<button class="btn ok" onclick="startRecord('${cmd}', ${s})">${s} сек</button>`).join("")}
+    if (c.type === "image") {
+      div.innerHTML = `
+        <img src="data:${c.mime};base64,${c.b64}" />
+        <div class="thumb-label">${label} · ${t}</div>
+      `;
+      div.onclick = () => openImageViewer(c);
+    } else {
+      div.innerHTML = `
+        <div style="height:100%;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.04)">
+          <div class="thumb-video-icon">▶</div>
         </div>
-        <div class="row">
-          <input class="inp mono" id="customSeconds" type="number" min="1" max="120" placeholder="Своё (сек, 1..120)" />
-          <button class="btn info" style="min-width:120px" onclick="startRecordCustom('${cmd}')">Старт</button>
-        </div>
-        <div class="muted" style="margin-top:10px">
-          Видео будет доступно как файл для скачивания и сохранится в галерею.
-        </div>
-      `,
-      actions: [{text:"Закрыть", kind:"info", onClick: closeSheet}]
-    });
-  }
-
-  function startRecordCustom(cmd){
-    const v = Number(document.getElementById("customSeconds")?.value || 0);
-    if (!v || v < 1 || v > 120){
-      showToast("❌ секунды 1..120", 2500);
-      return;
+        <div class="thumb-label">${label} · ${t}</div>
+      `;
+      div.onclick = () => openFileViewer(c);
     }
-    startRecord(cmd, v);
+    g.appendChild(div);
   }
+}
 
-  async function startRecord(cmd, seconds){
-    closeSheet();
-    await execCmd(cmd, {seconds});
-  }
+async function dlB64({ b64, mime, filename }) {
+  const bin   = atob(b64);
+  const bytes = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+  const url = URL.createObjectURL(new Blob([bytes], { type: mime }));
+  const a   = Object.assign(document.createElement("a"), { href: url, download: filename || "file" });
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1500);
+}
 
-  // exec + вывод (text/image/file)
-  async function execCmd(cmd, extraPayload={}, {silent=false} = {}){
-    try{
-      if (!silent) showToast("⏳ " + cmd);
-      const res = await apiPost("/api/exec", {cmd, ...extraPayload});
+function openImageViewer(c) {
+  openSheet({
+    title: c.kind === "screenshot" ? "Скриншот" : "Фото с камеры",
+    desc: new Date(c.t).toLocaleString(),
+    bodyHtml: `<div class="viewer"><img src="data:${c.mime};base64,${c.b64}" /></div>`,
+    actions: [
+      { text:"💾 Скачать", kind:"ok",   onClick: async () => { await dlB64(c); } },
+      { text:"Закрыть",   kind:"accent", onClick: closeSheet },
+    ]
+  });
+}
 
-      const ok = !!res.ok;
-      const msg = res.message || (ok ? "OK" : "Error");
-      addLog({cmd, ok, message: msg});
-      if (!silent) showToast((ok ? "✅ " : "❌ ") + msg, 3200);
+function openFileViewer(c) {
+  const isVid = (c.mime || "").includes("video");
+  openSheet({
+    title: c.filename || "Файл",
+    desc: c.url || "",
+    bodyHtml: `
+      ${isVid ? `<div class="viewer"><video controls src="${c.url}"></video></div>` : ""}
+      <div style="font-size:11px;color:var(--muted);word-break:break-all;margin-top:8px">${esc(c.url || "")}</div>
+    `,
+    actions: [
+      { text:"⬇ Скачать",     kind:"ok",    onClick: () => window.open(c.url, "_blank") },
+      { text:"📋 Копировать", kind:"blue",   onClick: async () => { await copyText(c.url || ""); } },
+      { text:"Закрыть",      kind:"accent",  onClick: closeSheet },
+    ]
+  });
+}
 
-      const data = res.data;
+// ══════════════════════════════════════════════════════
+//  execCmd
+// ══════════════════════════════════════════════════════
+async function execCmd(cmd, extra = {}) {
+  showToast("⏳ " + cmd);
+  try {
+    const res = await apiPost("/api/exec", { cmd, ...extra });
+    const ok  = !!res.ok;
+    const msg = res.message || (ok ? "OK" : "Error");
+    addLog({ cmd, ok, message: msg });
+    showToast((ok ? "✅ " : "❌ ") + msg, 3500);
 
-      if (data && data.type === "text" && data.text){
-        openSheet({
-          title: cmd,
-          desc: msg,
-          bodyHtml: `<pre class="inp mono" style="white-space:pre-wrap;line-height:1.35">${esc(data.text)}</pre>`,
-          actions: [
-            {text:"Копировать", kind:"ok", onClick: async()=>{ await copyText(data.text); }},
-            {text:"Закрыть", kind:"info", onClick: closeSheet},
-          ]
-        });
-      }
+    const d = res.data;
 
-      if (data && data.type === "image" && data.b64 && data.mime){
-        const t = Date.now();
-        const filename = (cmd === "screenshot") ? `screenshot_${t}.jpg` : `camera_${t}.jpg`;
-        const cap = {t, kind: cmd, type:"image", mime: data.mime, b64: data.b64, filename};
-        addCapture(cap);
-        openImageViewer(cap);
-      }
-
-      if (data && data.type === "file" && data.url){
-        const absUrl = API_BASE + data.url;
-        const t = Date.now();
-        const cap = {
-          t, kind: cmd, type: "file",
-          url: absUrl,
-          filename: data.filename || "file",
-          mime: data.mime || "",
-          size: data.size || 0
-        };
-        addCapture(cap);
-        openFileViewer(cap);
-      }
-
-      return res;
-    }catch(e){
-      console.log(e);
-      addLog({cmd, ok:false, message: e?.message || "Ошибка"});
-      if (!silent) showToast("❌ " + (e?.message || "Ошибка"), 5000);
-      tg?.showAlert?.("Ошибка: " + (e?.message || "Ошибка"));
-      return null;
+    if (d?.type === "text" && d.text) {
+      openSheet({
+        title: cmd,
+        desc: msg,
+        bodyHtml: `<pre class="code">${esc(d.text)}</pre>`,
+        actions: [
+          { text:"📋 Копировать", kind:"ok",    onClick: async () => { await copyText(d.text); } },
+          { text:"Закрыть",      kind:"accent", onClick: closeSheet },
+        ]
+      });
     }
-  }
 
-  // confirm dangerous
-  function confirmDanger(cmd){
-    openSheet({
-      title: "Подтверждение",
-      desc: "Это действие может привести к потере несохранённых данных.",
-      bodyHtml: `<div class="muted">Команда: <span class="mono">${esc(cmd)}</span></div>`,
-      actions: [
-        {text:"Отмена", kind:"info", onClick: closeSheet},
-        {text:"Подтвердить", kind:"danger", onClick: async()=>{ closeSheet(); await execCmd(cmd); }},
-      ]
-    });
-  }
-
-  // timer
-  async function startShutdownTimer(){
-    const v = Number(document.getElementById("timerMinutes").value || 0);
-    if (!v || v < 1 || v > 1440){
-      showToast("❌ Введи минуты (1..1440)", 3500);
-      return;
+    if (d?.type === "image" && d.b64 && d.mime) {
+      const t   = Date.now();
+      const cap = { t, kind: cmd, type:"image", mime: d.mime, b64: d.b64, filename: `${cmd}_${t}.jpg` };
+      addCapture(cap);
+      openImageViewer(cap);
     }
-    await execCmd("timer_start_menu", {minutes: v});
-  }
 
-  // volume
-  function volPreview(val){
-    document.getElementById("volNum").textContent = val;
-    const s = document.getElementById("vol");
-    const pct = val + "%";
-    s.style.background = `linear-gradient(to right, var(--btn) ${pct}, rgba(255,255,255,.14) ${pct})`;
-  }
-  async function setVolume(val){
-    val = Number(val);
-    volPreview(val);
-    await execCmd("volume:" + val);
-  }
-  volPreview(50);
-
-  // key/type
-  async function pressKey(){
-    const key = document.getElementById("keySelect").value;
-    if (key.includes("+")) await execCmd("key:" + key); // если сервер умеет
-    else await execCmd("key:" + key);
-  }
-  async function typeText(){
-    const text = (document.getElementById("typeText").value || "").trim();
-    if (!text){ showToast("❌ Введи текст", 2500); return; }
-    await execCmd("type:" + text);
-    document.getElementById("typeText").value = "";
-  }
-
-  function runRaw(){
-    const cmd = (document.getElementById("rawCmd").value || "").trim();
-    if (!cmd){ showToast("❌ Введи команду", 2500); return; }
-    execCmd(cmd);
-  }
-
-  // Settings
-  function openSettings(){
-    const panelUrl = location.origin + location.pathname + (API_BASE ? ("?api=" + encodeURIComponent(API_BASE)) : "");
-    openSheet({
-      title: "Настройки",
-      desc: "API URL — это твой trycloudflare (туннель до ПК).",
-      bodyHtml: `
-        <div class="muted" style="margin-bottom:8px">API URL</div>
-        <input class="inp mono" id="apiInput" value="${esc(API_BASE)}" placeholder="https://xxxxx.trycloudflare.com" />
-        <div style="height:10px"></div>
-        <button class="btnRow" onclick="saveApiFromSheet()">💾 Сохранить API</button>
-        <div class="hr"></div>
-        <div class="muted">Ссылка панели:</div>
-        <div class="muted mono" style="margin-top:6px;word-break:break-all;color:#9cc2ff">${esc(panelUrl)}</div>
-        <div style="height:10px"></div>
-        <button class="btnRow" onclick="copyText('${esc(panelUrl)}')">📋 Копировать ссылку</button>
-      `,
-      actions: [{text:"Закрыть", kind:"info", onClick: closeSheet}]
-    });
-  }
-
-  function saveApiFromSheet(){
-    const el = document.getElementById("apiInput");
-    let v = (el?.value || "").trim();
-    if (v.endsWith("/")) v = v.slice(0, -1);
-    if (!v.startsWith("https://")){
-      showToast("❌ API должен начинаться с https://", 3500);
-      return;
+    if (d?.type === "file" && d.url) {
+      const t   = Date.now();
+      const cap = { t, kind: cmd, type:"file", url: API_BASE + d.url, filename: d.filename || "file", mime: d.mime || "", size: d.size || 0 };
+      addCapture(cap);
+      openFileViewer(cap);
     }
-    API_BASE = v;
-    localStorage.setItem("api_base", API_BASE);
-    showToast("✅ API сохранён", 1800);
-    refreshTop(true);
-    closeSheet();
-    updateInfo(true);
-  }
 
-  function refreshTop(apiOk){
-    if (apiOk){
-      dot.classList.add("ok");
-      connText.textContent = inTelegram ? "tg+api" : "api";
-      topSub.textContent = "API: " + (API_BASE ? API_BASE.replace("https://","") : "не задан");
-    }else{
-      dot.classList.remove("ok");
-      connText.textContent = inTelegram ? "tg" : "browser";
-      topSub.textContent = API_BASE ? "API недоступен" : "Нужен API URL";
-    }
+    return res;
+  } catch (e) {
+    addLog({ cmd, ok: false, message: e?.message || "Ошибка" });
+    showToast("❌ " + (e?.message || "Ошибка"), 5000);
+    return null;
   }
+}
 
-  // Auto info
-  async function updateInfo(showToastFlag=false){
-    try{
-      const res = await apiPost("/api/info", {});
-      const d = res.data || {};
-      document.getElementById("publicIp").textContent = d.public_ip || "—";
-      document.getElementById("localIp").textContent = d.local_ip || "—";
-      document.getElementById("cpu").textContent = (d.cpu_percent != null ? (d.cpu_percent.toFixed(1)+"%") : "—");
-      document.getElementById("ram").textContent = d.ram || "—";
-      document.getElementById("disk").textContent = d.disk_c || "—";
-      document.getElementById("uptime").textContent = d.uptime || "—";
-      document.getElementById("infoUpdated").textContent = "Обновлено: " + nowTime();
-      refreshTop(true);
-      if (showToastFlag) showToast("✅ Инфо обновлено", 1600);
-    }catch(e){
-      refreshTop(false);
-      if (showToastFlag) showToast("❌ " + (e?.message || "info error"), 4000);
-    }
+// ══════════════════════════════════════════════════════
+//  Danger confirm
+// ══════════════════════════════════════════════════════
+function confirmAction(cmd, title) {
+  openSheet({
+    title,
+    desc: "Это действие может привести к потере несохранённых данных.",
+    actions: [
+      { text:"Отмена",      kind:"accent", onClick: closeSheet },
+      { text:"✅ Подтвердить", kind:"danger", onClick: async () => { closeSheet(); await execCmd(cmd); } },
+    ]
+  });
+}
+
+// ══════════════════════════════════════════════════════
+//  Timer / Volume / Keys
+// ══════════════════════════════════════════════════════
+async function startTimer() {
+  const v = Number(document.getElementById("timerMin").value || 0);
+  if (!v || v < 1 || v > 1440) { showToast("❌ Введи минуты 1..1440", 3000); return; }
+  await execCmd("timer_start_menu", { minutes: v });
+}
+
+function volPreview(val) {
+  document.getElementById("volNum").textContent = val;
+  const r   = document.getElementById("volRange");
+  const pct = val + "%";
+  r.style.background = `linear-gradient(to right, var(--accent) ${pct}, rgba(255,255,255,.1) ${pct})`;
+}
+async function setVolume(val) {
+  val = Number(val);
+  document.getElementById("volRange").value = val;
+  volPreview(val);
+  await execCmd("volume:" + val);
+}
+volPreview(50);
+
+async function pressKey() {
+  const key = document.getElementById("keySelect").value;
+  await execCmd("key:" + key);
+}
+async function typeText() {
+  const text = (document.getElementById("typeText").value || "").trim();
+  if (!text) { showToast("❌ Введи текст"); return; }
+  await execCmd("type:" + text);
+  document.getElementById("typeText").value = "";
+}
+function runRaw() {
+  const cmd = (document.getElementById("rawCmd").value || "").trim();
+  if (!cmd) { showToast("❌ Введи команду"); return; }
+  execCmd(cmd);
+}
+
+// ══════════════════════════════════════════════════════
+//  Record picker
+// ══════════════════════════════════════════════════════
+function openRecordPicker(kind) {
+  const cmd   = kind === "screen" ? "record_start_buttons" : "camera_record";
+  const title = kind === "screen" ? "🎥 Запись экрана" : "🎬 Запись с камеры";
+  openSheet({
+    title,
+    desc: "Выбери длительность",
+    bodyHtml: `
+      <div class="btn-grid col4" style="margin-bottom:10px">
+        ${[5,10,15,30].map(s => `<button class="btn ok" onclick="startRecord('${cmd}',${s})">${s}с</button>`).join("")}
+      </div>
+      <div class="btn-grid col3">
+        ${[45,60,90].map(s => `<button class="btn blue" onclick="startRecord('${cmd}',${s})">${s}с</button>`).join("")}
+      </div>
+      <div class="mt12"></div>
+      <div class="field-label">Своё (1..120 сек)</div>
+      <div class="row">
+        <input class="inp" id="customSec" type="number" min="1" max="120" placeholder="Секунды" />
+        <button class="btn accent" style="min-width:80px;min-height:44px;" onclick="startRecordCustom('${cmd}')">Старт</button>
+      </div>
+    `,
+    actions: [{ text:"Закрыть", kind:"accent", onClick: closeSheet }]
+  });
+}
+function startRecordCustom(cmd) {
+  const v = Number(document.getElementById("customSec")?.value || 0);
+  if (!v || v < 1 || v > 120) { showToast("❌ Секунды 1..120"); return; }
+  startRecord(cmd, v);
+}
+async function startRecord(cmd, seconds) {
+  closeSheet();
+  await execCmd(cmd, { seconds });
+}
+
+// ══════════════════════════════════════════════════════
+//  System info
+// ══════════════════════════════════════════════════════
+async function updateInfo(toast = false) {
+  try {
+    const res = await apiPost("/api/info", {});
+    const d   = res.data || {};
+    document.getElementById("publicIp").textContent = d.public_ip || "—";
+    document.getElementById("localIp").textContent  = d.local_ip  || "—";
+    document.getElementById("cpu").textContent      = d.cpu_percent != null ? d.cpu_percent.toFixed(1) + "%" : "—";
+    document.getElementById("ram").textContent      = d.ram   || "—";
+    document.getElementById("disk").textContent     = d.disk_c || "—";
+    document.getElementById("uptime").textContent   = d.uptime || "—";
+    setOnline(true);
+    if (toast) showToast("✅ Обновлено", 1600);
+  } catch (e) {
+    setOnline(false);
+    if (toast) showToast("❌ " + (e?.message || "info error"), 4000);
   }
+}
 
-  // Boot
-  loadLog();
-  loadCaps();
-  refreshTop(!!API_BASE);
+function setOnline(on) {
+  const dot  = document.getElementById("dot");
+  const text = document.getElementById("statusText");
+  dot.classList.toggle("online", on);
+  text.textContent = on ? (inTG ? "Telegram · online" : "online") : "offline";
+}
 
-  if (API_BASE){
-    updateInfo(false);
-    setInterval(()=>updateInfo(false), 60000);
-  } else {
-    topSub.textContent = "Нужен API URL (открой панель кнопкой бота)";
+// ══════════════════════════════════════════════════════
+//  WinLock
+// ══════════════════════════════════════════════════════
+async function winlockRefreshStatus() {
+  try {
+    const res = await apiPost("/api/winlock", { op:"status" });
+    const d   = (res.data?.value) || {};
+    const locked = !!d.locked;
+    document.getElementById("winlockDot").classList.toggle("online", !locked);
+    document.getElementById("winlockStatus").textContent = locked ? "Заблокировано" : "Разблокировано";
+  } catch {
+    document.getElementById("winlockStatus").textContent = "—";
   }
+}
+
+async function winlockUnlock() {
+  await execCmd("winlock_unlock");
+  winlockRefreshStatus();
+}
+
+function openWinlockSheet() {
+  openSheet({
+    title: "🔒 Заблокировать ПК",
+    desc: "Настройте параметры блокировки",
+    bodyHtml: `
+      <div class="field-label">Сообщение на экране</div>
+      <input class="inp" id="wlMsg" placeholder="Необязательно" />
+
+      <div class="mt12"></div>
+      <div class="field-label">Тип блокировки</div>
+      <select class="sel" id="wlType" onchange="wlTypeChange()">
+        <option value="remote">📱 Только через Telegram</option>
+        <option value="password">🔑 С паролем</option>
+      </select>
+
+      <div id="wlPassWrap" style="display:none" class="mt12">
+        <div class="field-label">Пароль (мин. 4 символа)</div>
+        <input class="inp" id="wlPass" placeholder="Введите пароль" />
+      </div>
+
+      <div class="mt12"></div>
+      <div class="field-label">Озвучка</div>
+      <select class="sel" id="wlVoice">
+        <option value="0">🔇 Без озвучки</option>
+        <option value="1">🔊 С озвучкой</option>
+      </select>
+    `,
+    actions: [
+      { text:"Отмена",        kind:"accent", onClick: closeSheet },
+      { text:"🔒 Заблокировать", kind:"danger", onClick: doWinlockLock },
+    ]
+  });
+}
+
+function wlTypeChange() {
+  const sel  = document.getElementById("wlType");
+  const wrap = document.getElementById("wlPassWrap");
+  if (wrap) wrap.style.display = sel?.value === "password" ? "block" : "none";
+}
+
+async function doWinlockLock() {
+  const msg      = document.getElementById("wlMsg")?.value?.trim()   || "";
+  const lockType = document.getElementById("wlType")?.value          || "remote";
+  const pass     = document.getElementById("wlPass")?.value?.trim()  || "";
+  const voice    = document.getElementById("wlVoice")?.value === "1";
+
+  if (lockType === "password" && pass.length < 4) {
+    showToast("❌ Пароль минимум 4 символа", 3000);
+    return;
+  }
+  closeSheet();
+  const res = await apiPost("/api/exec", {
+    cmd: "winlock_lock", message: msg, lock_type: lockType, password: pass, voice
+  });
+  const ok  = !!res?.ok;
+  const m   = res?.message || (ok ? "OK" : "Ошибка");
+  addLog({ cmd:"winlock_lock", ok, message: m });
+  showToast((ok ? "✅ " : "❌ ") + m, 3000);
+  winlockRefreshStatus();
+}
+
+// ══════════════════════════════════════════════════════
+//  Settings sheet
+// ══════════════════════════════════════════════════════
+function openSettings() {
+  const url = location.origin + location.pathname + (API_BASE ? "?api=" + encodeURIComponent(API_BASE) : "");
+  openSheet({
+    title: "Настройки",
+    desc: "API URL — адрес Cloudflare-туннеля до ПК",
+    bodyHtml: `
+      <div class="field-label">API URL</div>
+      <input class="inp" id="apiInp" value="${esc(API_BASE)}" placeholder="https://xxxxx.trycloudflare.com" />
+      <div class="mt8"></div>
+      <button class="btn-primary" onclick="saveApi()">💾 Сохранить</button>
+      <div class="mt12" style="font-size:11px;color:var(--muted)">Ссылка панели:</div>
+      <div style="font-size:11px;color:#9cc2ff;word-break:break-all;margin-top:4px">${esc(url)}</div>
+      <div class="mt8"></div>
+      <button class="btn-row blue" onclick="copyText('${esc(url)}')">
+        <span class="btn-row-icon">📋</span>
+        <span class="btn-row-text">Копировать ссылку</span>
+      </button>
+    `,
+    actions: [{ text:"Закрыть", kind:"accent", onClick: closeSheet }]
+  });
+}
+
+function saveApi() {
+  let v = (document.getElementById("apiInp")?.value || "").trim().replace(/\/$/, "");
+  if (!v.startsWith("https://")) { showToast("❌ Должен начинаться с https://", 3500); return; }
+  API_BASE = v;
+  localStorage.setItem("api_base", API_BASE);
+  showToast("✅ API сохранён", 1800);
+  setOnline(false);
+  closeSheet();
+  updateInfo(true);
+}
+
+// ══════════════════════════════════════════════════════
+//  Boot
+// ══════════════════════════════════════════════════════
+loadLog();
+loadCaps();
+setOnline(false);
+renderLog();
+
+if (API_BASE) {
+  updateInfo(false);
+  winlockRefreshStatus();
+  setInterval(() => updateInfo(false), 60_000);
+  setInterval(() => winlockRefreshStatus(), 10_000);
+} else {
+  document.getElementById("statusText").textContent = "Нужен API URL";
+}
 </script>
 </body>
 </html>
