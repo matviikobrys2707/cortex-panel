@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Cortex Panel</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+  <style>
+    :root{
+      --bg: var(--tg-theme-bg-color, #0b1220);
+      --sec: var(--tg-theme-secondary-bg-color, #101a2f);
+      --text: var(--tg-theme-text-color, #e9eefc);
+      --hint: var(--tg-theme-hint-color, #93a4c7);
+      --btn: var(--tg-theme-button-color, #6d5efc);
+      --btnText: var(--tg-theme-button-text-color, #fff);
+
+      --glass: rgba(255,255,255,.06);
+      --border: rgba(255,255,255,.12);
+      --radius: 16px;
+      --radiusSm: 12px;
+
+      --danger: #ff4d6d;
+      --ok: #2ed573;
+      --warn: #ffa502;
+      --info: #4da3ff;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      min-height: 100vh;
+      padding-bottom: 86px;
+    }
+
+    .header{
+      position: sticky; top:0; z-index:100;
+      padding: 14px 16px;
+      background: rgba(255,255,255,.05);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+      display:flex; align-items:center; justify-content:space-between;
+      gap: 10px;
+    }
+    .title{
+      font-weight:900;
+      font-size:18px;
+      letter-spacing:.2px;
+      background: linear-gradient(135deg, #a78bfa, #60a5fa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip:text;
+      white-space: nowrap;
+      overflow:hidden;
+      text-overflow: ellipsis;
+    }
+    .status{
+      display:flex; align-items:center; gap:8px;
+      font-size:12px;
+      color: var(--hint);
+      flex-shrink: 0;
+    }
+    .dot{
+      width:10px; height:10px; border-radius:99px;
+      background: var(--danger);
+      box-shadow: 0 0 10px rgba(255,77,109,.45);
+    }
+    .dot.online{
+      background: var(--ok);
+      box-shadow: 0 0 10px rgba(46,213,115,.45);
+    }
+
+    .page{display:none; padding:16px;}
+    .page.active{display:block;}
+
+    .card{
+      background: var(--glass);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px;
+      margin-bottom: 12px;
+    }
+    .cardTitle{
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:1px;
+      color: var(--hint);
+      font-weight:800;
+      margin-bottom: 12px;
+    }
+
+    .grid2{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+    .grid3{display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px;}
+
+    .btn{
+      border:none; cursor:pointer;
+      border-radius: var(--radiusSm);
+      padding: 13px 10px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-weight:900;
+      font-size:13px;
+      display:flex; align-items:center; justify-content:center;
+      transition: transform .12s ease, background .12s ease;
+      user-select:none;
+      min-height: 46px;
+      text-align: center;
+    }
+    .btn:active{transform: scale(.97); background: rgba(255,255,255,.09);}
+
+    .btn.danger{border-color: rgba(255,77,109,.35); background: rgba(255,77,109,.12); color: var(--danger);}
+    .btn.warn{border-color: rgba(255,165,2,.35); background: rgba(255,165,2,.12); color: var(--warn);}
+    .btn.ok{border-color: rgba(46,213,115,.35); background: rgba(46,213,115,.12); color: var(--ok);}
+    .btn.info{border-color: rgba(77,163,255,.35); background: rgba(77,163,255,.12); color: var(--info);}
+    .btn.purple{border-color: rgba(167,139,250,.35); background: rgba(167,139,250,.12); color: #a78bfa;}
+
+    .btnRow{
+      width:100%;
+      border:none; cursor:pointer;
+      border-radius: var(--radiusSm);
+      padding: 14px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-weight:900;
+      font-size:14px;
+      display:flex; align-items:center; justify-content:center;
+      transition: transform .12s ease, background .12s ease;
+      user-select:none;
+      margin-bottom: 12px;
+    }
+    .btnRow:active{transform: scale(.98); background: rgba(255,255,255,.09);}
+
+    /* Range */
+    .bigNum{
+      text-align:center;
+      font-size:46px;
+      font-weight:900;
+      line-height:1;
+      background: linear-gradient(135deg, #a78bfa, #60a5fa);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+    }
+    .sub{
+      text-align:center;
+      margin-top:4px;
+      color: var(--hint);
+      font-size:12px;
+      margin-bottom: 10px;
+    }
+    input[type="range"]{
+      -webkit-appearance:none;
+      width:100%;
+      height:6px;
+      border-radius:99px;
+      background: rgba(255,255,255,.12);
+      outline:none;
+      margin: 8px 0 14px;
+    }
+    input[type="range"]::-webkit-slider-thumb{
+      -webkit-appearance:none;
+      width:22px; height:22px;
+      border-radius:99px;
+      background: var(--btn);
+      box-shadow: 0 0 14px rgba(109,94,252,.55);
+    }
+    .quick{
+      display:flex; gap:8px;
+    }
+    .quick button{
+      flex:1;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      border-radius: 12px;
+      padding: 9px 6px;
+      font-weight:900;
+      cursor:pointer;
+    }
+    .quick button:active{transform:scale(.97);}
+
+    /* API setup card */
+    .apiRow{
+      display:flex;
+      gap:10px;
+    }
+    .inp{
+      flex: 1;
+      border: 1px solid var(--border);
+      background: var(--sec);
+      color: var(--text);
+      border-radius: var(--radiusSm);
+      padding: 10px 12px;
+      outline:none;
+      font-size: 13px;
+      font-weight: 800;
+    }
+    .inp::placeholder{color: var(--hint);}
+    .small{
+      color: var(--hint);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+    .mono{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+
+    /* File browser */
+    .pathBar{
+      display:flex; gap:10px; align-items:center;
+      background: var(--sec);
+      border: 1px solid var(--border);
+      border-radius: var(--radiusSm);
+      padding: 10px 12px;
+      margin-bottom: 10px;
+      color: var(--hint);
+      font-size: 12px;
+      overflow:hidden;
+    }
+    .pathBar span{
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+      flex:1;
+    }
+    .backBtn{
+      flex-shrink:0;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      padding: 6px 10px;
+      border-radius: 10px;
+      cursor:pointer;
+      font-weight:900;
+      font-size: 12px;
+    }
+
+    .list{display:flex; flex-direction:column; gap:6px;}
+    .item{
+      display:flex; align-items:center; gap:12px;
+      padding: 12px 12px;
+      border-radius: var(--radiusSm);
+      background: rgba(255,255,255,.06);
+      border: 1px solid var(--border);
+      cursor:pointer;
+      user-select:none;
+    }
+    .item:active{transform:scale(.99); background: rgba(255,255,255,.09);}
+    .icon{font-size:20px; width:26px; text-align:center;}
+    .info{flex:1; overflow:hidden;}
+    .name{
+      font-weight:900;
+      font-size:14px;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+    }
+    .meta{
+      margin-top:2px;
+      font-size:11px;
+      color: var(--hint);
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+    }
+    .arrow{color: var(--hint); font-weight:900;}
+
+    /* Processes */
+    .search{
+      width:100%;
+      border: 1px solid var(--border);
+      background: var(--sec);
+      color: var(--text);
+      border-radius: var(--radiusSm);
+      padding: 10px 12px;
+      outline:none;
+      font-size:14px;
+      font-weight: 800;
+    }
+    .search::placeholder{color: var(--hint);}
+
+    /* Tabbar */
+    .tabbar{
+      position: fixed;
+      left:0; right:0; bottom:0;
+      background: var(--sec);
+      border-top: 1px solid var(--border);
+      display:flex;
+      padding-bottom: env(safe-area-inset-bottom);
+      z-index:200;
+    }
+    .tab{
+      flex:1;
+      border:none;
+      background: transparent;
+      color: var(--hint);
+      padding: 10px 0 9px;
+      font-size: 10px;
+      cursor:pointer;
+      font-weight:900;
+    }
+    .tab.active{color: var(--btn);}
+
+    /* Toast */
+    .toast{
+      position: fixed;
+      left:50%;
+      bottom: 94px;
+      transform: translateX(-50%) translateY(14px);
+      background: rgba(15, 22, 35, .92);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 900;
+      opacity: 0;
+      pointer-events: none;
+      transition: .2s ease;
+      max-width: 92%;
+      white-space: nowrap;
+      overflow:hidden;
+      text-overflow: ellipsis;
+      backdrop-filter: blur(18px);
+      z-index:999;
+    }
+    .toast.show{
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* Confirm modal */
+    .modalBg{
+      position: fixed;
+      inset: 0;
+      display:none;
+      align-items:flex-end;
+      background: rgba(0,0,0,.55);
+      z-index:500;
+    }
+    .modalBg.open{display:flex;}
+    .modal{
+      width:100%;
+      background: var(--sec);
+      border-top-left-radius: var(--radius);
+      border-top-right-radius: var(--radius);
+      border: 1px solid var(--border);
+      padding: 16px;
+    }
+    .mTitle{font-weight:900; font-size:16px; margin-bottom:6px;}
+    .mDesc{color: var(--hint); font-size:13px; margin-bottom: 14px; word-break: break-word;}
+    .mRow{display:flex; gap:10px;}
+    .mBtn{
+      flex:1;
+      border:none;
+      border-radius: 14px;
+      padding: 14px 12px;
+      font-weight:900;
+      cursor:pointer;
+      font-size:14px;
+    }
+    .mCancel{background: rgba(255,255,255,.07); color: var(--text); border: 1px solid var(--border);}
+    .mOk{background: var(--danger); color: #fff;}
+
+    .skeleton{
+      height: 52px;
+      border-radius: var(--radiusSm);
+      border: 1px solid var(--border);
+      background: linear-gradient(90deg, rgba(255,255,255,.06) 25%, rgba(255,255,255,.10) 50%, rgba(255,255,255,.06) 75%);
+      background-size: 200% 100%;
+      animation: sh 1.2s infinite linear;
+    }
+    @keyframes sh{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+    .hr{
+      height: 1px;
+      background: rgba(255,255,255,.10);
+      margin: 10px 0;
+      border-radius: 99px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="header">
+    <div class="title" id="topTitle">Cortex Panel</div>
+    <div class="status">
+      <div class="dot" id="dot"></div>
+      <div id="statusText">offline</div>
+    </div>
+  </div>
+
+  <div class="page active" id="page-home">
+    <div class="card" id="apiCard" style="display:none">
+      <div class="cardTitle">Подключение к ПК (API)</div>
+      <div class="apiRow">
+        <input class="inp mono" id="apiInput" placeholder="https://xxxxx.trycloudflare.com" />
+        <button class="btn info" style="min-width:110px" onclick="saveApi()">Сохранить</button>
+      </div>
+      <div class="hr"></div>
+      <div class="small">
+        1) На ПК запусти туннель:<br/>
+        <span class="mono">cloudflared tunnel --url http://127.0.0.1:8080</span><br/><br/>
+        2) Возьми ссылку вида <span class="mono">https://xxxxx.trycloudflare.com</span><br/>
+        3) Вставь сюда или открой панель с параметром:<br/>
+        <span class="mono">?api=https://xxxxx.trycloudflare.com</span>
+      </div>
+    </div>
+
+    <div class="card" id="tgCard" style="display:none">
+      <div class="cardTitle">Telegram WebApp</div>
+      <div class="small">
+        Открой панель через Telegram (кнопка у бота).<br/>
+        В обычном браузере <b>tg.initData</b> не будет, и сервер может запретить запросы.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="cardTitle">Питание</div>
+      <div class="grid2">
+        <button class="btn danger" onclick="confirmAction('shutdown','Выключить ПК?','ПК завершит работу через 3 секунды.')">Выключить</button>
+        <button class="btn warn" onclick="confirmAction('reboot','Перезагрузить?','ПК перезагрузится через 3 секунды.')">Перезагрузка</button>
+        <button class="btn info" onclick="sendCmd('sleep')">Сон</button>
+        <button class="btn purple" onclick="sendCmd('lock')">Блокировка</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="cardTitle">Быстро</div>
+      <div class="grid2">
+        <button class="btn info" onclick="sendCmd('taskbar')">Рабочий стол (Win+D)</button>
+        <button class="btn ok" onclick="sendCmd('media_play')">Play/Pause</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="page" id="page-media">
+    <div class="card">
+      <div class="cardTitle">Громкость</div>
+      <div class="bigNum" id="volNum">50</div>
+      <div class="sub">процентов</div>
+
+      <input id="vol" type="range" min="0" max="100" value="50"
+             oninput="volPreview(this.value)"
+             onchange="setVolume(this.value)"/>
+
+      <div class="quick">
+        <button onclick="setVolume(0)">0</button>
+        <button onclick="setVolume(25)">25</button>
+        <button onclick="setVolume(50)">50</button>
+        <button onclick="setVolume(75)">75</button>
+        <button onclick="setVolume(100)">100</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="cardTitle">Медиа</div>
+      <div class="grid3">
+        <button class="btn info" onclick="sendCmd('media_prev')">Prev</button>
+        <button class="btn ok" onclick="sendCmd('media_play')">Play</button>
+        <button class="btn info" onclick="sendCmd('media_next')">Next</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="page" id="page-files">
+    <div class="pathBar">
+      <button class="backBtn" onclick="goUp()">←</button>
+      <span id="pathText">drives</span>
+      <button class="backBtn" onclick="loadFiles('drives')">Диски</button>
+    </div>
+
+    <div class="card">
+      <div class="cardTitle">Файлы</div>
+      <div class="list" id="fileList">
+        <div class="skeleton"></div>
+        <div class="skeleton" style="height:44px;opacity:.7"></div>
+      </div>
+
+      <div class="hr"></div>
+      <div class="small">
+        Примечание: действия с файлами (скачать/удалить) зависят от того,
+        реализованы ли они в твоём сервере. Сейчас панель делает навигацию и может отправлять команды через <span class="mono">/api/exec</span>.
+      </div>
+    </div>
+  </div>
+
+  <div class="page" id="page-proc">
+    <div class="card" style="padding:12px">
+      <input class="search" id="procSearch" placeholder="Поиск процесса..." oninput="renderProc()"/>
+    </div>
+
+    <button class="btnRow" onclick="loadProcesses()">Обновить процессы</button>
+
+    <div class="card">
+      <div class="cardTitle">Процессы (топ)</div>
+      <div class="list" id="procList">
+        <div style="color:var(--hint); font-weight:900; padding:10px 2px">
+          Нажми “Обновить процессы”.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tabbar">
+    <button class="tab active" onclick="tab('home', this)">Главная</button>
+    <button class="tab" onclick="tab('media', this)">Медиа</button>
+    <button class="tab" onclick="tab('files', this); loadFiles(currentPath || 'drives')">Файлы</button>
+    <button class="tab" onclick="tab('proc', this)">Процессы</button>
+  </div>
+
+  <div class="toast" id="toast">...</div>
+
+  <div class="modalBg" id="modalBg" onclick="modalClick(event)">
+    <div class="modal">
+      <div class="mTitle" id="mTitle">Подтверждение</div>
+      <div class="mDesc" id="mDesc">...</div>
+      <div class="mRow">
+        <button class="mBtn mCancel" onclick="closeModal()">Отмена</button>
+        <button class="mBtn mOk" id="mOk" onclick="confirmDo()">Ок</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+  // Telegram
+  const tg = window.Telegram?.WebApp;
+
+  // API_BASE: ?api=... -> localStorage -> пусто
+  const params = new URLSearchParams(location.search);
+  let API_BASE = (params.get("api") || localStorage.getItem("api_base") || "").trim();
+  if (API_BASE.endsWith("/")) API_BASE = API_BASE.slice(0, -1);
+  if (API_BASE) localStorage.setItem("api_base", API_BASE);
+
+  // UI refs
+  const dot = document.getElementById('dot');
+  const statusText = document.getElementById('statusText');
+  const apiCard = document.getElementById('apiCard');
+  const apiInput = document.getElementById('apiInput');
+  const tgCard = document.getElementById('tgCard');
+  const topTitle = document.getElementById('topTitle');
+
+  // toast
+  let toastTimer = null;
+  function toast(msg, ms=2600){
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(()=>t.classList.remove('show'), ms);
+  }
+
+  function safeText(s){
+    return String(s ?? "")
+      .replaceAll('&','&amp;')
+      .replaceAll('<','&lt;')
+      .replaceAll('>','&gt;')
+      .replaceAll('"','&quot;')
+      .replaceAll("'","&#039;");
+  }
+
+  // Telegram init
+  const inTelegram = !!(tg && tg.initData);
+  if (inTelegram) {
+    tg.ready();
+    tg.expand();
+    dot.classList.add('online');
+    statusText.textContent = 'telegram';
+  } else {
+    dot.classList.remove('online');
+    statusText.textContent = 'browser';
+    tgCard.style.display = 'block';
+  }
+
+  // Show API card if missing
+  function refreshApiUi(){
+    if (!API_BASE) {
+      apiCard.style.display = 'block';
+      apiInput.value = "";
+      topTitle.textContent = "Cortex Panel (нет API)";
+    } else {
+      apiCard.style.display = 'none';
+      apiInput.value = API_BASE;
+      topTitle.textContent = "Cortex Panel";
+    }
+  }
+
+  function saveApi(){
+    let v = (apiInput.value || "").trim();
+    if (v.endsWith("/")) v = v.slice(0, -1);
+    if (!v.startsWith("https://")) {
+      toast("API должен начинаться с https://", 4000);
+      return;
+    }
+    API_BASE = v;
+    localStorage.setItem("api_base", API_BASE);
+    toast("API сохранён", 2200);
+    refreshApiUi();
+  }
+
+  refreshApiUi();
+
+  // API helper (важно: X-Tg-Init-Data)
+  async function apiPost(path, payload){
+    if (!API_BASE) {
+      throw new Error("API URL не задан. Вставь trycloudflare ссылку или открой с ?api=...");
+    }
+
+    const headers = {'Content-Type':'application/json'};
+    if (tg && tg.initData) headers['X-Tg-Init-Data'] = tg.initData;
+
+    const r = await fetch(API_BASE + path, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify(payload || {})
+    });
+
+    let data = null;
+    try { data = await r.json(); } catch {}
+
+    if (!r.ok) {
+      const msg = data?.message || ('HTTP ' + r.status);
+      throw new Error(msg);
+    }
+    return data;
+  }
+
+  // Commands
+  async function sendCmd(cmd){
+    try{
+      toast('⏳ ' + cmd);
+      const res = await apiPost('/api/exec', {cmd});
+      toast((res.ok ? '✅ ' : '❌ ') + (res.message || '...'), 3500);
+    }catch(e){
+      console.log(e);
+      toast('❌ ' + (e?.message || 'API error'), 5000);
+      if (tg?.showAlert) tg.showAlert('Ошибка: ' + (e?.message || 'API error'));
+    }
+  }
+
+  // Tabs
+  function tab(name, el){
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+    document.getElementById('page-' + name).classList.add('active');
+    el.classList.add('active');
+  }
+
+  // Modal confirm
+  let pending = null;
+  function confirmAction(cmd, title, desc){
+    pending = cmd;
+    document.getElementById('mTitle').textContent = title;
+    document.getElementById('mDesc').textContent = desc;
+    document.getElementById('modalBg').classList.add('open');
+  }
+  function closeModal(){ document.getElementById('modalBg').classList.remove('open'); }
+  function modalClick(e){ if (e.target.id === 'modalBg') closeModal(); }
+  async function confirmDo(){
+    closeModal();
+    if (pending) await sendCmd(pending);
+    pending = null;
+  }
+
+  // Volume
+  function volPreview(val){
+    document.getElementById('volNum').textContent = val;
+    const s = document.getElementById('vol');
+    const pct = val + '%';
+    s.style.background = `linear-gradient(to right, var(--btn) ${pct}, rgba(255,255,255,.12) ${pct})`;
+  }
+  async function setVolume(val){
+    val = Number(val);
+    volPreview(val);
+    await sendCmd('volume:' + val);
+  }
+  volPreview(50);
+
+  // Files
+  let currentPath = 'drives';
+  const stack = [];
+
+  function fileIcon(f){
+    if (f.is_dir) return '📁';
+    const n = (f.name || '').toLowerCase();
+    const ext = n.includes('.') ? n.split('.').pop() : '';
+    const map = {
+      'exe':'⚙️','bat':'⚙️','cmd':'⚙️','msi':'⚙️',
+      'png':'🖼️','jpg':'🖼️','jpeg':'🖼️','gif':'🖼️','webp':'🖼️',
+      'mp4':'🎬','avi':'🎬','mkv':'🎬','mov':'🎬',
+      'mp3':'🎵','wav':'🎵','flac':'🎵',
+      'zip':'🗜️','rar':'🗜️','7z':'🗜️',
+      'pdf':'📕','txt':'📄','json':'📋','py':'🐍','html':'🌐','css':'🎨','js':'🟨'
+    };
+    return map[ext] || '📄';
+  }
+
+  function renderFiles(files){
+    const list = document.getElementById('fileList');
+    if (!files || files.length === 0){
+      list.innerHTML = `<div style="color:var(--hint); font-weight:900; padding:10px 2px">Пусто.</div>`;
+      return;
+    }
+    list.innerHTML = '';
+
+    for (const f of files){
+      const div = document.createElement('div');
+      div.className = 'item';
+      div.innerHTML = `
+        <div class="icon">${fileIcon(f)}</div>
+        <div class="info">
+          <div class="name">${safeText(f.name || '')}</div>
+          <div class="meta">${safeText((f.is_dir ? 'Папка' : (f.meta || 'Файл')) + (f.modified ? ' • ' + f.modified : ''))}</div>
+        </div>
+        <div class="arrow">›</div>
+      `;
+
+      div.onclick = () => {
+        if (f.is_dir){
+          if (currentPath && currentPath !== 'drives') stack.push(currentPath);
+          loadFiles(f.path);
+        } else {
+          // просто копируем путь в буфер (если получится) и отправим команду open:... (если на сервере поддержано)
+          const p = f.path || '';
+          confirmAction(
+            'open:' + p,
+            'Файл выбран',
+            p + "\n\nНажми ОК чтобы отправить команду open:<path> (если сервер поддерживает)."
+          );
+        }
+      };
+
+      list.appendChild(div);
+    }
+  }
+
+  async function loadFiles(path){
+    try{
+      path = path || 'drives';
+      document.getElementById('pathText').textContent = path;
+
+      const list = document.getElementById('fileList');
+      list.innerHTML = '<div class="skeleton"></div><div class="skeleton" style="height:44px;opacity:.7"></div>';
+
+      const res = await apiPost('/api/browse', {path});
+      const data = res.data || {};
+      currentPath = data.path || path;
+      document.getElementById('pathText').textContent = currentPath;
+      renderFiles(data.files || []);
+    }catch(e){
+      console.log(e);
+      toast('❌ ' + (e?.message || 'browse error'), 5000);
+    }
+  }
+
+  function goUp(){
+    if (stack.length === 0){
+      loadFiles('drives');
+      return;
+    }
+    const prev = stack.pop();
+    loadFiles(prev);
+  }
+
+  // Processes
+  let procAll = [];
+  async function loadProcesses(){
+    try{
+      toast('⏳ processes...');
+      const list = document.getElementById('procList');
+      list.innerHTML = '<div class="skeleton"></div><div class="skeleton" style="height:44px;opacity:.7"></div>';
+
+      const res = await apiPost('/api/processes', {});
+      procAll = (res.data && res.data.processes) ? res.data.processes : [];
+      renderProc();
+      toast('✅ processes: ' + procAll.length, 2500);
+    }catch(e){
+      console.log(e);
+      toast('❌ ' + (e?.message || 'process error'), 5000);
+    }
+  }
+
+  function renderProc(){
+    const q = (document.getElementById('procSearch').value || '').toLowerCase();
+    const list = document.getElementById('procList');
+
+    let arr = procAll;
+    if (q) arr = arr.filter(p => (p.name || '').toLowerCase().includes(q));
+
+    if (!arr || arr.length === 0){
+      list.innerHTML = `<div style="color:var(--hint); font-weight:900; padding:10px 2px">Ничего не найдено.</div>`;
+      return;
+    }
+
+    list.innerHTML = '';
+    arr.slice(0, 80).forEach(p=>{
+      const div = document.createElement('div');
+      div.className = 'item';
+      div.style.cursor = 'default';
+      const cpu = (typeof p.cpu === 'number') ? p.cpu.toFixed(1) : (p.cpu ?? 0);
+      div.innerHTML = `
+        <div class="icon">⚙️</div>
+        <div class="info">
+          <div class="name">${safeText(p.name || 'unknown')}</div>
+          <div class="meta">PID: ${p.pid} • CPU: ${cpu}%</div>
+        </div>
+        <div class="arrow"></div>
+      `;
+      list.appendChild(div);
+    });
+  }
+
+  // Автозагрузка дисков
+  if (API_BASE) {
+    loadFiles('drives');
+  }
+</script>
+</body>
+</html>
