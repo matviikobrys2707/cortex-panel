@@ -8,45 +8,44 @@
 
   <style>
     :root{
-      --bg: var(--tg-theme-bg-color, #0b1220);
-      --sec: var(--tg-theme-secondary-bg-color, #0f1a33);
-      --text: var(--tg-theme-text-color, #eaf0ff);
-      --hint: var(--tg-theme-hint-color, #94a7cf);
-      --btn: var(--tg-theme-button-color, #6d5efc);
-      --btnText: var(--tg-theme-button-text-color, #ffffff);
-      --link: var(--tg-theme-link-color, #9cc2ff);
+      --bg: var(--tg-theme-bg-color, #070A14);
+      --sec: var(--tg-theme-secondary-bg-color, #0C1226);
+      --text: var(--tg-theme-text-color, #EAF0FF);
+      --hint: var(--tg-theme-hint-color, #92A5D6);
+      --btn: var(--tg-theme-button-color, #6D5EFC);
+      --btnText: var(--tg-theme-button-text-color, #fff);
 
       --glass: rgba(255,255,255,.06);
       --border: rgba(255,255,255,.12);
+      --shadow: 0 18px 60px rgba(0,0,0,.45);
 
       --r: 18px;
-      --rs: 12px;
+      --rs: 14px;
 
-      --danger: #ff4d6d;
-      --ok: #2ed573;
-      --warn: #ffa502;
-      --info: #4da3ff;
-
-      --shadow: 0 14px 50px rgba(0,0,0,.36);
+      --danger: #FF4D6D;
+      --ok: #2ED573;
+      --warn: #FFB020;
+      --info: #4DA3FF;
+      --violet: #A78BFA;
     }
 
     *{box-sizing:border-box;margin:0;padding:0}
     body{
       background:
-        radial-gradient(1200px 900px at 10% -10%, rgba(167,139,250,.16), transparent 45%),
-        radial-gradient(900px 700px at 95% 0%, rgba(96,165,250,.14), transparent 50%),
-        radial-gradient(1200px 900px at 50% 120%, rgba(109,94,252,.10), transparent 55%),
+        radial-gradient(1100px 800px at 8% -10%, rgba(167,139,250,.18), transparent 55%),
+        radial-gradient(900px 700px at 92% -6%, rgba(77,163,255,.14), transparent 55%),
+        radial-gradient(1100px 900px at 50% 120%, rgba(109,94,252,.10), transparent 58%),
         var(--bg);
       color: var(--text);
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
       min-height: 100vh;
-      padding-bottom: 90px;
+      padding-bottom: 94px;
       overflow-x: hidden;
     }
 
     /* Top */
     .top{
-      position: sticky; top:0; z-index: 120;
+      position: sticky; top:0; z-index:120;
       padding: 14px 16px 12px;
       background: rgba(255,255,255,.04);
       border-bottom: 1px solid var(--border);
@@ -60,23 +59,23 @@
     .brand{min-width:0}
     .title{
       font-weight: 950;
-      letter-spacing:.2px;
       font-size: 18px;
-      background: linear-gradient(135deg, #a78bfa, #60a5fa);
+      letter-spacing:.2px;
+      background: linear-gradient(135deg, var(--violet), #60A5FA);
       -webkit-background-clip:text;
       -webkit-text-fill-color:transparent;
       background-clip:text;
       white-space: nowrap;
-      overflow: hidden;
+      overflow:hidden;
       text-overflow: ellipsis;
     }
     .subtitle{
       color: var(--hint);
       font-size: 12px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
       margin-top: 2px;
+      white-space: nowrap;
+      overflow:hidden;
+      text-overflow: ellipsis;
     }
     .topRight{display:flex; align-items:center; gap:10px; flex-shrink:0;}
     .pill{
@@ -92,12 +91,10 @@
     .dot{
       width:10px; height:10px; border-radius:999px;
       background: var(--danger);
-      box-shadow: 0 0 12px rgba(255,77,109,.40);
+      box-shadow: 0 0 12px rgba(255,77,109,.45);
     }
-    .dot.ok{
-      background: var(--ok);
-      box-shadow: 0 0 12px rgba(46,213,115,.40);
-    }
+    .dot.ok{ background: var(--ok); box-shadow: 0 0 12px rgba(46,213,115,.45); }
+
     .iconBtn{
       width: 38px; height: 38px;
       border-radius: 12px;
@@ -121,19 +118,15 @@
       border-radius: var(--r);
       padding: 14px;
       margin-bottom: 12px;
-      box-shadow: 0 10px 40px rgba(0,0,0,.22);
+      box-shadow: 0 12px 46px rgba(0,0,0,.26);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
     }
     .cardHeader{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
       margin-bottom: 12px;
     }
     .cardTitle{
-      display:flex; align-items:center; gap:8px;
       font-size: 12px;
       font-weight: 950;
       letter-spacing: 1px;
@@ -183,17 +176,17 @@
     .btnRow:active{ transform: scale(.98); background: rgba(255,255,255,.10); }
 
     .danger{ border-color: rgba(255,77,109,.35)!important; background: rgba(255,77,109,.12)!important; }
-    .warn{ border-color: rgba(255,165,2,.35)!important; background: rgba(255,165,2,.12)!important; }
+    .warn{ border-color: rgba(255,176,32,.35)!important; background: rgba(255,176,32,.12)!important; }
     .ok{ border-color: rgba(46,213,115,.35)!important; background: rgba(46,213,115,.12)!important; }
     .info{ border-color: rgba(77,163,255,.35)!important; background: rgba(77,163,255,.12)!important; }
-    .purple{ border-color: rgba(167,139,250,.35)!important; background: rgba(167,139,250,.12)!important; }
+    .violet{ border-color: rgba(167,139,250,.35)!important; background: rgba(167,139,250,.12)!important; }
 
     /* Inputs */
     .row{ display:flex; gap:10px; align-items:center; }
     .inp, .ta, .sel{
       width:100%;
       border: 1px solid var(--border);
-      background: rgba(15, 26, 51, .65);
+      background: rgba(12, 18, 38, .70);
       color: var(--text);
       border-radius: 14px;
       padding: 11px 12px;
@@ -203,7 +196,7 @@
     }
     .ta{ min-height: 90px; resize:none; }
     .mono{ font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
-    .inp::placeholder,.ta::placeholder{ color: rgba(148,167,207,.9); }
+    .inp::placeholder,.ta::placeholder{ color: rgba(146,165,214,.9); }
 
     /* Range */
     .bigNum{
@@ -211,7 +204,7 @@
       font-size: 48px;
       font-weight: 950;
       line-height: 1;
-      background: linear-gradient(135deg, #a78bfa, #60a5fa);
+      background: linear-gradient(135deg, var(--violet), #60A5FA);
       -webkit-background-clip:text;
       -webkit-text-fill-color:transparent;
     }
@@ -247,17 +240,10 @@
     }
     .quick button:active{ transform: scale(.97); background: rgba(255,255,255,.10); }
 
-    /* Stats table */
-    .stats{
-      display:flex;
-      flex-direction:column;
-      gap: 10px;
-    }
+    /* Stats */
+    .stats{display:flex; flex-direction:column; gap:10px;}
     .statRow{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap: 12px;
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
       padding: 10px 12px;
       border-radius: 14px;
       background: rgba(255,255,255,.06);
@@ -267,19 +253,15 @@
     .v{ color: var(--text); font-size: 12px; font-weight: 950; text-align:right; }
     .v.mono{ font-size: 12px; }
 
-    /* Activity */
-    .log{
-      display:flex;
-      flex-direction:column;
-      gap: 8px;
-    }
+    /* Log */
+    .log{display:flex; flex-direction:column; gap:8px;}
     .logItem{
       padding: 10px 12px;
       border-radius: 14px;
       background: rgba(255,255,255,.06);
       border: 1px solid rgba(255,255,255,.10);
     }
-    .logTop{display:flex; justify-content:space-between; gap: 10px; align-items:center;}
+    .logTop{display:flex; justify-content:space-between; gap:10px; align-items:center;}
     .logCmd{font-weight: 950; font-size: 13px;}
     .logTime{color: var(--hint); font-size: 11px; font-weight: 850;}
     .logMsg{color: var(--hint); font-size: 12px; margin-top: 4px; line-height: 1.35;}
@@ -288,26 +270,24 @@
 
     /* Gallery */
     .gallery{
-      display:flex;
-      gap: 10px;
+      display:flex; gap:10px;
       overflow-x:auto;
       padding-bottom: 4px;
       scroll-snap-type: x mandatory;
     }
     .thumb{
-      min-width: 140px;
-      max-width: 140px;
-      height: 96px;
+      min-width: 150px;
+      max-width: 150px;
+      height: 104px;
       border-radius: 16px;
       border: 1px solid rgba(255,255,255,.14);
       background: rgba(255,255,255,.06);
       position: relative;
       overflow:hidden;
       scroll-snap-align: start;
-      cursor:pointer;
-      user-select:none;
+      cursor:pointer; user-select:none;
     }
-    .thumb img{
+    .thumb img, .thumb video{
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -333,70 +313,11 @@
       backdrop-filter: blur(10px);
     }
 
-    /* File/Process lists */
-    .list{display:flex; flex-direction:column; gap: 8px;}
-    .item{
-      display:flex;
-      align-items:center;
-      gap: 12px;
-      padding: 12px 12px;
-      border-radius: 16px;
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.12);
-      cursor:pointer;
-      user-select:none;
-    }
-    .item:active{ transform: scale(.99); background: rgba(255,255,255,.10); }
-    .iIcon{ width: 28px; text-align:center; font-size: 20px; }
-    .iBody{ flex:1; overflow:hidden; }
-    .iName{
-      font-weight: 950;
-      font-size: 14px;
-      white-space: nowrap;
-      overflow:hidden;
-      text-overflow: ellipsis;
-    }
-    .iMeta{
-      margin-top: 2px;
-      color: var(--hint);
-      font-size: 11px;
-      white-space: nowrap;
-      overflow:hidden;
-      text-overflow: ellipsis;
-    }
-    .iArrow{ color: var(--hint); font-weight: 900; }
-
-    .pathBar{
-      display:flex; align-items:center; gap:10px;
-      padding: 10px 12px;
-      border-radius: 16px;
-      background: rgba(15,26,51,.65);
-      border: 1px solid rgba(255,255,255,.12);
-      color: var(--hint);
-      font-size: 12px;
-      overflow:hidden;
-      margin-bottom: 10px;
-    }
-    .pathBar span{ flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-    .miniBtn{
-      flex-shrink:0;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
-      color: var(--text);
-      padding: 7px 10px;
-      border-radius: 12px;
-      font-weight: 950;
-      cursor:pointer;
-      user-select:none;
-      font-size: 12px;
-    }
-    .miniBtn:active{ transform: scale(.97); background: rgba(255,255,255,.10); }
-
     /* Tabs */
     .tabs{
       position: fixed;
       left:0; right:0; bottom:0;
-      background: rgba(15,26,51,.78);
+      background: rgba(12,18,38,.78);
       border-top: 1px solid rgba(255,255,255,.10);
       backdrop-filter: blur(18px);
       -webkit-backdrop-filter: blur(18px);
@@ -451,7 +372,7 @@
       box-shadow: var(--shadow);
     }
 
-    /* Sheet (bottom) */
+    /* Sheet */
     .sheetBg{
       position: fixed;
       inset:0;
@@ -463,7 +384,7 @@
     .sheetBg.open{display:flex;}
     .sheet{
       width:100%;
-      background: rgba(15,26,51,.95);
+      background: rgba(12,18,38,.95);
       border: 1px solid rgba(255,255,255,.12);
       border-top-left-radius: 22px;
       border-top-right-radius: 22px;
@@ -485,17 +406,16 @@
     .sheetRow{ display:flex; gap: 10px; flex-wrap: wrap; }
     .sheetRow .btn{ flex: 1; min-width: 120px; }
 
-    /* Viewer */
     .viewer{
       border-radius: 18px;
       border: 1px solid rgba(255,255,255,.12);
       overflow:auto;
       background: rgba(0,0,0,.22);
-      max-height: 55vh;
+      max-height: 58vh;
       touch-action: pan-x pan-y pinch-zoom;
       -webkit-overflow-scrolling: touch;
     }
-    .viewer img{
+    .viewer img, .viewer video{
       width: 100%;
       height: auto;
       display:block;
@@ -507,7 +427,7 @@
 
   <div class="top">
     <div class="brand">
-      <div class="title" id="topTitle">Cortex Panel</div>
+      <div class="title">Cortex Panel</div>
       <div class="subtitle" id="topSub">Загрузка…</div>
     </div>
 
@@ -535,7 +455,7 @@
       <div class="grid2">
         <button class="btn danger" onclick="confirmDanger('off')">🛑 Выключить</button>
         <button class="btn warn" onclick="confirmDanger('restart')">♻️ Перезагрузка</button>
-        <button class="btn purple" onclick="execCmd('lock')">🔒 Lock</button>
+        <button class="btn violet" onclick="execCmd('lock')">🔒 Lock</button>
         <button class="btn info" onclick="execCmd('sleep')">🌙 Сон</button>
       </div>
 
@@ -544,7 +464,6 @@
       <div class="cardHeader" style="margin-bottom:8px">
         <div class="cardTitle">Таймер выключения</div>
       </div>
-
       <div class="row">
         <input class="inp" id="timerMinutes" type="number" min="1" max="1440" placeholder="Минуты (например 30)" />
         <button class="btn info" style="min-width:120px" onclick="startShutdownTimer()">⏳ Старт</button>
@@ -555,7 +474,7 @@
 
     <div class="card">
       <div class="cardHeader">
-        <div class="cardTitle">Последние действия</div>
+        <div class="cardTitle">Лог (последние действия)</div>
         <button class="miniBtn" onclick="clearLog()">Очистить</button>
       </div>
       <div class="log" id="logList"></div>
@@ -593,7 +512,7 @@
 
     <div class="card">
       <div class="cardHeader">
-        <div class="cardTitle">Клавиатура</div>
+        <div class="cardTitle">Клавиатура / Текст</div>
       </div>
 
       <div class="row">
@@ -606,6 +525,11 @@
           <option value="DOWN">DOWN</option>
           <option value="LEFT">LEFT</option>
           <option value="RIGHT">RIGHT</option>
+          <option value="ctrl+c">CTRL+C</option>
+          <option value="ctrl+v">CTRL+V</option>
+          <option value="ctrl+a">CTRL+A</option>
+          <option value="alt+tab">ALT+TAB</option>
+          <option value="win+d">WIN+D</option>
         </select>
         <button class="btn ok" style="min-width:140px" onclick="pressKey()">Отправить</button>
       </div>
@@ -621,46 +545,26 @@
   <div class="page" id="page-capture">
     <div class="card">
       <div class="cardHeader">
-        <div class="cardTitle">Галерея (за эту сессию)</div>
+        <div class="cardTitle">Галерея (эта сессия)</div>
         <button class="miniBtn" onclick="clearCaptures()">Очистить</button>
       </div>
       <div class="gallery" id="gallery"></div>
-      <div class="muted" id="galleryEmpty">Пока нет скриншотов/фото.</div>
+      <div class="muted" id="galleryEmpty">Пока нет скриншотов/фото/видео.</div>
     </div>
 
     <div class="card">
       <div class="cardHeader">
-        <div class="cardTitle">Скрин / Камера</div>
+        <div class="cardTitle">Скрин / Камера / Видео</div>
       </div>
       <div class="grid2">
         <button class="btn ok" onclick="execCmd('screenshot')">📸 Скриншот</button>
-        <button class="btn purple" onclick="execCmd('camera_photo')">📷 Фото с камеры</button>
-        <button class="btn info" onclick="execCmd('record_start_buttons')">🎥 Запись экрана</button>
-        <button class="btn info" onclick="execCmd('camera_record')">🎥 Запись камеры</button>
+        <button class="btn violet" onclick="execCmd('camera_photo')">📷 Фото с камеры</button>
+        <button class="btn info" onclick="openRecordPicker('screen')">🎥 Запись экрана</button>
+        <button class="btn info" onclick="openRecordPicker('camera')">🎥 Запись камеры</button>
       </div>
       <div class="hr"></div>
       <div class="muted">
-        Скрин/Фото показываются прямо здесь + можно открыть/приблизить/скачать.
-        Видео обычно большие — если захочешь, сделаем отдельную загрузку через токены.
-      </div>
-    </div>
-  </div>
-
-  <!-- FILES -->
-  <div class="page" id="page-files">
-    <div class="pathBar">
-      <button class="miniBtn" onclick="goUp()">←</button>
-      <span id="pathText">drives</span>
-      <button class="miniBtn" onclick="loadFiles('drives')">Диски</button>
-      <button class="miniBtn" onclick="loadFiles(currentPath)">⟳</button>
-    </div>
-
-    <div class="card">
-      <div class="cardHeader">
-        <div class="cardTitle">Файлы</div>
-      </div>
-      <div class="list" id="fileList">
-        <div class="muted">Открой вкладку “Файлы”, чтобы загрузить.</div>
+        Скрины/фото вставляются прямо в сайт. Видео — в виде файла (можно открыть/скачать), и оно тоже сохраняется в галерею этой сессии.
       </div>
     </div>
   </div>
@@ -669,7 +573,7 @@
   <div class="page" id="page-tools">
     <div class="card">
       <div class="cardHeader">
-        <div class="cardTitle">Информация (обновляется раз в минуту)</div>
+        <div class="cardTitle">Информация (авто каждые 60 сек)</div>
         <button class="miniBtn" onclick="updateInfo(true)">Обновить</button>
       </div>
 
@@ -690,23 +594,23 @@
         <div class="cardTitle">Инструменты</div>
       </div>
       <div class="grid2">
+        <button class="btn info" onclick="execCmd('status')">💻 Status</button>
         <button class="btn info" onclick="execCmd('ip')">🌐 IP (детали)</button>
         <button class="btn info" onclick="execCmd('speedtest')">⏱ Speedtest</button>
-        <button class="btn warn" onclick="execCmd('disk_cleanup')">🧹 Очистка диска</button>
-        <button class="btn info" onclick="execCmd('taskbar')">🖥 Win+D</button>
+        <button class="btn warn" onclick="execCmd('disk_cleanup')">🧹 Очистка</button>
       </div>
 
       <div class="hr"></div>
 
       <div class="cardHeader" style="margin-bottom:8px">
-        <div class="cardTitle">Команда вручную (универсально)</div>
+        <div class="cardTitle">Команда вручную</div>
       </div>
       <div class="row">
-        <input class="inp mono" id="rawCmd" placeholder="Например: open:C:\file.txt или volume:70" />
+        <input class="inp mono" id="rawCmd" placeholder="Например: download:C:\file.txt или kill:1234" />
         <button class="btn ok" style="min-width:120px" onclick="runRaw()">▶</button>
       </div>
       <div class="muted" style="margin-top:10px">
-        Это спасает, если UI не содержит кнопку, но команда на сервере есть.
+        Если в UI нет кнопки — можно выполнить команду напрямую.
       </div>
     </div>
   </div>
@@ -715,8 +619,7 @@
   <div class="tabs">
     <button class="tab active" onclick="openTab('home', this)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M3 10.5 12 3l9 7.5V21a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-        <path d="M9 23V13h6v10"/>
+        <path d="M3 10.5 12 3l9 7.5V21a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 23V13h6v10"/>
       </svg>
       Дом
     </button>
@@ -731,12 +634,6 @@
         <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="12" cy="12" r="3"/>
       </svg>
       Камера
-    </button>
-    <button class="tab" onclick="openTab('files', this); loadFiles(currentPath || 'drives')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
-      </svg>
-      Файлы
     </button>
     <button class="tab" onclick="openTab('tools', this)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -764,7 +661,7 @@
 <script>
   const tg = window.Telegram?.WebApp;
 
-  // API_BASE from ?api= or localStorage
+  // API_BASE
   const params = new URLSearchParams(location.search);
   let API_BASE = (params.get("api") || localStorage.getItem("api_base") || "").trim();
   if (API_BASE.endsWith("/")) API_BASE = API_BASE.slice(0, -1);
@@ -828,9 +725,14 @@
   function closeSheet(){ document.getElementById("sheetBg").classList.remove("open"); }
   function sheetBgClick(e){ if (e.target.id === "sheetBg") closeSheet(); }
 
+  async function copyText(s){
+    try{ await navigator.clipboard.writeText(s); showToast("✅ Скопировано", 1400); }
+    catch{ showToast("❌ Не удалось скопировать", 2500); }
+  }
+
   // API
   async function apiPost(path, payload){
-    if (!API_BASE) throw new Error("API URL не задан (кнопка бота должна открыть панель с ?api=...).");
+    if (!API_BASE) throw new Error("API URL не задан. Открой панель через кнопку бота (там будет ?api=...).");
 
     const headers = {"Content-Type":"application/json"};
     if (tg && tg.initData) headers["X-Tg-Init-Data"] = tg.initData;
@@ -851,25 +753,19 @@
     return data;
   }
 
-  function normalizeCmd(cmd){
-    if (cmd === "play") return "media_play";
-    // off/restart пусть сервер сам нормализует, но ок и так
-    return cmd;
-  }
-
-  // activity log (local)
-  const LOG_KEY = "cortex_log_v1";
+  // Activity log (localStorage)
+  const LOG_KEY = "cortex_log_v2";
   let logItems = [];
   function loadLog(){
     try{ logItems = JSON.parse(localStorage.getItem(LOG_KEY) || "[]"); }catch{ logItems = []; }
     renderLog();
   }
   function saveLog(){
-    localStorage.setItem(LOG_KEY, JSON.stringify(logItems.slice(0, 25)));
+    localStorage.setItem(LOG_KEY, JSON.stringify(logItems.slice(0, 30)));
   }
   function addLog({cmd, ok, message}){
     logItems.unshift({t: Date.now(), cmd, ok: !!ok, message: String(message || "")});
-    logItems = logItems.slice(0, 25);
+    logItems = logItems.slice(0, 30);
     saveLog();
     renderLog();
   }
@@ -889,8 +785,7 @@
     empty.style.display = "none";
     list.innerHTML = "";
     for (const it of logItems){
-      const d = new Date(it.t);
-      const time = d.toLocaleTimeString([], {hour:"2-digit", minute:"2-digit", second:"2-digit"});
+      const time = new Date(it.t).toLocaleTimeString([], {hour:"2-digit", minute:"2-digit", second:"2-digit"});
       const div = document.createElement("div");
       div.className = "logItem";
       div.innerHTML = `
@@ -898,21 +793,21 @@
           <div class="logCmd">${esc(it.cmd)} <span class="${it.ok ? "tagOk":"tagErr"}">${it.ok ? "✓":"×"}</span></div>
           <div class="logTime">${time}</div>
         </div>
-        <div class="logMsg">${esc(it.message).slice(0, 400)}</div>
+        <div class="logMsg">${esc(it.message).slice(0, 600)}</div>
       `;
       list.appendChild(div);
     }
   }
 
-  // Captures history (session)
-  const CAP_KEY = "cortex_caps_v1";
+  // Captures (sessionStorage)
+  const CAP_KEY = "cortex_caps_v2";
   let captures = [];
   function loadCaps(){
     try{ captures = JSON.parse(sessionStorage.getItem(CAP_KEY) || "[]"); }catch{ captures = []; }
     renderCaps();
   }
   function saveCaps(){
-    sessionStorage.setItem(CAP_KEY, JSON.stringify(captures.slice(0, 20)));
+    sessionStorage.setItem(CAP_KEY, JSON.stringify(captures.slice(0, 30)));
   }
   function clearCaptures(){
     captures = [];
@@ -920,10 +815,9 @@
     renderCaps();
     showToast("✅ Галерея очищена", 1500);
   }
-
   function addCapture(cap){
     captures.unshift(cap);
-    captures = captures.slice(0, 20);
+    captures = captures.slice(0, 30);
     saveCaps();
     renderCaps();
   }
@@ -931,22 +825,21 @@
   function renderCaps(){
     const g = document.getElementById("gallery");
     const empty = document.getElementById("galleryEmpty");
-
     if (!captures.length){
       g.innerHTML = "";
       empty.style.display = "block";
       return;
     }
     empty.style.display = "none";
-
     g.innerHTML = "";
+
     for (const c of captures){
       const div = document.createElement("div");
       div.className = "thumb";
       const time = new Date(c.t).toLocaleTimeString([], {hour:"2-digit", minute:"2-digit"});
-      const badge = c.kind === "screenshot" ? "Скрин" : (c.kind === "camera_photo" ? "Камера" : "Файл");
+      const badge = c.kind === "screenshot" ? "Скрин" : (c.kind === "camera_photo" ? "Камера" : "Видео");
 
-      if (c.type === "image" && c.b64 && c.mime){
+      if (c.type === "image"){
         const src = `data:${c.mime};base64,${c.b64}`;
         div.innerHTML = `
           <img src="${src}" />
@@ -956,22 +849,17 @@
           </div>
         `;
         div.onclick = ()=> openImageViewer(c);
-      } else {
+      } else if (c.type === "file"){
         div.innerHTML = `
-          <div style="height:100%;display:flex;align-items:center;justify-content:center;font-weight:950;color:var(--hint);">
-            ${badge}
+          <div style="height:100%;display:flex;align-items:center;justify-content:center;font-weight:950;color:var(--hint)">
+            🎬 ${esc(c.filename || "video.mp4")}
           </div>
           <div class="thumbMeta">
             <div class="thumbBadge">${badge}</div>
             <div class="thumbBadge">${time}</div>
           </div>
         `;
-        div.onclick = ()=> openSheet({
-          title: badge,
-          desc: c.filename || "",
-          bodyHtml: `<div class="muted">Этот тип пока не отображаем.</div>`,
-          actions: [{text:"Закрыть", kind:"info", onClick: closeSheet}]
-        });
+        div.onclick = ()=> openFileViewer(c);
       }
 
       g.appendChild(div);
@@ -993,52 +881,95 @@
     setTimeout(()=>URL.revokeObjectURL(url), 1500);
   }
 
-  async function copyText(s){
-    try{ await navigator.clipboard.writeText(s); showToast("✅ Скопировано", 1400); }
-    catch{ showToast("❌ Не удалось скопировать", 2500); }
-  }
-
   function openImageViewer(c){
     const src = `data:${c.mime};base64,${c.b64}`;
     openSheet({
       title: c.kind === "screenshot" ? "Скриншот" : "Фото с камеры",
       desc: new Date(c.t).toLocaleString(),
       bodyHtml: `
-        <div class="viewer">
-          <img src="${src}" />
-        </div>
-        <div class="muted" style="margin-top:10px">
-          Можно приблизить пальцами (pinch).<br/>
-          Размер: ${Math.round((c.b64.length * 3 / 4) / 1024)} KB
-        </div>
+        <div class="viewer"><img src="${src}"/></div>
+        <div class="muted" style="margin-top:10px">Pinch-to-zoom работает.</div>
       `,
       actions: [
         {text:"Скачать", kind:"ok", onClick: async()=>{ await downloadB64({b64:c.b64, mime:c.mime, filename:c.filename}); }},
-        {text:"Скопировать data-url", kind:"info", onClick: async()=>{ await copyText(src); }},
         {text:"Закрыть", kind:"info", onClick: closeSheet},
       ]
     });
   }
 
-  // exec command with output support
-  async function execCmd(cmd, extraPayload={}, {silent=false} = {}){
-    const origCmd = cmd;
-    const real = normalizeCmd(cmd);
-    try{
-      if (!silent) showToast("⏳ " + origCmd);
+  function openFileViewer(c){
+    openSheet({
+      title: c.filename || "Файл",
+      desc: c.url || "",
+      bodyHtml: `
+        ${(c.mime || "").includes("video") ? `
+          <div class="viewer"><video controls src="${c.url}"></video></div>
+        ` : ""}
+        <div class="muted" style="margin-top:10px;word-break:break-all">${esc(c.url || "")}</div>
+      `,
+      actions: [
+        {text:"Скачать", kind:"ok", onClick: ()=>window.open(c.url, "_blank")},
+        {text:"Копировать ссылку", kind:"info", onClick: async()=>{ await copyText(c.url || ""); }},
+        {text:"Закрыть", kind:"info", onClick: closeSheet},
+      ]
+    });
+  }
 
-      const res = await apiPost("/api/exec", {cmd: real, ...extraPayload});
+  // записи: выбор длительности
+  function openRecordPicker(kind){
+    const presets = [5, 10, 15, 30, 60];
+    const title = (kind === "screen") ? "🎥 Запись экрана" : "🎥 Запись камеры";
+    const cmd = (kind === "screen") ? "record_start_buttons" : "camera_record";
+
+    openSheet({
+      title,
+      desc: "Выбери длительность записи",
+      bodyHtml: `
+        <div class="sheetRow" style="margin-bottom:10px">
+          ${presets.map(s => `<button class="btn ok" onclick="startRecord('${cmd}', ${s})">${s} сек</button>`).join("")}
+        </div>
+        <div class="row">
+          <input class="inp mono" id="customSeconds" type="number" min="1" max="120" placeholder="Своё (сек, 1..120)" />
+          <button class="btn info" style="min-width:120px" onclick="startRecordCustom('${cmd}')">Старт</button>
+        </div>
+        <div class="muted" style="margin-top:10px">
+          Видео будет доступно как файл для скачивания и сохранится в галерею.
+        </div>
+      `,
+      actions: [{text:"Закрыть", kind:"info", onClick: closeSheet}]
+    });
+  }
+
+  function startRecordCustom(cmd){
+    const v = Number(document.getElementById("customSeconds")?.value || 0);
+    if (!v || v < 1 || v > 120){
+      showToast("❌ секунды 1..120", 2500);
+      return;
+    }
+    startRecord(cmd, v);
+  }
+
+  async function startRecord(cmd, seconds){
+    closeSheet();
+    await execCmd(cmd, {seconds});
+  }
+
+  // exec + вывод (text/image/file)
+  async function execCmd(cmd, extraPayload={}, {silent=false} = {}){
+    try{
+      if (!silent) showToast("⏳ " + cmd);
+      const res = await apiPost("/api/exec", {cmd, ...extraPayload});
+
       const ok = !!res.ok;
       const msg = res.message || (ok ? "OK" : "Error");
-
-      addLog({cmd: origCmd, ok, message: msg});
+      addLog({cmd, ok, message: msg});
       if (!silent) showToast((ok ? "✅ " : "❌ ") + msg, 3200);
 
-      // show details if server returned data
       const data = res.data;
+
       if (data && data.type === "text" && data.text){
         openSheet({
-          title: origCmd,
+          title: cmd,
           desc: msg,
           bodyHtml: `<pre class="inp mono" style="white-space:pre-wrap;line-height:1.35">${esc(data.text)}</pre>`,
           actions: [
@@ -1050,19 +981,30 @@
 
       if (data && data.type === "image" && data.b64 && data.mime){
         const t = Date.now();
-        const filename = (origCmd === "screenshot")
-          ? `screenshot_${t}.jpg`
-          : `camera_${t}.jpg`;
-
-        const cap = {t, kind: origCmd, type:"image", mime: data.mime, b64: data.b64, filename};
+        const filename = (cmd === "screenshot") ? `screenshot_${t}.jpg` : `camera_${t}.jpg`;
+        const cap = {t, kind: cmd, type:"image", mime: data.mime, b64: data.b64, filename};
         addCapture(cap);
         openImageViewer(cap);
+      }
+
+      if (data && data.type === "file" && data.url){
+        const absUrl = API_BASE + data.url;
+        const t = Date.now();
+        const cap = {
+          t, kind: cmd, type: "file",
+          url: absUrl,
+          filename: data.filename || "file",
+          mime: data.mime || "",
+          size: data.size || 0
+        };
+        addCapture(cap);
+        openFileViewer(cap);
       }
 
       return res;
     }catch(e){
       console.log(e);
-      addLog({cmd: origCmd, ok:false, message: e?.message || "Ошибка"});
+      addLog({cmd, ok:false, message: e?.message || "Ошибка"});
       if (!silent) showToast("❌ " + (e?.message || "Ошибка"), 5000);
       tg?.showAlert?.("Ошибка: " + (e?.message || "Ошибка"));
       return null;
@@ -1106,10 +1048,11 @@
   }
   volPreview(50);
 
-  // input
+  // key/type
   async function pressKey(){
     const key = document.getElementById("keySelect").value;
-    await execCmd("key:" + key);
+    if (key.includes("+")) await execCmd("key:" + key); // если сервер умеет
+    else await execCmd("key:" + key);
   }
   async function typeText(){
     const text = (document.getElementById("typeText").value || "").trim();
@@ -1124,85 +1067,12 @@
     execCmd(cmd);
   }
 
-  // files
-  let currentPath = "drives";
-  const pathStack = [];
-
-  function fileIcon(f){
-    if (f.is_dir) return "📁";
-    const n = (f.name || "").toLowerCase();
-    const ext = n.includes(".") ? n.split(".").pop() : "";
-    const map = {exe:"⚙️", bat:"⚙️", cmd:"⚙️", msi:"⚙️", png:"🖼️", jpg:"🖼️", jpeg:"🖼️", gif:"🖼️", webp:"🖼️", mp4:"🎬", avi:"🎬", mkv:"🎬", mov:"🎬", mp3:"🎵", wav:"🎵", flac:"🎵", zip:"🗜️", rar:"🗜️", "7z":"🗜️", pdf:"📕", txt:"📄", json:"📋", py:"🐍", html:"🌐", css:"🎨", js:"🟨"};
-    return map[ext] || "📄";
-  }
-
-  function renderFiles(files){
-    const list = document.getElementById("fileList");
-    if (!files || files.length === 0){
-      list.innerHTML = `<div class="muted" style="padding:6px 2px">Пусто.</div>`;
-      return;
-    }
-    list.innerHTML = "";
-    for (const f of files){
-      const div = document.createElement("div");
-      div.className = "item";
-      div.innerHTML = `
-        <div class="iIcon">${fileIcon(f)}</div>
-        <div class="iBody">
-          <div class="iName">${esc(f.name || "")}</div>
-          <div class="iMeta">${esc((f.is_dir ? "Папка" : (f.meta || "Файл")) + (f.modified ? " • " + f.modified : ""))}</div>
-        </div>
-        <div class="iArrow">›</div>
-      `;
-      div.onclick = ()=>{
-        if (f.is_dir){
-          if (currentPath && currentPath !== "drives") pathStack.push(currentPath);
-          loadFiles(f.path);
-        } else {
-          openSheet({
-            title: f.name || "Файл",
-            desc: f.path || "",
-            bodyHtml: `<div class="muted">Действия зависят от поддержки на сервере.</div>`,
-            actions: [
-              {text:"Открыть", kind:"ok", onClick: async()=>{ closeSheet(); await execCmd("open:" + f.path); }},
-              {text:"Удалить", kind:"danger", onClick: async()=>{ closeSheet(); await execCmd("delete:" + f.path); }},
-              {text:"Закрыть", kind:"info", onClick: closeSheet},
-            ]
-          });
-        }
-      };
-      list.appendChild(div);
-    }
-  }
-
-  async function loadFiles(path){
-    try{
-      path = path || "drives";
-      currentPath = path;
-      document.getElementById("pathText").textContent = currentPath;
-      document.getElementById("fileList").innerHTML = `<div class="skeleton"></div><div class="skeleton" style="height:44px;opacity:.7"></div>`;
-      const res = await apiPost("/api/browse", {path});
-      const data = res.data || {};
-      currentPath = data.path || path;
-      document.getElementById("pathText").textContent = currentPath;
-      renderFiles(data.files || []);
-    }catch(e){
-      console.log(e);
-      showToast("❌ " + (e?.message || "browse error"), 5000);
-    }
-  }
-
-  function goUp(){
-    if (pathStack.length === 0){ loadFiles("drives"); return; }
-    loadFiles(pathStack.pop());
-  }
-
   // Settings
   function openSettings(){
     const panelUrl = location.origin + location.pathname + (API_BASE ? ("?api=" + encodeURIComponent(API_BASE)) : "");
     openSheet({
       title: "Настройки",
-      desc: "API URL — это твой trycloudflare / туннель до ПК.",
+      desc: "API URL — это твой trycloudflare (туннель до ПК).",
       bodyHtml: `
         <div class="muted" style="margin-bottom:8px">API URL</div>
         <input class="inp mono" id="apiInput" value="${esc(API_BASE)}" placeholder="https://xxxxx.trycloudflare.com" />
@@ -1210,7 +1080,7 @@
         <button class="btnRow" onclick="saveApiFromSheet()">💾 Сохранить API</button>
         <div class="hr"></div>
         <div class="muted">Ссылка панели:</div>
-        <div class="muted mono" style="margin-top:6px;word-break:break-all;color:var(--link)">${esc(panelUrl)}</div>
+        <div class="muted mono" style="margin-top:6px;word-break:break-all;color:#9cc2ff">${esc(panelUrl)}</div>
         <div style="height:10px"></div>
         <button class="btnRow" onclick="copyText('${esc(panelUrl)}')">📋 Копировать ссылку</button>
       `,
@@ -1246,7 +1116,7 @@
     }
   }
 
-  // Auto Info (каждую минуту) -> /api/info
+  // Auto info
   async function updateInfo(showToastFlag=false){
     try{
       const res = await apiPost("/api/info", {});
@@ -1266,16 +1136,13 @@
     }
   }
 
-  // boot
+  // Boot
   loadLog();
   loadCaps();
   refreshTop(!!API_BASE);
 
   if (API_BASE){
     updateInfo(false);
-    // автозагрузка дисков
-    loadFiles("drives");
-    // авто обновление каждую минуту
     setInterval(()=>updateInfo(false), 60000);
   } else {
     topSub.textContent = "Нужен API URL (открой панель кнопкой бота)";
