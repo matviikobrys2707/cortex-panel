@@ -8,1174 +8,1278 @@
 
   <style>
     :root{
-      --bg: var(--tg-theme-bg-color, #ffffff);
-      --sec: var(--tg-theme-secondary-bg-color, #f4f4f5);
-      --text: var(--tg-theme-text-color, #000000);
-      --hint: var(--tg-theme-hint-color, #999999);
-      --btn: var(--tg-theme-button-color, #3390ec);
+      --bg: var(--tg-theme-bg-color, #0b1220);
+      --sec: var(--tg-theme-secondary-bg-color, #0f1a33);
+      --text: var(--tg-theme-text-color, #eaf0ff);
+      --hint: var(--tg-theme-hint-color, #94a7cf);
+      --btn: var(--tg-theme-button-color, #6d5efc);
       --btnText: var(--tg-theme-button-text-color, #ffffff);
-      --accent: #3390ec;
-      --danger: #e53935;
-      --success: #43a047;
-      --warning: #fb8c00);
-      --card-bg: #ffffff;
-      --divider: #e0e0e0;
+      --link: var(--tg-theme-link-color, #9cc2ff);
+
+      --glass: rgba(255,255,255,.06);
+      --border: rgba(255,255,255,.12);
+
+      --r: 18px;
+      --rs: 12px;
+
+      --danger: #ff4d6d;
+      --ok: #2ed573;
+      --warn: #ffa502;
+      --info: #4da3ff;
+
+      --shadow: 0 14px 50px rgba(0,0,0,.36);
     }
 
-    /* Dark theme */
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: var(--tg-theme-bg-color, #18222d);
-        --sec: var(--tg-theme-secondary-bg-color, #131e29);
-        --text: var(--tg-theme-text-color, #ffffff);
-        --hint: var(--tg-theme-hint-color, #708499);
-        --card-bg: #232e3c;
-        --divider: #2b3843;
-      }
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      background: var(--sec);
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      background:
+        radial-gradient(1200px 900px at 10% -10%, rgba(167,139,250,.16), transparent 45%),
+        radial-gradient(900px 700px at 95% 0%, rgba(96,165,250,.14), transparent 50%),
+        radial-gradient(1200px 900px at 50% 120%, rgba(109,94,252,.10), transparent 55%),
+        var(--bg);
       color: var(--text);
-      padding-bottom: 72px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      min-height: 100vh;
+      padding-bottom: 90px;
       overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
     }
 
-    /* Header */
-    .header {
-      background: var(--bg);
-      padding: 12px 16px;
-      border-bottom: 1px solid var(--divider);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-
-    .header-content {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+    /* Top */
+    .top{
+      position: sticky; top:0; z-index: 120;
+      padding: 14px 16px 12px;
+      background: rgba(255,255,255,.04);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
       gap: 12px;
     }
-
-    .header-title {
-      font-size: 20px;
-      font-weight: 600;
-      color: var(--text);
+    .brand{min-width:0}
+    .title{
+      font-weight: 950;
+      letter-spacing:.2px;
+      font-size: 18px;
+      background: linear-gradient(135deg, #a78bfa, #60a5fa);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
-
-    .status-badge {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      padding: 4px 10px;
-      border-radius: 12px;
+    .subtitle{
+      color: var(--hint);
       font-size: 12px;
-      font-weight: 500;
-      background: var(--sec);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-top: 2px;
     }
-
-    .status-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
+    .topRight{display:flex; align-items:center; gap:10px; flex-shrink:0;}
+    .pill{
+      display:flex; align-items:center; gap:8px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid var(--border);
+      font-size: 12px;
+      font-weight: 900;
+      color: var(--hint);
+    }
+    .dot{
+      width:10px; height:10px; border-radius:999px;
       background: var(--danger);
+      box-shadow: 0 0 12px rgba(255,77,109,.40);
     }
-
-    .status-dot.online {
-      background: var(--success);
+    .dot.ok{
+      background: var(--ok);
+      box-shadow: 0 0 12px rgba(46,213,115,.40);
     }
-
-    .settings-btn {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      border: none;
-      background: var(--sec);
-      color: var(--text);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: opacity 0.2s;
+    .iconBtn{
+      width: 38px; height: 38px;
+      border-radius: 12px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid var(--border);
+      display:flex; align-items:center; justify-content:center;
+      cursor:pointer; user-select:none;
+      transition: transform .12s ease, background .12s ease;
     }
+    .iconBtn:active{ transform: scale(.96); background: rgba(255,255,255,.10); }
+    .iconBtn svg{ width:18px; height:18px; }
 
-    .settings-btn:active {
-      opacity: 0.6;
+    /* Pages */
+    .page{display:none; padding: 14px 16px;}
+    .page.active{display:block;}
+
+    /* Cards */
+    .card{
+      background: rgba(255,255,255,.06);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 14px;
+      margin-bottom: 12px;
+      box-shadow: 0 10px 40px rgba(0,0,0,.22);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
     }
-
-    /* Container */
-    .container {
-      padding: 0;
-    }
-
-    .page {
-      display: none;
-      padding: 12px 0;
-    }
-
-    .page.active {
-      display: block;
-    }
-
-    /* Section */
-    .section {
-      background: var(--bg);
+    .cardHeader{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
       margin-bottom: 12px;
     }
-
-    .section-header {
-      padding: 12px 16px 8px;
-      font-size: 13px;
-      font-weight: 600;
+    .cardTitle{
+      display:flex; align-items:center; gap:8px;
+      font-size: 12px;
+      font-weight: 950;
+      letter-spacing: 1px;
       text-transform: uppercase;
       color: var(--hint);
-      letter-spacing: 0.5px;
     }
+    .muted{ color: var(--hint); font-size: 12px; line-height: 1.35; }
+    .hr{ height:1px; background: rgba(255,255,255,.10); margin: 12px 0; border-radius:99px; }
 
-    .section-content {
-      padding: 0 12px 12px;
-    }
+    /* Buttons */
+    .grid2{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+    .grid3{display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px;}
 
-    /* Grid buttons */
-    .btn-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 8px;
-    }
-
-    .btn-grid-3 {
-      grid-template-columns: repeat(3, 1fr);
-    }
-
-    .action-btn {
-      position: relative;
-      border: none;
-      border-radius: 12px;
-      padding: 16px 12px;
-      background: var(--card-bg);
+    .btn{
+      border:none; cursor:pointer;
+      border-radius: 14px;
+      padding: 13px 12px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid var(--border);
       color: var(--text);
+      font-weight: 950;
+      font-size: 13px;
+      min-height: 48px;
+      display:flex; align-items:center; justify-content:center;
+      user-select:none;
+      transition: transform .12s ease, background .12s ease;
+      text-align:center;
+    }
+    .btn:active{ transform: scale(.97); background: rgba(255,255,255,.10); }
+
+    .btnRow{
+      width:100%;
+      border:none; cursor:pointer;
+      border-radius: 14px;
+      padding: 14px 12px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-weight: 950;
       font-size: 14px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: transform 0.15s, opacity 0.15s;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-      min-height: 80px;
-      justify-content: center;
+      display:flex; align-items:center; justify-content:center;
+      gap: 10px;
+      user-select:none;
+      transition: transform .12s ease, background .12s ease;
+      margin-bottom: 12px;
     }
+    .btnRow:active{ transform: scale(.98); background: rgba(255,255,255,.10); }
 
-    .action-btn:active {
-      transform: scale(0.96);
-      opacity: 0.8;
-    }
+    .danger{ border-color: rgba(255,77,109,.35)!important; background: rgba(255,77,109,.12)!important; }
+    .warn{ border-color: rgba(255,165,2,.35)!important; background: rgba(255,165,2,.12)!important; }
+    .ok{ border-color: rgba(46,213,115,.35)!important; background: rgba(46,213,115,.12)!important; }
+    .info{ border-color: rgba(77,163,255,.35)!important; background: rgba(77,163,255,.12)!important; }
+    .purple{ border-color: rgba(167,139,250,.35)!important; background: rgba(167,139,250,.12)!important; }
 
-    .action-btn .icon {
-      font-size: 28px;
-      line-height: 1;
-    }
-
-    .action-btn.danger {
-      background: var(--danger);
-      color: white;
-    }
-
-    .action-btn.warning {
-      background: var(--warning);
-      color: white;
-    }
-
-    .action-btn.success {
-      background: var(--success);
-      color: white;
-    }
-
-    .action-btn.primary {
-      background: var(--accent);
-      color: white;
-    }
-
-    /* List items */
-    .list-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 12px 16px;
-      background: var(--bg);
-      border-bottom: 1px solid var(--divider);
-      cursor: pointer;
-      transition: background 0.15s;
-    }
-
-    .list-item:active {
-      background: var(--sec);
-    }
-
-    .list-item:first-child {
-      border-top: 1px solid var(--divider);
-    }
-
-    .list-icon {
-      font-size: 24px;
-      width: 32px;
-      text-align: center;
-    }
-
-    .list-content {
-      flex: 1;
-      min-width: 0;
-    }
-
-    .list-title {
-      font-size: 15px;
-      font-weight: 500;
+    /* Inputs */
+    .row{ display:flex; gap:10px; align-items:center; }
+    .inp, .ta, .sel{
+      width:100%;
+      border: 1px solid var(--border);
+      background: rgba(15, 26, 51, .65);
       color: var(--text);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .list-subtitle {
+      border-radius: 14px;
+      padding: 11px 12px;
+      outline:none;
       font-size: 13px;
-      color: var(--hint);
-      margin-top: 2px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      font-weight: 850;
     }
+    .ta{ min-height: 90px; resize:none; }
+    .mono{ font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .inp::placeholder,.ta::placeholder{ color: rgba(148,167,207,.9); }
 
-    .list-arrow {
-      color: var(--hint);
-      font-size: 18px;
-    }
-
-    /* Input */
-    .input-group {
-      padding: 12px 16px;
-      background: var(--bg);
-      border-bottom: 1px solid var(--divider);
-    }
-
-    .input-label {
-      font-size: 13px;
-      color: var(--hint);
-      margin-bottom: 8px;
-      display: block;
-    }
-
-    .input {
-      width: 100%;
-      border: 1px solid var(--divider);
-      background: var(--sec);
-      color: var(--text);
-      border-radius: 10px;
-      padding: 12px;
-      font-size: 15px;
-      outline: none;
-    }
-
-    .input:focus {
-      border-color: var(--accent);
-    }
-
-    .textarea {
-      min-height: 100px;
-      resize: vertical;
-      font-family: inherit;
-    }
-
-    /* Select */
-    .select {
-      width: 100%;
-      border: 1px solid var(--divider);
-      background: var(--sec);
-      color: var(--text);
-      border-radius: 10px;
-      padding: 12px;
-      font-size: 15px;
-      outline: none;
-    }
-
-    /* Volume slider */
-    .volume-container {
-      padding: 24px 16px;
-      background: var(--bg);
-    }
-
-    .volume-display {
-      text-align: center;
-      margin-bottom: 16px;
-    }
-
-    .volume-value {
+    /* Range */
+    .bigNum{
+      text-align:center;
       font-size: 48px;
-      font-weight: 700;
-      color: var(--accent);
+      font-weight: 950;
+      line-height: 1;
+      background: linear-gradient(135deg, #a78bfa, #60a5fa);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
     }
-
-    .volume-label {
-      font-size: 13px;
-      color: var(--hint);
-      margin-top: 4px;
+    .sub{ text-align:center; margin-top: 4px; color: var(--hint); font-size: 12px; margin-bottom: 10px; }
+    input[type="range"]{
+      -webkit-appearance:none;
+      width:100%;
+      height:6px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.14);
+      outline:none;
+      margin: 10px 0 14px;
     }
+    input[type="range"]::-webkit-slider-thumb{
+      -webkit-appearance:none;
+      width: 22px; height: 22px;
+      border-radius: 999px;
+      background: var(--btn);
+      box-shadow: 0 0 16px rgba(109,94,252,.55);
+      cursor:pointer;
+    }
+    .quick{ display:flex; gap:8px; }
+    .quick button{
+      flex:1;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      border-radius: 14px;
+      padding: 10px 6px;
+      font-weight: 950;
+      cursor:pointer;
+      user-select:none;
+    }
+    .quick button:active{ transform: scale(.97); background: rgba(255,255,255,.10); }
 
-    .slider {
-      -webkit-appearance: none;
+    /* Stats table */
+    .stats{
+      display:flex;
+      flex-direction:column;
+      gap: 10px;
+    }
+    .statRow{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.10);
+    }
+    .k{ color: var(--hint); font-size: 12px; font-weight: 900; }
+    .v{ color: var(--text); font-size: 12px; font-weight: 950; text-align:right; }
+    .v.mono{ font-size: 12px; }
+
+    /* Activity */
+    .log{
+      display:flex;
+      flex-direction:column;
+      gap: 8px;
+    }
+    .logItem{
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.10);
+    }
+    .logTop{display:flex; justify-content:space-between; gap: 10px; align-items:center;}
+    .logCmd{font-weight: 950; font-size: 13px;}
+    .logTime{color: var(--hint); font-size: 11px; font-weight: 850;}
+    .logMsg{color: var(--hint); font-size: 12px; margin-top: 4px; line-height: 1.35;}
+    .tagOk{color: #bfffe0;}
+    .tagErr{color: #ffd1db;}
+
+    /* Gallery */
+    .gallery{
+      display:flex;
+      gap: 10px;
+      overflow-x:auto;
+      padding-bottom: 4px;
+      scroll-snap-type: x mandatory;
+    }
+    .thumb{
+      min-width: 140px;
+      max-width: 140px;
+      height: 96px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      position: relative;
+      overflow:hidden;
+      scroll-snap-align: start;
+      cursor:pointer;
+      user-select:none;
+    }
+    .thumb img{
       width: 100%;
-      height: 4px;
-      border-radius: 2px;
-      background: var(--divider);
-      outline: none;
-      margin: 20px 0;
+      height: 100%;
+      object-fit: cover;
+      display:block;
     }
-
-    .slider::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      background: var(--accent);
-      cursor: pointer;
-      box-shadow: 0 2px 8px rgba(51, 144, 236, 0.4);
-    }
-
-    .slider::-moz-range-thumb {
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      background: var(--accent);
-      cursor: pointer;
-      border: none;
-    }
-
-    .quick-values {
-      display: flex;
-      gap: 8px;
-    }
-
-    .quick-btn {
-      flex: 1;
-      border: 1px solid var(--divider);
-      background: var(--sec);
-      color: var(--text);
-      border-radius: 8px;
-      padding: 8px;
-      font-size: 13px;
-      font-weight: 500;
-      cursor: pointer;
-    }
-
-    .quick-btn:active {
-      background: var(--divider);
-    }
-
-    /* Full width button */
-    .btn-full {
-      width: 100%;
-      border: none;
-      border-radius: 12px;
-      padding: 14px;
-      background: var(--accent);
-      color: white;
-      font-size: 15px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: opacity 0.2s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-    }
-
-    .btn-full:active {
-      opacity: 0.8;
-    }
-
-    .btn-full.secondary {
-      background: var(--sec);
-      color: var(--text);
-    }
-
-    /* Path bar */
-    .path-bar {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 12px 16px;
-      background: var(--bg);
-      border-bottom: 1px solid var(--divider);
-    }
-
-    .path-btn {
-      padding: 6px 12px;
-      border-radius: 8px;
-      border: 1px solid var(--divider);
-      background: var(--sec);
-      color: var(--text);
-      font-size: 13px;
-      cursor: pointer;
-    }
-
-    .path-text {
-      flex: 1;
-      font-size: 13px;
-      color: var(--hint);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      font-family: monospace;
-    }
-
-    /* Bottom navigation */
-    .bottom-nav {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: var(--bg);
-      border-top: 1px solid var(--divider);
-      display: flex;
-      padding-bottom: env(safe-area-inset-bottom);
-      z-index: 100;
-    }
-
-    .nav-item {
-      flex: 1;
-      border: none;
-      background: transparent;
-      padding: 8px 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-      cursor: pointer;
-      color: var(--hint);
+    .thumbMeta{
+      position:absolute;
+      left: 8px; right: 8px; bottom: 8px;
+      display:flex;
+      justify-content:space-between;
+      gap:8px;
+      align-items:center;
       font-size: 10px;
-      font-weight: 500;
-      transition: color 0.2s;
+      font-weight: 950;
+      color: rgba(255,255,255,.92);
+      text-shadow: 0 1px 8px rgba(0,0,0,.55);
+    }
+    .thumbBadge{
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(0,0,0,.35);
+      border: 1px solid rgba(255,255,255,.14);
+      backdrop-filter: blur(10px);
     }
 
-    .nav-item.active {
-      color: var(--accent);
+    /* File/Process lists */
+    .list{display:flex; flex-direction:column; gap: 8px;}
+    .item{
+      display:flex;
+      align-items:center;
+      gap: 12px;
+      padding: 12px 12px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.12);
+      cursor:pointer;
+      user-select:none;
     }
-
-    .nav-icon {
-      font-size: 24px;
-    }
-
-    /* Modal */
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.4);
-      display: none;
-      align-items: flex-end;
-      z-index: 200;
-      animation: fadeIn 0.2s;
-    }
-
-    .modal-overlay.open {
-      display: flex;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    .modal {
-      width: 100%;
-      background: var(--bg);
-      border-top-left-radius: 16px;
-      border-top-right-radius: 16px;
-      padding: 16px;
-      animation: slideUp 0.25s ease-out;
-    }
-
-    @keyframes slideUp {
-      from { transform: translateY(100%); }
-      to { transform: translateY(0); }
-    }
-
-    .modal-handle {
-      width: 36px;
-      height: 4px;
-      background: var(--divider);
-      border-radius: 2px;
-      margin: 0 auto 16px;
-    }
-
-    .modal-title {
-      font-size: 18px;
-      font-weight: 600;
-      margin-bottom: 8px;
-    }
-
-    .modal-desc {
+    .item:active{ transform: scale(.99); background: rgba(255,255,255,.10); }
+    .iIcon{ width: 28px; text-align:center; font-size: 20px; }
+    .iBody{ flex:1; overflow:hidden; }
+    .iName{
+      font-weight: 950;
       font-size: 14px;
+      white-space: nowrap;
+      overflow:hidden;
+      text-overflow: ellipsis;
+    }
+    .iMeta{
+      margin-top: 2px;
       color: var(--hint);
-      margin-bottom: 16px;
-      line-height: 1.4;
+      font-size: 11px;
+      white-space: nowrap;
+      overflow:hidden;
+      text-overflow: ellipsis;
     }
+    .iArrow{ color: var(--hint); font-weight: 900; }
 
-    .modal-actions {
-      display: flex;
-      gap: 8px;
-      margin-top: 16px;
+    .pathBar{
+      display:flex; align-items:center; gap:10px;
+      padding: 10px 12px;
+      border-radius: 16px;
+      background: rgba(15,26,51,.65);
+      border: 1px solid rgba(255,255,255,.12);
+      color: var(--hint);
+      font-size: 12px;
+      overflow:hidden;
+      margin-bottom: 10px;
     }
+    .pathBar span{ flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .miniBtn{
+      flex-shrink:0;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      padding: 7px 10px;
+      border-radius: 12px;
+      font-weight: 950;
+      cursor:pointer;
+      user-select:none;
+      font-size: 12px;
+    }
+    .miniBtn:active{ transform: scale(.97); background: rgba(255,255,255,.10); }
+
+    /* Tabs */
+    .tabs{
+      position: fixed;
+      left:0; right:0; bottom:0;
+      background: rgba(15,26,51,.78);
+      border-top: 1px solid rgba(255,255,255,.10);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      padding-bottom: env(safe-area-inset-bottom);
+      display:flex;
+      z-index: 150;
+    }
+    .tab{
+      flex:1;
+      border:none;
+      background: transparent;
+      color: var(--hint);
+      padding: 10px 0 8px;
+      cursor:pointer;
+      user-select:none;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap: 6px;
+      font-size: 10px;
+      font-weight: 950;
+    }
+    .tab svg{ width: 20px; height: 20px; }
+    .tab.active{ color: var(--btn); }
 
     /* Toast */
-    .toast {
+    .toast{
       position: fixed;
-      bottom: 88px;
-      left: 50%;
-      transform: translateX(-50%) translateY(100px);
-      background: rgba(0, 0, 0, 0.85);
-      color: white;
-      padding: 12px 20px;
-      border-radius: 24px;
-      font-size: 14px;
-      font-weight: 500;
-      opacity: 0;
-      transition: all 0.3s;
-      z-index: 300;
-      max-width: 90%;
-      text-align: center;
+      left:50%;
+      bottom: 98px;
+      transform: translateX(-50%) translateY(16px);
+      opacity:0;
+      pointer-events:none;
+      transition: .22s ease;
+      max-width: 92%;
+      z-index: 999;
+    }
+    .toast.show{ opacity:1; transform: translateX(-50%) translateY(0); }
+    .toastBox{
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(10, 14, 26, .92);
+      border: 1px solid rgba(255,255,255,.14);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      color: var(--text);
+      font-weight: 950;
+      font-size: 13px;
+      white-space: nowrap;
+      overflow:hidden;
+      text-overflow: ellipsis;
+      box-shadow: var(--shadow);
     }
 
-    .toast.show {
-      opacity: 1;
-      transform: translateX(-50%) translateY(0);
+    /* Sheet (bottom) */
+    .sheetBg{
+      position: fixed;
+      inset:0;
+      background: rgba(0,0,0,.56);
+      display:none;
+      align-items:flex-end;
+      z-index: 500;
     }
-
-    /* Empty state */
-    .empty-state {
-      text-align: center;
-      padding: 40px 20px;
-      color: var(--hint);
+    .sheetBg.open{display:flex;}
+    .sheet{
+      width:100%;
+      background: rgba(15,26,51,.95);
+      border: 1px solid rgba(255,255,255,.12);
+      border-top-left-radius: 22px;
+      border-top-right-radius: 22px;
+      box-shadow: var(--shadow);
+      padding: 14px 14px 16px;
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      animation: up .18s ease-out;
     }
-
-    .empty-icon {
-      font-size: 48px;
-      margin-bottom: 12px;
-      opacity: 0.5;
+    @keyframes up{ from{ transform: translateY(30px); opacity:.5 } to{ transform: translateY(0); opacity:1 } }
+    .handle{
+      width:44px; height:4px;
+      border-radius:99px;
+      background: rgba(255,255,255,.20);
+      margin: 2px auto 12px;
     }
+    .sheetTitle{ font-weight: 950; font-size: 16px; margin-bottom: 6px; }
+    .sheetDesc{ color: var(--hint); font-size: 13px; line-height:1.35; margin-bottom: 12px; word-break: break-word; }
+    .sheetRow{ display:flex; gap: 10px; flex-wrap: wrap; }
+    .sheetRow .btn{ flex: 1; min-width: 120px; }
 
-    /* Timer input row */
-    .input-row {
-      display: flex;
-      gap: 8px;
-      padding: 12px 16px;
-      background: var(--bg);
+    /* Viewer */
+    .viewer{
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.12);
+      overflow:auto;
+      background: rgba(0,0,0,.22);
+      max-height: 55vh;
+      touch-action: pan-x pan-y pinch-zoom;
+      -webkit-overflow-scrolling: touch;
     }
-
-    .input-row .input {
-      flex: 1;
+    .viewer img{
+      width: 100%;
+      height: auto;
+      display:block;
     }
-
-    .input-row .btn-full {
-      flex-shrink: 0;
-      width: auto;
-      padding: 0 20px;
-    }
-
-    /* Utility */
-    .mb-12 { margin-bottom: 12px; }
-    .p-16 { padding: 16px; }
-    .text-center { text-align: center; }
-    .text-hint { color: var(--hint); }
-    .text-sm { font-size: 13px; }
-    .mono { font-family: monospace; }
   </style>
 </head>
 
 <body>
 
-  <!-- Header -->
-  <div class="header">
-    <div class="header-content">
-      <div class="header-title">Cortex Panel</div>
-      <div class="status-badge">
-        <div class="status-dot" id="statusDot"></div>
-        <span id="statusText">offline</span>
+  <div class="top">
+    <div class="brand">
+      <div class="title" id="topTitle">Cortex Panel</div>
+      <div class="subtitle" id="topSub">Загрузка…</div>
+    </div>
+
+    <div class="topRight">
+      <div class="pill">
+        <div class="dot" id="dot"></div>
+        <div id="connText">offline</div>
       </div>
-      <button class="settings-btn" onclick="openSettings()">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+
+      <div class="iconBtn" onclick="openSettings()" title="Настройки">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="12" cy="12" r="3"/>
-          <path d="M12 1v6m0 6v6m5.2-13.2 4.2-4.2m-13 13L4.2 19.8m0-15.6 4.2 4.2m9.4 9.4 4.2 4.2"/>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V22a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.6 1.65 1.65 0 0 0 10.51 3H11a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09A1.65 1.65 0 0 0 16 4.6a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09A1.65 1.65 0 0 0 19.4 15Z"/>
         </svg>
-      </button>
+      </div>
     </div>
   </div>
 
-  <!-- Main Container -->
-  <div class="container">
-
-    <!-- HOME PAGE -->
-    <div class="page active" id="page-home">
-      <div class="section">
-        <div class="section-header">Управление питанием</div>
-        <div class="section-content">
-          <div class="btn-grid">
-            <button class="action-btn danger" onclick="confirmAction('off', 'Выключить ПК?')">
-              <div class="icon">⏻</div>
-              <div>Выключить</div>
-            </button>
-            <button class="action-btn warning" onclick="confirmAction('restart', 'Перезагрузить ПК?')">
-              <div class="icon">↻</div>
-              <div>Перезагрузка</div>
-            </button>
-            <button class="action-btn primary" onclick="execCmd('sleep')">
-              <div class="icon">🌙</div>
-              <div>Сон</div>
-            </button>
-            <button class="action-btn primary" onclick="execCmd('lock')">
-              <div class="icon">🔒</div>
-              <div>Блокировка</div>
-            </button>
-          </div>
-        </div>
+  <!-- HOME -->
+  <div class="page active" id="page-home">
+    <div class="card">
+      <div class="cardHeader">
+        <div class="cardTitle">Система</div>
+      </div>
+      <div class="grid2">
+        <button class="btn danger" onclick="confirmDanger('off')">🛑 Выключить</button>
+        <button class="btn warn" onclick="confirmDanger('restart')">♻️ Перезагрузка</button>
+        <button class="btn purple" onclick="execCmd('lock')">🔒 Lock</button>
+        <button class="btn info" onclick="execCmd('sleep')">🌙 Сон</button>
       </div>
 
-      <div class="section">
-        <div class="section-header">Таймер выключения</div>
-        <div class="input-row">
-          <input type="number" class="input" id="timerMinutes" placeholder="Минуты" min="1" max="1440">
-          <button class="btn-full" onclick="startTimer()">Запустить</button>
-        </div>
-        <div class="p-16">
-          <button class="btn-full secondary" onclick="execCmd('cancel')">Отменить таймер</button>
-        </div>
+      <div class="hr"></div>
+
+      <div class="cardHeader" style="margin-bottom:8px">
+        <div class="cardTitle">Таймер выключения</div>
       </div>
 
-      <div class="section">
-        <div class="section-header">Быстрые действия</div>
-        <div class="section-content">
-          <div class="btn-grid">
-            <button class="action-btn success" onclick="execCmd('status')">
-              <div class="icon">💻</div>
-              <div>Статус ПК</div>
-            </button>
-            <button class="action-btn primary" onclick="execCmd('taskbar')">
-              <div class="icon">🖥️</div>
-              <div>Рабочий стол</div>
-            </button>
-          </div>
-        </div>
+      <div class="row">
+        <input class="inp" id="timerMinutes" type="number" min="1" max="1440" placeholder="Минуты (например 30)" />
+        <button class="btn info" style="min-width:120px" onclick="startShutdownTimer()">⏳ Старт</button>
       </div>
+      <div style="height:10px"></div>
+      <button class="btnRow" onclick="execCmd('cancel')">⛔ Отмена таймера</button>
     </div>
 
-    <!-- MEDIA PAGE -->
-    <div class="page" id="page-media">
-      <div class="section">
-        <div class="volume-container">
-          <div class="volume-display">
-            <div class="volume-value" id="volumeValue">50</div>
-            <div class="volume-label">громкость</div>
-          </div>
-          <input type="range" class="slider" id="volumeSlider" min="0" max="100" value="50" 
-                 oninput="updateVolume(this.value)" onchange="setVolume(this.value)">
-          <div class="quick-values">
-            <button class="quick-btn" onclick="setVolume(0)">0</button>
-            <button class="quick-btn" onclick="setVolume(25)">25</button>
-            <button class="quick-btn" onclick="setVolume(50)">50</button>
-            <button class="quick-btn" onclick="setVolume(75)">75</button>
-            <button class="quick-btn" onclick="setVolume(100)">100</button>
-          </div>
-        </div>
+    <div class="card">
+      <div class="cardHeader">
+        <div class="cardTitle">Последние действия</div>
+        <button class="miniBtn" onclick="clearLog()">Очистить</button>
       </div>
-
-      <div class="section">
-        <div class="section-header">Управление медиа</div>
-        <div class="section-content">
-          <div class="btn-grid-3">
-            <button class="action-btn primary" onclick="execCmd('media_prev')">
-              <div class="icon">⏮</div>
-              <div>Назад</div>
-            </button>
-            <button class="action-btn success" onclick="execCmd('media_play')">
-              <div class="icon">⏯</div>
-              <div>Play</div>
-            </button>
-            <button class="action-btn primary" onclick="execCmd('media_next')">
-              <div class="icon">⏭</div>
-              <div>Вперёд</div>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- CAPTURE PAGE -->
-    <div class="page" id="page-capture">
-      <div class="section">
-        <div class="section-header">Скриншоты и запись</div>
-        <div class="section-content">
-          <div class="btn-grid">
-            <button class="action-btn success" onclick="execCmd('screenshot')">
-              <div class="icon">📸</div>
-              <div>Скриншот</div>
-            </button>
-            <button class="action-btn primary" onclick="execCmd('record_start_buttons')">
-              <div class="icon">🎥</div>
-              <div>Видеозапись</div>
-            </button>
-            <button class="action-btn warning" onclick="execCmd('camera_photo')">
-              <div class="icon">📷</div>
-              <div>Фото</div>
-            </button>
-            <button class="action-btn warning" onclick="execCmd('camera_record')">
-              <div class="icon">🎬</div>
-              <div>Камера</div>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- FILES PAGE -->
-    <div class="page" id="page-files">
-      <div class="path-bar">
-        <button class="path-btn" onclick="goUp()">←</button>
-        <div class="path-text" id="pathText">drives</div>
-        <button class="path-btn" onclick="refreshFiles()">↻</button>
-      </div>
-      <div id="fileList"></div>
-    </div>
-
-    <!-- MORE PAGE -->
-    <div class="page" id="page-more">
-      <div class="section">
-        <div class="section-header">Инструменты</div>
-        <div class="section-content">
-          <div class="btn-grid">
-            <button class="action-btn primary" onclick="execCmd('ip')">
-              <div class="icon">🌐</div>
-              <div>Мой IP</div>
-            </button>
-            <button class="action-btn primary" onclick="execCmd('speedtest')">
-              <div class="icon">⚡</div>
-              <div>Speedtest</div>
-            </button>
-            <button class="action-btn warning" onclick="execCmd('disk_cleanup')">
-              <div class="icon">🧹</div>
-              <div>Очистка</div>
-            </button>
-            <button class="action-btn primary" onclick="loadProcesses()">
-              <div class="icon">⚙️</div>
-              <div>Процессы</div>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <div class="section">
-        <div class="section-header">Ввод текста</div>
-        <div class="input-group">
-          <label class="input-label">Выберите клавишу</label>
-          <select class="select" id="keySelect">
-            <option value="ENTER">ENTER</option>
-            <option value="ESC">ESC</option>
-            <option value="TAB">TAB</option>
-            <option value="SPACE">SPACE</option>
-            <option value="UP">↑ UP</option>
-            <option value="DOWN">↓ DOWN</option>
-            <option value="LEFT">← LEFT</option>
-            <option value="RIGHT">→ RIGHT</option>
-          </select>
-        </div>
-        <div class="p-16">
-          <button class="btn-full" onclick="pressKey()">Нажать клавишу</button>
-        </div>
-        
-        <div class="input-group">
-          <label class="input-label">Текст для ввода</label>
-          <textarea class="input textarea" id="typeText" placeholder="Введите текст..."></textarea>
-        </div>
-        <div class="p-16">
-          <button class="btn-full" onclick="typeText()">Отправить текст</button>
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- Bottom Navigation -->
-  <div class="bottom-nav">
-    <button class="nav-item active" onclick="switchPage('home', this)">
-      <div class="nav-icon">🏠</div>
-      <div>Главная</div>
-    </button>
-    <button class="nav-item" onclick="switchPage('media', this)">
-      <div class="nav-icon">🎵</div>
-      <div>Медиа</div>
-    </button>
-    <button class="nav-item" onclick="switchPage('capture', this)">
-      <div class="nav-icon">📸</div>
-      <div>Камера</div>
-    </button>
-    <button class="nav-item" onclick="switchPage('files', this)">
-      <div class="nav-icon">📁</div>
-      <div>Файлы</div>
-    </button>
-    <button class="nav-item" onclick="switchPage('more', this)">
-      <div class="nav-icon">⋯</div>
-      <div>Ещё</div>
-    </button>
-  </div>
-
-  <!-- Toast -->
-  <div class="toast" id="toast"></div>
-
-  <!-- Modal -->
-  <div class="modal-overlay" id="modalOverlay" onclick="closeModalOnBg(event)">
-    <div class="modal">
-      <div class="modal-handle"></div>
-      <div class="modal-title" id="modalTitle"></div>
-      <div class="modal-desc" id="modalDesc"></div>
-      <div id="modalBody"></div>
-      <div class="modal-actions" id="modalActions"></div>
+      <div class="log" id="logList"></div>
+      <div class="muted" id="logEmpty">Пока пусто.</div>
     </div>
   </div>
 
-  <script>
-    // Telegram WebApp init
-    const tg = window.Telegram?.WebApp;
-    if (tg) {
-      tg.ready();
-      tg.expand();
-      tg.enableClosingConfirmation();
+  <!-- MEDIA -->
+  <div class="page" id="page-media">
+    <div class="card">
+      <div class="cardHeader">
+        <div class="cardTitle">Громкость</div>
+        <button class="miniBtn" onclick="execCmd('mute_unmute')">🔇 Mute</button>
+      </div>
+
+      <div class="bigNum" id="volNum">50</div>
+      <div class="sub">процентов</div>
+      <input id="vol" type="range" min="0" max="100" value="50" oninput="volPreview(this.value)" onchange="setVolume(this.value)" />
+      <div class="quick">
+        <button onclick="setVolume(0)">0</button>
+        <button onclick="setVolume(25)">25</button>
+        <button onclick="setVolume(50)">50</button>
+        <button onclick="setVolume(75)">75</button>
+        <button onclick="setVolume(100)">100</button>
+      </div>
+
+      <div class="hr"></div>
+
+      <div class="grid3">
+        <button class="btn info" onclick="execCmd('media_prev')">⏮</button>
+        <button class="btn ok" onclick="execCmd('play')">⏯</button>
+        <button class="btn info" onclick="execCmd('media_next')">⏭</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="cardHeader">
+        <div class="cardTitle">Клавиатура</div>
+      </div>
+
+      <div class="row">
+        <select class="sel" id="keySelect">
+          <option value="ENTER">ENTER</option>
+          <option value="ESC">ESC</option>
+          <option value="TAB">TAB</option>
+          <option value="SPACE">SPACE</option>
+          <option value="UP">UP</option>
+          <option value="DOWN">DOWN</option>
+          <option value="LEFT">LEFT</option>
+          <option value="RIGHT">RIGHT</option>
+        </select>
+        <button class="btn ok" style="min-width:140px" onclick="pressKey()">Отправить</button>
+      </div>
+
+      <div style="height:10px"></div>
+      <textarea class="ta" id="typeText" placeholder="Текст для печати на ПК..."></textarea>
+      <div style="height:10px"></div>
+      <button class="btnRow" onclick="typeText()">⌨️ Напечатать</button>
+    </div>
+  </div>
+
+  <!-- CAPTURE -->
+  <div class="page" id="page-capture">
+    <div class="card">
+      <div class="cardHeader">
+        <div class="cardTitle">Галерея (за эту сессию)</div>
+        <button class="miniBtn" onclick="clearCaptures()">Очистить</button>
+      </div>
+      <div class="gallery" id="gallery"></div>
+      <div class="muted" id="galleryEmpty">Пока нет скриншотов/фото.</div>
+    </div>
+
+    <div class="card">
+      <div class="cardHeader">
+        <div class="cardTitle">Скрин / Камера</div>
+      </div>
+      <div class="grid2">
+        <button class="btn ok" onclick="execCmd('screenshot')">📸 Скриншот</button>
+        <button class="btn purple" onclick="execCmd('camera_photo')">📷 Фото с камеры</button>
+        <button class="btn info" onclick="execCmd('record_start_buttons')">🎥 Запись экрана</button>
+        <button class="btn info" onclick="execCmd('camera_record')">🎥 Запись камеры</button>
+      </div>
+      <div class="hr"></div>
+      <div class="muted">
+        Скрин/Фото показываются прямо здесь + можно открыть/приблизить/скачать.
+        Видео обычно большие — если захочешь, сделаем отдельную загрузку через токены.
+      </div>
+    </div>
+  </div>
+
+  <!-- FILES -->
+  <div class="page" id="page-files">
+    <div class="pathBar">
+      <button class="miniBtn" onclick="goUp()">←</button>
+      <span id="pathText">drives</span>
+      <button class="miniBtn" onclick="loadFiles('drives')">Диски</button>
+      <button class="miniBtn" onclick="loadFiles(currentPath)">⟳</button>
+    </div>
+
+    <div class="card">
+      <div class="cardHeader">
+        <div class="cardTitle">Файлы</div>
+      </div>
+      <div class="list" id="fileList">
+        <div class="muted">Открой вкладку “Файлы”, чтобы загрузить.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOOLS -->
+  <div class="page" id="page-tools">
+    <div class="card">
+      <div class="cardHeader">
+        <div class="cardTitle">Информация (обновляется раз в минуту)</div>
+        <button class="miniBtn" onclick="updateInfo(true)">Обновить</button>
+      </div>
+
+      <div class="stats">
+        <div class="statRow"><div class="k">🌐 Public IP</div><div class="v mono" id="publicIp">—</div></div>
+        <div class="statRow"><div class="k">🏠 Local IP</div><div class="v mono" id="localIp">—</div></div>
+        <div class="statRow"><div class="k">🧠 CPU</div><div class="v" id="cpu">—</div></div>
+        <div class="statRow"><div class="k">💾 RAM</div><div class="v" id="ram">—</div></div>
+        <div class="statRow"><div class="k">📦 Disk C</div><div class="v" id="disk">—</div></div>
+        <div class="statRow"><div class="k">⏱ Uptime</div><div class="v" id="uptime">—</div></div>
+      </div>
+
+      <div class="muted" style="margin-top:10px" id="infoUpdated">—</div>
+    </div>
+
+    <div class="card">
+      <div class="cardHeader">
+        <div class="cardTitle">Инструменты</div>
+      </div>
+      <div class="grid2">
+        <button class="btn info" onclick="execCmd('ip')">🌐 IP (детали)</button>
+        <button class="btn info" onclick="execCmd('speedtest')">⏱ Speedtest</button>
+        <button class="btn warn" onclick="execCmd('disk_cleanup')">🧹 Очистка диска</button>
+        <button class="btn info" onclick="execCmd('taskbar')">🖥 Win+D</button>
+      </div>
+
+      <div class="hr"></div>
+
+      <div class="cardHeader" style="margin-bottom:8px">
+        <div class="cardTitle">Команда вручную (универсально)</div>
+      </div>
+      <div class="row">
+        <input class="inp mono" id="rawCmd" placeholder="Например: open:C:\file.txt или volume:70" />
+        <button class="btn ok" style="min-width:120px" onclick="runRaw()">▶</button>
+      </div>
+      <div class="muted" style="margin-top:10px">
+        Это спасает, если UI не содержит кнопку, но команда на сервере есть.
+      </div>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab active" onclick="openTab('home', this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M3 10.5 12 3l9 7.5V21a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+        <path d="M9 23V13h6v10"/>
+      </svg>
+      Дом
+    </button>
+    <button class="tab" onclick="openTab('media', this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+      </svg>
+      Медиа
+    </button>
+    <button class="tab" onclick="openTab('capture', this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="12" cy="12" r="3"/>
+      </svg>
+      Камера
+    </button>
+    <button class="tab" onclick="openTab('files', this); loadFiles(currentPath || 'drives')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+      </svg>
+      Файлы
+    </button>
+    <button class="tab" onclick="openTab('tools', this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/>
+      </svg>
+      Ещё
+    </button>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast"><div class="toastBox" id="toastBox">...</div></div>
+
+  <!-- SHEET -->
+  <div class="sheetBg" id="sheetBg" onclick="sheetBgClick(event)">
+    <div class="sheet">
+      <div class="handle"></div>
+      <div class="sheetTitle" id="sheetTitle">...</div>
+      <div class="sheetDesc" id="sheetDesc">...</div>
+      <div id="sheetBody"></div>
+      <div class="hr"></div>
+      <div class="sheetRow" id="sheetActions"></div>
+    </div>
+  </div>
+
+<script>
+  const tg = window.Telegram?.WebApp;
+
+  // API_BASE from ?api= or localStorage
+  const params = new URLSearchParams(location.search);
+  let API_BASE = (params.get("api") || localStorage.getItem("api_base") || "").trim();
+  if (API_BASE.endsWith("/")) API_BASE = API_BASE.slice(0, -1);
+  if (API_BASE) localStorage.setItem("api_base", API_BASE);
+
+  const inTelegram = !!(tg && tg.initData);
+  if (inTelegram) { tg.ready(); tg.expand(); }
+
+  // top ui
+  const dot = document.getElementById("dot");
+  const connText = document.getElementById("connText");
+  const topSub = document.getElementById("topSub");
+
+  // toast
+  let toastTimer = null;
+  function showToast(msg, ms=2600){
+    const t = document.getElementById('toast');
+    document.getElementById('toastBox').textContent = msg;
+    t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(()=>t.classList.remove('show'), ms);
+  }
+
+  function nowTime(){
+    const d = new Date();
+    return d.toLocaleTimeString([], {hour:"2-digit", minute:"2-digit", second:"2-digit"});
+  }
+
+  function esc(s){
+    return String(s ?? "")
+      .replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;").replaceAll("'","&#039;");
+  }
+
+  // tabs
+  function openTab(name, el){
+    document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+    document.querySelectorAll(".tab").forEach(b=>b.classList.remove("active"));
+    document.getElementById("page-"+name).classList.add("active");
+    el.classList.add("active");
+  }
+
+  // sheet
+  function openSheet({title, desc, bodyHtml, actions}){
+    document.getElementById("sheetTitle").textContent = title || "";
+    document.getElementById("sheetDesc").textContent = desc || "";
+    document.getElementById("sheetBody").innerHTML = bodyHtml || "";
+
+    const a = document.getElementById("sheetActions");
+    a.innerHTML = "";
+    (actions || []).forEach(x=>{
+      const b = document.createElement("button");
+      b.className = "btn " + (x.kind || "info");
+      b.textContent = x.text || "OK";
+      b.onclick = x.onClick || closeSheet;
+      a.appendChild(b);
+    });
+
+    document.getElementById("sheetBg").classList.add("open");
+  }
+  function closeSheet(){ document.getElementById("sheetBg").classList.remove("open"); }
+  function sheetBgClick(e){ if (e.target.id === "sheetBg") closeSheet(); }
+
+  // API
+  async function apiPost(path, payload){
+    if (!API_BASE) throw new Error("API URL не задан (кнопка бота должна открыть панель с ?api=...).");
+
+    const headers = {"Content-Type":"application/json"};
+    if (tg && tg.initData) headers["X-Tg-Init-Data"] = tg.initData;
+
+    const r = await fetch(API_BASE + path, {
+      method: "POST",
+      headers,
+      body: JSON.stringify(payload || {})
+    });
+
+    let data = null;
+    try{ data = await r.json(); }catch{}
+
+    if (!r.ok){
+      const msg = data?.message || ("HTTP " + r.status);
+      throw new Error(msg);
     }
+    return data;
+  }
 
-    // API Configuration
-    const params = new URLSearchParams(location.search);
-    let API_BASE = (params.get("api") || localStorage.getItem("api_base") || "").trim();
-    if (API_BASE.endsWith("/")) API_BASE = API_BASE.slice(0, -1);
-    if (API_BASE) localStorage.setItem("api_base", API_BASE);
+  function normalizeCmd(cmd){
+    if (cmd === "play") return "media_play";
+    // off/restart пусть сервер сам нормализует, но ок и так
+    return cmd;
+  }
 
-    // Global state
-    let currentPath = "drives";
-    const pathStack = [];
-    let processes = [];
-
-    // Toast
-    let toastTimer;
-    function showToast(msg, duration = 2500) {
-      const toast = document.getElementById('toast');
-      toast.textContent = msg;
-      toast.classList.add('show');
-      clearTimeout(toastTimer);
-      toastTimer = setTimeout(() => toast.classList.remove('show'), duration);
+  // activity log (local)
+  const LOG_KEY = "cortex_log_v1";
+  let logItems = [];
+  function loadLog(){
+    try{ logItems = JSON.parse(localStorage.getItem(LOG_KEY) || "[]"); }catch{ logItems = []; }
+    renderLog();
+  }
+  function saveLog(){
+    localStorage.setItem(LOG_KEY, JSON.stringify(logItems.slice(0, 25)));
+  }
+  function addLog({cmd, ok, message}){
+    logItems.unshift({t: Date.now(), cmd, ok: !!ok, message: String(message || "")});
+    logItems = logItems.slice(0, 25);
+    saveLog();
+    renderLog();
+  }
+  function clearLog(){
+    logItems = [];
+    saveLog();
+    renderLog();
+  }
+  function renderLog(){
+    const list = document.getElementById("logList");
+    const empty = document.getElementById("logEmpty");
+    if (!logItems.length){
+      list.innerHTML = "";
+      empty.style.display = "block";
+      return;
     }
-
-    // API Helper
-    async function apiPost(path, payload) {
-      if (!API_BASE) {
-        throw new Error("API URL не установлен");
-      }
-
-      const headers = { "Content-Type": "application/json" };
-      if (tg?.initData) headers["X-Tg-Init-Data"] = tg.initData;
-
-      const response = await fetch(API_BASE + path, {
-        method: "POST",
-        headers,
-        body: JSON.stringify(payload || {})
-      });
-
-      let data = null;
-      try { data = await response.json(); } catch {}
-
-      if (!response.ok) {
-        throw new Error(data?.message || `HTTP ${response.status}`);
-      }
-      return data;
+    empty.style.display = "none";
+    list.innerHTML = "";
+    for (const it of logItems){
+      const d = new Date(it.t);
+      const time = d.toLocaleTimeString([], {hour:"2-digit", minute:"2-digit", second:"2-digit"});
+      const div = document.createElement("div");
+      div.className = "logItem";
+      div.innerHTML = `
+        <div class="logTop">
+          <div class="logCmd">${esc(it.cmd)} <span class="${it.ok ? "tagOk":"tagErr"}">${it.ok ? "✓":"×"}</span></div>
+          <div class="logTime">${time}</div>
+        </div>
+        <div class="logMsg">${esc(it.message).slice(0, 400)}</div>
+      `;
+      list.appendChild(div);
     }
+  }
 
-    // Command execution
-    function normalizeCmd(cmd) {
-      const map = {
-        'off': 'shutdown',
-        'restart': 'reboot',
-        'play': 'media_play'
-      };
-      return map[cmd] || cmd;
+  // Captures history (session)
+  const CAP_KEY = "cortex_caps_v1";
+  let captures = [];
+  function loadCaps(){
+    try{ captures = JSON.parse(sessionStorage.getItem(CAP_KEY) || "[]"); }catch{ captures = []; }
+    renderCaps();
+  }
+  function saveCaps(){
+    sessionStorage.setItem(CAP_KEY, JSON.stringify(captures.slice(0, 20)));
+  }
+  function clearCaptures(){
+    captures = [];
+    saveCaps();
+    renderCaps();
+    showToast("✅ Галерея очищена", 1500);
+  }
+
+  function addCapture(cap){
+    captures.unshift(cap);
+    captures = captures.slice(0, 20);
+    saveCaps();
+    renderCaps();
+  }
+
+  function renderCaps(){
+    const g = document.getElementById("gallery");
+    const empty = document.getElementById("galleryEmpty");
+
+    if (!captures.length){
+      g.innerHTML = "";
+      empty.style.display = "block";
+      return;
     }
+    empty.style.display = "none";
 
-    async function execCmd(cmd) {
-      try {
-        showToast(`⏳ ${cmd}...`);
-        const result = await apiPost("/api/exec", { cmd: normalizeCmd(cmd) });
-        showToast(result.message || "✅ Выполнено");
-      } catch (error) {
-        showToast(`❌ ${error.message}`, 3500);
-      }
-    }
+    g.innerHTML = "";
+    for (const c of captures){
+      const div = document.createElement("div");
+      div.className = "thumb";
+      const time = new Date(c.t).toLocaleTimeString([], {hour:"2-digit", minute:"2-digit"});
+      const badge = c.kind === "screenshot" ? "Скрин" : (c.kind === "camera_photo" ? "Камера" : "Файл");
 
-    // Page switching
-    function switchPage(page, button) {
-      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-      document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
-      
-      document.getElementById(`page-${page}`).classList.add('active');
-      button.classList.add('active');
-
-      if (page === 'files' && !document.getElementById('fileList').children.length) {
-        loadFiles('drives');
-      }
-    }
-
-    // Volume control
-    function updateVolume(value) {
-      document.getElementById('volumeValue').textContent = value;
-    }
-
-    async function setVolume(value) {
-      updateVolume(value);
-      document.getElementById('volumeSlider').value = value;
-      await execCmd(`volume:${value}`);
-    }
-
-    // Timer
-    async function startTimer() {
-      const minutes = parseInt(document.getElementById('timerMinutes').value);
-      if (!minutes || minutes < 1) {
-        showToast("❌ Укажите минуты");
-        return;
-      }
-      await apiPost("/api/exec", { cmd: "timer_start_menu", minutes });
-      showToast(`✅ Таймер: ${minutes} мин`);
-    }
-
-    // Confirm action
-    function confirmAction(cmd, message) {
-      openModal({
-        title: "Подтверждение",
-        desc: message,
-        actions: [
-          { text: "Отмена", class: "secondary", onClick: closeModal },
-          { text: "Подтвердить", class: "", onClick: () => { closeModal(); execCmd(cmd); }}
-        ]
-      });
-    }
-
-    // Files
-    async function loadFiles(path) {
-      try {
-        currentPath = path || "drives";
-        document.getElementById('pathText').textContent = currentPath;
-        
-        const fileList = document.getElementById('fileList');
-        fileList.innerHTML = '<div class="empty-state"><div class="empty-icon">⏳</div>Загрузка...</div>';
-
-        const result = await apiPost("/api/browse", { path: currentPath });
-        const files = result.data?.files || [];
-
-        if (!files.length) {
-          fileList.innerHTML = '<div class="empty-state"><div class="empty-icon">📭</div>Пусто</div>';
-          return;
-        }
-
-        fileList.innerHTML = files.map(file => `
-          <div class="list-item" onclick='handleFile(${JSON.stringify(file)})'>
-            <div class="list-icon">${file.is_dir ? '📁' : '📄'}</div>
-            <div class="list-content">
-              <div class="list-title">${escapeHtml(file.name)}</div>
-              <div class="list-subtitle">${file.is_dir ? 'Папка' : (file.meta || 'Файл')}</div>
-            </div>
-            <div class="list-arrow">›</div>
+      if (c.type === "image" && c.b64 && c.mime){
+        const src = `data:${c.mime};base64,${c.b64}`;
+        div.innerHTML = `
+          <img src="${src}" />
+          <div class="thumbMeta">
+            <div class="thumbBadge">${badge}</div>
+            <div class="thumbBadge">${time}</div>
           </div>
-        `).join('');
-
-      } catch (error) {
-        showToast(`❌ ${error.message}`, 3500);
-      }
-    }
-
-    function handleFile(file) {
-      if (file.is_dir) {
-        pathStack.push(currentPath);
-        loadFiles(file.path);
+        `;
+        div.onclick = ()=> openImageViewer(c);
       } else {
-        openModal({
-          title: file.name,
-          desc: file.path,
+        div.innerHTML = `
+          <div style="height:100%;display:flex;align-items:center;justify-content:center;font-weight:950;color:var(--hint);">
+            ${badge}
+          </div>
+          <div class="thumbMeta">
+            <div class="thumbBadge">${badge}</div>
+            <div class="thumbBadge">${time}</div>
+          </div>
+        `;
+        div.onclick = ()=> openSheet({
+          title: badge,
+          desc: c.filename || "",
+          bodyHtml: `<div class="muted">Этот тип пока не отображаем.</div>`,
+          actions: [{text:"Закрыть", kind:"info", onClick: closeSheet}]
+        });
+      }
+
+      g.appendChild(div);
+    }
+  }
+
+  async function downloadB64({b64, mime, filename}){
+    const bin = atob(b64);
+    const bytes = new Uint8Array(bin.length);
+    for (let i=0;i<bin.length;i++) bytes[i] = bin.charCodeAt(i);
+    const blob = new Blob([bytes], {type: mime || "application/octet-stream"});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename || "file";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url), 1500);
+  }
+
+  async function copyText(s){
+    try{ await navigator.clipboard.writeText(s); showToast("✅ Скопировано", 1400); }
+    catch{ showToast("❌ Не удалось скопировать", 2500); }
+  }
+
+  function openImageViewer(c){
+    const src = `data:${c.mime};base64,${c.b64}`;
+    openSheet({
+      title: c.kind === "screenshot" ? "Скриншот" : "Фото с камеры",
+      desc: new Date(c.t).toLocaleString(),
+      bodyHtml: `
+        <div class="viewer">
+          <img src="${src}" />
+        </div>
+        <div class="muted" style="margin-top:10px">
+          Можно приблизить пальцами (pinch).<br/>
+          Размер: ${Math.round((c.b64.length * 3 / 4) / 1024)} KB
+        </div>
+      `,
+      actions: [
+        {text:"Скачать", kind:"ok", onClick: async()=>{ await downloadB64({b64:c.b64, mime:c.mime, filename:c.filename}); }},
+        {text:"Скопировать data-url", kind:"info", onClick: async()=>{ await copyText(src); }},
+        {text:"Закрыть", kind:"info", onClick: closeSheet},
+      ]
+    });
+  }
+
+  // exec command with output support
+  async function execCmd(cmd, extraPayload={}, {silent=false} = {}){
+    const origCmd = cmd;
+    const real = normalizeCmd(cmd);
+    try{
+      if (!silent) showToast("⏳ " + origCmd);
+
+      const res = await apiPost("/api/exec", {cmd: real, ...extraPayload});
+      const ok = !!res.ok;
+      const msg = res.message || (ok ? "OK" : "Error");
+
+      addLog({cmd: origCmd, ok, message: msg});
+      if (!silent) showToast((ok ? "✅ " : "❌ ") + msg, 3200);
+
+      // show details if server returned data
+      const data = res.data;
+      if (data && data.type === "text" && data.text){
+        openSheet({
+          title: origCmd,
+          desc: msg,
+          bodyHtml: `<pre class="inp mono" style="white-space:pre-wrap;line-height:1.35">${esc(data.text)}</pre>`,
           actions: [
-            { text: "Закрыть", class: "secondary", onClick: closeModal },
-            { text: "Открыть", class: "", onClick: () => { closeModal(); execCmd(`open:${file.path}`); }}
+            {text:"Копировать", kind:"ok", onClick: async()=>{ await copyText(data.text); }},
+            {text:"Закрыть", kind:"info", onClick: closeSheet},
           ]
         });
       }
-    }
 
-    function goUp() {
-      if (pathStack.length) {
-        loadFiles(pathStack.pop());
-      } else {
-        loadFiles('drives');
+      if (data && data.type === "image" && data.b64 && data.mime){
+        const t = Date.now();
+        const filename = (origCmd === "screenshot")
+          ? `screenshot_${t}.jpg`
+          : `camera_${t}.jpg`;
+
+        const cap = {t, kind: origCmd, type:"image", mime: data.mime, b64: data.b64, filename};
+        addCapture(cap);
+        openImageViewer(cap);
       }
-    }
 
-    function refreshFiles() {
-      loadFiles(currentPath);
+      return res;
+    }catch(e){
+      console.log(e);
+      addLog({cmd: origCmd, ok:false, message: e?.message || "Ошибка"});
+      if (!silent) showToast("❌ " + (e?.message || "Ошибка"), 5000);
+      tg?.showAlert?.("Ошибка: " + (e?.message || "Ошибка"));
+      return null;
     }
+  }
 
-    // Processes
-    async function loadProcesses() {
-      try {
-        showToast("⏳ Загрузка процессов...");
-        const result = await apiPost("/api/processes", {});
-        processes = result.data?.processes || [];
-        showToast(`✅ Процессов: ${processes.length}`);
-        
-        // Show in modal
-        openModal({
-          title: "Процессы",
-          desc: `Всего: ${processes.length}`,
-          body: processes.slice(0, 50).map(p => `
-            <div class="list-item">
-              <div class="list-icon">⚙️</div>
-              <div class="list-content">
-                <div class="list-title">${escapeHtml(p.name)}</div>
-                <div class="list-subtitle">PID: ${p.pid} • CPU: ${(p.cpu || 0).toFixed(1)}%</div>
-              </div>
-            </div>
-          `).join(''),
-          actions: [{ text: "Закрыть", class: "secondary", onClick: closeModal }]
-        });
-      } catch (error) {
-        showToast(`❌ ${error.message}`, 3500);
-      }
+  // confirm dangerous
+  function confirmDanger(cmd){
+    openSheet({
+      title: "Подтверждение",
+      desc: "Это действие может привести к потере несохранённых данных.",
+      bodyHtml: `<div class="muted">Команда: <span class="mono">${esc(cmd)}</span></div>`,
+      actions: [
+        {text:"Отмена", kind:"info", onClick: closeSheet},
+        {text:"Подтвердить", kind:"danger", onClick: async()=>{ closeSheet(); await execCmd(cmd); }},
+      ]
+    });
+  }
+
+  // timer
+  async function startShutdownTimer(){
+    const v = Number(document.getElementById("timerMinutes").value || 0);
+    if (!v || v < 1 || v > 1440){
+      showToast("❌ Введи минуты (1..1440)", 3500);
+      return;
     }
+    await execCmd("timer_start_menu", {minutes: v});
+  }
 
-    // Input
-    async function pressKey() {
-      const key = document.getElementById('keySelect').value;
-      await execCmd(`key:${key}`);
+  // volume
+  function volPreview(val){
+    document.getElementById("volNum").textContent = val;
+    const s = document.getElementById("vol");
+    const pct = val + "%";
+    s.style.background = `linear-gradient(to right, var(--btn) ${pct}, rgba(255,255,255,.14) ${pct})`;
+  }
+  async function setVolume(val){
+    val = Number(val);
+    volPreview(val);
+    await execCmd("volume:" + val);
+  }
+  volPreview(50);
+
+  // input
+  async function pressKey(){
+    const key = document.getElementById("keySelect").value;
+    await execCmd("key:" + key);
+  }
+  async function typeText(){
+    const text = (document.getElementById("typeText").value || "").trim();
+    if (!text){ showToast("❌ Введи текст", 2500); return; }
+    await execCmd("type:" + text);
+    document.getElementById("typeText").value = "";
+  }
+
+  function runRaw(){
+    const cmd = (document.getElementById("rawCmd").value || "").trim();
+    if (!cmd){ showToast("❌ Введи команду", 2500); return; }
+    execCmd(cmd);
+  }
+
+  // files
+  let currentPath = "drives";
+  const pathStack = [];
+
+  function fileIcon(f){
+    if (f.is_dir) return "📁";
+    const n = (f.name || "").toLowerCase();
+    const ext = n.includes(".") ? n.split(".").pop() : "";
+    const map = {exe:"⚙️", bat:"⚙️", cmd:"⚙️", msi:"⚙️", png:"🖼️", jpg:"🖼️", jpeg:"🖼️", gif:"🖼️", webp:"🖼️", mp4:"🎬", avi:"🎬", mkv:"🎬", mov:"🎬", mp3:"🎵", wav:"🎵", flac:"🎵", zip:"🗜️", rar:"🗜️", "7z":"🗜️", pdf:"📕", txt:"📄", json:"📋", py:"🐍", html:"🌐", css:"🎨", js:"🟨"};
+    return map[ext] || "📄";
+  }
+
+  function renderFiles(files){
+    const list = document.getElementById("fileList");
+    if (!files || files.length === 0){
+      list.innerHTML = `<div class="muted" style="padding:6px 2px">Пусто.</div>`;
+      return;
     }
-
-    async function typeText() {
-      const text = document.getElementById('typeText').value.trim();
-      if (!text) {
-        showToast("❌ Введите текст");
-        return;
-      }
-      await execCmd(`type:${text}`);
-      document.getElementById('typeText').value = '';
+    list.innerHTML = "";
+    for (const f of files){
+      const div = document.createElement("div");
+      div.className = "item";
+      div.innerHTML = `
+        <div class="iIcon">${fileIcon(f)}</div>
+        <div class="iBody">
+          <div class="iName">${esc(f.name || "")}</div>
+          <div class="iMeta">${esc((f.is_dir ? "Папка" : (f.meta || "Файл")) + (f.modified ? " • " + f.modified : ""))}</div>
+        </div>
+        <div class="iArrow">›</div>
+      `;
+      div.onclick = ()=>{
+        if (f.is_dir){
+          if (currentPath && currentPath !== "drives") pathStack.push(currentPath);
+          loadFiles(f.path);
+        } else {
+          openSheet({
+            title: f.name || "Файл",
+            desc: f.path || "",
+            bodyHtml: `<div class="muted">Действия зависят от поддержки на сервере.</div>`,
+            actions: [
+              {text:"Открыть", kind:"ok", onClick: async()=>{ closeSheet(); await execCmd("open:" + f.path); }},
+              {text:"Удалить", kind:"danger", onClick: async()=>{ closeSheet(); await execCmd("delete:" + f.path); }},
+              {text:"Закрыть", kind:"info", onClick: closeSheet},
+            ]
+          });
+        }
+      };
+      list.appendChild(div);
     }
+  }
 
-    // Settings
-    function openSettings() {
-      openModal({
-        title: "Настройки",
-        desc: "API URL для подключения к ПК",
-        body: `
-          <div class="input-group">
-            <input type="text" class="input mono" id="apiInput" 
-                   placeholder="https://xxxxx.trycloudflare.com" 
-                   value="${escapeHtml(API_BASE)}">
-          </div>
-          <div class="p-16">
-            <button class="btn-full" onclick="saveApi()">Сохранить</button>
-          </div>
-        `,
-        actions: [
-          { text: "Закрыть", class: "secondary", onClick: closeModal },
-          { text: "Проверить", class: "", onClick: pingApi }
-        ]
-      });
+  async function loadFiles(path){
+    try{
+      path = path || "drives";
+      currentPath = path;
+      document.getElementById("pathText").textContent = currentPath;
+      document.getElementById("fileList").innerHTML = `<div class="skeleton"></div><div class="skeleton" style="height:44px;opacity:.7"></div>`;
+      const res = await apiPost("/api/browse", {path});
+      const data = res.data || {};
+      currentPath = data.path || path;
+      document.getElementById("pathText").textContent = currentPath;
+      renderFiles(data.files || []);
+    }catch(e){
+      console.log(e);
+      showToast("❌ " + (e?.message || "browse error"), 5000);
     }
+  }
 
-    function saveApi() {
-      const input = document.getElementById('apiInput');
-      let url = input.value.trim();
-      if (url.endsWith('/')) url = url.slice(0, -1);
-      
-      if (!url.startsWith('https://')) {
-        showToast("❌ URL должен начинаться с https://");
-        return;
-      }
-      
-      API_BASE = url;
-      localStorage.setItem('api_base', API_BASE);
-      showToast("✅ Сохранено");
-      updateStatus();
+  function goUp(){
+    if (pathStack.length === 0){ loadFiles("drives"); return; }
+    loadFiles(pathStack.pop());
+  }
+
+  // Settings
+  function openSettings(){
+    const panelUrl = location.origin + location.pathname + (API_BASE ? ("?api=" + encodeURIComponent(API_BASE)) : "");
+    openSheet({
+      title: "Настройки",
+      desc: "API URL — это твой trycloudflare / туннель до ПК.",
+      bodyHtml: `
+        <div class="muted" style="margin-bottom:8px">API URL</div>
+        <input class="inp mono" id="apiInput" value="${esc(API_BASE)}" placeholder="https://xxxxx.trycloudflare.com" />
+        <div style="height:10px"></div>
+        <button class="btnRow" onclick="saveApiFromSheet()">💾 Сохранить API</button>
+        <div class="hr"></div>
+        <div class="muted">Ссылка панели:</div>
+        <div class="muted mono" style="margin-top:6px;word-break:break-all;color:var(--link)">${esc(panelUrl)}</div>
+        <div style="height:10px"></div>
+        <button class="btnRow" onclick="copyText('${esc(panelUrl)}')">📋 Копировать ссылку</button>
+      `,
+      actions: [{text:"Закрыть", kind:"info", onClick: closeSheet}]
+    });
+  }
+
+  function saveApiFromSheet(){
+    const el = document.getElementById("apiInput");
+    let v = (el?.value || "").trim();
+    if (v.endsWith("/")) v = v.slice(0, -1);
+    if (!v.startsWith("https://")){
+      showToast("❌ API должен начинаться с https://", 3500);
+      return;
     }
+    API_BASE = v;
+    localStorage.setItem("api_base", API_BASE);
+    showToast("✅ API сохранён", 1800);
+    refreshTop(true);
+    closeSheet();
+    updateInfo(true);
+  }
 
-    async function pingApi() {
-      try {
-        await apiPost("/api/processes", {});
-        showToast("✅ Подключение успешно");
-        updateStatus(true);
-      } catch (error) {
-        showToast(`❌ ${error.message}`, 3500);
-        updateStatus(false);
-      }
+  function refreshTop(apiOk){
+    if (apiOk){
+      dot.classList.add("ok");
+      connText.textContent = inTelegram ? "tg+api" : "api";
+      topSub.textContent = "API: " + (API_BASE ? API_BASE.replace("https://","") : "не задан");
+    }else{
+      dot.classList.remove("ok");
+      connText.textContent = inTelegram ? "tg" : "browser";
+      topSub.textContent = API_BASE ? "API недоступен" : "Нужен API URL";
     }
+  }
 
-    // Modal
-    function openModal({ title, desc, body = '', actions = [] }) {
-      document.getElementById('modalTitle').textContent = title;
-      document.getElementById('modalDesc').textContent = desc;
-      document.getElementById('modalBody').innerHTML = body;
-      
-      const actionsEl = document.getElementById('modalActions');
-      actionsEl.innerHTML = actions.map(action => `
-        <button class="btn-full ${action.class || ''}" 
-                onclick="(${action.onClick.toString()})()">${action.text}</button>
-      `).join('');
-      
-      document.getElementById('modalOverlay').classList.add('open');
+  // Auto Info (каждую минуту) -> /api/info
+  async function updateInfo(showToastFlag=false){
+    try{
+      const res = await apiPost("/api/info", {});
+      const d = res.data || {};
+      document.getElementById("publicIp").textContent = d.public_ip || "—";
+      document.getElementById("localIp").textContent = d.local_ip || "—";
+      document.getElementById("cpu").textContent = (d.cpu_percent != null ? (d.cpu_percent.toFixed(1)+"%") : "—");
+      document.getElementById("ram").textContent = d.ram || "—";
+      document.getElementById("disk").textContent = d.disk_c || "—";
+      document.getElementById("uptime").textContent = d.uptime || "—";
+      document.getElementById("infoUpdated").textContent = "Обновлено: " + nowTime();
+      refreshTop(true);
+      if (showToastFlag) showToast("✅ Инфо обновлено", 1600);
+    }catch(e){
+      refreshTop(false);
+      if (showToastFlag) showToast("❌ " + (e?.message || "info error"), 4000);
     }
+  }
 
-    function closeModal() {
-      document.getElementById('modalOverlay').classList.remove('open');
-    }
+  // boot
+  loadLog();
+  loadCaps();
+  refreshTop(!!API_BASE);
 
-    function closeModalOnBg(event) {
-      if (event.target.id === 'modalOverlay') closeModal();
-    }
-
-    // Status update
-    function updateStatus(online) {
-      const dot = document.getElementById('statusDot');
-      const text = document.getElementById('statusText');
-      
-      if (online === undefined) online = !!API_BASE;
-      
-      if (online) {
-        dot.classList.add('online');
-        text.textContent = 'online';
-      } else {
-        dot.classList.remove('online');
-        text.textContent = 'offline';
-      }
-    }
-
-    // Utility
-    function escapeHtml(text) {
-      const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
-      return String(text).replace(/[&<>"']/g, m => map[m]);
-    }
-
-    // Init
-    updateStatus();
-    if (API_BASE) {
-      pingApi();
-    }
-  </script>
-
+  if (API_BASE){
+    updateInfo(false);
+    // автозагрузка дисков
+    loadFiles("drives");
+    // авто обновление каждую минуту
+    setInterval(()=>updateInfo(false), 60000);
+  } else {
+    topSub.textContent = "Нужен API URL (открой панель кнопкой бота)";
+  }
+</script>
 </body>
 </html>
