@@ -8,1233 +8,1174 @@
 
   <style>
     :root{
-      --bg: var(--tg-theme-bg-color, #0b1220);
-      --sec: var(--tg-theme-secondary-bg-color, #0f1a33);
-      --text: var(--tg-theme-text-color, #eaf0ff);
-      --hint: var(--tg-theme-hint-color, #94a7cf);
-      --btn: var(--tg-theme-button-color, #6d5efc);
+      --bg: var(--tg-theme-bg-color, #ffffff);
+      --sec: var(--tg-theme-secondary-bg-color, #f4f4f5);
+      --text: var(--tg-theme-text-color, #000000);
+      --hint: var(--tg-theme-hint-color, #999999);
+      --btn: var(--tg-theme-button-color, #3390ec);
       --btnText: var(--tg-theme-button-text-color, #ffffff);
-      --link: var(--tg-theme-link-color, #9cc2ff);
-
-      --glass: rgba(255,255,255,.06);
-      --glass2: rgba(255,255,255,.08);
-      --border: rgba(255,255,255,.12);
-
-      --r: 18px;
-      --rs: 12px;
-
-      --danger: #ff4d6d;
-      --ok: #2ed573;
-      --warn: #ffa502;
-      --info: #4da3ff;
-
-      --shadow: 0 14px 40px rgba(0,0,0,.35);
+      --accent: #3390ec;
+      --danger: #e53935;
+      --success: #43a047;
+      --warning: #fb8c00);
+      --card-bg: #ffffff;
+      --divider: #e0e0e0;
     }
 
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{
-      background: radial-gradient(1200px 900px at 10% -10%, rgba(167,139,250,.16), transparent 45%),
-                  radial-gradient(900px 700px at 95% 0%, rgba(96,165,250,.14), transparent 50%),
-                  radial-gradient(1200px 900px at 50% 120%, rgba(109,94,252,.10), transparent 55%),
-                  var(--bg);
+    /* Dark theme */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: var(--tg-theme-bg-color, #18222d);
+        --sec: var(--tg-theme-secondary-bg-color, #131e29);
+        --text: var(--tg-theme-text-color, #ffffff);
+        --hint: var(--tg-theme-hint-color, #708499);
+        --card-bg: #232e3c;
+        --divider: #2b3843;
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: var(--sec);
       color: var(--text);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-      min-height: 100vh;
-      padding-bottom: 86px;
+      padding-bottom: 72px;
       overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* Top bar */
-    .top{
+    /* Header */
+    .header {
+      background: var(--bg);
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--divider);
       position: sticky;
       top: 0;
-      z-index: 120;
-      padding: 14px 16px 12px;
-      background: rgba(255,255,255,.04);
-      border-bottom: 1px solid var(--border);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
+      z-index: 100;
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       gap: 12px;
     }
-    .brand{
-      display:flex;
-      flex-direction:column;
-      gap: 2px;
-      min-width: 0;
-    }
-    .title{
-      font-weight: 950;
-      letter-spacing:.2px;
-      font-size: 18px;
-      background: linear-gradient(135deg, #a78bfa, #60a5fa);
-      -webkit-background-clip:text;
-      -webkit-text-fill-color:transparent;
-      background-clip:text;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .subtitle{
-      color: var(--hint);
-      font-size: 12px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .topRight{
-      display:flex;
-      align-items:center;
-      gap: 10px;
-      flex-shrink: 0;
-    }
-    .pill{
-      display:flex;
-      align-items:center;
-      gap: 8px;
-      padding: 8px 10px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.06);
-      border: 1px solid var(--border);
-      font-size: 12px;
-      font-weight: 850;
-      color: var(--hint);
-    }
-    .dot{
-      width: 10px;
-      height: 10px;
-      border-radius: 999px;
-      background: var(--danger);
-      box-shadow: 0 0 12px rgba(255,77,109,.40);
-    }
-    .dot.ok{
-      background: var(--ok);
-      box-shadow: 0 0 12px rgba(46,213,115,.40);
-    }
-    .iconBtn{
-      width: 38px;
-      height: 38px;
-      border-radius: 12px;
-      background: rgba(255,255,255,.06);
-      border: 1px solid var(--border);
-      display:flex;
-      align-items:center;
-      justify-content:center;
+
+    .header-title {
+      font-size: 20px;
+      font-weight: 600;
       color: var(--text);
-      cursor:pointer;
-      user-select:none;
-      transition: transform .12s ease, background .12s ease;
     }
-    .iconBtn:active{ transform: scale(.96); background: rgba(255,255,255,.10); }
-    .iconBtn svg{ width: 18px; height: 18px; }
 
-    /* Pages */
-    .page{display:none; padding: 14px 16px;}
-    .page.active{display:block;}
-
-    /* Cards */
-    .card{
-      background: rgba(255,255,255,.06);
-      border: 1px solid var(--border);
-      border-radius: var(--r);
-      padding: 14px;
-      margin-bottom: 12px;
-      box-shadow: 0 10px 40px rgba(0,0,0,.22);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-    }
-    .cardHeader{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap: 10px;
-      margin-bottom: 12px;
-    }
-    .cardTitle{
-      display:flex;
-      align-items:center;
-      gap: 8px;
+    .status-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 12px;
       font-size: 12px;
-      font-weight: 950;
-      letter-spacing: 1px;
+      font-weight: 500;
+      background: var(--sec);
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--danger);
+    }
+
+    .status-dot.online {
+      background: var(--success);
+    }
+
+    .settings-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: none;
+      background: var(--sec);
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    .settings-btn:active {
+      opacity: 0.6;
+    }
+
+    /* Container */
+    .container {
+      padding: 0;
+    }
+
+    .page {
+      display: none;
+      padding: 12px 0;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    /* Section */
+    .section {
+      background: var(--bg);
+      margin-bottom: 12px;
+    }
+
+    .section-header {
+      padding: 12px 16px 8px;
+      font-size: 13px;
+      font-weight: 600;
       text-transform: uppercase;
       color: var(--hint);
+      letter-spacing: 0.5px;
     }
-    .cardTitle svg{ width: 14px; height: 14px; color: var(--hint); }
 
-    .muted{ color: var(--hint); font-size: 12px; line-height: 1.35; }
+    .section-content {
+      padding: 0 12px 12px;
+    }
 
-    .grid2{display:grid; grid-template-columns:1fr 1fr; gap: 10px;}
-    .grid3{display:grid; grid-template-columns:1fr 1fr 1fr; gap: 10px;}
-
-    /* Buttons */
-    .btn{
-      border:none;
-      cursor:pointer;
-      border-radius: 14px;
-      padding: 13px 12px;
-      background: rgba(255,255,255,.06);
-      border: 1px solid var(--border);
-      color: var(--text);
-      font-weight: 900;
-      font-size: 13px;
-      min-height: 48px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
+    /* Grid buttons */
+    .btn-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
       gap: 8px;
-      user-select:none;
-      transition: transform .12s ease, background .12s ease, border-color .12s ease;
-      text-align:center;
     }
-    .btn:active{ transform: scale(.97); background: rgba(255,255,255,.10); }
-    .btn svg{ width: 18px; height: 18px; }
 
-    .btn.danger{ border-color: rgba(255,77,109,.35); background: rgba(255,77,109,.12); color: #ffd1db; }
-    .btn.warn{ border-color: rgba(255,165,2,.35); background: rgba(255,165,2,.12); color: #ffe3ad; }
-    .btn.ok{ border-color: rgba(46,213,115,.35); background: rgba(46,213,115,.12); color: #cbffe3; }
-    .btn.info{ border-color: rgba(77,163,255,.35); background: rgba(77,163,255,.12); color: #cfe7ff; }
-    .btn.purple{ border-color: rgba(167,139,250,.35); background: rgba(167,139,250,.12); color: #eadcff; }
+    .btn-grid-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
 
-    .btnRow{
-      width:100%;
-      border:none;
-      cursor:pointer;
-      border-radius: 14px;
-      padding: 14px 12px;
-      background: rgba(255,255,255,.06);
-      border: 1px solid var(--border);
-      color: var(--text);
-      font-weight: 950;
-      font-size: 14px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap: 10px;
-      user-select:none;
-      transition: transform .12s ease, background .12s ease;
-      margin-bottom: 12px;
-    }
-    .btnRow:active{ transform: scale(.98); background: rgba(255,255,255,.10); }
-
-    /* Inputs */
-    .row{ display:flex; gap: 10px; align-items:center; }
-    .inp, .sel, .ta{
-      width:100%;
-      border: 1px solid var(--border);
-      background: rgba(15, 26, 51, .65);
-      color: var(--text);
-      border-radius: 14px;
-      padding: 11px 12px;
-      outline: none;
-      font-size: 13px;
-      font-weight: 800;
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,.03);
-    }
-    .inp::placeholder, .ta::placeholder{ color: rgba(148,167,207,.9); }
-    .ta{ min-height: 88px; resize:none; }
-
-    /* Range */
-    .bigNum{
-      text-align:center;
-      font-size: 48px;
-      font-weight: 950;
-      line-height: 1;
-      background: linear-gradient(135deg, #a78bfa, #60a5fa);
-      -webkit-background-clip:text;
-      -webkit-text-fill-color:transparent;
-    }
-    .sub{ text-align:center; margin-top: 4px; color: var(--hint); font-size: 12px; margin-bottom: 10px; }
-    input[type="range"]{
-      -webkit-appearance:none;
-      width:100%;
-      height:6px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.14);
-      outline:none;
-      margin: 10px 0 14px;
-    }
-    input[type="range"]::-webkit-slider-thumb{
-      -webkit-appearance:none;
-      width: 22px;
-      height: 22px;
-      border-radius: 999px;
-      background: var(--btn);
-      box-shadow: 0 0 16px rgba(109,94,252,.55);
-      cursor:pointer;
-    }
-    .quick{ display:flex; gap: 8px; }
-    .quick button{
-      flex:1;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,.06);
-      color: var(--text);
-      border-radius: 14px;
-      padding: 10px 6px;
-      font-weight: 950;
-      cursor:pointer;
-      user-select:none;
-      transition: transform .12s ease, background .12s ease;
-    }
-    .quick button:active{ transform: scale(.97); background: rgba(255,255,255,.10); }
-
-    /* Lists */
-    .list{display:flex; flex-direction:column; gap: 8px;}
-    .item{
-      display:flex;
-      align-items:center;
-      gap: 12px;
-      padding: 12px 12px;
-      border-radius: 16px;
-      background: rgba(255,255,255,.06);
-      border: 1px solid var(--border);
-      cursor:pointer;
-      user-select:none;
-      transition: transform .12s ease, background .12s ease;
-    }
-    .item:active{ transform: scale(.99); background: rgba(255,255,255,.10); }
-    .iIcon{ width: 28px; text-align:center; font-size: 20px; }
-    .iBody{ flex:1; overflow:hidden; }
-    .iName{
-      font-weight: 950;
-      font-size: 14px;
-      white-space: nowrap;
-      overflow:hidden;
-      text-overflow: ellipsis;
-    }
-    .iMeta{
-      margin-top: 2px;
-      color: var(--hint);
-      font-size: 11px;
-      white-space: nowrap;
-      overflow:hidden;
-      text-overflow: ellipsis;
-    }
-    .iArrow{ color: var(--hint); font-weight: 900; }
-
-    .pathBar{
-      display:flex;
-      align-items:center;
-      gap: 10px;
-      padding: 10px 12px;
-      border-radius: 16px;
-      background: rgba(15,26,51,.65);
-      border: 1px solid var(--border);
-      color: var(--hint);
-      font-size: 12px;
-      overflow:hidden;
-      margin-bottom: 10px;
-    }
-    .pathBar span{
-      flex:1;
-      overflow:hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-    }
-    .miniBtn{
-      flex-shrink:0;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,.06);
-      color: var(--text);
-      padding: 7px 10px;
+    .action-btn {
+      position: relative;
+      border: none;
       border-radius: 12px;
-      font-weight: 950;
-      cursor:pointer;
-      user-select:none;
-      transition: transform .12s ease, background .12s ease;
-      font-size: 12px;
-    }
-    .miniBtn:active{ transform: scale(.97); background: rgba(255,255,255,.10); }
-
-    /* Tab bar */
-    .tabs{
-      position: fixed;
-      left:0; right:0; bottom:0;
-      background: rgba(15,26,51,.78);
-      border-top: 1px solid rgba(255,255,255,.10);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      padding-bottom: env(safe-area-inset-bottom);
-      display:flex;
-      z-index: 150;
-    }
-    .tab{
-      flex:1;
-      border:none;
-      background: transparent;
-      color: var(--hint);
-      padding: 10px 0 8px;
-      cursor:pointer;
-      user-select:none;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      gap: 6px;
-      font-size: 10px;
-      font-weight: 950;
-    }
-    .tab svg{ width: 20px; height: 20px; }
-    .tab.active{ color: var(--btn); }
-
-    /* Toast */
-    .toast{
-      position: fixed;
-      left: 50%;
-      bottom: 96px;
-      transform: translateX(-50%) translateY(16px);
-      opacity: 0;
-      pointer-events:none;
-      transition: .22s ease;
-      max-width: 92%;
-      z-index: 999;
-    }
-    .toast.show{ opacity: 1; transform: translateX(-50%) translateY(0); }
-    .toastBox{
-      padding: 10px 14px;
-      border-radius: 999px;
-      background: rgba(10, 14, 26, .92);
-      border: 1px solid rgba(255,255,255,.14);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
+      padding: 16px 12px;
+      background: var(--card-bg);
       color: var(--text);
-      font-weight: 950;
-      font-size: 13px;
-      white-space: nowrap;
-      overflow:hidden;
-      text-overflow: ellipsis;
-      box-shadow: var(--shadow);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: transform 0.15s, opacity 0.15s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      min-height: 80px;
+      justify-content: center;
     }
 
-    /* Bottom sheet */
-    .sheetBg{
+    .action-btn:active {
+      transform: scale(0.96);
+      opacity: 0.8;
+    }
+
+    .action-btn .icon {
+      font-size: 28px;
+      line-height: 1;
+    }
+
+    .action-btn.danger {
+      background: var(--danger);
+      color: white;
+    }
+
+    .action-btn.warning {
+      background: var(--warning);
+      color: white;
+    }
+
+    .action-btn.success {
+      background: var(--success);
+      color: white;
+    }
+
+    .action-btn.primary {
+      background: var(--accent);
+      color: white;
+    }
+
+    /* List items */
+    .list-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      background: var(--bg);
+      border-bottom: 1px solid var(--divider);
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .list-item:active {
+      background: var(--sec);
+    }
+
+    .list-item:first-child {
+      border-top: 1px solid var(--divider);
+    }
+
+    .list-icon {
+      font-size: 24px;
+      width: 32px;
+      text-align: center;
+    }
+
+    .list-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .list-title {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .list-subtitle {
+      font-size: 13px;
+      color: var(--hint);
+      margin-top: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .list-arrow {
+      color: var(--hint);
+      font-size: 18px;
+    }
+
+    /* Input */
+    .input-group {
+      padding: 12px 16px;
+      background: var(--bg);
+      border-bottom: 1px solid var(--divider);
+    }
+
+    .input-label {
+      font-size: 13px;
+      color: var(--hint);
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .input {
+      width: 100%;
+      border: 1px solid var(--divider);
+      background: var(--sec);
+      color: var(--text);
+      border-radius: 10px;
+      padding: 12px;
+      font-size: 15px;
+      outline: none;
+    }
+
+    .input:focus {
+      border-color: var(--accent);
+    }
+
+    .textarea {
+      min-height: 100px;
+      resize: vertical;
+      font-family: inherit;
+    }
+
+    /* Select */
+    .select {
+      width: 100%;
+      border: 1px solid var(--divider);
+      background: var(--sec);
+      color: var(--text);
+      border-radius: 10px;
+      padding: 12px;
+      font-size: 15px;
+      outline: none;
+    }
+
+    /* Volume slider */
+    .volume-container {
+      padding: 24px 16px;
+      background: var(--bg);
+    }
+
+    .volume-display {
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .volume-value {
+      font-size: 48px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .volume-label {
+      font-size: 13px;
+      color: var(--hint);
+      margin-top: 4px;
+    }
+
+    .slider {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 4px;
+      border-radius: 2px;
+      background: var(--divider);
+      outline: none;
+      margin: 20px 0;
+    }
+
+    .slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--accent);
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(51, 144, 236, 0.4);
+    }
+
+    .slider::-moz-range-thumb {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--accent);
+      cursor: pointer;
+      border: none;
+    }
+
+    .quick-values {
+      display: flex;
+      gap: 8px;
+    }
+
+    .quick-btn {
+      flex: 1;
+      border: 1px solid var(--divider);
+      background: var(--sec);
+      color: var(--text);
+      border-radius: 8px;
+      padding: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .quick-btn:active {
+      background: var(--divider);
+    }
+
+    /* Full width button */
+    .btn-full {
+      width: 100%;
+      border: none;
+      border-radius: 12px;
+      padding: 14px;
+      background: var(--accent);
+      color: white;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-full:active {
+      opacity: 0.8;
+    }
+
+    .btn-full.secondary {
+      background: var(--sec);
+      color: var(--text);
+    }
+
+    /* Path bar */
+    .path-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 16px;
+      background: var(--bg);
+      border-bottom: 1px solid var(--divider);
+    }
+
+    .path-btn {
+      padding: 6px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--divider);
+      background: var(--sec);
+      color: var(--text);
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .path-text {
+      flex: 1;
+      font-size: 13px;
+      color: var(--hint);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-family: monospace;
+    }
+
+    /* Bottom navigation */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--bg);
+      border-top: 1px solid var(--divider);
+      display: flex;
+      padding-bottom: env(safe-area-inset-bottom);
+      z-index: 100;
+    }
+
+    .nav-item {
+      flex: 1;
+      border: none;
+      background: transparent;
+      padding: 8px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      color: var(--hint);
+      font-size: 10px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-item.active {
+      color: var(--accent);
+    }
+
+    .nav-icon {
+      font-size: 24px;
+    }
+
+    /* Modal */
+    .modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,.56);
-      display:none;
+      background: rgba(0, 0, 0, 0.4);
+      display: none;
       align-items: flex-end;
-      z-index: 500;
+      z-index: 200;
+      animation: fadeIn 0.2s;
     }
-    .sheetBg.open{ display:flex; }
-    .sheet{
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .modal {
       width: 100%;
-      background: rgba(15,26,51,.95);
-      border: 1px solid rgba(255,255,255,.12);
-      border-top-left-radius: 22px;
-      border-top-right-radius: 22px;
-      box-shadow: var(--shadow);
-      padding: 14px 14px 16px;
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      animation: up .18s ease-out;
+      background: var(--bg);
+      border-top-left-radius: 16px;
+      border-top-right-radius: 16px;
+      padding: 16px;
+      animation: slideUp 0.25s ease-out;
     }
-    @keyframes up{ from{ transform: translateY(30px); opacity:.5 } to{ transform: translateY(0); opacity:1 } }
-    .handle{
-      width: 44px;
+
+    @keyframes slideUp {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+    }
+
+    .modal-handle {
+      width: 36px;
       height: 4px;
-      border-radius: 99px;
-      background: rgba(255,255,255,.20);
-      margin: 2px auto 12px;
+      background: var(--divider);
+      border-radius: 2px;
+      margin: 0 auto 16px;
     }
-    .sheetTitle{ font-weight: 950; font-size: 16px; margin-bottom: 6px; }
-    .sheetDesc{ color: var(--hint); font-size: 13px; line-height: 1.35; margin-bottom: 12px; }
-    .sheetRow{ display:flex; gap: 10px; }
-    .sheetRow .btn{ flex: 1; }
 
-    .hr{ height: 1px; background: rgba(255,255,255,.10); margin: 12px 0; border-radius: 99px; }
-
-    .mono{ font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
-
-    .skeleton{
-      height: 54px;
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: linear-gradient(90deg, rgba(255,255,255,.06) 25%, rgba(255,255,255,.10) 50%, rgba(255,255,255,.06) 75%);
-      background-size: 200% 100%;
-      animation: sh 1.2s infinite linear;
+    .modal-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 8px;
     }
-    @keyframes sh{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+    .modal-desc {
+      font-size: 14px;
+      color: var(--hint);
+      margin-bottom: 16px;
+      line-height: 1.4;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 88px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: rgba(0, 0, 0, 0.85);
+      color: white;
+      padding: 12px 20px;
+      border-radius: 24px;
+      font-size: 14px;
+      font-weight: 500;
+      opacity: 0;
+      transition: all 0.3s;
+      z-index: 300;
+      max-width: 90%;
+      text-align: center;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* Empty state */
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--hint);
+    }
+
+    .empty-icon {
+      font-size: 48px;
+      margin-bottom: 12px;
+      opacity: 0.5;
+    }
+
+    /* Timer input row */
+    .input-row {
+      display: flex;
+      gap: 8px;
+      padding: 12px 16px;
+      background: var(--bg);
+    }
+
+    .input-row .input {
+      flex: 1;
+    }
+
+    .input-row .btn-full {
+      flex-shrink: 0;
+      width: auto;
+      padding: 0 20px;
+    }
+
+    /* Utility */
+    .mb-12 { margin-bottom: 12px; }
+    .p-16 { padding: 16px; }
+    .text-center { text-align: center; }
+    .text-hint { color: var(--hint); }
+    .text-sm { font-size: 13px; }
+    .mono { font-family: monospace; }
   </style>
 </head>
 
 <body>
 
-  <!-- TOP -->
-  <div class="top">
-    <div class="brand">
-      <div class="title" id="topTitle">Cortex Panel</div>
-      <div class="subtitle" id="topSub">Подключение…</div>
-    </div>
-
-    <div class="topRight">
-      <div class="pill">
-        <div class="dot" id="dot"></div>
-        <div id="connText">offline</div>
+  <!-- Header -->
+  <div class="header">
+    <div class="header-content">
+      <div class="header-title">Cortex Panel</div>
+      <div class="status-badge">
+        <div class="status-dot" id="statusDot"></div>
+        <span id="statusText">offline</span>
       </div>
-
-      <div class="iconBtn" onclick="openSettings()" title="Настройки">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <button class="settings-btn" onclick="openSettings()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="12" cy="12" r="3"/>
-          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V22a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.6 1.65 1.65 0 0 0 10.51 3H11a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09A1.65 1.65 0 0 0 16 4.6a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09A1.65 1.65 0 0 0 19.4 15Z"/>
+          <path d="M12 1v6m0 6v6m5.2-13.2 4.2-4.2m-13 13L4.2 19.8m0-15.6 4.2 4.2m9.4 9.4 4.2 4.2"/>
         </svg>
-      </div>
+      </button>
     </div>
   </div>
 
-  <!-- HOME -->
-  <div class="page active" id="page-home">
-    <div class="card">
-      <div class="cardHeader">
-        <div class="cardTitle">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M12 2v10"/><path d="M18.36 6.64a9 9 0 1 1-12.72 0"/>
-          </svg>
-          Система
+  <!-- Main Container -->
+  <div class="container">
+
+    <!-- HOME PAGE -->
+    <div class="page active" id="page-home">
+      <div class="section">
+        <div class="section-header">Управление питанием</div>
+        <div class="section-content">
+          <div class="btn-grid">
+            <button class="action-btn danger" onclick="confirmAction('off', 'Выключить ПК?')">
+              <div class="icon">⏻</div>
+              <div>Выключить</div>
+            </button>
+            <button class="action-btn warning" onclick="confirmAction('restart', 'Перезагрузить ПК?')">
+              <div class="icon">↻</div>
+              <div>Перезагрузка</div>
+            </button>
+            <button class="action-btn primary" onclick="execCmd('sleep')">
+              <div class="icon">🌙</div>
+              <div>Сон</div>
+            </button>
+            <button class="action-btn primary" onclick="execCmd('lock')">
+              <div class="icon">🔒</div>
+              <div>Блокировка</div>
+            </button>
+          </div>
         </div>
       </div>
 
-      <div class="grid2">
-        <button class="btn danger" onclick="confirmDanger('off')">
-          🛑 Выключить ПК
-        </button>
-        <button class="btn warn" onclick="confirmDanger('restart')">
-          ♻️ Перезагрузить
-        </button>
-        <button class="btn purple" onclick="execCmd('lock')">🔒 Заблокировать</button>
-        <button class="btn info" onclick="execCmd('sleep')">🌙 Сон</button>
-      </div>
-
-      <div class="hr"></div>
-
-      <div class="cardHeader" style="margin-bottom:8px">
-        <div class="cardTitle">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
-          </svg>
-          Таймер выключения
+      <div class="section">
+        <div class="section-header">Таймер выключения</div>
+        <div class="input-row">
+          <input type="number" class="input" id="timerMinutes" placeholder="Минуты" min="1" max="1440">
+          <button class="btn-full" onclick="startTimer()">Запустить</button>
+        </div>
+        <div class="p-16">
+          <button class="btn-full secondary" onclick="execCmd('cancel')">Отменить таймер</button>
         </div>
       </div>
 
-      <div class="row">
-        <input class="inp" id="timerMinutes" type="number" min="1" max="1440" placeholder="Минуты (например 30)" />
-        <button class="btn info" style="min-width:120px" onclick="startShutdownTimer()">⏳ Старт</button>
-      </div>
-      <div style="height:10px"></div>
-      <button class="btnRow" onclick="execCmd('cancel')">⛔ Отмена таймера</button>
-
-      <div class="muted">
-        Команды как в меню бота: <span class="mono">timer_start_menu</span> и <span class="mono">cancel</span>.
-        В панели “Старт” отправляет таймер с минутами (нужна поддержка на сервере).
+      <div class="section">
+        <div class="section-header">Быстрые действия</div>
+        <div class="section-content">
+          <div class="btn-grid">
+            <button class="action-btn success" onclick="execCmd('status')">
+              <div class="icon">💻</div>
+              <div>Статус ПК</div>
+            </button>
+            <button class="action-btn primary" onclick="execCmd('taskbar')">
+              <div class="icon">🖥️</div>
+              <div>Рабочий стол</div>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="card">
-      <div class="cardHeader">
-        <div class="cardTitle">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 20h8"/>
-          </svg>
-          Быстро
+    <!-- MEDIA PAGE -->
+    <div class="page" id="page-media">
+      <div class="section">
+        <div class="volume-container">
+          <div class="volume-display">
+            <div class="volume-value" id="volumeValue">50</div>
+            <div class="volume-label">громкость</div>
+          </div>
+          <input type="range" class="slider" id="volumeSlider" min="0" max="100" value="50" 
+                 oninput="updateVolume(this.value)" onchange="setVolume(this.value)">
+          <div class="quick-values">
+            <button class="quick-btn" onclick="setVolume(0)">0</button>
+            <button class="quick-btn" onclick="setVolume(25)">25</button>
+            <button class="quick-btn" onclick="setVolume(50)">50</button>
+            <button class="quick-btn" onclick="setVolume(75)">75</button>
+            <button class="quick-btn" onclick="setVolume(100)">100</button>
+          </div>
         </div>
       </div>
-      <div class="grid2">
-        <button class="btn ok" onclick="execCmd('status')">💻 Статус ПК</button>
-        <button class="btn info" onclick="execCmd('taskbar')">🖥 Рабочий стол</button>
+
+      <div class="section">
+        <div class="section-header">Управление медиа</div>
+        <div class="section-content">
+          <div class="btn-grid-3">
+            <button class="action-btn primary" onclick="execCmd('media_prev')">
+              <div class="icon">⏮</div>
+              <div>Назад</div>
+            </button>
+            <button class="action-btn success" onclick="execCmd('media_play')">
+              <div class="icon">⏯</div>
+              <div>Play</div>
+            </button>
+            <button class="action-btn primary" onclick="execCmd('media_next')">
+              <div class="icon">⏭</div>
+              <div>Вперёд</div>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
+
+    <!-- CAPTURE PAGE -->
+    <div class="page" id="page-capture">
+      <div class="section">
+        <div class="section-header">Скриншоты и запись</div>
+        <div class="section-content">
+          <div class="btn-grid">
+            <button class="action-btn success" onclick="execCmd('screenshot')">
+              <div class="icon">📸</div>
+              <div>Скриншот</div>
+            </button>
+            <button class="action-btn primary" onclick="execCmd('record_start_buttons')">
+              <div class="icon">🎥</div>
+              <div>Видеозапись</div>
+            </button>
+            <button class="action-btn warning" onclick="execCmd('camera_photo')">
+              <div class="icon">📷</div>
+              <div>Фото</div>
+            </button>
+            <button class="action-btn warning" onclick="execCmd('camera_record')">
+              <div class="icon">🎬</div>
+              <div>Камера</div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FILES PAGE -->
+    <div class="page" id="page-files">
+      <div class="path-bar">
+        <button class="path-btn" onclick="goUp()">←</button>
+        <div class="path-text" id="pathText">drives</div>
+        <button class="path-btn" onclick="refreshFiles()">↻</button>
+      </div>
+      <div id="fileList"></div>
+    </div>
+
+    <!-- MORE PAGE -->
+    <div class="page" id="page-more">
+      <div class="section">
+        <div class="section-header">Инструменты</div>
+        <div class="section-content">
+          <div class="btn-grid">
+            <button class="action-btn primary" onclick="execCmd('ip')">
+              <div class="icon">🌐</div>
+              <div>Мой IP</div>
+            </button>
+            <button class="action-btn primary" onclick="execCmd('speedtest')">
+              <div class="icon">⚡</div>
+              <div>Speedtest</div>
+            </button>
+            <button class="action-btn warning" onclick="execCmd('disk_cleanup')">
+              <div class="icon">🧹</div>
+              <div>Очистка</div>
+            </button>
+            <button class="action-btn primary" onclick="loadProcesses()">
+              <div class="icon">⚙️</div>
+              <div>Процессы</div>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-header">Ввод текста</div>
+        <div class="input-group">
+          <label class="input-label">Выберите клавишу</label>
+          <select class="select" id="keySelect">
+            <option value="ENTER">ENTER</option>
+            <option value="ESC">ESC</option>
+            <option value="TAB">TAB</option>
+            <option value="SPACE">SPACE</option>
+            <option value="UP">↑ UP</option>
+            <option value="DOWN">↓ DOWN</option>
+            <option value="LEFT">← LEFT</option>
+            <option value="RIGHT">→ RIGHT</option>
+          </select>
+        </div>
+        <div class="p-16">
+          <button class="btn-full" onclick="pressKey()">Нажать клавишу</button>
+        </div>
+        
+        <div class="input-group">
+          <label class="input-label">Текст для ввода</label>
+          <textarea class="input textarea" id="typeText" placeholder="Введите текст..."></textarea>
+        </div>
+        <div class="p-16">
+          <button class="btn-full" onclick="typeText()">Отправить текст</button>
+        </div>
+      </div>
+    </div>
+
   </div>
 
-  <!-- MEDIA -->
-  <div class="page" id="page-media">
-    <div class="card">
-      <div class="cardHeader">
-        <div class="cardTitle">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
-          </svg>
-          Громкость
-        </div>
-      </div>
-
-      <div class="bigNum" id="volNum">50</div>
-      <div class="sub">процентов</div>
-      <input id="vol" type="range" min="0" max="100" value="50" oninput="volPreview(this.value)" onchange="setVolume(this.value)" />
-      <div class="quick">
-        <button onclick="setVolume(0)">0</button>
-        <button onclick="setVolume(25)">25</button>
-        <button onclick="setVolume(50)">50</button>
-        <button onclick="setVolume(75)">75</button>
-        <button onclick="setVolume(100)">100</button>
-      </div>
-
-      <div class="hr"></div>
-
-      <div class="grid2">
-        <button class="btn info" onclick="execCmd('volume_control')">🔊 Меню громкости</button>
-        <button class="btn ok" onclick="execCmd('play')">▶️ Воспр/Пауза</button>
-      </div>
-
-      <div style="height:10px"></div>
-      <div class="grid3">
-        <button class="btn info" onclick="execCmd('media_prev')">⏮ Prev</button>
-        <button class="btn ok" onclick="execCmd('media_play')">⏯ Play</button>
-        <button class="btn info" onclick="execCmd('media_next')">⏭ Next</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- CAPTURE -->
-  <div class="page" id="page-capture">
-    <div class="card">
-      <div class="cardHeader">
-        <div class="cardTitle">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="12" cy="12" r="3"/>
-          </svg>
-          Снимки / Запись
-        </div>
-      </div>
-
-      <div class="grid2">
-        <button class="btn ok" onclick="execCmd('screenshot')">📸 Скриншот</button>
-        <button class="btn info" onclick="execCmd('record_start_buttons')">🎥 Видеозапись</button>
-        <button class="btn purple" onclick="execCmd('camera_photo')">📷 Фото с камеры</button>
-        <button class="btn purple" onclick="execCmd('camera_record')">🎥 Запись камеры</button>
-      </div>
-
-      <div class="muted" style="margin-top:10px">
-        Эти команды соответствуют callback_data из бота: <span class="mono">screenshot</span>, <span class="mono">record_start_buttons</span>, <span class="mono">camera_photo</span>, <span class="mono">camera_record</span>.
-      </div>
-    </div>
-  </div>
-
-  <!-- FILES -->
-  <div class="page" id="page-files">
-    <div class="pathBar">
-      <button class="miniBtn" onclick="goUp()">←</button>
-      <span id="pathText">drives</span>
-      <button class="miniBtn" onclick="loadFiles('drives')">Диски</button>
-    </div>
-
-    <div class="card">
-      <div class="cardHeader">
-        <div class="cardTitle">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
-          </svg>
-          Браузер файлов
-        </div>
-        <button class="miniBtn" onclick="loadFiles(currentPath)">Обновить</button>
-      </div>
-
-      <div class="list" id="fileList">
-        <div class="skeleton"></div>
-        <div class="skeleton" style="height:44px;opacity:.7"></div>
-      </div>
-
-      <div class="hr"></div>
-      <div class="muted">
-        Тап по папке — вход. Тап по файлу — откроется шторка с действиями (если сервер их поддерживает).
-      </div>
-    </div>
-  </div>
-
-  <!-- INPUT -->
-  <div class="page" id="page-input">
-    <div class="card">
-      <div class="cardHeader">
-        <div class="cardTitle">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/>
-          </svg>
-          Ввод (клавиатура)
-        </div>
-      </div>
-
-      <div class="grid2">
-        <button class="btn info" onclick="execCmd('key_start')">👆 Нажать клавишу</button>
-        <button class="btn purple" onclick="execCmd('type_start')">⌨️ Напечатать текст</button>
-      </div>
-
-      <div class="hr"></div>
-
-      <div class="cardHeader" style="margin-bottom:8px">
-        <div class="cardTitle">Быстрый ввод</div>
-      </div>
-
-      <div class="muted" style="margin-bottom:10px">
-        Это удобный “быстрый режим”. Для работы нужно, чтобы сервер понимал команды <span class="mono">key:</span> и <span class="mono">type:</span>.
-      </div>
-
-      <div class="row">
-        <select class="sel" id="keySelect">
-          <option value="ENTER">ENTER</option>
-          <option value="ESC">ESC</option>
-          <option value="TAB">TAB</option>
-          <option value="SPACE">SPACE</option>
-          <option value="UP">UP</option>
-          <option value="DOWN">DOWN</option>
-          <option value="LEFT">LEFT</option>
-          <option value="RIGHT">RIGHT</option>
-          <option value="VOLUME_UP">VOLUME_UP</option>
-          <option value="VOLUME_DOWN">VOLUME_DOWN</option>
-          <option value="MUTE">MUTE</option>
-        </select>
-        <button class="btn ok" style="min-width:140px" onclick="pressKey()">Отправить</button>
-      </div>
-
-      <div style="height:10px"></div>
-
-      <textarea class="ta" id="typeText" placeholder="Текст для печати на ПК..."></textarea>
-      <div style="height:10px"></div>
-      <button class="btnRow" onclick="typeText()">Отправить текст</button>
-    </div>
-  </div>
-
-  <!-- TOOLS -->
-  <div class="page" id="page-tools">
-    <div class="card">
-      <div class="cardHeader">
-        <div class="cardTitle">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/>
-          </svg>
-          Инструменты
-        </div>
-      </div>
-
-      <div class="grid2">
-        <button class="btn info" onclick="execCmd('ip')">🌐 Мой IP</button>
-        <button class="btn info" onclick="execCmd('speedtest')">⏱️ Speedtest</button>
-        <button class="btn warn" onclick="execCmd('disk_cleanup')">🧹 Очистка диска</button>
-        <button class="btn purple" onclick="execCmd('extra_commands')">🔧 Дополнительные</button>
-      </div>
-
-      <div class="hr"></div>
-
-      <button class="btnRow" onclick="loadProcesses()">⚙️ Обновить процессы</button>
-      <input class="inp" id="procSearch" placeholder="Поиск процесса..." oninput="renderProc()" />
-      <div style="height:10px"></div>
-      <div class="list" id="procList">
-        <div class="muted" style="padding: 6px 2px">
-          Нажми “Обновить процессы”.
-        </div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="cardHeader">
-        <div class="cardTitle">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M12 2l2.5 7.5L22 12l-7.5 2.5L12 22l-2.5-7.5L2 12l7.5-2.5L12 2z"/>
-          </svg>
-          Owner
-        </div>
-      </div>
-
-      <div class="grid2">
-        <button class="btn danger" onclick="execCmd('access_management')">🔐 Управление доступом</button>
-        <button class="btn purple" onclick="execCmd('owner_settings')">👑 Настройки</button>
-      </div>
-
-      <div class="muted" style="margin-top:10px">
-        Эти кнопки должны работать только для OWNER (сервер должен проверять).
-      </div>
-    </div>
-  </div>
-
-  <!-- TAB BAR -->
-  <div class="tabs">
-    <button class="tab active" onclick="openTab('home', this)">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M3 10.5 12 3l9 7.5V21a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-        <path d="M9 23V13h6v10"/>
-      </svg>
-      Главная
+  <!-- Bottom Navigation -->
+  <div class="bottom-nav">
+    <button class="nav-item active" onclick="switchPage('home', this)">
+      <div class="nav-icon">🏠</div>
+      <div>Главная</div>
     </button>
-
-    <button class="tab" onclick="openTab('media', this)">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M11 5 6 9H2v6h4l5 4z"/>
-        <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
-      </svg>
-      Медиа
+    <button class="nav-item" onclick="switchPage('media', this)">
+      <div class="nav-icon">🎵</div>
+      <div>Медиа</div>
     </button>
-
-    <button class="tab" onclick="openTab('capture', this)">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <rect x="3" y="3" width="18" height="18" rx="2"/>
-        <circle cx="12" cy="12" r="3"/>
-      </svg>
-      Камера
+    <button class="nav-item" onclick="switchPage('capture', this)">
+      <div class="nav-icon">📸</div>
+      <div>Камера</div>
     </button>
-
-    <button class="tab" onclick="openTab('files', this); loadFiles(currentPath || 'drives')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
-      </svg>
-      Файлы
+    <button class="nav-item" onclick="switchPage('files', this)">
+      <div class="nav-icon">📁</div>
+      <div>Файлы</div>
     </button>
-
-    <button class="tab" onclick="openTab('tools', this)">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M14.7 6.3a1 1 0 0 1 0 1.4l-7 7a1 1 0 0 1-1.4 0l-2-2a1 1 0 0 1 1.4-1.4l1.3 1.3 6.3-6.3a1 1 0 0 1 1.4 0z"/>
-        <path d="M12 2a10 10 0 1 0 10 10"/>
-      </svg>
-      Ещё
+    <button class="nav-item" onclick="switchPage('more', this)">
+      <div class="nav-icon">⋯</div>
+      <div>Ещё</div>
     </button>
   </div>
 
-  <!-- TOAST -->
-  <div class="toast" id="toast"><div class="toastBox" id="toastBox">...</div></div>
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
 
-  <!-- SHEET: CONFIRM / SETTINGS / FILE ACTIONS -->
-  <div class="sheetBg" id="sheetBg" onclick="sheetBgClick(event)">
-    <div class="sheet" id="sheet">
-      <div class="handle"></div>
-
-      <div class="sheetTitle" id="sheetTitle">...</div>
-      <div class="sheetDesc" id="sheetDesc">...</div>
-
-      <div id="sheetBody"></div>
-
-      <div class="hr"></div>
-      <div class="sheetRow" id="sheetActions"></div>
+  <!-- Modal -->
+  <div class="modal-overlay" id="modalOverlay" onclick="closeModalOnBg(event)">
+    <div class="modal">
+      <div class="modal-handle"></div>
+      <div class="modal-title" id="modalTitle"></div>
+      <div class="modal-desc" id="modalDesc"></div>
+      <div id="modalBody"></div>
+      <div class="modal-actions" id="modalActions"></div>
     </div>
   </div>
 
-<script>
-  // Telegram WebApp
-  const tg = window.Telegram?.WebApp;
-
-  // API_BASE from ?api=... or localStorage
-  const params = new URLSearchParams(location.search);
-  let API_BASE = (params.get("api") || localStorage.getItem("api_base") || "").trim();
-  if (API_BASE.endsWith("/")) API_BASE = API_BASE.slice(0, -1);
-  if (API_BASE) localStorage.setItem("api_base", API_BASE);
-
-  // UI refs
-  const dot = document.getElementById('dot');
-  const connText = document.getElementById('connText');
-  const topSub = document.getElementById('topSub');
-
-  // toast
-  let toastTimer = null;
-  function showToast(msg, ms=2600){
-    const t = document.getElementById('toast');
-    const box = document.getElementById('toastBox');
-    box.textContent = msg;
-    t.classList.add('show');
-    clearTimeout(toastTimer);
-    toastTimer = setTimeout(()=>t.classList.remove('show'), ms);
-  }
-
-  function esc(s){
-    return String(s ?? "")
-      .replaceAll("&","&amp;")
-      .replaceAll("<","&lt;")
-      .replaceAll(">","&gt;")
-      .replaceAll('"',"&quot;")
-      .replaceAll("'","&#039;");
-  }
-
-  // tabs
-  function openTab(name, el){
-    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-    document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
-    document.getElementById('page-' + name).classList.add('active');
-    el.classList.add('active');
-  }
-
-  // init Telegram
-  const inTelegram = !!(tg && tg.initData);
-  if (inTelegram){
-    tg.ready();
-    tg.expand();
-  }
-
-  // API helper
-  async function apiPost(path, payload){
-    if (!API_BASE){
-      throw new Error("API URL не задан. Открой панель через кнопку бота (она должна подставить ?api=...).");
+  <script>
+    // Telegram WebApp init
+    const tg = window.Telegram?.WebApp;
+    if (tg) {
+      tg.ready();
+      tg.expand();
+      tg.enableClosingConfirmation();
     }
 
-    const headers = { "Content-Type": "application/json" };
-    if (tg && tg.initData) headers["X-Tg-Init-Data"] = tg.initData;
+    // API Configuration
+    const params = new URLSearchParams(location.search);
+    let API_BASE = (params.get("api") || localStorage.getItem("api_base") || "").trim();
+    if (API_BASE.endsWith("/")) API_BASE = API_BASE.slice(0, -1);
+    if (API_BASE) localStorage.setItem("api_base", API_BASE);
 
-    const r = await fetch(API_BASE + path, {
-      method: "POST",
-      headers,
-      body: JSON.stringify(payload || {})
-    });
+    // Global state
+    let currentPath = "drives";
+    const pathStack = [];
+    let processes = [];
 
-    let data = null;
-    try{ data = await r.json(); } catch {}
-
-    if (!r.ok){
-      const msg = data?.message || ("HTTP " + r.status);
-      throw new Error(msg);
-    }
-    return data;
-  }
-
-  // COMMAND MAP for compatibility with твоим меню
-  function normalizeCmd(cmd){
-    // имена как в меню бота → имена как в API (если у тебя так)
-    if (cmd === "off") return "shutdown";
-    if (cmd === "restart") return "reboot";
-    if (cmd === "play") return "media_play";
-    return cmd;
-  }
-
-  async function execCmd(cmd){
-    const real = normalizeCmd(cmd);
-    try{
-      showToast("⏳ " + cmd);
-      const res = await apiPost("/api/exec", { cmd: real, raw: cmd });
-      showToast((res.ok ? "✅ " : "❌ ") + (res.message || "Готово"), 3500);
-    }catch(e){
-      console.log(e);
-      showToast("❌ " + (e?.message || "Ошибка"), 5000);
-      tg?.showAlert?.("Ошибка: " + (e?.message || "Ошибка"));
-    }
-  }
-
-  // DANGEROUS confirm
-  function confirmDanger(cmd){
-    openSheet({
-      title: "Подтверждение",
-      desc: "Это действие может привести к потере несохранённых данных.",
-      bodyHtml: `<div class="muted">Команда: <span class="mono">${esc(cmd)}</span></div>`,
-      actions: [
-        { text: "Отмена", kind: "info", onClick: closeSheet },
-        { text: "Подтвердить", kind: "danger", onClick: async()=>{ closeSheet(); await execCmd(cmd);} }
-      ]
-    });
-  }
-
-  // TIMER start (минуты)
-  async function startShutdownTimer(){
-    const v = Number(document.getElementById("timerMinutes").value || 0);
-    if (!v || v < 1 || v > 1440){
-      showToast("❌ Введи минуты (1..1440)", 3500);
-      return;
+    // Toast
+    let toastTimer;
+    function showToast(msg, duration = 2500) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove('show'), duration);
     }
 
-    // Тут 2 варианта:
-    // 1) если твой server.py поддерживает cmd="timer" + minutes в payload -> делай так
-    // 2) если поддерживает строку "timer:<minutes>" -> делай так
-    //
-    // Я отправлю универсально: cmd="timer_start_menu" + minutes
-    try{
-      showToast("⏳ Таймер: " + v + " мин");
-      const res = await apiPost("/api/exec", { cmd: "timer_start_menu", minutes: v });
-      showToast((res.ok ? "✅ " : "❌ ") + (res.message || "Отправлено"), 3500);
-    }catch(e){
-      console.log(e);
-      showToast("❌ " + (e?.message || "Ошибка таймера"), 5000);
+    // API Helper
+    async function apiPost(path, payload) {
+      if (!API_BASE) {
+        throw new Error("API URL не установлен");
+      }
+
+      const headers = { "Content-Type": "application/json" };
+      if (tg?.initData) headers["X-Tg-Init-Data"] = tg.initData;
+
+      const response = await fetch(API_BASE + path, {
+        method: "POST",
+        headers,
+        body: JSON.stringify(payload || {})
+      });
+
+      let data = null;
+      try { data = await response.json(); } catch {}
+
+      if (!response.ok) {
+        throw new Error(data?.message || `HTTP ${response.status}`);
+      }
+      return data;
     }
-  }
 
-  // VOLUME
-  function volPreview(val){
-    document.getElementById("volNum").textContent = val;
-    const s = document.getElementById("vol");
-    const pct = val + "%";
-    s.style.background = `linear-gradient(to right, var(--btn) ${pct}, rgba(255,255,255,.14) ${pct})`;
-  }
-  async function setVolume(val){
-    val = Number(val);
-    volPreview(val);
-    // volume в API обычно "volume:50"
-    await execCmd("volume:" + val);
-  }
-  volPreview(50);
-
-  // FILES
-  let currentPath = "drives";
-  const pathStack = [];
-
-  function fileIcon(f){
-    if (f.is_dir) return "📁";
-    const n = (f.name || "").toLowerCase();
-    const ext = n.includes(".") ? n.split(".").pop() : "";
-    const map = {
-      exe:"⚙️", bat:"⚙️", cmd:"⚙️", msi:"⚙️",
-      png:"🖼️", jpg:"🖼️", jpeg:"🖼️", gif:"🖼️", webp:"🖼️",
-      mp4:"🎬", avi:"🎬", mkv:"🎬", mov:"🎬",
-      mp3:"🎵", wav:"🎵", flac:"🎵",
-      zip:"🗜️", rar:"🗜️", "7z":"🗜️",
-      pdf:"📕", txt:"📄", json:"📋", py:"🐍", html:"🌐", css:"🎨", js:"🟨"
-    };
-    return map[ext] || "📄";
-  }
-
-  function renderFiles(files){
-    const list = document.getElementById("fileList");
-    if (!files || files.length === 0){
-      list.innerHTML = `<div class="muted" style="padding:6px 2px">Пусто.</div>`;
-      return;
-    }
-    list.innerHTML = "";
-    for (const f of files){
-      const div = document.createElement("div");
-      div.className = "item";
-      div.innerHTML = `
-        <div class="iIcon">${fileIcon(f)}</div>
-        <div class="iBody">
-          <div class="iName">${esc(f.name || "")}</div>
-          <div class="iMeta">${esc((f.is_dir ? "Папка" : (f.meta || "Файл")) + (f.modified ? " • " + f.modified : ""))}</div>
-        </div>
-        <div class="iArrow">›</div>
-      `;
-
-      div.onclick = () => {
-        if (f.is_dir){
-          if (currentPath && currentPath !== "drives") pathStack.push(currentPath);
-          loadFiles(f.path);
-        } else {
-          openFileActions(f);
-        }
+    // Command execution
+    function normalizeCmd(cmd) {
+      const map = {
+        'off': 'shutdown',
+        'restart': 'reboot',
+        'play': 'media_play'
       };
-
-      list.appendChild(div);
-    }
-  }
-
-  async function loadFiles(path){
-    try{
-      path = path || "drives";
-      currentPath = path;
-      document.getElementById("pathText").textContent = currentPath;
-      document.getElementById("fileList").innerHTML =
-        `<div class="skeleton"></div><div class="skeleton" style="height:44px;opacity:.7"></div>`;
-
-      const res = await apiPost("/api/browse", { path });
-      const data = res.data || {};
-      currentPath = data.path || path;
-      document.getElementById("pathText").textContent = currentPath;
-      renderFiles(data.files || []);
-    }catch(e){
-      console.log(e);
-      showToast("❌ " + (e?.message || "browse error"), 5000);
-    }
-  }
-
-  function goUp(){
-    if (pathStack.length === 0){
-      loadFiles("drives");
-      return;
-    }
-    const prev = pathStack.pop();
-    loadFiles(prev);
-  }
-
-  function openFileActions(f){
-    const p = f.path || "";
-    openSheet({
-      title: f.name || "Файл",
-      desc: p,
-      bodyHtml: `
-        <div class="muted">Действия зависят от поддержки на сервере.</div>
-      `,
-      actions: [
-        { text: "Закрыть", kind: "info", onClick: closeSheet },
-        { text: "Открыть", kind: "ok", onClick: async()=>{ closeSheet(); await apiExecCompat("open", p);} },
-        { text: "Удалить", kind: "danger", onClick: async()=>{ closeSheet(); await apiExecCompat("delete", p);} },
-      ]
-    });
-  }
-
-  async function apiExecCompat(action, path){
-    // самые частые форматы для серверов:
-    // "open:C:\path\file" / "delete:C:\path"
-    const cmd = `${action}:${path}`;
-    await execCmd(cmd);
-  }
-
-  // PROCESSES
-  let procAll = [];
-  async function loadProcesses(){
-    try{
-      showToast("⏳ processes...");
-      document.getElementById("procList").innerHTML =
-        `<div class="skeleton"></div><div class="skeleton" style="height:44px;opacity:.7"></div>`;
-
-      const res = await apiPost("/api/processes", {});
-      procAll = (res.data && res.data.processes) ? res.data.processes : [];
-      renderProc();
-      showToast("✅ processes: " + procAll.length, 2200);
-    }catch(e){
-      console.log(e);
-      showToast("❌ " + (e?.message || "process error"), 5000);
-    }
-  }
-
-  function renderProc(){
-    const q = (document.getElementById("procSearch").value || "").toLowerCase();
-    const list = document.getElementById("procList");
-
-    let arr = procAll;
-    if (q) arr = arr.filter(p => (p.name || "").toLowerCase().includes(q));
-
-    if (!arr || arr.length === 0){
-      list.innerHTML = `<div class="muted" style="padding:6px 2px">Ничего не найдено.</div>`;
-      return;
+      return map[cmd] || cmd;
     }
 
-    list.innerHTML = "";
-    arr.slice(0, 80).forEach(p=>{
-      const cpu = (typeof p.cpu === "number") ? p.cpu.toFixed(1) : (p.cpu ?? 0);
-      const div = document.createElement("div");
-      div.className = "item";
-      div.style.cursor = "default";
-      div.innerHTML = `
-        <div class="iIcon">⚙️</div>
-        <div class="iBody">
-          <div class="iName">${esc(p.name || "unknown")}</div>
-          <div class="iMeta">PID: ${p.pid} • CPU: ${cpu}%</div>
-        </div>
-        <div class="iArrow"></div>
-      `;
-      list.appendChild(div);
-    });
-  }
-
-  // Quick input (key/type)
-  async function pressKey(){
-    const key = document.getElementById("keySelect").value;
-    // серверу нужно понимать cmd "key" или "key:ENTER"
-    // отправим "key:ENTER" (самый простой формат)
-    await execCmd("key:" + key);
-  }
-
-  async function typeText(){
-    const text = (document.getElementById("typeText").value || "").trim();
-    if (!text){
-      showToast("❌ Введи текст", 2500);
-      return;
+    async function execCmd(cmd) {
+      try {
+        showToast(`⏳ ${cmd}...`);
+        const result = await apiPost("/api/exec", { cmd: normalizeCmd(cmd) });
+        showToast(result.message || "✅ Выполнено");
+      } catch (error) {
+        showToast(`❌ ${error.message}`, 3500);
+      }
     }
-    // безопаснее всего отправлять payload, но сервер сейчас может понимать строку
-    // сделаем простой формат: type:<text>
-    await execCmd("type:" + text);
-    document.getElementById("typeText").value = "";
-  }
 
-  // Settings sheet
-  function openSettings(){
-    const panelUrl = location.origin + location.pathname + (API_BASE ? ("?api=" + encodeURIComponent(API_BASE)) : "");
-    openSheet({
-      title: "Настройки панели",
-      desc: "Здесь API URL (туннель до твоего ПК). Обычно бот обновляет его автоматически.",
-      bodyHtml: `
-        <div class="muted" style="margin-bottom:10px">
-          API URL:
-        </div>
-        <input class="inp mono" id="apiInput" placeholder="https://xxxxx.trycloudflare.com" value="${esc(API_BASE)}" />
-        <div style="height:10px"></div>
-        <button class="btnRow" onclick="saveApiFromSheet()">💾 Сохранить API</button>
-        <div class="hr"></div>
-        <div class="muted">
-          Панель-ссылка (для проверки):
-          <div class="mono" style="margin-top:6px; word-break: break-all; color: var(--link)">${esc(panelUrl)}</div>
-        </div>
-        <div style="height:10px"></div>
-        <button class="btnRow" onclick="copyText('${esc(panelUrl)}')">📋 Копировать ссылку</button>
-        <button class="btnRow" onclick="pingApi()">📡 Проверить подключение</button>
-      `,
-      actions: [
-        { text: "Закрыть", kind: "info", onClick: closeSheet }
-      ]
-    });
-  }
+    // Page switching
+    function switchPage(page, button) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+      
+      document.getElementById(`page-${page}`).classList.add('active');
+      button.classList.add('active');
 
-  function saveApiFromSheet(){
-    const el = document.getElementById("apiInput");
-    let v = (el?.value || "").trim();
-    if (v.endsWith("/")) v = v.slice(0, -1);
-    if (!v.startsWith("https://")){
-      showToast("❌ API должен начинаться с https://", 3500);
-      return;
+      if (page === 'files' && !document.getElementById('fileList').children.length) {
+        loadFiles('drives');
+      }
     }
-    API_BASE = v;
-    localStorage.setItem("api_base", API_BASE);
-    showToast("✅ API сохранён", 2000);
-    refreshTop();
-  }
 
-  async function pingApi(){
-    try{
-      showToast("⏳ ping...");
-      // лёгкая проверка: /api/processes
-      await apiPost("/api/processes", {});
-      showToast("✅ API доступен", 2200);
-      refreshTop(true);
-    }catch(e){
-      showToast("❌ " + (e?.message || "ping error"), 5000);
-      refreshTop(false);
+    // Volume control
+    function updateVolume(value) {
+      document.getElementById('volumeValue').textContent = value;
     }
-  }
 
-  async function copyText(s){
-    try{
-      await navigator.clipboard.writeText(s);
-      showToast("✅ Скопировано", 1500);
-    }catch{
-      showToast("❌ Не удалось скопировать", 2500);
+    async function setVolume(value) {
+      updateVolume(value);
+      document.getElementById('volumeSlider').value = value;
+      await execCmd(`volume:${value}`);
     }
-  }
 
-  // Top status refresh
-  function refreshTop(forceOk){
-    const ok = (typeof forceOk === "boolean") ? forceOk : (!!API_BASE);
-    if (ok){
-      dot.classList.add("ok");
-      connText.textContent = inTelegram ? "telegram+api" : "api";
-      topSub.textContent = API_BASE ? ("API: " + API_BASE.replace("https://","")) : "API не задан";
-    }else{
-      dot.classList.remove("ok");
-      connText.textContent = inTelegram ? "telegram" : "browser";
-      topSub.textContent = API_BASE ? "API недоступен" : "Нужен API URL";
+    // Timer
+    async function startTimer() {
+      const minutes = parseInt(document.getElementById('timerMinutes').value);
+      if (!minutes || minutes < 1) {
+        showToast("❌ Укажите минуты");
+        return;
+      }
+      await apiPost("/api/exec", { cmd: "timer_start_menu", minutes });
+      showToast(`✅ Таймер: ${minutes} мин`);
     }
-  }
 
-  // Sheet engine
-  function openSheet({title, desc, bodyHtml, actions}){
-    document.getElementById("sheetTitle").textContent = title || "";
-    document.getElementById("sheetDesc").textContent = desc || "";
-    document.getElementById("sheetBody").innerHTML = bodyHtml || "";
+    // Confirm action
+    function confirmAction(cmd, message) {
+      openModal({
+        title: "Подтверждение",
+        desc: message,
+        actions: [
+          { text: "Отмена", class: "secondary", onClick: closeModal },
+          { text: "Подтвердить", class: "", onClick: () => { closeModal(); execCmd(cmd); }}
+        ]
+      });
+    }
 
-    const actionsEl = document.getElementById("sheetActions");
-    actionsEl.innerHTML = "";
-    (actions || []).forEach(a=>{
-      const b = document.createElement("button");
-      b.className = "btn " + (a.kind || "info");
-      b.textContent = a.text || "OK";
-      b.onclick = a.onClick || closeSheet;
-      actionsEl.appendChild(b);
-    });
+    // Files
+    async function loadFiles(path) {
+      try {
+        currentPath = path || "drives";
+        document.getElementById('pathText').textContent = currentPath;
+        
+        const fileList = document.getElementById('fileList');
+        fileList.innerHTML = '<div class="empty-state"><div class="empty-icon">⏳</div>Загрузка...</div>';
 
-    document.getElementById("sheetBg").classList.add("open");
-  }
+        const result = await apiPost("/api/browse", { path: currentPath });
+        const files = result.data?.files || [];
 
-  function closeSheet(){
-    document.getElementById("sheetBg").classList.remove("open");
-  }
+        if (!files.length) {
+          fileList.innerHTML = '<div class="empty-state"><div class="empty-icon">📭</div>Пусто</div>';
+          return;
+        }
 
-  function sheetBgClick(e){
-    if (e.target.id === "sheetBg") closeSheet();
-  }
+        fileList.innerHTML = files.map(file => `
+          <div class="list-item" onclick='handleFile(${JSON.stringify(file)})'>
+            <div class="list-icon">${file.is_dir ? '📁' : '📄'}</div>
+            <div class="list-content">
+              <div class="list-title">${escapeHtml(file.name)}</div>
+              <div class="list-subtitle">${file.is_dir ? 'Папка' : (file.meta || 'Файл')}</div>
+            </div>
+            <div class="list-arrow">›</div>
+          </div>
+        `).join('');
 
-  // Boot
-  refreshTop(!!API_BASE);
+      } catch (error) {
+        showToast(`❌ ${error.message}`, 3500);
+      }
+    }
 
-  // авто подгрузить диски если API есть
-  if (API_BASE){
-    loadFiles("drives");
-  }
-</script>
+    function handleFile(file) {
+      if (file.is_dir) {
+        pathStack.push(currentPath);
+        loadFiles(file.path);
+      } else {
+        openModal({
+          title: file.name,
+          desc: file.path,
+          actions: [
+            { text: "Закрыть", class: "secondary", onClick: closeModal },
+            { text: "Открыть", class: "", onClick: () => { closeModal(); execCmd(`open:${file.path}`); }}
+          ]
+        });
+      }
+    }
+
+    function goUp() {
+      if (pathStack.length) {
+        loadFiles(pathStack.pop());
+      } else {
+        loadFiles('drives');
+      }
+    }
+
+    function refreshFiles() {
+      loadFiles(currentPath);
+    }
+
+    // Processes
+    async function loadProcesses() {
+      try {
+        showToast("⏳ Загрузка процессов...");
+        const result = await apiPost("/api/processes", {});
+        processes = result.data?.processes || [];
+        showToast(`✅ Процессов: ${processes.length}`);
+        
+        // Show in modal
+        openModal({
+          title: "Процессы",
+          desc: `Всего: ${processes.length}`,
+          body: processes.slice(0, 50).map(p => `
+            <div class="list-item">
+              <div class="list-icon">⚙️</div>
+              <div class="list-content">
+                <div class="list-title">${escapeHtml(p.name)}</div>
+                <div class="list-subtitle">PID: ${p.pid} • CPU: ${(p.cpu || 0).toFixed(1)}%</div>
+              </div>
+            </div>
+          `).join(''),
+          actions: [{ text: "Закрыть", class: "secondary", onClick: closeModal }]
+        });
+      } catch (error) {
+        showToast(`❌ ${error.message}`, 3500);
+      }
+    }
+
+    // Input
+    async function pressKey() {
+      const key = document.getElementById('keySelect').value;
+      await execCmd(`key:${key}`);
+    }
+
+    async function typeText() {
+      const text = document.getElementById('typeText').value.trim();
+      if (!text) {
+        showToast("❌ Введите текст");
+        return;
+      }
+      await execCmd(`type:${text}`);
+      document.getElementById('typeText').value = '';
+    }
+
+    // Settings
+    function openSettings() {
+      openModal({
+        title: "Настройки",
+        desc: "API URL для подключения к ПК",
+        body: `
+          <div class="input-group">
+            <input type="text" class="input mono" id="apiInput" 
+                   placeholder="https://xxxxx.trycloudflare.com" 
+                   value="${escapeHtml(API_BASE)}">
+          </div>
+          <div class="p-16">
+            <button class="btn-full" onclick="saveApi()">Сохранить</button>
+          </div>
+        `,
+        actions: [
+          { text: "Закрыть", class: "secondary", onClick: closeModal },
+          { text: "Проверить", class: "", onClick: pingApi }
+        ]
+      });
+    }
+
+    function saveApi() {
+      const input = document.getElementById('apiInput');
+      let url = input.value.trim();
+      if (url.endsWith('/')) url = url.slice(0, -1);
+      
+      if (!url.startsWith('https://')) {
+        showToast("❌ URL должен начинаться с https://");
+        return;
+      }
+      
+      API_BASE = url;
+      localStorage.setItem('api_base', API_BASE);
+      showToast("✅ Сохранено");
+      updateStatus();
+    }
+
+    async function pingApi() {
+      try {
+        await apiPost("/api/processes", {});
+        showToast("✅ Подключение успешно");
+        updateStatus(true);
+      } catch (error) {
+        showToast(`❌ ${error.message}`, 3500);
+        updateStatus(false);
+      }
+    }
+
+    // Modal
+    function openModal({ title, desc, body = '', actions = [] }) {
+      document.getElementById('modalTitle').textContent = title;
+      document.getElementById('modalDesc').textContent = desc;
+      document.getElementById('modalBody').innerHTML = body;
+      
+      const actionsEl = document.getElementById('modalActions');
+      actionsEl.innerHTML = actions.map(action => `
+        <button class="btn-full ${action.class || ''}" 
+                onclick="(${action.onClick.toString()})()">${action.text}</button>
+      `).join('');
+      
+      document.getElementById('modalOverlay').classList.add('open');
+    }
+
+    function closeModal() {
+      document.getElementById('modalOverlay').classList.remove('open');
+    }
+
+    function closeModalOnBg(event) {
+      if (event.target.id === 'modalOverlay') closeModal();
+    }
+
+    // Status update
+    function updateStatus(online) {
+      const dot = document.getElementById('statusDot');
+      const text = document.getElementById('statusText');
+      
+      if (online === undefined) online = !!API_BASE;
+      
+      if (online) {
+        dot.classList.add('online');
+        text.textContent = 'online';
+      } else {
+        dot.classList.remove('online');
+        text.textContent = 'offline';
+      }
+    }
+
+    // Utility
+    function escapeHtml(text) {
+      const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
+      return String(text).replace(/[&<>"']/g, m => map[m]);
+    }
+
+    // Init
+    updateStatus();
+    if (API_BASE) {
+      pingApi();
+    }
+  </script>
 
 </body>
 </html>
