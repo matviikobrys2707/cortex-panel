@@ -9,444 +9,557 @@
   <style>
     :root{
       --bg: var(--tg-theme-bg-color, #0b1220);
-      --sec: var(--tg-theme-secondary-bg-color, #101a2f);
-      --text: var(--tg-theme-text-color, #e9eefc);
-      --hint: var(--tg-theme-hint-color, #93a4c7);
+      --sec: var(--tg-theme-secondary-bg-color, #0f1a33);
+      --text: var(--tg-theme-text-color, #eaf0ff);
+      --hint: var(--tg-theme-hint-color, #94a7cf);
       --btn: var(--tg-theme-button-color, #6d5efc);
-      --btnText: var(--tg-theme-button-text-color, #fff);
+      --btnText: var(--tg-theme-button-text-color, #ffffff);
+      --link: var(--tg-theme-link-color, #9cc2ff);
 
       --glass: rgba(255,255,255,.06);
+      --glass2: rgba(255,255,255,.08);
       --border: rgba(255,255,255,.12);
-      --radius: 16px;
-      --radiusSm: 12px;
+
+      --r: 18px;
+      --rs: 12px;
 
       --danger: #ff4d6d;
       --ok: #2ed573;
       --warn: #ffa502;
       --info: #4da3ff;
+
+      --shadow: 0 14px 40px rgba(0,0,0,.35);
     }
 
     *{box-sizing:border-box;margin:0;padding:0}
     body{
-      background: var(--bg);
+      background: radial-gradient(1200px 900px at 10% -10%, rgba(167,139,250,.16), transparent 45%),
+                  radial-gradient(900px 700px at 95% 0%, rgba(96,165,250,.14), transparent 50%),
+                  radial-gradient(1200px 900px at 50% 120%, rgba(109,94,252,.10), transparent 55%),
+                  var(--bg);
       color: var(--text);
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
       min-height: 100vh;
       padding-bottom: 86px;
+      overflow-x: hidden;
     }
 
-    .header{
-      position: sticky; top:0; z-index:100;
-      padding: 14px 16px;
-      background: rgba(255,255,255,.05);
-      backdrop-filter: blur(18px);
+    /* Top bar */
+    .top{
+      position: sticky;
+      top: 0;
+      z-index: 120;
+      padding: 14px 16px 12px;
+      background: rgba(255,255,255,.04);
       border-bottom: 1px solid var(--border);
-      display:flex; align-items:center; justify-content:space-between;
-      gap: 10px;
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
+    }
+    .brand{
+      display:flex;
+      flex-direction:column;
+      gap: 2px;
+      min-width: 0;
     }
     .title{
-      font-weight:900;
-      font-size:18px;
+      font-weight: 950;
       letter-spacing:.2px;
+      font-size: 18px;
       background: linear-gradient(135deg, #a78bfa, #60a5fa);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
       background-clip:text;
       white-space: nowrap;
-      overflow:hidden;
+      overflow: hidden;
       text-overflow: ellipsis;
     }
-    .status{
-      display:flex; align-items:center; gap:8px;
-      font-size:12px;
+    .subtitle{
       color: var(--hint);
+      font-size: 12px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .topRight{
+      display:flex;
+      align-items:center;
+      gap: 10px;
       flex-shrink: 0;
     }
+    .pill{
+      display:flex;
+      align-items:center;
+      gap: 8px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid var(--border);
+      font-size: 12px;
+      font-weight: 850;
+      color: var(--hint);
+    }
     .dot{
-      width:10px; height:10px; border-radius:99px;
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
       background: var(--danger);
-      box-shadow: 0 0 10px rgba(255,77,109,.45);
+      box-shadow: 0 0 12px rgba(255,77,109,.40);
     }
-    .dot.online{
+    .dot.ok{
       background: var(--ok);
-      box-shadow: 0 0 10px rgba(46,213,115,.45);
+      box-shadow: 0 0 12px rgba(46,213,115,.40);
     }
+    .iconBtn{
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid var(--border);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color: var(--text);
+      cursor:pointer;
+      user-select:none;
+      transition: transform .12s ease, background .12s ease;
+    }
+    .iconBtn:active{ transform: scale(.96); background: rgba(255,255,255,.10); }
+    .iconBtn svg{ width: 18px; height: 18px; }
 
-    .page{display:none; padding:16px;}
+    /* Pages */
+    .page{display:none; padding: 14px 16px;}
     .page.active{display:block;}
 
+    /* Cards */
     .card{
-      background: var(--glass);
+      background: rgba(255,255,255,.06);
       border: 1px solid var(--border);
-      border-radius: var(--radius);
+      border-radius: var(--r);
       padding: 14px;
+      margin-bottom: 12px;
+      box-shadow: 0 10px 40px rgba(0,0,0,.22);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+    .cardHeader{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 10px;
       margin-bottom: 12px;
     }
     .cardTitle{
-      font-size:12px;
-      text-transform:uppercase;
-      letter-spacing:1px;
+      display:flex;
+      align-items:center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 950;
+      letter-spacing: 1px;
+      text-transform: uppercase;
       color: var(--hint);
-      font-weight:800;
-      margin-bottom: 12px;
     }
+    .cardTitle svg{ width: 14px; height: 14px; color: var(--hint); }
 
-    .grid2{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
-    .grid3{display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px;}
+    .muted{ color: var(--hint); font-size: 12px; line-height: 1.35; }
 
+    .grid2{display:grid; grid-template-columns:1fr 1fr; gap: 10px;}
+    .grid3{display:grid; grid-template-columns:1fr 1fr 1fr; gap: 10px;}
+
+    /* Buttons */
     .btn{
-      border:none; cursor:pointer;
-      border-radius: var(--radiusSm);
-      padding: 13px 10px;
+      border:none;
+      cursor:pointer;
+      border-radius: 14px;
+      padding: 13px 12px;
       background: rgba(255,255,255,.06);
       border: 1px solid var(--border);
       color: var(--text);
-      font-weight:900;
-      font-size:13px;
-      display:flex; align-items:center; justify-content:center;
-      transition: transform .12s ease, background .12s ease;
+      font-weight: 900;
+      font-size: 13px;
+      min-height: 48px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap: 8px;
       user-select:none;
-      min-height: 46px;
-      text-align: center;
+      transition: transform .12s ease, background .12s ease, border-color .12s ease;
+      text-align:center;
     }
-    .btn:active{transform: scale(.97); background: rgba(255,255,255,.09);}
+    .btn:active{ transform: scale(.97); background: rgba(255,255,255,.10); }
+    .btn svg{ width: 18px; height: 18px; }
 
-    .btn.danger{border-color: rgba(255,77,109,.35); background: rgba(255,77,109,.12); color: var(--danger);}
-    .btn.warn{border-color: rgba(255,165,2,.35); background: rgba(255,165,2,.12); color: var(--warn);}
-    .btn.ok{border-color: rgba(46,213,115,.35); background: rgba(46,213,115,.12); color: var(--ok);}
-    .btn.info{border-color: rgba(77,163,255,.35); background: rgba(77,163,255,.12); color: var(--info);}
-    .btn.purple{border-color: rgba(167,139,250,.35); background: rgba(167,139,250,.12); color: #a78bfa;}
+    .btn.danger{ border-color: rgba(255,77,109,.35); background: rgba(255,77,109,.12); color: #ffd1db; }
+    .btn.warn{ border-color: rgba(255,165,2,.35); background: rgba(255,165,2,.12); color: #ffe3ad; }
+    .btn.ok{ border-color: rgba(46,213,115,.35); background: rgba(46,213,115,.12); color: #cbffe3; }
+    .btn.info{ border-color: rgba(77,163,255,.35); background: rgba(77,163,255,.12); color: #cfe7ff; }
+    .btn.purple{ border-color: rgba(167,139,250,.35); background: rgba(167,139,250,.12); color: #eadcff; }
 
     .btnRow{
       width:100%;
-      border:none; cursor:pointer;
-      border-radius: var(--radiusSm);
-      padding: 14px;
+      border:none;
+      cursor:pointer;
+      border-radius: 14px;
+      padding: 14px 12px;
       background: rgba(255,255,255,.06);
       border: 1px solid var(--border);
       color: var(--text);
-      font-weight:900;
-      font-size:14px;
-      display:flex; align-items:center; justify-content:center;
-      transition: transform .12s ease, background .12s ease;
+      font-weight: 950;
+      font-size: 14px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap: 10px;
       user-select:none;
+      transition: transform .12s ease, background .12s ease;
       margin-bottom: 12px;
     }
-    .btnRow:active{transform: scale(.98); background: rgba(255,255,255,.09);}
+    .btnRow:active{ transform: scale(.98); background: rgba(255,255,255,.10); }
+
+    /* Inputs */
+    .row{ display:flex; gap: 10px; align-items:center; }
+    .inp, .sel, .ta{
+      width:100%;
+      border: 1px solid var(--border);
+      background: rgba(15, 26, 51, .65);
+      color: var(--text);
+      border-radius: 14px;
+      padding: 11px 12px;
+      outline: none;
+      font-size: 13px;
+      font-weight: 800;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.03);
+    }
+    .inp::placeholder, .ta::placeholder{ color: rgba(148,167,207,.9); }
+    .ta{ min-height: 88px; resize:none; }
 
     /* Range */
     .bigNum{
       text-align:center;
-      font-size:46px;
-      font-weight:900;
-      line-height:1;
+      font-size: 48px;
+      font-weight: 950;
+      line-height: 1;
       background: linear-gradient(135deg, #a78bfa, #60a5fa);
       -webkit-background-clip:text;
       -webkit-text-fill-color:transparent;
     }
-    .sub{
-      text-align:center;
-      margin-top:4px;
-      color: var(--hint);
-      font-size:12px;
-      margin-bottom: 10px;
-    }
+    .sub{ text-align:center; margin-top: 4px; color: var(--hint); font-size: 12px; margin-bottom: 10px; }
     input[type="range"]{
       -webkit-appearance:none;
       width:100%;
       height:6px;
-      border-radius:99px;
-      background: rgba(255,255,255,.12);
+      border-radius: 999px;
+      background: rgba(255,255,255,.14);
       outline:none;
-      margin: 8px 0 14px;
+      margin: 10px 0 14px;
     }
     input[type="range"]::-webkit-slider-thumb{
       -webkit-appearance:none;
-      width:22px; height:22px;
-      border-radius:99px;
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
       background: var(--btn);
-      box-shadow: 0 0 14px rgba(109,94,252,.55);
+      box-shadow: 0 0 16px rgba(109,94,252,.55);
+      cursor:pointer;
     }
-    .quick{
-      display:flex; gap:8px;
-    }
+    .quick{ display:flex; gap: 8px; }
     .quick button{
       flex:1;
-      border:1px solid var(--border);
-      background: rgba(255,255,255,.06);
-      color: var(--text);
-      border-radius: 12px;
-      padding: 9px 6px;
-      font-weight:900;
-      cursor:pointer;
-    }
-    .quick button:active{transform:scale(.97);}
-
-    /* API setup card */
-    .apiRow{
-      display:flex;
-      gap:10px;
-    }
-    .inp{
-      flex: 1;
-      border: 1px solid var(--border);
-      background: var(--sec);
-      color: var(--text);
-      border-radius: var(--radiusSm);
-      padding: 10px 12px;
-      outline:none;
-      font-size: 13px;
-      font-weight: 800;
-    }
-    .inp::placeholder{color: var(--hint);}
-    .small{
-      color: var(--hint);
-      font-size: 12px;
-      line-height: 1.35;
-    }
-    .mono{
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-    }
-
-    /* File browser */
-    .pathBar{
-      display:flex; gap:10px; align-items:center;
-      background: var(--sec);
-      border: 1px solid var(--border);
-      border-radius: var(--radiusSm);
-      padding: 10px 12px;
-      margin-bottom: 10px;
-      color: var(--hint);
-      font-size: 12px;
-      overflow:hidden;
-    }
-    .pathBar span{
-      overflow:hidden;
-      text-overflow:ellipsis;
-      white-space:nowrap;
-      flex:1;
-    }
-    .backBtn{
-      flex-shrink:0;
       border: 1px solid var(--border);
       background: rgba(255,255,255,.06);
       color: var(--text);
-      padding: 6px 10px;
-      border-radius: 10px;
+      border-radius: 14px;
+      padding: 10px 6px;
+      font-weight: 950;
       cursor:pointer;
-      font-weight:900;
-      font-size: 12px;
+      user-select:none;
+      transition: transform .12s ease, background .12s ease;
     }
+    .quick button:active{ transform: scale(.97); background: rgba(255,255,255,.10); }
 
-    .list{display:flex; flex-direction:column; gap:6px;}
+    /* Lists */
+    .list{display:flex; flex-direction:column; gap: 8px;}
     .item{
-      display:flex; align-items:center; gap:12px;
+      display:flex;
+      align-items:center;
+      gap: 12px;
       padding: 12px 12px;
-      border-radius: var(--radiusSm);
+      border-radius: 16px;
       background: rgba(255,255,255,.06);
       border: 1px solid var(--border);
       cursor:pointer;
       user-select:none;
+      transition: transform .12s ease, background .12s ease;
     }
-    .item:active{transform:scale(.99); background: rgba(255,255,255,.09);}
-    .icon{font-size:20px; width:26px; text-align:center;}
-    .info{flex:1; overflow:hidden;}
-    .name{
-      font-weight:900;
-      font-size:14px;
+    .item:active{ transform: scale(.99); background: rgba(255,255,255,.10); }
+    .iIcon{ width: 28px; text-align:center; font-size: 20px; }
+    .iBody{ flex:1; overflow:hidden; }
+    .iName{
+      font-weight: 950;
+      font-size: 14px;
+      white-space: nowrap;
       overflow:hidden;
-      text-overflow:ellipsis;
-      white-space:nowrap;
+      text-overflow: ellipsis;
     }
-    .meta{
-      margin-top:2px;
-      font-size:11px;
+    .iMeta{
+      margin-top: 2px;
       color: var(--hint);
+      font-size: 11px;
+      white-space: nowrap;
       overflow:hidden;
-      text-overflow:ellipsis;
-      white-space:nowrap;
+      text-overflow: ellipsis;
     }
-    .arrow{color: var(--hint); font-weight:900;}
+    .iArrow{ color: var(--hint); font-weight: 900; }
 
-    /* Processes */
-    .search{
-      width:100%;
-      border: 1px solid var(--border);
-      background: var(--sec);
-      color: var(--text);
-      border-radius: var(--radiusSm);
+    .pathBar{
+      display:flex;
+      align-items:center;
+      gap: 10px;
       padding: 10px 12px;
-      outline:none;
-      font-size:14px;
-      font-weight: 800;
+      border-radius: 16px;
+      background: rgba(15,26,51,.65);
+      border: 1px solid var(--border);
+      color: var(--hint);
+      font-size: 12px;
+      overflow:hidden;
+      margin-bottom: 10px;
     }
-    .search::placeholder{color: var(--hint);}
+    .pathBar span{
+      flex:1;
+      overflow:hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    .miniBtn{
+      flex-shrink:0;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      padding: 7px 10px;
+      border-radius: 12px;
+      font-weight: 950;
+      cursor:pointer;
+      user-select:none;
+      transition: transform .12s ease, background .12s ease;
+      font-size: 12px;
+    }
+    .miniBtn:active{ transform: scale(.97); background: rgba(255,255,255,.10); }
 
-    /* Tabbar */
-    .tabbar{
+    /* Tab bar */
+    .tabs{
       position: fixed;
       left:0; right:0; bottom:0;
-      background: var(--sec);
-      border-top: 1px solid var(--border);
-      display:flex;
+      background: rgba(15,26,51,.78);
+      border-top: 1px solid rgba(255,255,255,.10);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
       padding-bottom: env(safe-area-inset-bottom);
-      z-index:200;
+      display:flex;
+      z-index: 150;
     }
     .tab{
       flex:1;
       border:none;
       background: transparent;
       color: var(--hint);
-      padding: 10px 0 9px;
-      font-size: 10px;
+      padding: 10px 0 8px;
       cursor:pointer;
-      font-weight:900;
+      user-select:none;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap: 6px;
+      font-size: 10px;
+      font-weight: 950;
     }
-    .tab.active{color: var(--btn);}
+    .tab svg{ width: 20px; height: 20px; }
+    .tab.active{ color: var(--btn); }
 
     /* Toast */
     .toast{
       position: fixed;
-      left:50%;
-      bottom: 94px;
-      transform: translateX(-50%) translateY(14px);
-      background: rgba(15, 22, 35, .92);
-      border: 1px solid var(--border);
-      color: var(--text);
+      left: 50%;
+      bottom: 96px;
+      transform: translateX(-50%) translateY(16px);
+      opacity: 0;
+      pointer-events:none;
+      transition: .22s ease;
+      max-width: 92%;
+      z-index: 999;
+    }
+    .toast.show{ opacity: 1; transform: translateX(-50%) translateY(0); }
+    .toastBox{
       padding: 10px 14px;
       border-radius: 999px;
+      background: rgba(10, 14, 26, .92);
+      border: 1px solid rgba(255,255,255,.14);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      color: var(--text);
+      font-weight: 950;
       font-size: 13px;
-      font-weight: 900;
-      opacity: 0;
-      pointer-events: none;
-      transition: .2s ease;
-      max-width: 92%;
       white-space: nowrap;
       overflow:hidden;
       text-overflow: ellipsis;
-      backdrop-filter: blur(18px);
-      z-index:999;
-    }
-    .toast.show{
-      opacity: 1;
-      transform: translateX(-50%) translateY(0);
+      box-shadow: var(--shadow);
     }
 
-    /* Confirm modal */
-    .modalBg{
+    /* Bottom sheet */
+    .sheetBg{
       position: fixed;
       inset: 0;
+      background: rgba(0,0,0,.56);
       display:none;
-      align-items:flex-end;
-      background: rgba(0,0,0,.55);
-      z-index:500;
+      align-items: flex-end;
+      z-index: 500;
     }
-    .modalBg.open{display:flex;}
-    .modal{
-      width:100%;
-      background: var(--sec);
-      border-top-left-radius: var(--radius);
-      border-top-right-radius: var(--radius);
-      border: 1px solid var(--border);
-      padding: 16px;
+    .sheetBg.open{ display:flex; }
+    .sheet{
+      width: 100%;
+      background: rgba(15,26,51,.95);
+      border: 1px solid rgba(255,255,255,.12);
+      border-top-left-radius: 22px;
+      border-top-right-radius: 22px;
+      box-shadow: var(--shadow);
+      padding: 14px 14px 16px;
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      animation: up .18s ease-out;
     }
-    .mTitle{font-weight:900; font-size:16px; margin-bottom:6px;}
-    .mDesc{color: var(--hint); font-size:13px; margin-bottom: 14px; word-break: break-word;}
-    .mRow{display:flex; gap:10px;}
-    .mBtn{
-      flex:1;
-      border:none;
-      border-radius: 14px;
-      padding: 14px 12px;
-      font-weight:900;
-      cursor:pointer;
-      font-size:14px;
+    @keyframes up{ from{ transform: translateY(30px); opacity:.5 } to{ transform: translateY(0); opacity:1 } }
+    .handle{
+      width: 44px;
+      height: 4px;
+      border-radius: 99px;
+      background: rgba(255,255,255,.20);
+      margin: 2px auto 12px;
     }
-    .mCancel{background: rgba(255,255,255,.07); color: var(--text); border: 1px solid var(--border);}
-    .mOk{background: var(--danger); color: #fff;}
+    .sheetTitle{ font-weight: 950; font-size: 16px; margin-bottom: 6px; }
+    .sheetDesc{ color: var(--hint); font-size: 13px; line-height: 1.35; margin-bottom: 12px; }
+    .sheetRow{ display:flex; gap: 10px; }
+    .sheetRow .btn{ flex: 1; }
+
+    .hr{ height: 1px; background: rgba(255,255,255,.10); margin: 12px 0; border-radius: 99px; }
+
+    .mono{ font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
 
     .skeleton{
-      height: 52px;
-      border-radius: var(--radiusSm);
-      border: 1px solid var(--border);
+      height: 54px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.12);
       background: linear-gradient(90deg, rgba(255,255,255,.06) 25%, rgba(255,255,255,.10) 50%, rgba(255,255,255,.06) 75%);
       background-size: 200% 100%;
       animation: sh 1.2s infinite linear;
     }
     @keyframes sh{0%{background-position:200% 0}100%{background-position:-200% 0}}
-
-    .hr{
-      height: 1px;
-      background: rgba(255,255,255,.10);
-      margin: 10px 0;
-      border-radius: 99px;
-    }
   </style>
 </head>
 
 <body>
-  <div class="header">
-    <div class="title" id="topTitle">Cortex Panel</div>
-    <div class="status">
-      <div class="dot" id="dot"></div>
-      <div id="statusText">offline</div>
+
+  <!-- TOP -->
+  <div class="top">
+    <div class="brand">
+      <div class="title" id="topTitle">Cortex Panel</div>
+      <div class="subtitle" id="topSub">Подключение…</div>
+    </div>
+
+    <div class="topRight">
+      <div class="pill">
+        <div class="dot" id="dot"></div>
+        <div id="connText">offline</div>
+      </div>
+
+      <div class="iconBtn" onclick="openSettings()" title="Настройки">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V22a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.6 1.65 1.65 0 0 0 10.51 3H11a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09A1.65 1.65 0 0 0 16 4.6a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09A1.65 1.65 0 0 0 19.4 15Z"/>
+        </svg>
+      </div>
     </div>
   </div>
 
+  <!-- HOME -->
   <div class="page active" id="page-home">
-    <div class="card" id="apiCard" style="display:none">
-      <div class="cardTitle">Подключение к ПК (API)</div>
-      <div class="apiRow">
-        <input class="inp mono" id="apiInput" placeholder="https://xxxxx.trycloudflare.com" />
-        <button class="btn info" style="min-width:110px" onclick="saveApi()">Сохранить</button>
+    <div class="card">
+      <div class="cardHeader">
+        <div class="cardTitle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2v10"/><path d="M18.36 6.64a9 9 0 1 1-12.72 0"/>
+          </svg>
+          Система
+        </div>
       </div>
+
+      <div class="grid2">
+        <button class="btn danger" onclick="confirmDanger('off')">
+          🛑 Выключить ПК
+        </button>
+        <button class="btn warn" onclick="confirmDanger('restart')">
+          ♻️ Перезагрузить
+        </button>
+        <button class="btn purple" onclick="execCmd('lock')">🔒 Заблокировать</button>
+        <button class="btn info" onclick="execCmd('sleep')">🌙 Сон</button>
+      </div>
+
       <div class="hr"></div>
-      <div class="small">
-        1) На ПК запусти туннель:<br/>
-        <span class="mono">cloudflared tunnel --url http://127.0.0.1:8080</span><br/><br/>
-        2) Возьми ссылку вида <span class="mono">https://xxxxx.trycloudflare.com</span><br/>
-        3) Вставь сюда или открой панель с параметром:<br/>
-        <span class="mono">?api=https://xxxxx.trycloudflare.com</span>
-      </div>
-    </div>
 
-    <div class="card" id="tgCard" style="display:none">
-      <div class="cardTitle">Telegram WebApp</div>
-      <div class="small">
-        Открой панель через Telegram (кнопка у бота).<br/>
-        В обычном браузере <b>tg.initData</b> не будет, и сервер может запретить запросы.
+      <div class="cardHeader" style="margin-bottom:8px">
+        <div class="cardTitle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
+          </svg>
+          Таймер выключения
+        </div>
       </div>
-    </div>
 
-    <div class="card">
-      <div class="cardTitle">Питание</div>
-      <div class="grid2">
-        <button class="btn danger" onclick="confirmAction('shutdown','Выключить ПК?','ПК завершит работу через 3 секунды.')">Выключить</button>
-        <button class="btn warn" onclick="confirmAction('reboot','Перезагрузить?','ПК перезагрузится через 3 секунды.')">Перезагрузка</button>
-        <button class="btn info" onclick="sendCmd('sleep')">Сон</button>
-        <button class="btn purple" onclick="sendCmd('lock')">Блокировка</button>
+      <div class="row">
+        <input class="inp" id="timerMinutes" type="number" min="1" max="1440" placeholder="Минуты (например 30)" />
+        <button class="btn info" style="min-width:120px" onclick="startShutdownTimer()">⏳ Старт</button>
+      </div>
+      <div style="height:10px"></div>
+      <button class="btnRow" onclick="execCmd('cancel')">⛔ Отмена таймера</button>
+
+      <div class="muted">
+        Команды как в меню бота: <span class="mono">timer_start_menu</span> и <span class="mono">cancel</span>.
+        В панели “Старт” отправляет таймер с минутами (нужна поддержка на сервере).
       </div>
     </div>
 
     <div class="card">
-      <div class="cardTitle">Быстро</div>
+      <div class="cardHeader">
+        <div class="cardTitle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 20h8"/>
+          </svg>
+          Быстро
+        </div>
+      </div>
       <div class="grid2">
-        <button class="btn info" onclick="sendCmd('taskbar')">Рабочий стол (Win+D)</button>
-        <button class="btn ok" onclick="sendCmd('media_play')">Play/Pause</button>
+        <button class="btn ok" onclick="execCmd('status')">💻 Статус ПК</button>
+        <button class="btn info" onclick="execCmd('taskbar')">🖥 Рабочий стол</button>
       </div>
     </div>
   </div>
 
+  <!-- MEDIA -->
   <div class="page" id="page-media">
     <div class="card">
-      <div class="cardTitle">Громкость</div>
+      <div class="cardHeader">
+        <div class="cardTitle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+          </svg>
+          Громкость
+        </div>
+      </div>
+
       <div class="bigNum" id="volNum">50</div>
       <div class="sub">процентов</div>
-
-      <input id="vol" type="range" min="0" max="100" value="50"
-             oninput="volPreview(this.value)"
-             onchange="setVolume(this.value)"/>
-
+      <input id="vol" type="range" min="0" max="100" value="50" oninput="volPreview(this.value)" onchange="setVolume(this.value)" />
       <div class="quick">
         <button onclick="setVolume(0)">0</button>
         <button onclick="setVolume(25)">25</button>
@@ -454,82 +567,248 @@
         <button onclick="setVolume(75)">75</button>
         <button onclick="setVolume(100)">100</button>
       </div>
-    </div>
 
-    <div class="card">
-      <div class="cardTitle">Медиа</div>
+      <div class="hr"></div>
+
+      <div class="grid2">
+        <button class="btn info" onclick="execCmd('volume_control')">🔊 Меню громкости</button>
+        <button class="btn ok" onclick="execCmd('play')">▶️ Воспр/Пауза</button>
+      </div>
+
+      <div style="height:10px"></div>
       <div class="grid3">
-        <button class="btn info" onclick="sendCmd('media_prev')">Prev</button>
-        <button class="btn ok" onclick="sendCmd('media_play')">Play</button>
-        <button class="btn info" onclick="sendCmd('media_next')">Next</button>
+        <button class="btn info" onclick="execCmd('media_prev')">⏮ Prev</button>
+        <button class="btn ok" onclick="execCmd('media_play')">⏯ Play</button>
+        <button class="btn info" onclick="execCmd('media_next')">⏭ Next</button>
       </div>
     </div>
   </div>
 
+  <!-- CAPTURE -->
+  <div class="page" id="page-capture">
+    <div class="card">
+      <div class="cardHeader">
+        <div class="cardTitle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="12" cy="12" r="3"/>
+          </svg>
+          Снимки / Запись
+        </div>
+      </div>
+
+      <div class="grid2">
+        <button class="btn ok" onclick="execCmd('screenshot')">📸 Скриншот</button>
+        <button class="btn info" onclick="execCmd('record_start_buttons')">🎥 Видеозапись</button>
+        <button class="btn purple" onclick="execCmd('camera_photo')">📷 Фото с камеры</button>
+        <button class="btn purple" onclick="execCmd('camera_record')">🎥 Запись камеры</button>
+      </div>
+
+      <div class="muted" style="margin-top:10px">
+        Эти команды соответствуют callback_data из бота: <span class="mono">screenshot</span>, <span class="mono">record_start_buttons</span>, <span class="mono">camera_photo</span>, <span class="mono">camera_record</span>.
+      </div>
+    </div>
+  </div>
+
+  <!-- FILES -->
   <div class="page" id="page-files">
     <div class="pathBar">
-      <button class="backBtn" onclick="goUp()">←</button>
+      <button class="miniBtn" onclick="goUp()">←</button>
       <span id="pathText">drives</span>
-      <button class="backBtn" onclick="loadFiles('drives')">Диски</button>
+      <button class="miniBtn" onclick="loadFiles('drives')">Диски</button>
     </div>
 
     <div class="card">
-      <div class="cardTitle">Файлы</div>
+      <div class="cardHeader">
+        <div class="cardTitle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+          </svg>
+          Браузер файлов
+        </div>
+        <button class="miniBtn" onclick="loadFiles(currentPath)">Обновить</button>
+      </div>
+
       <div class="list" id="fileList">
         <div class="skeleton"></div>
         <div class="skeleton" style="height:44px;opacity:.7"></div>
       </div>
 
       <div class="hr"></div>
-      <div class="small">
-        Примечание: действия с файлами (скачать/удалить) зависят от того,
-        реализованы ли они в твоём сервере. Сейчас панель делает навигацию и может отправлять команды через <span class="mono">/api/exec</span>.
+      <div class="muted">
+        Тап по папке — вход. Тап по файлу — откроется шторка с действиями (если сервер их поддерживает).
       </div>
     </div>
   </div>
 
-  <div class="page" id="page-proc">
-    <div class="card" style="padding:12px">
-      <input class="search" id="procSearch" placeholder="Поиск процесса..." oninput="renderProc()"/>
-    </div>
-
-    <button class="btnRow" onclick="loadProcesses()">Обновить процессы</button>
-
+  <!-- INPUT -->
+  <div class="page" id="page-input">
     <div class="card">
-      <div class="cardTitle">Процессы (топ)</div>
+      <div class="cardHeader">
+        <div class="cardTitle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/>
+          </svg>
+          Ввод (клавиатура)
+        </div>
+      </div>
+
+      <div class="grid2">
+        <button class="btn info" onclick="execCmd('key_start')">👆 Нажать клавишу</button>
+        <button class="btn purple" onclick="execCmd('type_start')">⌨️ Напечатать текст</button>
+      </div>
+
+      <div class="hr"></div>
+
+      <div class="cardHeader" style="margin-bottom:8px">
+        <div class="cardTitle">Быстрый ввод</div>
+      </div>
+
+      <div class="muted" style="margin-bottom:10px">
+        Это удобный “быстрый режим”. Для работы нужно, чтобы сервер понимал команды <span class="mono">key:</span> и <span class="mono">type:</span>.
+      </div>
+
+      <div class="row">
+        <select class="sel" id="keySelect">
+          <option value="ENTER">ENTER</option>
+          <option value="ESC">ESC</option>
+          <option value="TAB">TAB</option>
+          <option value="SPACE">SPACE</option>
+          <option value="UP">UP</option>
+          <option value="DOWN">DOWN</option>
+          <option value="LEFT">LEFT</option>
+          <option value="RIGHT">RIGHT</option>
+          <option value="VOLUME_UP">VOLUME_UP</option>
+          <option value="VOLUME_DOWN">VOLUME_DOWN</option>
+          <option value="MUTE">MUTE</option>
+        </select>
+        <button class="btn ok" style="min-width:140px" onclick="pressKey()">Отправить</button>
+      </div>
+
+      <div style="height:10px"></div>
+
+      <textarea class="ta" id="typeText" placeholder="Текст для печати на ПК..."></textarea>
+      <div style="height:10px"></div>
+      <button class="btnRow" onclick="typeText()">Отправить текст</button>
+    </div>
+  </div>
+
+  <!-- TOOLS -->
+  <div class="page" id="page-tools">
+    <div class="card">
+      <div class="cardHeader">
+        <div class="cardTitle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/>
+          </svg>
+          Инструменты
+        </div>
+      </div>
+
+      <div class="grid2">
+        <button class="btn info" onclick="execCmd('ip')">🌐 Мой IP</button>
+        <button class="btn info" onclick="execCmd('speedtest')">⏱️ Speedtest</button>
+        <button class="btn warn" onclick="execCmd('disk_cleanup')">🧹 Очистка диска</button>
+        <button class="btn purple" onclick="execCmd('extra_commands')">🔧 Дополнительные</button>
+      </div>
+
+      <div class="hr"></div>
+
+      <button class="btnRow" onclick="loadProcesses()">⚙️ Обновить процессы</button>
+      <input class="inp" id="procSearch" placeholder="Поиск процесса..." oninput="renderProc()" />
+      <div style="height:10px"></div>
       <div class="list" id="procList">
-        <div style="color:var(--hint); font-weight:900; padding:10px 2px">
+        <div class="muted" style="padding: 6px 2px">
           Нажми “Обновить процессы”.
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="tabbar">
-    <button class="tab active" onclick="tab('home', this)">Главная</button>
-    <button class="tab" onclick="tab('media', this)">Медиа</button>
-    <button class="tab" onclick="tab('files', this); loadFiles(currentPath || 'drives')">Файлы</button>
-    <button class="tab" onclick="tab('proc', this)">Процессы</button>
-  </div>
+    <div class="card">
+      <div class="cardHeader">
+        <div class="cardTitle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2l2.5 7.5L22 12l-7.5 2.5L12 22l-2.5-7.5L2 12l7.5-2.5L12 2z"/>
+          </svg>
+          Owner
+        </div>
+      </div>
 
-  <div class="toast" id="toast">...</div>
+      <div class="grid2">
+        <button class="btn danger" onclick="execCmd('access_management')">🔐 Управление доступом</button>
+        <button class="btn purple" onclick="execCmd('owner_settings')">👑 Настройки</button>
+      </div>
 
-  <div class="modalBg" id="modalBg" onclick="modalClick(event)">
-    <div class="modal">
-      <div class="mTitle" id="mTitle">Подтверждение</div>
-      <div class="mDesc" id="mDesc">...</div>
-      <div class="mRow">
-        <button class="mBtn mCancel" onclick="closeModal()">Отмена</button>
-        <button class="mBtn mOk" id="mOk" onclick="confirmDo()">Ок</button>
+      <div class="muted" style="margin-top:10px">
+        Эти кнопки должны работать только для OWNER (сервер должен проверять).
       </div>
     </div>
   </div>
 
+  <!-- TAB BAR -->
+  <div class="tabs">
+    <button class="tab active" onclick="openTab('home', this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M3 10.5 12 3l9 7.5V21a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+        <path d="M9 23V13h6v10"/>
+      </svg>
+      Главная
+    </button>
+
+    <button class="tab" onclick="openTab('media', this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M11 5 6 9H2v6h4l5 4z"/>
+        <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+      </svg>
+      Медиа
+    </button>
+
+    <button class="tab" onclick="openTab('capture', this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="3" y="3" width="18" height="18" rx="2"/>
+        <circle cx="12" cy="12" r="3"/>
+      </svg>
+      Камера
+    </button>
+
+    <button class="tab" onclick="openTab('files', this); loadFiles(currentPath || 'drives')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+      </svg>
+      Файлы
+    </button>
+
+    <button class="tab" onclick="openTab('tools', this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M14.7 6.3a1 1 0 0 1 0 1.4l-7 7a1 1 0 0 1-1.4 0l-2-2a1 1 0 0 1 1.4-1.4l1.3 1.3 6.3-6.3a1 1 0 0 1 1.4 0z"/>
+        <path d="M12 2a10 10 0 1 0 10 10"/>
+      </svg>
+      Ещё
+    </button>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast"><div class="toastBox" id="toastBox">...</div></div>
+
+  <!-- SHEET: CONFIRM / SETTINGS / FILE ACTIONS -->
+  <div class="sheetBg" id="sheetBg" onclick="sheetBgClick(event)">
+    <div class="sheet" id="sheet">
+      <div class="handle"></div>
+
+      <div class="sheetTitle" id="sheetTitle">...</div>
+      <div class="sheetDesc" id="sheetDesc">...</div>
+
+      <div id="sheetBody"></div>
+
+      <div class="hr"></div>
+      <div class="sheetRow" id="sheetActions"></div>
+    </div>
+  </div>
+
 <script>
-  // Telegram
+  // Telegram WebApp
   const tg = window.Telegram?.WebApp;
 
-  // API_BASE: ?api=... -> localStorage -> пусто
+  // API_BASE from ?api=... or localStorage
   const params = new URLSearchParams(location.search);
   let API_BASE = (params.get("api") || localStorage.getItem("api_base") || "").trim();
   if (API_BASE.endsWith("/")) API_BASE = API_BASE.slice(0, -1);
@@ -537,199 +816,186 @@
 
   // UI refs
   const dot = document.getElementById('dot');
-  const statusText = document.getElementById('statusText');
-  const apiCard = document.getElementById('apiCard');
-  const apiInput = document.getElementById('apiInput');
-  const tgCard = document.getElementById('tgCard');
-  const topTitle = document.getElementById('topTitle');
+  const connText = document.getElementById('connText');
+  const topSub = document.getElementById('topSub');
 
   // toast
   let toastTimer = null;
-  function toast(msg, ms=2600){
+  function showToast(msg, ms=2600){
     const t = document.getElementById('toast');
-    t.textContent = msg;
+    const box = document.getElementById('toastBox');
+    box.textContent = msg;
     t.classList.add('show');
     clearTimeout(toastTimer);
     toastTimer = setTimeout(()=>t.classList.remove('show'), ms);
   }
 
-  function safeText(s){
+  function esc(s){
     return String(s ?? "")
-      .replaceAll('&','&amp;')
-      .replaceAll('<','&lt;')
-      .replaceAll('>','&gt;')
-      .replaceAll('"','&quot;')
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
       .replaceAll("'","&#039;");
   }
 
-  // Telegram init
-  const inTelegram = !!(tg && tg.initData);
-  if (inTelegram) {
-    tg.ready();
-    tg.expand();
-    dot.classList.add('online');
-    statusText.textContent = 'telegram';
-  } else {
-    dot.classList.remove('online');
-    statusText.textContent = 'browser';
-    tgCard.style.display = 'block';
-  }
-
-  // Show API card if missing
-  function refreshApiUi(){
-    if (!API_BASE) {
-      apiCard.style.display = 'block';
-      apiInput.value = "";
-      topTitle.textContent = "Cortex Panel (нет API)";
-    } else {
-      apiCard.style.display = 'none';
-      apiInput.value = API_BASE;
-      topTitle.textContent = "Cortex Panel";
-    }
-  }
-
-  function saveApi(){
-    let v = (apiInput.value || "").trim();
-    if (v.endsWith("/")) v = v.slice(0, -1);
-    if (!v.startsWith("https://")) {
-      toast("API должен начинаться с https://", 4000);
-      return;
-    }
-    API_BASE = v;
-    localStorage.setItem("api_base", API_BASE);
-    toast("API сохранён", 2200);
-    refreshApiUi();
-  }
-
-  refreshApiUi();
-
-  // API helper (важно: X-Tg-Init-Data)
-  async function apiPost(path, payload){
-    if (!API_BASE) {
-      throw new Error("API URL не задан. Вставь trycloudflare ссылку или открой с ?api=...");
-    }
-
-    const headers = {'Content-Type':'application/json'};
-    if (tg && tg.initData) headers['X-Tg-Init-Data'] = tg.initData;
-
-    const r = await fetch(API_BASE + path, {
-      method: 'POST',
-      headers,
-      body: JSON.stringify(payload || {})
-    });
-
-    let data = null;
-    try { data = await r.json(); } catch {}
-
-    if (!r.ok) {
-      const msg = data?.message || ('HTTP ' + r.status);
-      throw new Error(msg);
-    }
-    return data;
-  }
-
-  // Commands
-  async function sendCmd(cmd){
-    try{
-      toast('⏳ ' + cmd);
-      const res = await apiPost('/api/exec', {cmd});
-      toast((res.ok ? '✅ ' : '❌ ') + (res.message || '...'), 3500);
-    }catch(e){
-      console.log(e);
-      toast('❌ ' + (e?.message || 'API error'), 5000);
-      if (tg?.showAlert) tg.showAlert('Ошибка: ' + (e?.message || 'API error'));
-    }
-  }
-
-  // Tabs
-  function tab(name, el){
+  // tabs
+  function openTab(name, el){
     document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
     document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
     document.getElementById('page-' + name).classList.add('active');
     el.classList.add('active');
   }
 
-  // Modal confirm
-  let pending = null;
-  function confirmAction(cmd, title, desc){
-    pending = cmd;
-    document.getElementById('mTitle').textContent = title;
-    document.getElementById('mDesc').textContent = desc;
-    document.getElementById('modalBg').classList.add('open');
-  }
-  function closeModal(){ document.getElementById('modalBg').classList.remove('open'); }
-  function modalClick(e){ if (e.target.id === 'modalBg') closeModal(); }
-  async function confirmDo(){
-    closeModal();
-    if (pending) await sendCmd(pending);
-    pending = null;
+  // init Telegram
+  const inTelegram = !!(tg && tg.initData);
+  if (inTelegram){
+    tg.ready();
+    tg.expand();
   }
 
-  // Volume
+  // API helper
+  async function apiPost(path, payload){
+    if (!API_BASE){
+      throw new Error("API URL не задан. Открой панель через кнопку бота (она должна подставить ?api=...).");
+    }
+
+    const headers = { "Content-Type": "application/json" };
+    if (tg && tg.initData) headers["X-Tg-Init-Data"] = tg.initData;
+
+    const r = await fetch(API_BASE + path, {
+      method: "POST",
+      headers,
+      body: JSON.stringify(payload || {})
+    });
+
+    let data = null;
+    try{ data = await r.json(); } catch {}
+
+    if (!r.ok){
+      const msg = data?.message || ("HTTP " + r.status);
+      throw new Error(msg);
+    }
+    return data;
+  }
+
+  // COMMAND MAP for compatibility with твоим меню
+  function normalizeCmd(cmd){
+    // имена как в меню бота → имена как в API (если у тебя так)
+    if (cmd === "off") return "shutdown";
+    if (cmd === "restart") return "reboot";
+    if (cmd === "play") return "media_play";
+    return cmd;
+  }
+
+  async function execCmd(cmd){
+    const real = normalizeCmd(cmd);
+    try{
+      showToast("⏳ " + cmd);
+      const res = await apiPost("/api/exec", { cmd: real, raw: cmd });
+      showToast((res.ok ? "✅ " : "❌ ") + (res.message || "Готово"), 3500);
+    }catch(e){
+      console.log(e);
+      showToast("❌ " + (e?.message || "Ошибка"), 5000);
+      tg?.showAlert?.("Ошибка: " + (e?.message || "Ошибка"));
+    }
+  }
+
+  // DANGEROUS confirm
+  function confirmDanger(cmd){
+    openSheet({
+      title: "Подтверждение",
+      desc: "Это действие может привести к потере несохранённых данных.",
+      bodyHtml: `<div class="muted">Команда: <span class="mono">${esc(cmd)}</span></div>`,
+      actions: [
+        { text: "Отмена", kind: "info", onClick: closeSheet },
+        { text: "Подтвердить", kind: "danger", onClick: async()=>{ closeSheet(); await execCmd(cmd);} }
+      ]
+    });
+  }
+
+  // TIMER start (минуты)
+  async function startShutdownTimer(){
+    const v = Number(document.getElementById("timerMinutes").value || 0);
+    if (!v || v < 1 || v > 1440){
+      showToast("❌ Введи минуты (1..1440)", 3500);
+      return;
+    }
+
+    // Тут 2 варианта:
+    // 1) если твой server.py поддерживает cmd="timer" + minutes в payload -> делай так
+    // 2) если поддерживает строку "timer:<minutes>" -> делай так
+    //
+    // Я отправлю универсально: cmd="timer_start_menu" + minutes
+    try{
+      showToast("⏳ Таймер: " + v + " мин");
+      const res = await apiPost("/api/exec", { cmd: "timer_start_menu", minutes: v });
+      showToast((res.ok ? "✅ " : "❌ ") + (res.message || "Отправлено"), 3500);
+    }catch(e){
+      console.log(e);
+      showToast("❌ " + (e?.message || "Ошибка таймера"), 5000);
+    }
+  }
+
+  // VOLUME
   function volPreview(val){
-    document.getElementById('volNum').textContent = val;
-    const s = document.getElementById('vol');
-    const pct = val + '%';
-    s.style.background = `linear-gradient(to right, var(--btn) ${pct}, rgba(255,255,255,.12) ${pct})`;
+    document.getElementById("volNum").textContent = val;
+    const s = document.getElementById("vol");
+    const pct = val + "%";
+    s.style.background = `linear-gradient(to right, var(--btn) ${pct}, rgba(255,255,255,.14) ${pct})`;
   }
   async function setVolume(val){
     val = Number(val);
     volPreview(val);
-    await sendCmd('volume:' + val);
+    // volume в API обычно "volume:50"
+    await execCmd("volume:" + val);
   }
   volPreview(50);
 
-  // Files
-  let currentPath = 'drives';
-  const stack = [];
+  // FILES
+  let currentPath = "drives";
+  const pathStack = [];
 
   function fileIcon(f){
-    if (f.is_dir) return '📁';
-    const n = (f.name || '').toLowerCase();
-    const ext = n.includes('.') ? n.split('.').pop() : '';
+    if (f.is_dir) return "📁";
+    const n = (f.name || "").toLowerCase();
+    const ext = n.includes(".") ? n.split(".").pop() : "";
     const map = {
-      'exe':'⚙️','bat':'⚙️','cmd':'⚙️','msi':'⚙️',
-      'png':'🖼️','jpg':'🖼️','jpeg':'🖼️','gif':'🖼️','webp':'🖼️',
-      'mp4':'🎬','avi':'🎬','mkv':'🎬','mov':'🎬',
-      'mp3':'🎵','wav':'🎵','flac':'🎵',
-      'zip':'🗜️','rar':'🗜️','7z':'🗜️',
-      'pdf':'📕','txt':'📄','json':'📋','py':'🐍','html':'🌐','css':'🎨','js':'🟨'
+      exe:"⚙️", bat:"⚙️", cmd:"⚙️", msi:"⚙️",
+      png:"🖼️", jpg:"🖼️", jpeg:"🖼️", gif:"🖼️", webp:"🖼️",
+      mp4:"🎬", avi:"🎬", mkv:"🎬", mov:"🎬",
+      mp3:"🎵", wav:"🎵", flac:"🎵",
+      zip:"🗜️", rar:"🗜️", "7z":"🗜️",
+      pdf:"📕", txt:"📄", json:"📋", py:"🐍", html:"🌐", css:"🎨", js:"🟨"
     };
-    return map[ext] || '📄';
+    return map[ext] || "📄";
   }
 
   function renderFiles(files){
-    const list = document.getElementById('fileList');
+    const list = document.getElementById("fileList");
     if (!files || files.length === 0){
-      list.innerHTML = `<div style="color:var(--hint); font-weight:900; padding:10px 2px">Пусто.</div>`;
+      list.innerHTML = `<div class="muted" style="padding:6px 2px">Пусто.</div>`;
       return;
     }
-    list.innerHTML = '';
-
+    list.innerHTML = "";
     for (const f of files){
-      const div = document.createElement('div');
-      div.className = 'item';
+      const div = document.createElement("div");
+      div.className = "item";
       div.innerHTML = `
-        <div class="icon">${fileIcon(f)}</div>
-        <div class="info">
-          <div class="name">${safeText(f.name || '')}</div>
-          <div class="meta">${safeText((f.is_dir ? 'Папка' : (f.meta || 'Файл')) + (f.modified ? ' • ' + f.modified : ''))}</div>
+        <div class="iIcon">${fileIcon(f)}</div>
+        <div class="iBody">
+          <div class="iName">${esc(f.name || "")}</div>
+          <div class="iMeta">${esc((f.is_dir ? "Папка" : (f.meta || "Файл")) + (f.modified ? " • " + f.modified : ""))}</div>
         </div>
-        <div class="arrow">›</div>
+        <div class="iArrow">›</div>
       `;
 
       div.onclick = () => {
         if (f.is_dir){
-          if (currentPath && currentPath !== 'drives') stack.push(currentPath);
+          if (currentPath && currentPath !== "drives") pathStack.push(currentPath);
           loadFiles(f.path);
         } else {
-          // просто копируем путь в буфер (если получится) и отправим команду open:... (если на сервере поддержано)
-          const p = f.path || '';
-          confirmAction(
-            'open:' + p,
-            'Файл выбран',
-            p + "\n\nНажми ОК чтобы отправить команду open:<path> (если сервер поддерживает)."
-          );
+          openFileActions(f);
         }
       };
 
@@ -739,84 +1005,236 @@
 
   async function loadFiles(path){
     try{
-      path = path || 'drives';
-      document.getElementById('pathText').textContent = path;
+      path = path || "drives";
+      currentPath = path;
+      document.getElementById("pathText").textContent = currentPath;
+      document.getElementById("fileList").innerHTML =
+        `<div class="skeleton"></div><div class="skeleton" style="height:44px;opacity:.7"></div>`;
 
-      const list = document.getElementById('fileList');
-      list.innerHTML = '<div class="skeleton"></div><div class="skeleton" style="height:44px;opacity:.7"></div>';
-
-      const res = await apiPost('/api/browse', {path});
+      const res = await apiPost("/api/browse", { path });
       const data = res.data || {};
       currentPath = data.path || path;
-      document.getElementById('pathText').textContent = currentPath;
+      document.getElementById("pathText").textContent = currentPath;
       renderFiles(data.files || []);
     }catch(e){
       console.log(e);
-      toast('❌ ' + (e?.message || 'browse error'), 5000);
+      showToast("❌ " + (e?.message || "browse error"), 5000);
     }
   }
 
   function goUp(){
-    if (stack.length === 0){
-      loadFiles('drives');
+    if (pathStack.length === 0){
+      loadFiles("drives");
       return;
     }
-    const prev = stack.pop();
+    const prev = pathStack.pop();
     loadFiles(prev);
   }
 
-  // Processes
+  function openFileActions(f){
+    const p = f.path || "";
+    openSheet({
+      title: f.name || "Файл",
+      desc: p,
+      bodyHtml: `
+        <div class="muted">Действия зависят от поддержки на сервере.</div>
+      `,
+      actions: [
+        { text: "Закрыть", kind: "info", onClick: closeSheet },
+        { text: "Открыть", kind: "ok", onClick: async()=>{ closeSheet(); await apiExecCompat("open", p);} },
+        { text: "Удалить", kind: "danger", onClick: async()=>{ closeSheet(); await apiExecCompat("delete", p);} },
+      ]
+    });
+  }
+
+  async function apiExecCompat(action, path){
+    // самые частые форматы для серверов:
+    // "open:C:\path\file" / "delete:C:\path"
+    const cmd = `${action}:${path}`;
+    await execCmd(cmd);
+  }
+
+  // PROCESSES
   let procAll = [];
   async function loadProcesses(){
     try{
-      toast('⏳ processes...');
-      const list = document.getElementById('procList');
-      list.innerHTML = '<div class="skeleton"></div><div class="skeleton" style="height:44px;opacity:.7"></div>';
+      showToast("⏳ processes...");
+      document.getElementById("procList").innerHTML =
+        `<div class="skeleton"></div><div class="skeleton" style="height:44px;opacity:.7"></div>`;
 
-      const res = await apiPost('/api/processes', {});
+      const res = await apiPost("/api/processes", {});
       procAll = (res.data && res.data.processes) ? res.data.processes : [];
       renderProc();
-      toast('✅ processes: ' + procAll.length, 2500);
+      showToast("✅ processes: " + procAll.length, 2200);
     }catch(e){
       console.log(e);
-      toast('❌ ' + (e?.message || 'process error'), 5000);
+      showToast("❌ " + (e?.message || "process error"), 5000);
     }
   }
 
   function renderProc(){
-    const q = (document.getElementById('procSearch').value || '').toLowerCase();
-    const list = document.getElementById('procList');
+    const q = (document.getElementById("procSearch").value || "").toLowerCase();
+    const list = document.getElementById("procList");
 
     let arr = procAll;
-    if (q) arr = arr.filter(p => (p.name || '').toLowerCase().includes(q));
+    if (q) arr = arr.filter(p => (p.name || "").toLowerCase().includes(q));
 
     if (!arr || arr.length === 0){
-      list.innerHTML = `<div style="color:var(--hint); font-weight:900; padding:10px 2px">Ничего не найдено.</div>`;
+      list.innerHTML = `<div class="muted" style="padding:6px 2px">Ничего не найдено.</div>`;
       return;
     }
 
-    list.innerHTML = '';
+    list.innerHTML = "";
     arr.slice(0, 80).forEach(p=>{
-      const div = document.createElement('div');
-      div.className = 'item';
-      div.style.cursor = 'default';
-      const cpu = (typeof p.cpu === 'number') ? p.cpu.toFixed(1) : (p.cpu ?? 0);
+      const cpu = (typeof p.cpu === "number") ? p.cpu.toFixed(1) : (p.cpu ?? 0);
+      const div = document.createElement("div");
+      div.className = "item";
+      div.style.cursor = "default";
       div.innerHTML = `
-        <div class="icon">⚙️</div>
-        <div class="info">
-          <div class="name">${safeText(p.name || 'unknown')}</div>
-          <div class="meta">PID: ${p.pid} • CPU: ${cpu}%</div>
+        <div class="iIcon">⚙️</div>
+        <div class="iBody">
+          <div class="iName">${esc(p.name || "unknown")}</div>
+          <div class="iMeta">PID: ${p.pid} • CPU: ${cpu}%</div>
         </div>
-        <div class="arrow"></div>
+        <div class="iArrow"></div>
       `;
       list.appendChild(div);
     });
   }
 
-  // Автозагрузка дисков
-  if (API_BASE) {
-    loadFiles('drives');
+  // Quick input (key/type)
+  async function pressKey(){
+    const key = document.getElementById("keySelect").value;
+    // серверу нужно понимать cmd "key" или "key:ENTER"
+    // отправим "key:ENTER" (самый простой формат)
+    await execCmd("key:" + key);
+  }
+
+  async function typeText(){
+    const text = (document.getElementById("typeText").value || "").trim();
+    if (!text){
+      showToast("❌ Введи текст", 2500);
+      return;
+    }
+    // безопаснее всего отправлять payload, но сервер сейчас может понимать строку
+    // сделаем простой формат: type:<text>
+    await execCmd("type:" + text);
+    document.getElementById("typeText").value = "";
+  }
+
+  // Settings sheet
+  function openSettings(){
+    const panelUrl = location.origin + location.pathname + (API_BASE ? ("?api=" + encodeURIComponent(API_BASE)) : "");
+    openSheet({
+      title: "Настройки панели",
+      desc: "Здесь API URL (туннель до твоего ПК). Обычно бот обновляет его автоматически.",
+      bodyHtml: `
+        <div class="muted" style="margin-bottom:10px">
+          API URL:
+        </div>
+        <input class="inp mono" id="apiInput" placeholder="https://xxxxx.trycloudflare.com" value="${esc(API_BASE)}" />
+        <div style="height:10px"></div>
+        <button class="btnRow" onclick="saveApiFromSheet()">💾 Сохранить API</button>
+        <div class="hr"></div>
+        <div class="muted">
+          Панель-ссылка (для проверки):
+          <div class="mono" style="margin-top:6px; word-break: break-all; color: var(--link)">${esc(panelUrl)}</div>
+        </div>
+        <div style="height:10px"></div>
+        <button class="btnRow" onclick="copyText('${esc(panelUrl)}')">📋 Копировать ссылку</button>
+        <button class="btnRow" onclick="pingApi()">📡 Проверить подключение</button>
+      `,
+      actions: [
+        { text: "Закрыть", kind: "info", onClick: closeSheet }
+      ]
+    });
+  }
+
+  function saveApiFromSheet(){
+    const el = document.getElementById("apiInput");
+    let v = (el?.value || "").trim();
+    if (v.endsWith("/")) v = v.slice(0, -1);
+    if (!v.startsWith("https://")){
+      showToast("❌ API должен начинаться с https://", 3500);
+      return;
+    }
+    API_BASE = v;
+    localStorage.setItem("api_base", API_BASE);
+    showToast("✅ API сохранён", 2000);
+    refreshTop();
+  }
+
+  async function pingApi(){
+    try{
+      showToast("⏳ ping...");
+      // лёгкая проверка: /api/processes
+      await apiPost("/api/processes", {});
+      showToast("✅ API доступен", 2200);
+      refreshTop(true);
+    }catch(e){
+      showToast("❌ " + (e?.message || "ping error"), 5000);
+      refreshTop(false);
+    }
+  }
+
+  async function copyText(s){
+    try{
+      await navigator.clipboard.writeText(s);
+      showToast("✅ Скопировано", 1500);
+    }catch{
+      showToast("❌ Не удалось скопировать", 2500);
+    }
+  }
+
+  // Top status refresh
+  function refreshTop(forceOk){
+    const ok = (typeof forceOk === "boolean") ? forceOk : (!!API_BASE);
+    if (ok){
+      dot.classList.add("ok");
+      connText.textContent = inTelegram ? "telegram+api" : "api";
+      topSub.textContent = API_BASE ? ("API: " + API_BASE.replace("https://","")) : "API не задан";
+    }else{
+      dot.classList.remove("ok");
+      connText.textContent = inTelegram ? "telegram" : "browser";
+      topSub.textContent = API_BASE ? "API недоступен" : "Нужен API URL";
+    }
+  }
+
+  // Sheet engine
+  function openSheet({title, desc, bodyHtml, actions}){
+    document.getElementById("sheetTitle").textContent = title || "";
+    document.getElementById("sheetDesc").textContent = desc || "";
+    document.getElementById("sheetBody").innerHTML = bodyHtml || "";
+
+    const actionsEl = document.getElementById("sheetActions");
+    actionsEl.innerHTML = "";
+    (actions || []).forEach(a=>{
+      const b = document.createElement("button");
+      b.className = "btn " + (a.kind || "info");
+      b.textContent = a.text || "OK";
+      b.onclick = a.onClick || closeSheet;
+      actionsEl.appendChild(b);
+    });
+
+    document.getElementById("sheetBg").classList.add("open");
+  }
+
+  function closeSheet(){
+    document.getElementById("sheetBg").classList.remove("open");
+  }
+
+  function sheetBgClick(e){
+    if (e.target.id === "sheetBg") closeSheet();
+  }
+
+  // Boot
+  refreshTop(!!API_BASE);
+
+  // авто подгрузить диски если API есть
+  if (API_BASE){
+    loadFiles("drives");
   }
 </script>
+
 </body>
 </html>
