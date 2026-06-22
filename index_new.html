@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+  <title>Cortex</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<!-- Header -->
+<div class="hdr">
+  <div class="logo">Cortex</div>
+  <div class="hdr-right">
+    <div class="sdot" id="dot"></div>
+    <span class="stxt" id="stxt">…</span>
+    <div class="ibtn" onclick="openSettings()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="3"/>
+        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<!-- Pages -->
+<div id="pages">
+  <!-- Главная -->
+  <div class="page active" id="page-main">
+    <div class="slabel">Управление</div>
+    <div class="card">
+      <div class="card-body">
+        <div class="grid g2">
+          <button class="btn danger" onclick="confirmAction('shutdown','Выключить ПК?')"><span class="bi">⏻</span>Выключить</button>
+          <button class="btn warn" onclick="confirmAction('reboot','Перезагрузить ПК?')"><span class="bi">↺</span>Перезагрузка</button>
+          <button class="btn accent" onclick="execCmd('lock')"><span class="bi">🔒</span>Блокировка</button>
+          <button class="btn blue" onclick="execCmd('sleep')"><span class="bi">🌙</span>Сон</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="slabel">WinLock</div>
+    <div class="card">
+      <div class="card-hdr">
+        <div class="card-title">Блокировка ПК</div>
+        <div class="lock-chip"><div class="sdot" id="wlDot"></div><span id="wlStatus">…</span></div>
+      </div>
+      <div class="card-body">
+        <div class="grid g2">
+          <button class="btn danger" onclick="openWinlockSheet()"><span class="bi">🔒</span>Заблокировать</button>
+          <button class="btn ok" onclick="winlockUnlock()"><span class="bi">🔓</span>Разблокировать</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="slabel">Система</div>
+    <div class="card">
+      <div class="card-hdr">
+        <div class="card-title">Информация</div>
+        <span class="chip" onclick="updateInfo(true)">↻</span>
+      </div>
+      <div class="stat-list">
+        <div class="stat-row"><div class="stat-k"><div class="stat-ico">🌐</div>Public IP</div><div class="stat-v" id="publicIp">—</div></div>
+        <div class="stat-row"><div class="stat-k"><div class="stat-ico">🏠</div>Local IP</div><div class="stat-v" id="localIp">—</div></div>
+        <div class="stat-row"><div class="stat-k"><div class="stat-ico">🧠</div>CPU</div><div class="stat-v" id="cpuVal">—</div></div>
+        <div class="stat-row"><div class="stat-k"><div class="stat-ico">💾</div>RAM</div><div class="stat-v" id="ramVal">—</div></div>
+        <div class="stat-row"><div class="stat-k"><div class="stat-ico">💿</div>Disk C</div><div class="stat-v" id="diskVal">—</div></div>
+        <div class="stat-row"><div class="stat-k"><div class="stat-ico">⏱</div>Uptime</div><div class="stat-v" id="uptimeVal">—</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Таймер -->
+  <div class="page" id="page-timer">
+    <div class="slabel">Таймеры</div>
+    <div class="card">
+      <div class="card-hdr">
+        <div class="card-title">Активные таймеры</div>
+        <span class="chip" onclick="openTimerSheet()">+ Новый</span>
+      </div>
+      <div style="height:10px"></div>
+      <div id="timerList"></div>
+      <div class="empty" id="timerEmpty" style="display:none">
+        <div class="empty-ico">⏰</div>Нет таймеров
+      </div>
+    </div>
+
+    <div class="slabel">Быстрые действия</div>
+    <div class="card">
+      <div class="card-body">
+        <div class="grid g2">
+          <button class="btn danger" onclick="confirmAction('shutdown','Выключить?')"><span class="bi">⏻</span>Выключить</button>
+          <button class="btn warn" onclick="confirmAction('reboot','Перезагрузить?')"><span class="bi">↺</span>Перезагрузка</button>
+        </div>
+        <div class="mt8"></div>
+        <button class="btn accent" style="width:100%" onclick="execCmd('cancel')"><span class="bi">⏹</span>Отменить активный таймер</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Клавиатура -->
+  <div class="page" id="page-keyboard">
+    <div class="slabel">Нажать клавишу</div>
+    <div class="card">
+      <div class="card-body">
+        <div class="grid g3" id="keyboardGrid"></div>
+      </div>
+    </div>
+
+    <div class="slabel">Напечатать текст</div>
+    <div class="card">
+      <div class="card-body">
+        <div class="flabel">Введите текст</div>
+        <textarea class="ta" id="typeText" placeholder="Текст появится в активном окне на ПК…"></textarea>
+        <div class="mt8"></div>
+        <button class="bprim" onclick="typeText()">⌨️ Напечатать</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Мышь -->
+  <div class="page" id="page-mouse">
+    <div class="slabel">Кнопки мыши</div>
+    <div class="card">
+      <div class="card-body">
+        <div class="grid g3">
+          <button class="btn blue" onclick="mouseClick('left')"><span class="bi">🖱</span>ЛКМ</button>
+          <button class="btn accent" onclick="mouseClick('right')"><span class="bi">🖱</span>ПКМ</button>
+          <button class="btn ok" onclick="mouseClick('middle')"><span class="bi">🖱</span>СКМ</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="slabel">Скролл</div>
+    <div class="card">
+      <div class="card-body">
+        <div class="grid g2">
+          <button class="btn blue" onclick="mouseScroll('up')"><span class="bi">⬆️</span>Вверх</button>
+          <button class="btn blue" onclick="mouseScroll('down')"><span class="bi">⬇️</span>Вниз</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Медиа -->
+  <div class="page" id="page-media">
+    <div class="slabel">Громкость</div>
+    <div class="card">
+      <div class="card-body">
+        <div class="vol-wrap"><div class="vol-num" id="volNum">50</div><div class="vol-sub">Percent</div></div>
+        <input id="volRange" type="range" min="0" max="100" value="50" oninput="volPreview(this.value)" onchange="setVolume(this.value)"/>
+        <div class="qvol">
+          <button onclick="setVolume(0)">0</button>
+          <button onclick="setVolume(25)">25</button>
+          <button onclick="setVolume(50)">50</button>
+          <button onclick="setVolume(75)">75</button>
+          <button onclick="setVolume(100)">100</button>
+        </div>
+        <div class="mt12"></div>
+        <button class="btn warn" style="width:100%" onclick="mediaControl('mute')"><span class="bi">🔇</span>Mute / Unmute</button>
+      </div>
+    </div>
+
+    <div class="slabel">Плеер</div>
+    <div class="card">
+      <div class="card-body">
+        <div class="grid g3">
+          <button class="btn blue" onclick="mediaControl('prev')"><span class="bi">⏮</span>Пред</button>
+          <button class="btn ok" onclick="mediaControl('play')"><span class="bi">⏯</span>Play</button>
+          <button class="btn blue" onclick="mediaControl('next')"><span class="bi">⏭</span>След</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Камера -->
+  <div class="page" id="page-camera">
+    <div class="slabel">Галерея сессии</div>
+    <div class="card" style="padding-bottom:0">
+      <div class="card-hdr">
+        <div class="card-title">Медиа</div>
+        <span class="chip" onclick="clearCaptures()">Очистить</span>
+      </div>
+      <div style="height:10px"></div>
+      <div class="gallery" id="gallery"></div>
+      <div class="empty" id="galEmpty">
+        <div class="empty-ico">🖼</div>Нет скриншотов
+      </div>
+    </div>
+
+    <div class="slabel">Скриншот и камера</div>
+    <div class="card">
+      <div class="card-body">
+        <div class="grid g2">
+          <button class="btn ok" onclick="execCmd('screenshot')"><span class="bi">📸</span>Скриншот</button>
+          <button class="btn accent" onclick="execCmd('camera_photo')"><span class="bi">📷</span>Фото</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="slabel">Запись</div>
+    <div class="card">
+      <div class="card-body">
+        <div class="grid g2">
+          <button class="btn blue" onclick="openRecordPicker('screen')"><span class="bi">🎥</span>Запись экрана</button>
+          <button class="btn blue" onclick="openRecordPicker('camera')"><span class="bi">🎬</span>Запись камеры</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Файлы -->
+  <div class="page" id="page-files">
+    <div class="slabel">Файловый менеджер</div>
+    <div class="card" id="fbCard">
+      <div class="fb-path" id="fbPath">Загрузка…</div>
+      <div class="fb-search">
+        <input class="inp" id="fbSearch" placeholder="🔍 Поиск…" oninput="fbFilter(this.value)" />
+      </div>
+      <div class="fb-toolbar" id="fbToolbar"></div>
+      <div class="fb-list" id="fbList"></div>
+      <div class="empty" id="fbEmpty" style="display:none">
+        <div class="empty-ico">📂</div>Папка пуста
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Tabs -->
+<div class="tabs" id="tabs">
+  <button class="tab active" onclick="openTab('main',this)"><span class="tab-ico">🏠</span>Главная</button>
+  <button class="tab" onclick="openTab('timer',this)"><span class="tab-ico">⏰</span>Таймер</button>
+  <button class="tab" onclick="openTab('keyboard',this)"><span class="tab-ico">⌨️</span>Клавиши</button>
+  <button class="tab" onclick="openTab('mouse',this)"><span class="tab-ico">🖱</span>Мышь</button>
+  <button class="tab" onclick="openTab('media',this)"><span class="tab-ico">🎵</span>Медиа</button>
+  <button class="tab" onclick="openTab('camera',this)"><span class="tab-ico">📷</span>Камера</button>
+  <button class="tab" onclick="openTab('files',this)"><span class="tab-ico">📁</span>Файлы</button>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"><div class="tbox" id="tbox"></div></div>
+
+<!-- Sheet -->
+<div class="sbg" id="sbg" onclick="sbgClick(event)">
+  <div class="sheet">
+    <div class="shandle"></div>
+    <div class="shdr">
+      <div class="stitle" id="stitle"></div>
+      <div class="sdesc" id="sdesc"></div>
+    </div>
+    <div class="sbody" id="sbody"></div>
+    <div class="sacts" id="sacts"></div>
+  </div>
+</div>
+
+<!-- Record overlay -->
+<div class="rec-overlay" id="recOverlay">
+  <div class="rec-pulse" id="recIcon">🎥</div>
+  <div class="rec-title" id="recTitle">Запись…</div>
+  <div class="rec-sub" id="recSub">0 сек</div>
+  <div class="rec-timer" id="recTimer">00</div>
+  <div class="rec-bar-wrap"><div class="rec-bar" id="recBar"></div></div>
+</div>
+
+<!-- Scripts -->
+<script src="/js/core.js"></script>
+<script src="/js/timer.js"></script>
+<script src="/js/keyboard.js"></script>
+<script src="/js/mouse.js"></script>
+<script src="/js/media.js"></script>
+<script src="/js/capture.js"></script>
+<script src="/js/files.js"></script>
+<script src="/js/winlock.js"></script>
+<script>
+// Init после загрузки всех модулей
+document.addEventListener("DOMContentLoaded", () => {
+  renderKeyboard();
+  loadCaps();
+  volPreview(50);
+});
+</script>
+</body>
+</html>
