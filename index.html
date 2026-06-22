@@ -5,16 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
   <title>Cortex</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  <script src="js/core.js"></script>
-  <script src="js/timer.js"></script>
-  <script src="js/keyboard.js"></script>
-  <script src="js/mouse.js"></script>
-  <script src="js/media.js"></script>
-  <script src="js/capture.js"></script>
-  <script src="js/files.js"></script>
-  <script src="js/winlock.js"></script>
   <link rel="stylesheet" href="css/style.css">
-  
 </head>
 <body>
 
@@ -35,16 +26,25 @@
 
 <!-- Pages -->
 <div id="pages">
-  <!-- Главная -->
+
+  <!-- ГЛАВНАЯ -->
   <div class="page active" id="page-main">
-    <div class="slabel">Управление</div>
+    <div class="slabel">Управление ПК</div>
     <div class="card">
       <div class="card-body">
         <div class="grid g2">
-          <button class="btn danger" onclick="confirmAction('shutdown','Выключить ПК?')"><span class="bi">⏻</span>Выключить</button>
-          <button class="btn warn" onclick="confirmAction('reboot','Перезагрузить ПК?')"><span class="bi">↺</span>Перезагрузка</button>
-          <button class="btn accent" onclick="execCmd('lock')"><span class="bi">🔒</span>Блокировка</button>
-          <button class="btn blue" onclick="execCmd('sleep')"><span class="bi">🌙</span>Сон</button>
+          <button class="btn danger" onclick="confirmAction('shutdown','Выключить ПК?')">
+            <span class="bi">⏻</span>Выключить
+          </button>
+          <button class="btn warn" onclick="confirmAction('reboot','Перезагрузить ПК?')">
+            <span class="bi">↺</span>Перезагрузка
+          </button>
+          <button class="btn accent" onclick="execCmd('lock')">
+            <span class="bi">🔒</span>Блокировка
+          </button>
+          <button class="btn blue" onclick="execCmd('sleep')">
+            <span class="bi">🌙</span>Сон
+          </button>
         </div>
       </div>
     </div>
@@ -52,13 +52,45 @@
     <div class="slabel">WinLock</div>
     <div class="card">
       <div class="card-hdr">
-        <div class="card-title">Блокировка ПК</div>
-        <div class="lock-chip"><div class="sdot" id="wlDot"></div><span id="wlStatus">…</span></div>
+        <div class="card-title">Блокировка экрана</div>
+        <div class="lock-chip">
+          <div class="sdot" id="wlDot"></div>
+          <span id="wlStatus">…</span>
+        </div>
       </div>
       <div class="card-body">
         <div class="grid g2">
-          <button class="btn danger" onclick="openWinlockSheet()"><span class="bi">🔒</span>Заблокировать</button>
-          <button class="btn ok" onclick="winlockUnlock()"><span class="bi">🔓</span>Разблокировать</button>
+          <button class="btn danger" onclick="openWinlockSheet()">
+            <span class="bi">🔒</span>Заблокировать
+          </button>
+          <button class="btn ok" onclick="winlockUnlock()">
+            <span class="bi">🔓</span>Разблокировать
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="slabel">Таймер</div>
+    <div class="card">
+      <div class="card-hdr">
+        <div class="card-title">Быстрый таймер</div>
+        <span class="chip" onclick="openTab('timer', document.querySelector('.tab:nth-child(2)'))">Все таймеры →</span>
+      </div>
+      <div class="card-body">
+        <div class="flabel">Действие</div>
+        <select class="sel" id="quickAction">
+          <option value="shutdown">⏻ Выключение</option>
+          <option value="reboot">↺ Перезагрузка</option>
+          <option value="lock">🔒 Блокировка</option>
+          <option value="sleep">🌙 Сон</option>
+          <option value="winlock">🔐 WinLock</option>
+        </select>
+        <div class="mt8"></div>
+        <div class="row">
+          <input class="inp" id="quickMin" type="number" min="1" max="1440" placeholder="Минуты (1-1440)"/>
+          <button class="btn ok" style="min-width:90px;min-height:44px" onclick="quickTimer()">
+            ▶ Старт
+          </button>
         </div>
       </div>
     </div>
@@ -67,48 +99,61 @@
     <div class="card">
       <div class="card-hdr">
         <div class="card-title">Информация</div>
-        <span class="chip" onclick="updateInfo(true)">↻</span>
+        <span class="chip" onclick="updateInfo(true)">↻ Обновить</span>
       </div>
       <div class="stat-list">
-        <div class="stat-row"><div class="stat-k"><div class="stat-ico">🌐</div>Public IP</div><div class="stat-v" id="publicIp">—</div></div>
-        <div class="stat-row"><div class="stat-k"><div class="stat-ico">🏠</div>Local IP</div><div class="stat-v" id="localIp">—</div></div>
-        <div class="stat-row"><div class="stat-k"><div class="stat-ico">🧠</div>CPU</div><div class="stat-v" id="cpuVal">—</div></div>
-        <div class="stat-row"><div class="stat-k"><div class="stat-ico">💾</div>RAM</div><div class="stat-v" id="ramVal">—</div></div>
-        <div class="stat-row"><div class="stat-k"><div class="stat-ico">💿</div>Disk C</div><div class="stat-v" id="diskVal">—</div></div>
-        <div class="stat-row"><div class="stat-k"><div class="stat-ico">⏱</div>Uptime</div><div class="stat-v" id="uptimeVal">—</div></div>
+        <div class="stat-row">
+          <div class="stat-k"><div class="stat-ico">🌐</div>Public IP</div>
+          <div class="stat-v" id="publicIp">—</div>
+        </div>
+        <div class="stat-row">
+          <div class="stat-k"><div class="stat-ico">🏠</div>Local IP</div>
+          <div class="stat-v" id="localIp">—</div>
+        </div>
+        <div class="stat-row">
+          <div class="stat-k"><div class="stat-ico">🧠</div>CPU</div>
+          <div class="stat-v" id="cpuVal">—</div>
+        </div>
+        <div class="stat-row">
+          <div class="stat-k"><div class="stat-ico">💾</div>RAM</div>
+          <div class="stat-v" id="ramVal">—</div>
+        </div>
+        <div class="stat-row">
+          <div class="stat-k"><div class="stat-ico">💿</div>Disk C</div>
+          <div class="stat-v" id="diskVal">—</div>
+        </div>
+        <div class="stat-row">
+          <div class="stat-k"><div class="stat-ico">⏱</div>Uptime</div>
+          <div class="stat-v" id="uptimeVal">—</div>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- Таймер -->
+  <!-- ТАЙМЕРЫ -->
   <div class="page" id="page-timer">
-    <div class="slabel">Таймеры</div>
+    <div class="slabel">Активные таймеры</div>
     <div class="card">
       <div class="card-hdr">
-        <div class="card-title">Активные таймеры</div>
+        <div class="card-title">Таймеры</div>
         <span class="chip" onclick="openTimerSheet()">+ Новый</span>
       </div>
       <div style="height:10px"></div>
       <div id="timerList"></div>
-      <div class="empty" id="timerEmpty" style="display:none">
-        <div class="empty-ico">⏰</div>Нет таймеров
+      <div class="empty" id="timerEmpty">
+        <div class="empty-ico">⏰</div>Нет активных таймеров
       </div>
     </div>
-
-    <div class="slabel">Быстрые действия</div>
     <div class="card">
       <div class="card-body">
-        <div class="grid g2">
-          <button class="btn danger" onclick="confirmAction('shutdown','Выключить?')"><span class="bi">⏻</span>Выключить</button>
-          <button class="btn warn" onclick="confirmAction('reboot','Перезагрузить?')"><span class="bi">↺</span>Перезагрузка</button>
-        </div>
-        <div class="mt8"></div>
-        <button class="btn accent" style="width:100%" onclick="execCmd('cancel')"><span class="bi">⏹</span>Отменить активный таймер</button>
+        <button class="btn danger" style="width:100%" onclick="execCmd('cancel')">
+          <span class="bi">⏹</span>Отменить системный таймер
+        </button>
       </div>
     </div>
   </div>
 
-  <!-- Клавиатура -->
+  <!-- КЛАВИАТУРА -->
   <div class="page" id="page-keyboard">
     <div class="slabel">Нажать клавишу</div>
     <div class="card">
@@ -116,49 +161,73 @@
         <div class="grid g3" id="keyboardGrid"></div>
       </div>
     </div>
-
+    <div class="slabel">Своя комбинация</div>
+    <div class="card">
+      <div class="card-body">
+        <div class="flabel">Клавиша или комбинация (например: ctrl+c)</div>
+        <div class="row">
+          <input class="inp" id="customKey" placeholder="enter, ctrl+c, alt+tab…"/>
+          <button class="btn ok" style="min-width:90px;min-height:44px" onclick="pressCustomKey()">
+            Отправить
+          </button>
+        </div>
+      </div>
+    </div>
     <div class="slabel">Напечатать текст</div>
     <div class="card">
       <div class="card-body">
-        <div class="flabel">Введите текст</div>
-        <textarea class="ta" id="typeText" placeholder="Текст появится в активном окне на ПК…"></textarea>
+        <div class="flabel">Текст появится в активном окне на ПК</div>
+        <textarea class="ta" id="typeText" placeholder="Введите текст…"></textarea>
         <div class="mt8"></div>
         <button class="bprim" onclick="typeText()">⌨️ Напечатать</button>
       </div>
     </div>
   </div>
 
-  <!-- Мышь -->
+  <!-- МЫШЬ -->
   <div class="page" id="page-mouse">
     <div class="slabel">Кнопки мыши</div>
     <div class="card">
       <div class="card-body">
         <div class="grid g3">
-          <button class="btn blue" onclick="mouseClick('left')"><span class="bi">🖱</span>ЛКМ</button>
-          <button class="btn accent" onclick="mouseClick('right')"><span class="bi">🖱</span>ПКМ</button>
-          <button class="btn ok" onclick="mouseClick('middle')"><span class="bi">🖱</span>СКМ</button>
+          <button class="btn blue" onclick="mouseClick('left')">
+            <span class="bi">🖱</span>ЛКМ
+          </button>
+          <button class="btn accent" onclick="mouseClick('right')">
+            <span class="bi">🖱</span>ПКМ
+          </button>
+          <button class="btn ok" onclick="mouseClick('middle')">
+            <span class="bi">🖱</span>СКМ
+          </button>
         </div>
       </div>
     </div>
-
     <div class="slabel">Скролл</div>
     <div class="card">
       <div class="card-body">
         <div class="grid g2">
-          <button class="btn blue" onclick="mouseScroll('up')"><span class="bi">⬆️</span>Вверх</button>
-          <button class="btn blue" onclick="mouseScroll('down')"><span class="bi">⬇️</span>Вниз</button>
+          <button class="btn blue" onclick="mouseScroll('up')">
+            <span class="bi">⬆️</span>Вверх
+          </button>
+          <button class="btn blue" onclick="mouseScroll('down')">
+            <span class="bi">⬇️</span>Вниз</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Медиа -->
+  <!-- МЕДИА -->
   <div class="page" id="page-media">
     <div class="slabel">Громкость</div>
     <div class="card">
       <div class="card-body">
-        <div class="vol-wrap"><div class="vol-num" id="volNum">50</div><div class="vol-sub">Percent</div></div>
-        <input id="volRange" type="range" min="0" max="100" value="50" oninput="volPreview(this.value)" onchange="setVolume(this.value)"/>
+        <div class="vol-wrap">
+          <div class="vol-num" id="volNum">50</div>
+          <div class="vol-sub">Percent</div>
+        </div>
+        <input id="volRange" type="range" min="0" max="100" value="50"
+          oninput="volPreview(this.value)"
+          onchange="setVolume(this.value)"/>
         <div class="qvol">
           <button onclick="setVolume(0)">0</button>
           <button onclick="setVolume(25)">25</button>
@@ -167,23 +236,30 @@
           <button onclick="setVolume(100)">100</button>
         </div>
         <div class="mt12"></div>
-        <button class="btn warn" style="width:100%" onclick="mediaControl('mute')"><span class="bi">🔇</span>Mute / Unmute</button>
+        <button class="btn warn" style="width:100%" onclick="mediaControl('mute')">
+          <span class="bi">🔇</span>Mute / Unmute
+        </button>
       </div>
     </div>
-
     <div class="slabel">Плеер</div>
     <div class="card">
       <div class="card-body">
         <div class="grid g3">
-          <button class="btn blue" onclick="mediaControl('prev')"><span class="bi">⏮</span>Пред</button>
-          <button class="btn ok" onclick="mediaControl('play')"><span class="bi">⏯</span>Play</button>
-          <button class="btn blue" onclick="mediaControl('next')"><span class="bi">⏭</span>След</button>
+          <button class="btn blue" onclick="mediaControl('prev')">
+            <span class="bi">⏮</span>Пред
+          </button>
+          <button class="btn ok" onclick="mediaControl('play')">
+            <span class="bi">⏯</span>Play
+          </button>
+          <button class="btn blue" onclick="mediaControl('next')">
+            <span class="bi">⏭</span>След
+          </button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Камера -->
+  <!-- КАМЕРА -->
   <div class="page" id="page-camera">
     <div class="slabel">Галерея сессии</div>
     <div class="card" style="padding-bottom:0">
@@ -194,57 +270,79 @@
       <div style="height:10px"></div>
       <div class="gallery" id="gallery"></div>
       <div class="empty" id="galEmpty">
-        <div class="empty-ico">🖼</div>Нет скриншотов
+        <div class="empty-ico">🖼</div>Нет медиа
       </div>
     </div>
 
-    <div class="slabel">Скриншот и камера</div>
+    <div class="slabel">Скриншот</div>
     <div class="card">
       <div class="card-body">
         <div class="grid g2">
-          <button class="btn ok" onclick="execCmd('screenshot')"><span class="bi">📸</span>Скриншот</button>
-          <button class="btn accent" onclick="execCmd('camera_photo')"><span class="bi">📷</span>Фото</button>
+          <button class="btn ok" onclick="execCmd('screenshot')">
+            <span class="bi">📸</span>Скриншот
+          </button>
+          <button class="btn accent" onclick="execCmd('camera_photo')">
+            <span class="bi">📷</span>Фото
+          </button>
         </div>
       </div>
     </div>
 
-    <div class="slabel">Запись</div>
+    <div class="slabel">Запись экрана</div>
     <div class="card">
       <div class="card-body">
-        <div class="grid g2">
-          <button class="btn blue" onclick="openRecordPicker('screen')"><span class="bi">🎥</span>Запись экрана</button>
-          <button class="btn blue" onclick="openRecordPicker('camera')"><span class="bi">🎬</span>Запись камеры</button>
-        </div>
+        <button class="btn blue" style="width:100%;margin-bottom:8px" onclick="openRecordPicker('screen')">
+          <span class="bi">🎥</span>Запись экрана
+        </button>
+        <button class="btn blue" style="width:100%" onclick="openRecordPicker('camera')">
+          <span class="bi">🎬</span>Запись с камеры
+        </button>
       </div>
     </div>
   </div>
 
-  <!-- Файлы -->
+  <!-- ФАЙЛЫ -->
   <div class="page" id="page-files">
     <div class="slabel">Файловый менеджер</div>
-    <div class="card" id="fbCard">
+    <div class="card">
       <div class="fb-path" id="fbPath">Загрузка…</div>
       <div class="fb-search">
-        <input class="inp" id="fbSearch" placeholder="🔍 Поиск…" oninput="fbFilter(this.value)" />
+        <input class="inp" id="fbSearch" placeholder="🔍 Поиск…"
+          oninput="fbFilter(this.value)"/>
       </div>
       <div class="fb-toolbar" id="fbToolbar"></div>
-      <div class="fb-list" id="fbList"></div>
-      <div class="empty" id="fbEmpty" style="display:none">
+      <div class="fb-list"    id="fbList"></div>
+      <div class="empty"      id="fbEmpty" style="display:none">
         <div class="empty-ico">📂</div>Папка пуста
       </div>
     </div>
   </div>
-</div>
+
+</div><!-- /pages -->
 
 <!-- Tabs -->
-<div class="tabs" id="tabs">
-  <button class="tab active" onclick="openTab('main',this)"><span class="tab-ico">🏠</span>Главная</button>
-  <button class="tab" onclick="openTab('timer',this)"><span class="tab-ico">⏰</span>Таймер</button>
-  <button class="tab" onclick="openTab('keyboard',this)"><span class="tab-ico">⌨️</span>Клавиши</button>
-  <button class="tab" onclick="openTab('mouse',this)"><span class="tab-ico">🖱</span>Мышь</button>
-  <button class="tab" onclick="openTab('media',this)"><span class="tab-ico">🎵</span>Медиа</button>
-  <button class="tab" onclick="openTab('camera',this)"><span class="tab-ico">📷</span>Камера</button>
-  <button class="tab" onclick="openTab('files',this)"><span class="tab-ico">📁</span>Файлы</button>
+<div class="tabs">
+  <button class="tab active" onclick="openTab('main',this)">
+    <span class="tab-ico">🏠</span>Главная
+  </button>
+  <button class="tab" onclick="openTab('timer',this)">
+    <span class="tab-ico">⏰</span>Таймер
+  </button>
+  <button class="tab" onclick="openTab('keyboard',this)">
+    <span class="tab-ico">⌨️</span>Клавиши
+  </button>
+  <button class="tab" onclick="openTab('mouse',this)">
+    <span class="tab-ico">🖱</span>Мышь
+  </button>
+  <button class="tab" onclick="openTab('media',this)">
+    <span class="tab-ico">🎵</span>Медиа
+  </button>
+  <button class="tab" onclick="openTab('camera',this)">
+    <span class="tab-ico">📷</span>Камера
+  </button>
+  <button class="tab" onclick="openTab('files',this)">
+    <span class="tab-ico">📁</span>Файлы
+  </button>
 </div>
 
 <!-- Toast -->
@@ -256,7 +354,7 @@
     <div class="shandle"></div>
     <div class="shdr">
       <div class="stitle" id="stitle"></div>
-      <div class="sdesc" id="sdesc"></div>
+      <div class="sdesc"  id="sdesc"></div>
     </div>
     <div class="sbody" id="sbody"></div>
     <div class="sacts" id="sacts"></div>
@@ -265,29 +363,49 @@
 
 <!-- Record overlay -->
 <div class="rec-overlay" id="recOverlay">
-  <div class="rec-pulse" id="recIcon">🎥</div>
-  <div class="rec-title" id="recTitle">Запись…</div>
-  <div class="rec-sub" id="recSub">0 сек</div>
-  <div class="rec-timer" id="recTimer">00</div>
+  <div class="rec-pulse"  id="recIcon">🎥</div>
+  <div class="rec-title"  id="recTitle">Запись…</div>
+  <div class="rec-sub"    id="recSub">0 сек</div>
+  <div class="rec-timer"  id="recTimer">00</div>
   <div class="rec-bar-wrap"><div class="rec-bar" id="recBar"></div></div>
 </div>
 
-<!-- Scripts -->
-<script src="/js/core.js"></script>
-<script src="/js/timer.js"></script>
-<script src="/js/keyboard.js"></script>
-<script src="/js/mouse.js"></script>
-<script src="/js/media.js"></script>
-<script src="/js/capture.js"></script>
-<script src="/js/files.js"></script>
-<script src="/js/winlock.js"></script>
+<!-- JS -->
+<script src="js/core.js"></script>
+<script src="js/winlock.js"></script>
+<script src="js/timer.js"></script>
+<script src="js/keyboard.js"></script>
+<script src="js/mouse.js"></script>
+<script src="js/media.js"></script>
+<script src="js/capture.js"></script>
+<script src="js/files.js"></script>
+
 <script>
-// Init после загрузки всех модулей
+// ── Инициализация ──
 document.addEventListener("DOMContentLoaded", () => {
   renderKeyboard();
   loadCaps();
   volPreview(50);
+  winlockRefresh();
+  updateInfo(false);
+  timerRefresh();
+  setInterval(() => updateInfo(false), 60000);
+  setInterval(() => winlockRefresh(), 10000);
+  setInterval(() => renderTimers(), 1000);
 });
+
+// ── Быстрый таймер с главной ──
+async function quickTimer() {
+  const action  = document.getElementById("quickAction")?.value || "shutdown";
+  const minutes = Number(document.getElementById("quickMin")?.value || 0);
+  if (!minutes || minutes < 1 || minutes > 1440) {
+    toast("❌ Введите минуты 1..1440", 3000);
+    return;
+  }
+  const res = await execCmd("create", { action, minutes });
+  if (res?.ok) addTimer(action, minutes);
+}
 </script>
+
 </body>
 </html>
