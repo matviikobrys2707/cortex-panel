@@ -1,14 +1,9 @@
 // ══════════════════════════════════════════════════════════════
-//  Mouse — ЛКМ/ПКМ/СКМ/Скролл
+//  Mouse
 // ══════════════════════════════════════════════════════════════
 
 async function mouseClick(btn) {
-  const cmds = {
-    left: "mouse_left",
-    right: "mouse_right",
-    middle: "mouse_middle"
-  };
-  await execCmd(cmds[btn] || "mouse_left");
+  await execCmd("mouse_click", { button: btn });
 }
 
 async function mouseScroll(dir) {
