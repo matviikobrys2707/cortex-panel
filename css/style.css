@@ -39,7 +39,9 @@ body::before {
   z-index: 0;
 }
 
-/* ── Header ── */
+/* ══════════════════════════════════════════════════════════════
+   Header
+   ══════════════════════════════════════════════════════════════ */
 .hdr {
   position: sticky;
   top: 0;
@@ -115,7 +117,9 @@ body::before {
   height: 15px;
 }
 
-/* ── Pages ── */
+/* ══════════════════════════════════════════════════════════════
+   Pages
+   ══════════════════════════════════════════════════════════════ */
 .page {
   display: none;
   padding: 14px 14px;
@@ -139,7 +143,9 @@ body::before {
   }
 }
 
-/* ── Tabs ── */
+/* ══════════════════════════════════════════════════════════════
+   Tabs
+   ══════════════════════════════════════════════════════════════ */
 .tabs {
   position: fixed;
   bottom: 0;
@@ -182,7 +188,9 @@ body::before {
   color: var(--accent);
 }
 
-/* ── Section label ── */
+/* ══════════════════════════════════════════════════════════════
+   Section label
+   ══════════════════════════════════════════════════════════════ */
 .slabel {
   font-size: 10px;
   font-weight: 700;
@@ -192,7 +200,9 @@ body::before {
   margin: 0 0 8px 2px;
 }
 
-/* ── Card ── */
+/* ══════════════════════════════════════════════════════════════
+   Card
+   ══════════════════════════════════════════════════════════════ */
 .card {
   background: var(--card);
   border: 1px solid var(--border);
@@ -225,7 +235,9 @@ body::before {
   margin: 0 15px;
 }
 
-/* ── Buttons ── */
+/* ══════════════════════════════════════════════════════════════
+   Buttons
+   ══════════════════════════════════════════════════════════════ */
 .grid {
   display: grid;
   gap: 8px;
@@ -381,7 +393,9 @@ body::before {
   box-shadow: 0 4px 14px rgba(124, 110, 250, .25);
 }
 
-/* ── Inputs ── */
+/* ══════════════════════════════════════════════════════════════
+   Inputs
+   ══════════════════════════════════════════════════════════════ */
 .inp, .ta, .sel {
   width: 100%;
   border: 1px solid var(--border);
@@ -445,77 +459,38 @@ body::before {
   margin-top: 12px;
 }
 
-/* ── Volume ── */
-.vol-wrap {
-  text-align: center;
-  padding: 6px 0 2px;
-}
-
-.vol-num {
-  font-size: 54px;
-  font-weight: 900;
-  letter-spacing: -3px;
-  line-height: 1;
-  background: linear-gradient(135deg, #A78BFA, #60A5FA);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.vol-sub {
-  font-size: 10px;
-  font-weight: 700;
-  color: var(--muted);
-  letter-spacing: .8px;
-  text-transform: uppercase;
-  margin-top: 2px;
-}
-
-input[type=range] {
-  -webkit-appearance: none;
-  width: 100%;
-  height: 4px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, .1);
-  outline: none;
-  margin: 12px 0;
-}
-
-input[type=range]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #7C6EFA, #5AAFFF);
-  box-shadow: 0 0 18px rgba(124, 110, 250, .6);
-  cursor: pointer;
-  border: 2px solid rgba(255, 255, 255, .25);
-}
-
-.qvol {
+/* ══════════════════════════════════════════════════════════════
+   Volume Grid (как в Telegram)
+   ══════════════════════════════════════════════════════════════ */
+.vol-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 6px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
 }
 
-.qvol button {
+.vol-btn {
   border: 1px solid var(--border);
-  background: rgba(255, 255, 255, .04);
-  color: var(--muted);
-  border-radius: 10px;
-  padding: 8px 4px;
-  font-size: 12px;
+  background: rgba(255, 255, 255, .05);
+  color: var(--text);
+  border-radius: 12px;
+  padding: 14px 8px;
+  font-size: 13px;
   font-weight: 700;
   cursor: pointer;
   transition: .12s;
+  line-height: 1.4;
+  text-align: center;
 }
 
-.qvol button:active {
-  background: rgba(255, 255, 255, .10);
-  color: var(--text);
+.vol-btn:active {
+  background: rgba(124, 110, 250, .2);
+  border-color: var(--accent);
+  transform: scale(.95);
 }
 
-/* ── Stats ── */
+/* ══════════════════════════════════════════════════════════════
+   Stats
+   ══════════════════════════════════════════════════════════════ */
 .stat-list {
   display: flex;
   flex-direction: column;
@@ -559,7 +534,103 @@ input[type=range]::-webkit-slider-thumb {
   color: var(--text);
 }
 
-/* ── Gallery ── */
+/* ══════════════════════════════════════════════════════════════
+   Timer Badge
+   ══════════════════════════════════════════════════════════════ */
+.timer-status {
+  display: inline-flex;
+}
+
+.timer-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(251, 191, 36, .15);
+  border: 1px solid rgba(251, 191, 36, .4);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--warn);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .7; }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   Keyboard Categories
+   ══════════════════════════════════════════════════════════════ */
+.kb-cats {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 12px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.kb-cats::-webkit-scrollbar {
+  display: none;
+}
+
+.kb-cat {
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, .04);
+  color: var(--muted);
+  border-radius: 8px;
+  padding: 7px 14px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: .12s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.kb-cat.active {
+  background: rgba(124, 110, 250, .2);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.kb-cat:active {
+  transform: scale(.95);
+}
+
+.kb-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.kb-key {
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, .05);
+  color: var(--text);
+  border-radius: 10px;
+  padding: 12px 8px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: .12s;
+  text-align: center;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.kb-key:active {
+  background: rgba(90, 175, 255, .2);
+  border-color: var(--blue);
+  transform: scale(.95);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   Gallery
+   ══════════════════════════════════════════════════════════════ */
 .gallery {
   display: flex;
   gap: 8px;
@@ -625,7 +696,9 @@ input[type=range]::-webkit-slider-thumb {
   font-size: 11px;
 }
 
-/* ── File Browser ── */
+/* ══════════════════════════════════════════════════════════════
+   File Browser
+   ══════════════════════════════════════════════════════════════ */
 .fb-path {
   font-size: 11px;
   font-weight: 700;
@@ -724,14 +797,6 @@ input[type=range]::-webkit-slider-thumb {
   color: var(--ok);
 }
 
-.fb-empty {
-  padding: 28px 15px;
-  text-align: center;
-  color: var(--muted);
-  font-size: 12px;
-  font-weight: 600;
-}
-
 .fb-search {
   padding: 10px 15px;
   border-bottom: 1px solid var(--border);
@@ -742,152 +807,120 @@ input[type=range]::-webkit-slider-thumb {
   border-color: rgba(124, 110, 250, .4) !important;
 }
 
-/* ── Timer list ── */
-.timer-item {
+/* ══════════════════════════════════════════════════════════════
+   Toast (новый дизайн вверху)
+   ══════════════════════════════════════════════════════════════ */
+.toast-top {
+  position: fixed;
+  top: 70px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-120%);
+  z-index: 999;
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 10px 15px;
-  border-bottom: 1px solid var(--border);
-}
-
-.timer-item:last-child {
-  border-bottom: none;
-}
-
-.timer-body {
-  flex: 1;
-}
-
-.timer-action {
-  font-size: 13px;
-  font-weight: 700;
-}
-
-.timer-time {
-  font-size: 11px;
-  color: var(--muted);
-  margin-top: 2px;
-}
-
-/* ── Toast ── */
-.toast {
-  position: fixed;
-  bottom: 82px;
-  left: 50%;
-  transform: translateX(-50%) translateY(12px);
+  padding: 12px 18px;
+  border-radius: 14px;
+  background: rgba(14, 18, 32, .95);
+  border: 1px solid rgba(255, 255, 255, .15);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, .5);
+  transition: transform .3s cubic-bezier(.16, 1, .3, 1), opacity .3s;
   opacity: 0;
   pointer-events: none;
-  transition: .2s ease;
-  z-index: 999;
-  max-width: calc(100vw - 28px);
+  max-width: calc(100vw - 40px);
 }
 
-.toast.show {
-  opacity: 1;
+.toast-top.show {
   transform: translateX(-50%) translateY(0);
+  opacity: 1;
 }
 
-.tbox {
-  padding: 9px 15px;
-  border-radius: 999px;
-  background: rgba(12, 16, 28, .95);
-  border: 1px solid rgba(255, 255, 255, .12);
-  backdrop-filter: blur(20px);
-  font-size: 12px;
+.toast-icon {
+  font-size: 20px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.toast-text {
+  font-size: 13px;
   font-weight: 700;
   color: var(--text);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  box-shadow: 0 14px 40px rgba(0, 0, 0, .5);
 }
 
-/* ── Sheet ── */
-.sbg {
+/* ══════════════════════════════════════════════════════════════
+   Fullscreen Overlay
+   ══════════════════════════════════════════════════════════════ */
+.fs-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, .6);
-  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, .85);
+  backdrop-filter: blur(8px);
+  z-index: 600;
   display: none;
-  align-items: flex-end;
-  z-index: 500;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn .25s ease;
 }
 
-.sbg.open {
+.fs-overlay.open {
   display: flex;
 }
 
-.sheet {
+.fs-content {
   width: 100%;
-  background: rgba(10, 14, 26, .97);
-  border: 1px solid rgba(255, 255, 255, .1);
-  border-bottom: none;
-  border-top-left-radius: 24px;
-  border-top-right-radius: 24px;
-  box-shadow: 0 -24px 80px rgba(0, 0, 0, .6);
-  padding: 0 0 28px;
-  animation: sup .22s cubic-bezier(.16, 1, .3, 1);
+  max-width: 500px;
+  background: rgba(14, 18, 32, .97);
+  border: 1px solid rgba(255, 255, 255, .12);
+  border-radius: 20px;
+  padding: 24px 20px;
+  animation: scaleIn .3s cubic-bezier(.16, 1, .3, 1);
 }
 
-@keyframes sup {
+@keyframes scaleIn {
   from {
-    transform: translateY(40px);
-    opacity: .5;
+    transform: scale(.92);
+    opacity: 0;
   }
   to {
-    transform: translateY(0);
+    transform: scale(1);
     opacity: 1;
   }
 }
 
-.shandle {
-  width: 36px;
-  height: 4px;
-  border-radius: 99px;
-  background: rgba(255, 255, 255, .15);
-  margin: 13px auto 0;
-}
-
-.shdr {
-  padding: 14px 18px 10px;
-}
-
-.stitle {
-  font-size: 17px;
+.fs-title {
+  font-size: 20px;
   font-weight: 800;
+  margin-bottom: 8px;
+  text-align: center;
   letter-spacing: -.3px;
 }
 
-.sdesc {
+.fs-desc {
   font-size: 13px;
   color: var(--muted);
-  margin-top: 4px;
-  line-height: 1.4;
+  margin-bottom: 20px;
+  text-align: center;
+  line-height: 1.5;
 }
 
-.sbody {
-  padding: 0 15px;
-}
-
-.sbody > * + * {
-  margin-top: 10px;
-}
-
-.sacts {
+.fs-actions {
   display: flex;
-  gap: 8px;
-  padding: 14px 15px 0;
-  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
 }
 
-.sacts .btn {
+.fs-actions .btn {
   flex: 1;
-  min-width: 100px;
-  min-height: 46px;
 }
 
-/* ── Record overlay ── */
+/* ══════════════════════════════════════════════════════════════
+   Record overlay
+   ══════════════════════════════════════════════════════════════ */
 .rec-overlay {
   position: fixed;
   inset: 0;
@@ -968,23 +1001,9 @@ input[type=range]::-webkit-slider-thumb {
   transition: width 1s linear;
 }
 
-/* ── Viewer ── */
-.viewer {
-  border-radius: 14px;
-  overflow: auto;
-  background: rgba(0, 0, 0, .3);
-  max-height: 55vh;
-  touch-action: pan-x pan-y pinch-zoom;
-  border: 1px solid var(--border);
-}
-
-.viewer img, .viewer video {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-/* ── Chip ── */
+/* ══════════════════════════════════════════════════════════════
+   Chip
+   ══════════════════════════════════════════════════════════════ */
 .chip {
   display: inline-flex;
   align-items: center;
