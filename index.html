@@ -9,9 +9,6 @@
 </head>
 <body>
 
-<!-- ═══════════════════════════════════════════════════
-     HEADER
-═══════════════════════════════════════════════════ -->
 <div class="hdr">
   <div class="logo">Cortex</div>
   <div class="hdr-right">
@@ -26,159 +23,209 @@
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════
-     PAGES
-═══════════════════════════════════════════════════ -->
 <div id="pages">
 
-  <!-- ═══════════════════════════════════════════════
-       ГЛАВНАЯ (НОВЫЙ ДИЗАЙН)
-  ═══════════════════════════════════════════════ -->
+  <!-- ══ ГЛАВНАЯ ══ -->
   <div class="page active" id="page-main">
 
-    <!-- Статус панель -->
-    <div class="status-panel">
-      <div class="status-col">
-        <div class="status-icon">💻</div>
-        <div class="status-info">
-          <div class="status-label">Компьютер</div>
-          <div class="status-value" id="pcValMain">—</div>
-        </div>
-      </div>
-      <div class="status-col">
-        <div class="status-icon">🌐</div>
-        <div class="status-info">
-          <div class="status-label">IP</div>
-          <div class="status-value" id="publicIpMain">—</div>
-        </div>
-      </div>
-    </div>
-
     <!-- Быстрые действия -->
-    <div class="slabel">Быстрые действия</div>
-    <div class="quick-actions">
-      <button class="qa-card danger" onclick="confirmAction('shutdown','Выключить ПК?')">
-        <div class="qa-icon">⏻</div>
-        <div class="qa-label">Выключение</div>
-      </button>
-      <button class="qa-card warn" onclick="confirmAction('reboot','Перезагрузить?')">
-        <div class="qa-icon">↺</div>
-        <div class="qa-label">Перезагрузка</div>
-      </button>
-      <button class="qa-card blue" onclick="execCmd('sleep')">
-        <div class="qa-icon">🌙</div>
-        <div class="qa-label">Сон</div>
-      </button>
-      <button class="qa-card accent" onclick="execCmd('lock')">
-        <div class="qa-icon">🔒</div>
-        <div class="qa-label">Блокировка</div>
-      </button>
-    </div>
-
-    <!-- Таймеры -->
-    <div class="slabel">
-      <span>Таймеры</span>
-      <button class="add-btn" onclick="openTimerMenu()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-          <line x1="12" y1="5" x2="12" y2="19"/>
-          <line x1="5" y1="12" x2="19" y2="12"/>
-        </svg>
-      </button>
-    </div>
-    <div id="timersList"></div>
-    <div id="timersEmpty" class="empty-state">
-      <div class="empty-icon">⏱</div>
-      <div class="empty-text">Нет активных таймеров</div>
-    </div>
-
-    <!-- Система (компактно) -->
-    <div class="slabel">Мониторинг</div>
-    <div class="sys-grid">
-      <div class="sys-card">
-        <div class="sys-icon">🧠</div>
-        <div class="sys-body">
-          <div class="sys-label">CPU</div>
-          <div class="sys-value" id="cpuValMain">—</div>
-        </div>
-      </div>
-      <div class="sys-card">
-        <div class="sys-icon">💾</div>
-        <div class="sys-body">
-          <div class="sys-label">RAM</div>
-          <div class="sys-value" id="ramValMain">—</div>
-        </div>
-      </div>
-      <div class="sys-card">
-        <div class="sys-icon">💿</div>
-        <div class="sys-body">
-          <div class="sys-label">Диск C</div>
-          <div class="sys-value" id="diskValMain">—</div>
-        </div>
-      </div>
-      <div class="sys-card">
-        <div class="sys-icon">⏱</div>
-        <div class="sys-body">
-          <div class="sys-label">Uptime</div>
-          <div class="sys-value" id="uptimeValMain">—</div>
-        </div>
+    <div class="section-card">
+      <div class="section-title">⚡ Быстрые действия</div>
+      <div class="qa-grid">
+        <button class="qa-btn danger" onclick="confirmAction('shutdown','Выключить ПК?')">
+          <div class="qa-ico">⏻</div>
+          <div class="qa-lbl">Выключение</div>
+        </button>
+        <button class="qa-btn warn" onclick="confirmAction('reboot','Перезагрузить?')">
+          <div class="qa-ico">↺</div>
+          <div class="qa-lbl">Перезагрузка</div>
+        </button>
+        <button class="qa-btn blue" onclick="execCmd('sleep')">
+          <div class="qa-ico">🌙</div>
+          <div class="qa-lbl">Сон</div>
+        </button>
+        <button class="qa-btn accent" onclick="execCmd('lock')">
+          <div class="qa-ico">🔒</div>
+          <div class="qa-lbl">Блокировка</div>
+        </button>
+        <button class="qa-btn purple qa-full" onclick="openWinlockMainBtn()">
+          <div class="qa-ico">🔐</div>
+          <div class="qa-lbl">WinLock</div>
+        </button>
       </div>
     </div>
 
-    <!-- WinLock -->
-    <div class="slabel">WinLock</div>
-    <div class="winlock-card">
-      <div class="winlock-status">
-        <div class="sdot" id="wlDot"></div>
-        <span id="wlStatus">Загрузка…</span>
+    <!-- Таймер -->
+    <div class="section-card">
+      <div class="section-title-row">
+        <span class="section-title">⏱ Таймер</span>
+        <button class="add-btn" id="timerAddBtn" onclick="openTimerMenu()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+          </svg>
+          Добавить
+        </button>
       </div>
-      <div class="winlock-actions">
-        <button class="wl-btn danger" onclick="openWinlockMenu()">🔒</button>
-        <button class="wl-btn ok" onclick="winlockUnlock()">🔓</button>
+      <div id="timersList"></div>
+      <div id="timersEmpty" class="empty-timer">
+        <span class="empty-timer-ico">⏱</span>
+        <span>Нет активных таймеров</span>
+      </div>
+    </div>
+
+    <!-- Мониторинг -->
+    <div class="section-card">
+      <div class="section-title">📊 Мониторинг</div>
+      <div class="monitor-grid">
+        <div class="monitor-row">
+          <span class="monitor-ico">⬆️</span>
+          <span class="monitor-key">Отправлено</span>
+          <span class="monitor-val" id="netSent">—</span>
+        </div>
+        <div class="monitor-row">
+          <span class="monitor-ico">⬇️</span>
+          <span class="monitor-key">Получено</span>
+          <span class="monitor-val" id="netRecv">—</span>
+        </div>
+        <div class="monitor-row">
+          <span class="monitor-ico">🧠</span>
+          <span class="monitor-key">CPU</span>
+          <span class="monitor-val" id="cpuValMain">—</span>
+        </div>
+        <div class="monitor-row" id="gpuRow" style="display:none">
+          <span class="monitor-ico">🎮</span>
+          <span class="monitor-key">GPU</span>
+          <span class="monitor-val" id="gpuValMain">—</span>
+        </div>
+        <div class="monitor-row">
+          <span class="monitor-ico">⏱</span>
+          <span class="monitor-key">Uptime</span>
+          <span class="monitor-val" id="uptimeValMain">—</span>
+        </div>
+        <div class="monitor-row">
+          <span class="monitor-ico">🌐</span>
+          <span class="monitor-key">IP локальный</span>
+          <span class="monitor-val" id="localIpMain">—</span>
+        </div>
+        <div class="monitor-row">
+          <span class="monitor-ico">🌍</span>
+          <span class="monitor-key">IP внешний</span>
+          <span class="monitor-val" id="publicIpMain">—</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Железо -->
+    <div class="section-card">
+      <div class="section-title">🖥 Железо</div>
+      <div class="monitor-grid">
+        <div class="monitor-row">
+          <span class="monitor-ico">🖥</span>
+          <span class="monitor-key">Система</span>
+          <span class="monitor-val" id="osValMain">—</span>
+        </div>
+        <div class="monitor-row">
+          <span class="monitor-ico">💻</span>
+          <span class="monitor-key">Имя ПК</span>
+          <span class="monitor-val" id="pcValMain">—</span>
+        </div>
+        <div class="monitor-row">
+          <span class="monitor-ico">⚙️</span>
+          <span class="monitor-key">Процессор</span>
+          <span class="monitor-val" id="cpuNameMain">—</span>
+        </div>
+        <div class="monitor-row">
+          <span class="monitor-ico">🎮</span>
+          <span class="monitor-key">Видеокарта</span>
+          <span class="monitor-val" id="gpuNameMain">—</span>
+        </div>
+        <div class="monitor-row">
+          <span class="monitor-ico">💾</span>
+          <span class="monitor-key">RAM</span>
+          <span class="monitor-val" id="ramValMain">—</span>
+        </div>
+        <div id="disksContainer"></div>
       </div>
     </div>
 
   </div><!-- /page-main -->
 
-  <!-- ═══════════════════════════════════════════════
-       УПРАВЛЕНИЕ (ПЕРЕРАБОТАНО)
-  ═══════════════════════════════════════════════ -->
+  <!-- ══ УПРАВЛЕНИЕ ══ -->
   <div class="page" id="page-control">
 
-    <!-- Открытые окна -->
-    <div class="slabel">
-      <span>Открытые окна</span>
-      <span class="auto-badge">авто 10с</span>
-    </div>
+    <div class="slabel">Открытые окна <span class="auto-badge">авто 10с</span></div>
     <div class="card">
       <div class="card-hdr">
         <div class="card-title">Приложения</div>
-        <span class="chip" onclick="refreshWindows()">↻</span>
+        <span class="chip" onclick="refreshWindows()">↻ Обновить</span>
       </div>
-      <div id="windowsList" style="max-height:320px;overflow-y:auto">
-        <div class="empty">
-          <div class="empty-ico">🪟</div>
-          Загрузка…
+      <div id="windowsList" style="max-height:280px;overflow-y:auto">
+        <div class="empty"><div class="empty-ico">🪟</div>Загрузка…</div>
+      </div>
+    </div>
+
+    <!-- Клавиатура — ЦЕНТРИРОВАНА, без смены ориентации -->
+    <div class="slabel">Клавиатура</div>
+    <div class="card">
+      <div class="card-body">
+        <div class="row" style="margin-bottom:10px">
+          <input class="inp" id="customKey" placeholder="ctrl+c, win+d, alt+tab…"/>
+          <button class="btn ok" style="min-width:72px;min-height:44px;flex-direction:row"
+            onclick="pressCustomKey()">▶</button>
+        </div>
+        <textarea class="ta" id="typeText" placeholder="Текст для печати…" rows="2"></textarea>
+        <div class="mt8"></div>
+        <div class="row">
+          <button class="bprim" style="flex:1" onclick="typeText()">⌨️ Напечатать</button>
+          <button class="btn accent" style="min-width:72px;min-height:44px;flex-direction:row;margin-left:8px"
+            onclick="openFullKeyboard()">⌨️</button>
         </div>
       </div>
     </div>
 
-    <!-- Клавиатура (упрощённая) -->
-    <div class="slabel">Клавиатура</div>
+    <!-- Мышь — ПОЛНОСТЬЮ ПЕРЕРАБОТАНА -->
+    <div class="slabel">Мышь</div>
     <div class="card">
       <div class="card-body">
-        <button class="bprim" onclick="openFullKeyboard()">
-          ⌨️ Открыть клавиатуру
-        </button>
-        <div class="mt10"></div>
-        <div class="row">
-          <input class="inp" id="customKey" placeholder="ctrl+c, win+d, alt+tab…"/>
-          <button class="btn ok" style="min-width:80px;min-height:44px;flex-direction:row"
-            onclick="pressCustomKey()">▶</button>
+        <div class="mouse-wrap">
+          <div class="mouse-body">
+            <div class="mouse-btn-left"
+              onpointerdown="mouseHoldStart('left',this)"
+              onpointerup="mouseHoldStop('left',this)"
+              onpointerleave="mouseHoldStop('left',this)"
+              onpointercancel="mouseHoldStop('left',this)">
+              <span>ЛКМ</span>
+              <div class="mouse-hold-indicator" id="holdLeft"></div>
+            </div>
+            <div class="mouse-middle-col">
+              <div class="mouse-wheel" onclick="mouseScroll('up')">▲</div>
+              <div class="mouse-scroll-btn"
+                onpointerdown="mouseHoldStart('middle',this)"
+                onpointerup="mouseHoldStop('middle',this)"
+                onpointerleave="mouseHoldStop('middle',this)">●</div>
+              <div class="mouse-wheel" onclick="mouseScroll('down')">▼</div>
+            </div>
+            <div class="mouse-btn-right"
+              onpointerdown="mouseHoldStart('right',this)"
+              onpointerup="mouseHoldStop('right',this)"
+              onpointerleave="mouseHoldStop('right',this)"
+              onpointercancel="mouseHoldStop('right',this)">
+              <span>ПКМ</span>
+              <div class="mouse-hold-indicator" id="holdRight"></div>
+            </div>
+          </div>
+          <div class="mouse-cable"></div>
+          <!-- Статус зажатия -->
+          <div class="mouse-hold-status" id="mouseHoldStatus" style="display:none">
+            <div class="mhs-dot"></div>
+            <span id="mouseHoldStatusText">Зажато: ЛКМ — двигайте мышь на ПК</span>
+            <button onclick="mouseForceRelease()">✕</button>
+          </div>
         </div>
-        <div class="mt10"></div>
-        <textarea class="ta" id="typeText" placeholder="Текст для печати…" rows="3"></textarea>
-        <div class="mt8"></div>
-        <button class="bprim" onclick="typeText()">⌨️ Напечатать</button>
+        <div class="mt10 grid g2">
+          <button class="btn blue" onclick="mouseScroll('up')">⬆️ Скролл вверх</button>
+          <button class="btn blue" onclick="mouseScroll('down')">⬇️ Скролл вниз</button>
+        </div>
       </div>
     </div>
 
@@ -187,85 +234,41 @@
     <div class="card">
       <div class="card-body">
         <div class="row">
-          <input class="inp" id="urlInput" placeholder="https://google.com или IP…"/>
-          <button class="btn ok" style="min-width:80px;min-height:44px;flex-direction:row"
+          <input class="inp" id="urlInput" placeholder="https://google.com"/>
+          <button class="btn ok" style="min-width:72px;min-height:44px;flex-direction:row"
             onclick="openUrl()">🌐</button>
         </div>
       </div>
     </div>
 
-    <!-- Управление экраном -->
+    <!-- Трансляция -->
     <div class="slabel">Управление экраном</div>
     <div class="card">
       <div class="card-body">
         <button class="bprim-gradient" onclick="openScreenControl()">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;height:20px">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            style="width:20px;height:20px">
             <rect x="2" y="3" width="20" height="14" rx="2"/>
             <line x1="8" y1="21" x2="16" y2="21"/>
             <line x1="12" y1="17" x2="12" y2="21"/>
           </svg>
-          <span>Трансляция экрана + управление</span>
+          Трансляция экрана + управление
         </button>
-        <div class="hint-text">
-          Живая трансляция с управлением мышью в реальном времени
-        </div>
-      </div>
-    </div>
-
-    <!-- Мышь -->
-    <div class="slabel">Мышь</div>
-    <div class="card">
-      <div class="card-body">
-        <div class="mouse-visual">
-          <div class="mouse-body">
-            <div class="mouse-btn-left"
-              onpointerdown="mouseDown('left')"
-              onpointerup="mouseUp('left')"
-              onpointerleave="mouseUp('left')">
-              <span>ЛКМ</span>
-            </div>
-            <div class="mouse-middle-col">
-              <div class="mouse-wheel" onclick="mouseScroll('up')">▲</div>
-              <div class="mouse-scroll-btn"
-                onpointerdown="mouseDown('middle')"
-                onpointerup="mouseUp('middle')"
-                onpointerleave="mouseUp('middle')">●</div>
-              <div class="mouse-wheel" onclick="mouseScroll('down')">▼</div>
-            </div>
-            <div class="mouse-btn-right"
-              onpointerdown="mouseDown('right')"
-              onpointerup="mouseUp('right')"
-              onpointerleave="mouseUp('right')">
-              <span>ПКМ</span>
-            </div>
-          </div>
-          <div class="mouse-cable"></div>
-        </div>
-        <div class="mt8"></div>
-        <div class="grid g2">
-          <button class="btn blue" onclick="mouseScroll('up')">
-            <span class="bi">⬆️</span>Скролл вверх
-          </button>
-          <button class="btn blue" onclick="mouseScroll('down')">
-            <span class="bi">⬇️</span>Скролл вниз
-          </button>
-        </div>
+        <div class="hint-text">Живая трансляция с управлением мышью</div>
       </div>
     </div>
 
   </div><!-- /page-control -->
 
-  <!-- ═══════════════════════════════════════════════
-       МЕДИА
-  ═══════════════════════════════════════════════ -->
+  <!-- ══ МЕДИА ══ -->
   <div class="page" id="page-media">
 
-    <div class="slabel">Громкость (реальное значение)</div>
+    <div class="slabel">Громкость</div>
     <div class="card">
       <div class="card-body">
         <div class="vol-display">
           <div class="vol-icon" id="volIcon">🔊</div>
-          <div class="vol-percent" id="volPercent">50%</div>
+          <div class="vol-percent" id="volPercent">—%</div>
         </div>
         <input type="range" class="vol-slider" id="volSlider"
           min="0" max="100" value="50"
@@ -279,9 +282,10 @@
           <button class="vol-quick-btn" onclick="setVolume(100)">100%</button>
         </div>
         <div class="mt10"></div>
-        <button class="btn warn" id="muteBtn" style="width:100%;flex-direction:row;gap:8px;min-height:48px"
+        <button class="btn warn" id="muteBtn"
+          style="width:100%;flex-direction:row;gap:8px;min-height:48px"
           onclick="toggleMute()">
-          <span class="bi" id="muteIcon">🔇</span>
+          <span id="muteIcon">🔇</span>
           <span id="muteText">Выключить звук</span>
         </button>
       </div>
@@ -306,9 +310,7 @@
 
   </div><!-- /page-media -->
 
-  <!-- ═══════════════════════════════════════════════
-       КАМЕРА
-  ═══════════════════════════════════════════════ -->
+  <!-- ══ КАМЕРА ══ -->
   <div class="page" id="page-camera">
 
     <div class="slabel">Компьютер</div>
@@ -348,16 +350,13 @@
       <div style="height:10px"></div>
       <div class="gallery" id="gallery"></div>
       <div class="empty" id="galEmpty">
-        <div class="empty-ico">🖼</div>
-        Нет медиа
+        <div class="empty-ico">🖼</div>Нет медиа
       </div>
     </div>
 
   </div><!-- /page-camera -->
 
-  <!-- ═══════════════════════════════════════════════
-       ФАЙЛЫ
-  ═══════════════════════════════════════════════ -->
+  <!-- ══ ФАЙЛЫ ══ -->
   <div class="page" id="page-files">
 
     <div class="slabel">Файловый менеджер</div>
@@ -383,12 +382,9 @@
 
   </div><!-- /page-files -->
 
-  <!-- ═══════════════════════════════════════════════
-       ТРОЛЛИНГ (НОВЫЙ ДИЗАЙН + БОЛЬШЕ ФУНКЦИЙ)
-  ═══════════════════════════════════════════════ -->
+  <!-- ══ ТРОЛЛИНГ ══ -->
   <div class="page" id="page-troll">
 
-    <!-- Дисплей -->
     <div class="slabel">Дисплей</div>
     <div class="troll-section">
       <button class="troll-card warn" onclick="execCmd('monitor_off')">
@@ -401,7 +397,6 @@
       </button>
     </div>
 
-    <!-- Устройства -->
     <div class="slabel">Блокировка устройств</div>
     <div class="troll-section">
       <button class="troll-toggle-card" id="btnMouse" onclick="trollToggle('mouse')">
@@ -420,7 +415,6 @@
       </button>
     </div>
 
-    <!-- Хаос -->
     <div class="slabel">Хаос</div>
     <div class="troll-section">
       <button class="troll-toggle-card" id="btnCrazy" onclick="trollToggle('crazy')">
@@ -436,7 +430,6 @@
       </button>
     </div>
 
-    <!-- Скролл атаки -->
     <div class="slabel">Скролл атаки</div>
     <div class="troll-section">
       <button class="troll-card blue" onclick="scrollAttack('up')">
@@ -449,7 +442,6 @@
       </button>
     </div>
 
-    <!-- Клики -->
     <div class="slabel">Кликомания</div>
     <div class="troll-section">
       <button class="troll-card accent" onclick="clickSpam('left')">
@@ -462,7 +454,6 @@
       </button>
     </div>
 
-    <!-- Звук -->
     <div class="slabel">Звуковой террор</div>
     <div class="troll-section">
       <button class="troll-card warn" onclick="volumeChaos()">
@@ -475,7 +466,6 @@
       </button>
     </div>
 
-    <!-- Окна -->
     <div class="slabel">Окна</div>
     <div class="troll-section">
       <button class="troll-card blue" onclick="openMultiWindows()">
@@ -488,27 +478,38 @@
       </button>
     </div>
 
-    <!-- Экстрим -->
+    <!-- Fake BSOD -->
+    <div class="slabel">Fake BSOD</div>
+    <div class="troll-section">
+      <button class="troll-card warn" onclick="fakeBsod('win10')">
+        <div class="troll-card-icon">💙</div>
+        <div class="troll-card-label">Win10 стиль</div>
+      </button>
+      <button class="troll-card blue" onclick="fakeBsod('win11')">
+        <div class="troll-card-icon">🔵</div>
+        <div class="troll-card-label">Win11 стиль</div>
+      </button>
+    </div>
+
     <div class="slabel">⚠️ Экстрим</div>
     <div class="troll-section single">
-      <button class="troll-card-full danger" onclick="confirmAction('bsod','BSOD? Все несохранённые данные будут потеряны!')">
+      <button class="troll-card-full danger"
+        onclick="confirmAction('bsod','BSOD? Все несохранённые данные будут потеряны!')">
         <div class="tcf-icon">💀</div>
-        <div class="tcf-label">Синий экран смерти (BSOD)</div>
+        <div class="tcf-label">Настоящий BSOD</div>
         <div class="tcf-hint">Принудительный крэш системы</div>
       </button>
     </div>
 
     <div class="troll-warning">
-      ⚠️ Внимание! Некоторые функции могут привести к потере данных или зависанию ПК
+      ⚠️ Некоторые функции могут привести к потере данных
     </div>
 
   </div><!-- /page-troll -->
 
 </div><!-- /pages -->
 
-<!-- ═══════════════════════════════════════════════════
-     TABS
-═══════════════════════════════════════════════════ -->
+<!-- ══ TABS ══ -->
 <div class="tabs">
   <button class="tab active" onclick="openTab('main',this)">
     <span class="tab-ico">🏠</span>Главная
@@ -530,34 +531,41 @@
   </button>
 </div>
 
-<!-- ═══════════════════════════════════════════════════
-     ПОЛНАЯ КЛАВИАТУРА
-═══════════════════════════════════════════════════ -->
+<!-- ══ ПОЛНАЯ КЛАВИАТУРА ══ -->
 <div id="fullKbOverlay" class="fullkb-overlay">
   <div class="fullkb-header">
-    <div id="fullKbCombo" class="fullkb-combo">Нажмите клавишу</div>
-    <button class="fullkb-btn orient" id="kbOrientBtn" onclick="kbToggleOrientation()">
-      ↻ Повернуть
-    </button>
     <button class="fullkb-btn exec" onclick="fullKbExecute()">▶ Выполнить</button>
+    <div id="fullKbCombo" class="fullkb-combo">Нажмите клавишу</div>
     <button class="fullkb-btn clear" onclick="fullKbClear()">✕ Сброс</button>
     <button class="fullkb-btn close" onclick="closeFullKeyboard()">Закрыть</button>
   </div>
   <div id="fullKbBody" class="fullkb-body"></div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════
-     УПРАВЛЕНИЕ ЭКРАНОМ
-═══════════════════════════════════════════════════ -->
-<div id="screenCtrlOverlay" class="screenctrl-overlay landscape">
+<!-- ══ ТРАНСЛЯЦИЯ ЭКРАНА ══ -->
+<div id="screenCtrlOverlay" class="screenctrl-overlay">
   <div class="screenctrl-header">
     <div class="screenctrl-fps" id="scFps">— fps</div>
     <div class="screenctrl-ping" id="scPing">— ms</div>
     <div style="flex:1"></div>
-    <button class="screenctrl-orient-btn" id="scOrientBtn" onclick="scToggleOrientation()">
-      ↻ Portrait
-    </button>
-    <button class="screenctrl-close" onclick="closeScreenControl()">✕ Закрыть</button>
+    <!-- Кнопка настроек -->
+    <button class="sc-settings-btn" id="scSettingsBtn" onclick="scToggleSettings()">⚙️</button>
+    <button class="screenctrl-close" onclick="closeScreenControl()">✕</button>
+  </div>
+  <!-- Панель настроек трансляции -->
+  <div class="sc-settings-panel" id="scSettingsPanel" style="display:none">
+    <label class="sc-setting-row">
+      <span>Качество</span>
+      <select id="scQuality" onchange="scSetQuality(this.value)">
+        <option value="high">Высокое (медленно)</option>
+        <option value="medium" selected>Среднее</option>
+        <option value="low">Низкое (быстро)</option>
+      </select>
+    </label>
+    <label class="sc-setting-row">
+      <input type="checkbox" id="scJoystickEnabled" onchange="scToggleJoystick(this.checked)"/>
+      <span>🕹 Джойстик мыши (для телефона)</span>
+    </label>
   </div>
   <div class="screenctrl-canvas-wrap" id="scCanvasWrap">
     <canvas id="scCanvas"></canvas>
@@ -565,12 +573,16 @@
       <div style="font-size:40px;margin-bottom:12px">🖥</div>
       Загрузка трансляции…
     </div>
+    <!-- Джойстик (скрыт по умолчанию) -->
+    <div class="sc-joystick-wrap" id="scJoystickWrap" style="display:none">
+      <div class="sc-joystick" id="scJoystick">
+        <div class="sc-joystick-knob" id="scJoystickKnob"></div>
+      </div>
+    </div>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════
-     OVERLAYS
-═══════════════════════════════════════════════════ -->
+<!-- ══ OVERLAYS ══ -->
 <div class="fs-overlay" id="fsOverlay" onclick="closeFsOverlayBg(event)">
   <div class="fs-close" onclick="closeFsOverlay()">✕</div>
   <div class="fs-content" id="fsContent"></div>
@@ -591,11 +603,10 @@
   </div>
 </div>
 
-<input type="file" id="fileUploadInput" style="display:none" onchange="handleFileUpload(this.files[0])"/>
+<input type="file" id="fileUploadInput" style="display:none"
+  onchange="handleFileUpload(this.files[0])"/>
 
-<!-- ═══════════════════════════════════════════════════
-     SCRIPTS
-═══════════════════════════════════════════════════ -->
+<!-- ══ SCRIPTS ══ -->
 <script src="js/core.js"></script>
 <script src="js/winlock.js"></script>
 <script src="js/timer.js"></script>
@@ -613,8 +624,11 @@ document.addEventListener("DOMContentLoaded", () => {
   winlockRefresh();
   updateInfo(false);
   timerInit();
-  setInterval(() => updateInfo(false), 15000);
-  setInterval(() => winlockRefresh(), 15000);
+  // Громкость грузим сразу при открытии медиа-вкладки
+  document.querySelector('.tab[onclick*="media"]')
+    ?.addEventListener("click", () => {
+      fetchRealVolumeOnce();
+    });
 });
 </script>
 
