@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════
-//  Screen Control
+//  Screen Control — JPEG стрим с улучшенным получением WSS URL
 // ══════════════════════════════════════════════════════
 
 let _player  = null;
@@ -19,15 +19,15 @@ async function openScreenControl() {
   _canvas = document.getElementById('scCanvas');
   _ctx    = _canvas.getContext('2d', { alpha: false });
 
-  _showHint('🔌 Подключение…');
+  _showHint('🔌 Получение URL туннеля...');
   _updateStatus('connecting');
 
-  // Получаем WSS URL
+  // Получаем WSS URL с агрессивным retry
   const wsUrl = await _getWsUrl();
   console.log('[SC] wsUrl =', wsUrl);
 
   if (!wsUrl) {
-    _showHint('❌ Туннель не готов\nПодожди 10 сек и попробуй снова');
+    _showHint('❌ Не удалось получить URL туннеля\n\nПерезапустите бота');
     return;
   }
 
@@ -35,20 +35,42 @@ async function openScreenControl() {
   _bindInput();
 }
 
-// ── Получить WSS URL с сервера ────────────────────────
+// ── Получить WSS URL с сервера (до 20 попыток) ────────
 async function _getWsUrl() {
-  // Пробуем до 10 раз с паузой (туннель может стартовать медленно)
-  for (let i = 0; i < 10; i++) {
+  const MAX_TRIES = 20;  // 20 попыток
+  const DELAY     = 2000; // по 2 сек
+
+  for (let i = 0; i < MAX_TRIES; i++) {
     try {
       const base = window._apiBase || '';
-      const r    = await fetch(base + '/api/ws_url', { cache: 'no-store' });
-      const j    = await r.json();
-      if (j.ok && j.url) return j.url;
+      const r    = await fetch(base + '/api/ws_url', { 
+        cache: 'no-store',
+        headers: {
+          'Cache-Control': 'no-cache',
+          'Pragma': 'no-cache'
+        }
+      });
+      
+      const j = await r.json();
+      
+      console.log(`[SC] попытка ${i + 1}/${MAX_TRIES}:`, j);
+
+      if (j.ok && j.url && j.url.startsWith('wss://')) {
+        console.log('[SC] ✅ URL получен:', j.url);
+        return j.url;
+      }
+
+      // Обновляем hint
+      _showHint(`🔄 Ожидание туннеля...\nПопытка ${i + 1}/${MAX_TRIES}`);
+
     } catch(e) {
-      console.warn('[SC] ws_url fetch err:', e);
+      console.warn(`[SC] попытка ${i + 1} ошибка:`, e);
     }
-    await new Promise(r => setTimeout(r, 1500));
+
+    // Пауза перед следующей попыткой
+    await new Promise(r => setTimeout(r, DELAY));
   }
+
   return null;
 }
 
@@ -72,7 +94,7 @@ function _startPlayer(wsUrl) {
     },
 
     onError(e) {
-      _showHint('❌ Ошибка подключения');
+      _showHint('❌ Ошибка подключения\n' + (e.message || ''));
       _updateStatus('error');
     },
 
@@ -210,7 +232,11 @@ function _showHint(text) {
   const h = document.getElementById('scHint');
   if (!h) return;
   h.style.display = 'flex';
-  h.innerHTML = `<div style="font-size:36px;margin-bottom:8px">🖥</div><div>${text}</div>`;
+  // Поддержка \n в тексте
+  const html = text.split('\n').map(line => 
+    `<div style="text-align:center;line-height:1.4">${line}</div>`
+  ).join('');
+  h.innerHTML = `<div style="font-size:36px;margin-bottom:12px">🖥</div>${html}`;
 }
 
 function _hideHint() {
@@ -245,6 +271,6 @@ function scToggleJoystick(on) {
 }
 
 function scSetQuality(val) {
-  // TODO: отправить на сервер новый quality
   console.log('[SC] quality:', val);
+  // TODO: отправить на сервер новый quality
 }
