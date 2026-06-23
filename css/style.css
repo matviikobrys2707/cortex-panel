@@ -1,7 +1,7 @@
-/*
+/* ─────────────────────────────────────────────────────
   Cortex WebApp — style.css (full)
   Упрощённый/оптимизированный дизайн (меньше анимаций и свечений)
-*/
+───────────────────────────────────────────────────── */
 
 :root{
   --bg1:#0a0e1a;
@@ -103,11 +103,18 @@ body::before{
 .ibtn svg{width:16px;height:16px}
 
 /* Pages */
+#pages{
+  touch-action: pan-y;
+  overscroll-behavior: contain;
+}
+
 .page{
   display:none;
   padding:14px 14px;
   position:relative;
   z-index:1;
+
+  touch-action: pan-y;
 }
 .page.active{display:block}
 
@@ -149,6 +156,75 @@ body::before{
   text-transform:uppercase;
   color: var(--muted);
   margin: 0 0 10px 4px;
+
+  /* добавлено для таймеров/хедера секции */
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+/* ── Таймеры (кнопка добавления + карточки) ── */
+.add-timer-btn{
+  border:none;
+  border-radius:8px;
+  padding:4px 10px;
+  background: rgba(52,211,153,.15);
+  border: 1px solid rgba(52,211,153,.3);
+  color: var(--ok);
+  font-size:12px;
+  font-weight:900;
+  cursor:pointer;
+}
+.add-timer-btn:active{transform:scale(.95)}
+
+.timer-card{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:12px 14px;
+  border-radius:14px;
+  background: rgba(251,191,36,.08);
+  border: 1px solid rgba(251,191,36,.25);
+  margin-bottom:8px;
+}
+.timer-card-icon{font-size:24px;flex-shrink:0}
+.timer-card-body{flex:1}
+.timer-card-label{
+  font-size:13px;
+  font-weight:900;
+  color: var(--warn);
+}
+.timer-card-time{
+  font-size:20px;
+  font-weight:900;
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
+  letter-spacing:-1px;
+}
+.timer-card-del{
+  border:none;
+  border-radius:10px;
+  padding:8px 12px;
+  background: rgba(255,77,109,.14);
+  border: 1px solid rgba(255,77,109,.25);
+  color: var(--danger);
+  font-weight:900;
+  cursor:pointer;
+}
+.timer-card-del:active{transform:scale(.93)}
+
+/* ── Авто-обновление badge ── */
+.auto-badge{
+  font-size:9px;
+  font-weight:900;
+  letter-spacing:.5px;
+  text-transform:uppercase;
+  padding:2px 7px;
+  border-radius:999px;
+  background: rgba(52,211,153,.12);
+  border: 1px solid rgba(52,211,153,.25);
+  color: var(--ok);
+  margin-left:6px;
 }
 
 /* Cards */
@@ -160,6 +236,8 @@ body::before{
   margin-bottom: 14px;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+
+  touch-action: pan-y;
 }
 .card-hdr{
   display:flex;
@@ -173,6 +251,11 @@ body::before{
   letter-spacing:-.2px;
 }
 .card-body{padding:14px 16px}
+
+/* Card lists scroll fix */
+.fb-list, #windowsList{
+  touch-action: pan-y;
+}
 
 /* Chip */
 .chip{
@@ -267,6 +350,35 @@ body::before{
 .g2{grid-template-columns:1fr 1fr}
 .g3{grid-template-columns:1fr 1fr 1fr}
 .g4{grid-template-columns:1fr 1fr 1fr 1fr}
+
+/* ── Кнопки управления ПК ── */
+.pc-ctrl-grid{
+  display:grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap:8px;
+}
+.pc-btn{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:6px;
+  padding:14px 8px;
+  border-radius:14px;
+  border: 1px solid rgba(255,255,255,.1);
+  background: rgba(255,255,255,.05);
+  cursor:pointer;
+  user-select:none;
+  transition: transform .12s;
+}
+.pc-btn:active{transform:scale(.92)}
+.pc-btn-ico{font-size:24px;line-height:1}
+.pc-btn-lbl{font-size:10px;font-weight:900;color:var(--muted)}
+.pc-btn.danger{background:rgba(255,77,109,.12);border-color:rgba(255,77,109,.3)}
+.pc-btn.danger .pc-btn-ico{filter: drop-shadow(0 0 6px rgba(255,77,109,.4))}
+.pc-btn.warn{background:rgba(251,191,36,.10);border-color:rgba(251,191,36,.28)}
+.pc-btn.blue{background:rgba(90,175,255,.12);border-color:rgba(90,175,255,.28)}
+.pc-btn.accent{background:rgba(124,110,250,.12);border-color:rgba(124,110,250,.28)}
+.pc-btn.special{background:rgba(168,85,247,.12);border-color:rgba(168,85,247,.28)}
 
 /* Buttons */
 .btn{
