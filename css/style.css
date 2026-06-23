@@ -1430,3 +1430,35 @@ body::before {
   color: #7C6EFA;
   margin-bottom: 20px;
 }
+/* ═══════════════════════════════════════════════════
+   Screen Control Orientation
+═══════════════════════════════════════════════════ */
+.screenctrl-overlay.landscape {
+  /* Default landscape */
+}
+
+.screenctrl-overlay.portrait .screenctrl-canvas-wrap {
+  transform: rotate(90deg);
+  width: 100vh;
+  height: 100vw;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-origin: center;
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.screenctrl-orient-btn {
+  border: none;
+  border-radius: 10px;
+  padding: 8px 12px;
+  background: rgba(90,175,255,.14);
+  border: 1px solid rgba(90,175,255,.28);
+  color: var(--blue);
+  font-weight: 900;
+  cursor: pointer;
+  font-size: 12px;
+  flex-shrink: 0;
+  touch-action: manipulation;
+}
+.screenctrl-orient-btn:active { transform: scale(.93); }
