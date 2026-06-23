@@ -29,6 +29,8 @@
 
   <!-- ГЛАВНАЯ -->
   <div class="page active" id="page-main">
+    
+    <!-- Управление ПК -->
     <div class="slabel">Управление ПК</div>
     <div class="card">
       <div class="card-body">
@@ -49,6 +51,31 @@
       </div>
     </div>
 
+    <!-- Таймер -->
+    <div class="slabel">Таймер</div>
+    <div class="card">
+      <div class="card-hdr">
+        <div class="card-title">Отложенное действие</div>
+        <div class="timer-status" id="timerStatus" style="display:none">
+          <div class="timer-badge">
+            <span id="timerAction">⏱</span>
+            <span id="timerTime">00:00</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="grid g2">
+          <button class="btn ok" onclick="openTimerMenu()">
+            <span class="bi">➕</span>Добавить
+          </button>
+          <button class="btn danger" onclick="confirmCancelTimer()">
+            <span class="bi">❌</span>Отменить
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- WinLock -->
     <div class="slabel">WinLock</div>
     <div class="card">
       <div class="card-hdr">
@@ -59,46 +86,39 @@
         </div>
       </div>
       <div class="card-body">
-        <div class="grid g2">
-          <button class="btn danger" onclick="openWinlockSheet()">
-            <span class="bi">🔒</span>Заблокировать
-          </button>
-          <button class="btn ok" onclick="winlockUnlock()">
-            <span class="bi">🔓</span>Разблокировать
-          </button>
+        <button class="btn danger" style="width:100%" onclick="openWinlockMenu()">
+          <span class="bi">🔒</span>Заблокировать
+        </button>
+      </div>
+    </div>
+
+    <!-- Система -->
+    <div class="slabel">Железо</div>
+    <div class="card">
+      <div class="stat-list">
+        <div class="stat-row">
+          <div class="stat-k"><div class="stat-ico">💻</div>ОС</div>
+          <div class="stat-v" id="osVal">—</div>
+        </div>
+        <div class="stat-row">
+          <div class="stat-k"><div class="stat-ico">🖥</div>ПК</div>
+          <div class="stat-v" id="pcVal">—</div>
+        </div>
+        <div class="stat-row">
+          <div class="stat-k"><div class="stat-ico">🧠</div>Процессор</div>
+          <div class="stat-v" id="cpuName">—</div>
+        </div>
+        <div class="stat-row">
+          <div class="stat-k"><div class="stat-ico">🎮</div>Видеокарта</div>
+          <div class="stat-v" id="gpuName">—</div>
         </div>
       </div>
     </div>
 
-    <div class="slabel">Таймер</div>
+    <div class="slabel">Мониторинг</div>
     <div class="card">
       <div class="card-hdr">
-        <div class="card-title">Быстрый таймер</div>
-        <span class="chip" onclick="openTab('timer', document.querySelector('.tab:nth-child(2)'))">Все таймеры →</span>
-      </div>
-      <div class="card-body">
-        <div class="flabel">Действие</div>
-        <select class="sel" id="quickAction">
-          <option value="shutdown">⏻ Выключение</option>
-          <option value="reboot">↺ Перезагрузка</option>
-          <option value="lock">🔒 Блокировка</option>
-          <option value="sleep">🌙 Сон</option>
-          <option value="winlock">🔐 WinLock</option>
-        </select>
-        <div class="mt8"></div>
-        <div class="row">
-          <input class="inp" id="quickMin" type="number" min="1" max="1440" placeholder="Минуты (1-1440)"/>
-          <button class="btn ok" style="min-width:90px;min-height:44px" onclick="quickTimer()">
-            ▶ Старт
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <div class="slabel">Система</div>
-    <div class="card">
-      <div class="card-hdr">
-        <div class="card-title">Информация</div>
+        <div class="card-title">Система</div>
         <span class="chip" onclick="updateInfo(true)">↻ Обновить</span>
       </div>
       <div class="stat-list">
@@ -119,7 +139,7 @@
           <div class="stat-v" id="ramVal">—</div>
         </div>
         <div class="stat-row">
-          <div class="stat-k"><div class="stat-ico">💿</div>Disk C</div>
+          <div class="stat-k"><div class="stat-ico">💿</div>Диски</div>
           <div class="stat-v" id="diskVal">—</div>
         </div>
         <div class="stat-row">
@@ -130,63 +150,33 @@
     </div>
   </div>
 
-  <!-- ТАЙМЕРЫ -->
-  <div class="page" id="page-timer">
-    <div class="slabel">Активные таймеры</div>
-    <div class="card">
-      <div class="card-hdr">
-        <div class="card-title">Таймеры</div>
-        <span class="chip" onclick="openTimerSheet()">+ Новый</span>
-      </div>
-      <div style="height:10px"></div>
-      <div id="timerList"></div>
-      <div class="empty" id="timerEmpty">
-        <div class="empty-ico">⏰</div>Нет активных таймеров
-      </div>
-    </div>
+  <!-- УПРАВЛЕНИЕ (Клавиши + Мышь) -->
+  <div class="page" id="page-control">
+    <div class="slabel">Клавиатура</div>
     <div class="card">
       <div class="card-body">
-        <button class="btn danger" style="width:100%" onclick="execCmd('cancel')">
-          <span class="bi">⏹</span>Отменить системный таймер
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- КЛАВИАТУРА -->
-  <div class="page" id="page-keyboard">
-    <div class="slabel">Нажать клавишу</div>
-    <div class="card">
-      <div class="card-body">
-        <div class="grid g3" id="keyboardGrid"></div>
-      </div>
-    </div>
-    <div class="slabel">Своя комбинация</div>
-    <div class="card">
-      <div class="card-body">
-        <div class="flabel">Клавиша или комбинация (например: ctrl+c)</div>
+        <div class="kb-cats">
+          <button class="kb-cat active" onclick="switchKbCat('nav',this)">Навигация</button>
+          <button class="kb-cat" onclick="switchKbCat('combo',this)">Комбинации</button>
+          <button class="kb-cat" onclick="switchKbCat('fn',this)">F-клавиши</button>
+        </div>
+        <div class="kb-grid" id="kbGrid"></div>
+        <div class="mt12"></div>
+        <div class="flabel">Свой ввод</div>
         <div class="row">
           <input class="inp" id="customKey" placeholder="enter, ctrl+c, alt+tab…"/>
           <button class="btn ok" style="min-width:90px;min-height:44px" onclick="pressCustomKey()">
             Отправить
           </button>
         </div>
-      </div>
-    </div>
-    <div class="slabel">Напечатать текст</div>
-    <div class="card">
-      <div class="card-body">
-        <div class="flabel">Текст появится в активном окне на ПК</div>
-        <textarea class="ta" id="typeText" placeholder="Введите текст…"></textarea>
+        <div class="mt12"></div>
+        <textarea class="ta" id="typeText" placeholder="Напечатать текст…"></textarea>
         <div class="mt8"></div>
         <button class="bprim" onclick="typeText()">⌨️ Напечатать</button>
       </div>
     </div>
-  </div>
 
-  <!-- МЫШЬ -->
-  <div class="page" id="page-mouse">
-    <div class="slabel">Кнопки мыши</div>
+    <div class="slabel">Мышь</div>
     <div class="card">
       <div class="card-body">
         <div class="grid g3">
@@ -200,17 +190,14 @@
             <span class="bi">🖱</span>СКМ
           </button>
         </div>
-      </div>
-    </div>
-    <div class="slabel">Скролл</div>
-    <div class="card">
-      <div class="card-body">
+        <div class="mt8"></div>
         <div class="grid g2">
           <button class="btn blue" onclick="mouseScroll('up')">
-            <span class="bi">⬆️</span>Вверх
+            <span class="bi">⬆️</span>Скролл вверх
           </button>
           <button class="btn blue" onclick="mouseScroll('down')">
-            <span class="bi">⬇️</span>Вниз</button>
+            <span class="bi">⬇️</span>Скролл вниз
+          </button>
         </div>
       </div>
     </div>
@@ -221,19 +208,19 @@
     <div class="slabel">Громкость</div>
     <div class="card">
       <div class="card-body">
-        <div class="vol-wrap">
-          <div class="vol-num" id="volNum">50</div>
-          <div class="vol-sub">Percent</div>
-        </div>
-        <input id="volRange" type="range" min="0" max="100" value="50"
-          oninput="volPreview(this.value)"
-          onchange="setVolume(this.value)"/>
-        <div class="qvol">
-          <button onclick="setVolume(0)">0</button>
-          <button onclick="setVolume(25)">25</button>
-          <button onclick="setVolume(50)">50</button>
-          <button onclick="setVolume(75)">75</button>
-          <button onclick="setVolume(100)">100</button>
+        <div class="vol-grid">
+          <button class="vol-btn" onclick="setVolume(0)">🔇<br>0%</button>
+          <button class="vol-btn" onclick="setVolume(10)">🔈<br>10%</button>
+          <button class="vol-btn" onclick="setVolume(20)">🔈<br>20%</button>
+          <button class="vol-btn" onclick="setVolume(30)">🔉<br>30%</button>
+          <button class="vol-btn" onclick="setVolume(40)">🔉<br>40%</button>
+          <button class="vol-btn" onclick="setVolume(50)">🔊<br>50%</button>
+          <button class="vol-btn" onclick="setVolume(60)">🔊<br>60%</button>
+          <button class="vol-btn" onclick="setVolume(70)">🔊<br>70%</button>
+          <button class="vol-btn" onclick="setVolume(80)">🔊<br>80%</button>
+          <button class="vol-btn" onclick="setVolume(90)">🔊<br>90%</button>
+          <button class="vol-btn" onclick="setVolume(100)">📢<br>100%</button>
+          <button class="vol-btn" onclick="openCustomVolumeInput()">⌨️<br>Ввод</button>
         </div>
         <div class="mt12"></div>
         <button class="btn warn" style="width:100%" onclick="mediaControl('mute')">
@@ -241,6 +228,7 @@
         </button>
       </div>
     </div>
+
     <div class="slabel">Плеер</div>
     <div class="card">
       <div class="card-body">
@@ -307,12 +295,11 @@
     <div class="card">
       <div class="fb-path" id="fbPath">Загрузка…</div>
       <div class="fb-search">
-        <input class="inp" id="fbSearch" placeholder="🔍 Поиск…"
-          oninput="fbFilter(this.value)"/>
+        <input class="inp" id="fbSearch" placeholder="🔍 Поиск…" oninput="fbFilter(this.value)"/>
       </div>
       <div class="fb-toolbar" id="fbToolbar"></div>
-      <div class="fb-list"    id="fbList"></div>
-      <div class="empty"      id="fbEmpty" style="display:none">
+      <div class="fb-list" id="fbList"></div>
+      <div class="empty" id="fbEmpty" style="display:none">
         <div class="empty-ico">📂</div>Папка пуста
       </div>
     </div>
@@ -325,14 +312,8 @@
   <button class="tab active" onclick="openTab('main',this)">
     <span class="tab-ico">🏠</span>Главная
   </button>
-  <button class="tab" onclick="openTab('timer',this)">
-    <span class="tab-ico">⏰</span>Таймер
-  </button>
-  <button class="tab" onclick="openTab('keyboard',this)">
-    <span class="tab-ico">⌨️</span>Клавиши
-  </button>
-  <button class="tab" onclick="openTab('mouse',this)">
-    <span class="tab-ico">🖱</span>Мышь
+  <button class="tab" onclick="openTab('control',this)">
+    <span class="tab-ico">🎮</span>Управление
   </button>
   <button class="tab" onclick="openTab('media',this)">
     <span class="tab-ico">🎵</span>Медиа
@@ -345,28 +326,23 @@
   </button>
 </div>
 
-<!-- Toast -->
-<div class="toast" id="toast"><div class="tbox" id="tbox"></div></div>
+<!-- Fullscreen overlay -->
+<div class="fs-overlay" id="fsOverlay" onclick="closeFsOverlay(event)">
+  <div class="fs-content" id="fsContent"></div>
+</div>
 
-<!-- Sheet -->
-<div class="sbg" id="sbg" onclick="sbgClick(event)">
-  <div class="sheet">
-    <div class="shandle"></div>
-    <div class="shdr">
-      <div class="stitle" id="stitle"></div>
-      <div class="sdesc"  id="sdesc"></div>
-    </div>
-    <div class="sbody" id="sbody"></div>
-    <div class="sacts" id="sacts"></div>
-  </div>
+<!-- Toast (убран снизу, теперь вверху) -->
+<div class="toast-top" id="toastTop">
+  <div class="toast-icon" id="toastIcon">✅</div>
+  <div class="toast-text" id="toastText">Готово</div>
 </div>
 
 <!-- Record overlay -->
 <div class="rec-overlay" id="recOverlay">
-  <div class="rec-pulse"  id="recIcon">🎥</div>
-  <div class="rec-title"  id="recTitle">Запись…</div>
-  <div class="rec-sub"    id="recSub">0 сек</div>
-  <div class="rec-timer"  id="recTimer">00</div>
+  <div class="rec-pulse" id="recIcon">🎥</div>
+  <div class="rec-title" id="recTitle">Запись…</div>
+  <div class="rec-sub" id="recSub">0 сек</div>
+  <div class="rec-timer" id="recTimer">00</div>
   <div class="rec-bar-wrap"><div class="rec-bar" id="recBar"></div></div>
 </div>
 
@@ -381,30 +357,16 @@
 <script src="js/files.js"></script>
 
 <script>
-// ── Инициализация ──
 document.addEventListener("DOMContentLoaded", () => {
   renderKeyboard();
   loadCaps();
-  volPreview(50);
   winlockRefresh();
   updateInfo(false);
   timerRefresh();
-  setInterval(() => updateInfo(false), 60000);
+  setInterval(() => updateInfo(false), 10000); // Каждые 10 сек
   setInterval(() => winlockRefresh(), 10000);
   setInterval(() => renderTimers(), 1000);
 });
-
-// ── Быстрый таймер с главной ──
-async function quickTimer() {
-  const action  = document.getElementById("quickAction")?.value || "shutdown";
-  const minutes = Number(document.getElementById("quickMin")?.value || 0);
-  if (!minutes || minutes < 1 || minutes > 1440) {
-    toast("❌ Введите минуты 1..1440", 3000);
-    return;
-  }
-  const res = await execCmd("create", { action, minutes });
-  if (res?.ok) addTimer(action, minutes);
-}
 </script>
 
 </body>
