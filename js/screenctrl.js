@@ -26,47 +26,46 @@ let scJoystickEnabled = false;
 function openScreenControl() {
   const overlay = document.getElementById("screenCtrlOverlay");
   if (!overlay) return;
+
   scActive = true;
-  scFpsCount = 0; scFpsLast = Date.now();
   overlay.classList.add("open");
   document.body.style.overflow = "hidden";
-
-  // FPS counter
-  scFpsTimer = setInterval(() => {
-    const now = Date.now(), diff = (now - scFpsLast) / 1000;
-    const fps = diff > 0 ? Math.round(scFpsCount / diff) : 0;
-    scFpsCount = 0; scFpsLast = now;
-    const el = document.getElementById("scFps");
-    if (el) el.textContent = fps + " fps";
-  }, 1000);
 
   const hint = document.getElementById("scHint");
   if (hint) hint.style.display = "block";
 
+  // 🔥 H.264 плеер
+  if (!window.h264Player) {
+    window.h264Player = new H264Player('scCanvas', 'ws://localhost:8765');
+  }
+  window.h264Player.connect();
+
+  setTimeout(() => {
+    if (hint) hint.style.display = "none";
+  }, 2000);
+
+  scFpsTimer = setInterval(() => {
+    // FPS обновляется внутри H264Player
+  }, 1000);
+
   const canvas = document.getElementById("scCanvas");
   _scSetupCanvas(canvas);
-  _scLoop();
 }
 
-// ── Закрыть ──
 function closeScreenControl() {
   scActive = false;
+  
+  if (window.h264Player) {
+    window.h264Player.disconnect();
+  }
+
   clearInterval(scFpsTimer);
   scFpsTimer = null;
-  _scStopJoystick();
 
   const overlay = document.getElementById("screenCtrlOverlay");
   if (overlay) overlay.classList.remove("open");
+  
   document.body.style.overflow = "";
-
-  const el = document.getElementById("scFps");
-  if (el) el.textContent = "— fps";
-  const pe = document.getElementById("scPing");
-  if (pe) pe.textContent = "— ms";
-
-  // Скрываем панель настроек
-  const panel = document.getElementById("scSettingsPanel");
-  if (panel) panel.style.display = "none";
 }
 
 // ── Настройки ──
