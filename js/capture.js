@@ -1,13 +1,13 @@
 // ══════════════════════════════════════════════════════════════
-//  Capture — скрины, камера, запись
+//  Capture — галерея скриншотов/фото/видео
 // ══════════════════════════════════════════════════════════════
 
-const CAP_KEY = "cortex_caps_v5";
+const CAP_KEY = "cortex_captures_v1";
 let captures = [];
 
 function loadCaps() {
   try {
-    captures = JSON.parse(sessionStorage.getItem(CAP_KEY) || "[]");
+    captures = JSON.parse(localStorage.getItem(CAP_KEY) || "[]");
   } catch {
     captures = [];
   }
@@ -15,170 +15,222 @@ function loadCaps() {
 }
 
 function saveCaps() {
-  sessionStorage.setItem(CAP_KEY, JSON.stringify(captures.slice(0, 30)));
-}
-
-function clearCaptures() {
-  captures = [];
-  saveCaps();
-  renderCaps();
-  toast("Галерея очищена");
+  localStorage.setItem(CAP_KEY, JSON.stringify(captures));
 }
 
 function addCapture(cap) {
   captures.unshift(cap);
-  captures = captures.slice(0, 30);
+  if (captures.length > 50) captures = captures.slice(0, 50);
   saveCaps();
   renderCaps();
 }
 
+function clearCaptures() {
+  if (!captures.length) {
+    toast("ℹ️", "Галерея пуста", 2000);
+    return;
+  }
+  openFsOverlay(`
+    <div class="fs-title">🗑 Очистить галерею?</div>
+    <div class="fs-desc">Все медиа будут удалены</div>
+    <div class="fs-actions">
+      <button class="btn accent" onclick="closeFsOverlay()">Отмена</button>
+      <button class="btn danger" onclick="doClearCaptures()">✅ Очистить</button>
+    </div>
+  `);
+}
+
+function doClearCaptures() {
+  captures = [];
+  saveCaps();
+  renderCaps();
+  closeFsOverlay();
+  toast("✅", "Галерея очищена", 2000);
+}
+
 function renderCaps() {
-  const g = document.getElementById("gallery");
+  const gallery = document.getElementById("gallery");
   const empty = document.getElementById("galEmpty");
-  if (!g) return;
+  if (!gallery) return;
 
   if (!captures.length) {
-    g.innerHTML = "";
+    gallery.innerHTML = "";
     if (empty) empty.style.display = "block";
     return;
   }
-  if (empty) empty.style.display = "none";
 
-  g.innerHTML = "";
-  for (const c of captures) {
+  if (empty) empty.style.display = "none";
+  gallery.innerHTML = "";
+
+  captures.forEach((c, i) => {
     const div = document.createElement("div");
     div.className = "thumb";
-    const lbl = c.kind === "screenshot" ? "Скрин" : c.kind === "camera_photo" ? "Камера" : "Видео";
-    const t = new Date(c.t).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+    div.onclick = () => openCapViewer(c);
 
-    if (c.type === "image") {
-      div.innerHTML = `<img src="data:${c.mime};base64,${c.b64}"/><div class="thumb-lbl">${lbl} · ${t}</div>`;
-      div.onclick = () => openImgViewer(c);
+    if (c.type === "image" && c.b64) {
+      const img = document.createElement("img");
+      img.src = `data:${c.mime};base64,${c.b64}`;
+      div.appendChild(img);
+    } else if (c.type === "file" && c.url) {
+      if (c.mime.startsWith("video/")) {
+        const vid = document.createElement("video");
+        vid.src = c.url;
+        vid.muted = true;
+        div.appendChild(vid);
+        const play = document.createElement("div");
+        play.className = "thumb-play";
+        play.textContent = "▶";
+        div.appendChild(play);
+      } else {
+        const ico = document.createElement("div");
+        ico.style = "display:flex;align-items:center;justify-content:center;height:100%;font-size:28px;";
+        ico.textContent = "📄";
+        div.appendChild(ico);
+      }
+    }
+
+    const lbl = document.createElement("div");
+    lbl.className = "thumb-lbl";
+    lbl.textContent = c.kind || "media";
+    div.appendChild(lbl);
+
+    gallery.appendChild(div);
+  });
+}
+
+function openCapViewer(c) {
+  let content = "";
+
+  if (c.type === "image" && c.b64) {
+    content = `
+      <div class="fs-title">📸 ${esc(c.kind || "Изображение")}</div>
+      <div style="margin:12px 0;border-radius:12px;overflow:hidden;max-height:60vh">
+        <img src="data:${c.mime};base64,${c.b64}" style="width:100%;height:auto;display:block"/>
+      </div>
+      <div class="fs-actions">
+        <button class="btn accent" onclick="closeFsOverlay()">Закрыть</button>
+        <button class="btn ok" onclick="downloadCapture('${c.b64}','${c.filename}','${c.mime}')">📥 Скачать</button>
+      </div>
+    `;
+  } else if (c.type === "file" && c.url) {
+    if (c.mime.startsWith("video/")) {
+      content = `
+        <div class="fs-title">🎥 ${esc(c.kind || "Видео")}</div>
+        <div style="margin:12px 0;border-radius:12px;overflow:hidden;max-height:60vh">
+          <video src="${c.url}" controls style="width:100%;height:auto;display:block"></video>
+        </div>
+        <div class="fs-actions">
+          <button class="btn accent" onclick="closeFsOverlay()">Закрыть</button>
+          <button class="btn ok" onclick="window.open('${c.url}','_blank')">📥 Скачать</button>
+        </div>
+      `;
     } else {
-      div.innerHTML = `<div style="height:100%;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.04)"><div class="thumb-play">▶</div></div><div class="thumb-lbl">${lbl} · ${t}</div>`;
-      div.onclick = () => openFileViewer(c);
+      content = `
+        <div class="fs-title">📄 ${esc(c.filename || "Файл")}</div>
+        <div class="fs-desc">Размер: ${formatSize(c.size || 0)}</div>
+        <div class="fs-actions">
+          <button class="btn accent" onclick="closeFsOverlay()">Закрыть</button>
+          <button class="btn ok" onclick="window.open('${c.url}','_blank')">📥 Скачать</button>
+        </div>
+      `;
     }
-    g.appendChild(div);
+  }
+
+  openFsOverlay(content);
+}
+
+function downloadCapture(b64, filename, mime) {
+  try {
+    const bin = atob(b64);
+    const arr = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
+    const blob = new Blob([arr], { type: mime });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(url);
+    toast("✅", "Скачивание началось", 2000);
+  } catch (e) {
+    toast("❌", "Ошибка скачивания", 3000);
   }
 }
 
-async function dlB64({ b64, mime, filename }) {
-  const bin = atob(b64), bytes = new Uint8Array(bin.length);
-  for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
-  const url = URL.createObjectURL(new Blob([bytes], { type: mime }));
-  const a = Object.assign(document.createElement("a"), { href: url, download: filename || "file" });
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  setTimeout(() => URL.revokeObjectURL(url), 1500);
+function formatSize(n) {
+  if (n >= 1 << 30) return (n / (1 << 30)).toFixed(2) + " GB";
+  if (n >= 1 << 20) return (n / (1 << 20)).toFixed(1) + " MB";
+  if (n >= 1 << 10) return (n / (1 << 10)).toFixed(1) + " KB";
+  return n + " B";
 }
 
-function openImgViewer(c) {
-  openSheet({
-    title: c.kind === "screenshot" ? "Скриншот" : "Фото",
-    desc: new Date(c.t).toLocaleString(),
-    bodyHtml: `<div class="viewer"><img src="data:${c.mime};base64,${c.b64}"/></div>`,
-    actions: [
-      { text: "💾 Скачать", kind: "ok", onClick: async () => { await dlB64(c); } },
-      { text: "Закрыть", kind: "accent", onClick: closeSheet }
-    ]
-  });
+function openRecordPicker(type) {
+  const title = type === "screen" ? "🎥 Запись экрана" : "🎬 Запись с камеры";
+  openFsOverlay(`
+    <div class="fs-title">${title}</div>
+    <div class="fs-desc">Выберите длительность записи</div>
+    <div class="grid g3" style="margin-bottom:12px">
+      <button class="btn blue" onclick="startRecord('${type}',5)">5 сек</button>
+      <button class="btn blue" onclick="startRecord('${type}',10)">10 сек</button>
+      <button class="btn blue" onclick="startRecord('${type}',15)">15 сек</button>
+      <button class="btn blue" onclick="startRecord('${type}',30)">30 сек</button>
+      <button class="btn blue" onclick="startRecord('${type}',60)">1 мин</button>
+      <button class="btn blue" onclick="startRecord('${type}',120)">2 мин</button>
+    </div>
+    <div class="fs-actions">
+      <button class="btn accent" onclick="closeFsOverlay()">Отмена</button>
+    </div>
+  `);
 }
 
-function openFileViewer(c) {
-  const isVid = (c.mime || "").includes("video");
-  openSheet({
-    title: c.filename || "Файл",
-    desc: c.url || "",
-    bodyHtml: `${isVid ? `<div class="viewer"><video controls src="${c.url}"></video></div>` : ""}<div style="font-size:11px;color:var(--muted);word-break:break-all;margin-top:8px">${esc(c.url || "")}</div>`,
-    actions: [
-      { text: "⬇ Скачать", kind: "ok", onClick: () => window.open(c.url, "_blank") },
-      { text: "📋 Копировать", kind: "blue", onClick: async () => { await copyText(c.url || ""); } },
-      { text: "Закрыть", kind: "accent", onClick: closeSheet }
-    ]
-  });
-}
+async function startRecord(type, sec) {
+  closeFsOverlay();
+  
+  const cmd = type === "screen" ? "screen_record" : "camera_record";
+  const overlay = document.getElementById("recOverlay");
+  const icon = document.getElementById("recIcon");
+  const title = document.getElementById("recTitle");
+  const sub = document.getElementById("recSub");
+  const timer = document.getElementById("recTimer");
+  const bar = document.getElementById("recBar");
 
-// ── Record overlay ──
-let _recInterval = null;
+  icon.textContent = type === "screen" ? "🎥" : "🎬";
+  title.textContent = type === "screen" ? "Запись экрана" : "Запись камеры";
+  overlay.classList.add("show");
 
-function showRecOverlay(title, icon, seconds) {
-  document.getElementById("recTitle").textContent = title;
-  document.getElementById("recIcon").textContent = icon;
-  document.getElementById("recSub").textContent = seconds + " сек";
-  document.getElementById("recTimer").textContent = String(seconds).padStart(2, "0");
-  document.getElementById("recBar").style.width = "100%";
-  document.getElementById("recOverlay").classList.add("show");
-
-  let left = seconds;
-  _recInterval = setInterval(() => {
-    left--;
-    document.getElementById("recTimer").textContent = String(left).padStart(2, "0");
-    const pct = (left / seconds) * 100;
-    document.getElementById("recBar").style.width = pct + "%";
-    if (left <= 0) {
-      clearInterval(_recInterval);
-      hideRecOverlay();
-    }
+  let elapsed = 0;
+  const interval = setInterval(() => {
+    elapsed++;
+    sub.textContent = `${elapsed} сек`;
+    timer.textContent = String(elapsed).padStart(2, "0");
+    bar.style.width = `${(elapsed / sec) * 100}%`;
   }, 1000);
-}
 
-function hideRecOverlay() {
-  clearInterval(_recInterval);
-  document.getElementById("recOverlay").classList.remove("show");
-}
+  const res = await execCmd(cmd, { seconds: sec });
 
-function openRecordPicker(kind) {
-  const cmd = kind === "screen" ? "record_start_buttons" : "camera_record";
-  const title = kind === "screen" ? "🎥 Запись экрана" : "🎬 Запись с камеры";
-  const icon = kind === "screen" ? "🎥" : "🎬";
+  clearInterval(interval);
+  overlay.classList.remove("show");
 
-  openSheet({
-    title,
-    desc: "Выбери длительность",
-    bodyHtml: `
-      <div class="grid g4" style="margin-bottom:10px">
-        ${[5, 10, 15, 30].map(s => `<button class="btn ok" onclick="startRecord('${cmd}','${title}','${icon}',${s})"><span class="bi">▶</span>${s}с</button>`).join("")}
-      </div>
-      <div class="grid g3">
-        ${[45, 60, 90].map(s => `<button class="btn blue" onclick="startRecord('${cmd}','${title}','${icon}',${s})"><span class="bi">▶</span>${s}с</button>`).join("")}
-      </div>
-      <div class="mt12"></div>
-      <div class="flabel">Своё (1..120 сек)</div>
-      <div class="row">
-        <input class="inp" id="customSec" type="number" min="1" max="120" placeholder="Секунды"/>
-        <button class="btn accent" style="min-width:80px;min-height:44px" onclick="startRecordCustom('${cmd}','${title}','${icon}')">Старт</button>
-      </div>
-    `,
-    actions: [{ text: "Закрыть", kind: "accent", onClick: closeSheet }]
-  });
-}
-
-function startRecordCustom(cmd, title, icon) {
-  const v = Number(document.getElementById("customSec")?.value || 0);
-  if (!v || v < 1 || v > 120) {
-    toast("❌ Секунды 1..120");
-    return;
+  if (res?.ok && res.data?.url) {
+    const cap = {
+      t: Date.now(),
+      kind: cmd,
+      type: "file",
+      url: API_BASE + res.data.url,
+      filename: res.data.filename || "record.mp4",
+      mime: res.data.mime || "video/mp4",
+      size: res.data.size || 0
+    };
+    addCapture(cap);
+    
+    // Автоматически открываем просмотр
+    setTimeout(() => openCapViewer(cap), 500);
   }
-  startRecord(cmd, title, icon, v);
-}
-
-async function startRecord(cmd, title, icon, seconds) {
-  closeSheet();
-  showRecOverlay(title, icon, seconds);
-  
-  // ✅ ИСПРАВЛЕНИЕ: передаём seconds правильно
-  const res = await execCmd(cmd, { seconds: seconds });
-  
-  hideRecOverlay();
-  if (!res) return;
 }
 
 window.loadCaps = loadCaps;
 window.addCapture = addCapture;
 window.clearCaptures = clearCaptures;
-window.openImgViewer = openImgViewer;
-window.openFileViewer = openFileViewer;
+window.openCapViewer = openCapViewer;
 window.openRecordPicker = openRecordPicker;
 window.startRecord = startRecord;
-window.startRecordCustom = startRecordCustom;
