@@ -28,23 +28,43 @@
   <!-- ГЛАВНАЯ -->
   <div class="page active" id="page-main">
 
-    <!-- Управление ПК + Таймер ВВЕРХУ -->
-    <div class="quick-bar">
-      <button class="qbtn danger" onclick="confirmAction('shutdown','Выключить ПК?')">⏻ Выкл</button>
-      <button class="qbtn warn"   onclick="confirmAction('reboot','Перезагрузить ПК?')">↺ Рестарт</button>
-      <button class="qbtn accent" onclick="execCmd('lock')">🔒 Блок</button>
-      <button class="qbtn blue"   onclick="execCmd('sleep')">🌙 Сон</button>
-      <button class="qbtn ok"     onclick="openTimerMenu()" id="timerQBtn">⏰ Таймер</button>
-    </div>
-
-    <!-- Таймер статус -->
-    <div id="timerBadgeWrap" style="display:none;padding:0 0 8px">
-      <div class="timer-badge-full">
-        <span id="timerBadgeIcon">⏱</span>
-        <span id="timerBadgeText">Выключение через 00:00</span>
-        <button class="timer-cancel-mini" onclick="confirmCancelTimer()">✕</button>
+    <!-- Управление ПК -->
+    <div class="slabel">Управление ПК</div>
+    <div class="card">
+      <div class="card-body" style="padding:12px">
+        <div class="pc-ctrl-grid">
+          <button class="pc-btn danger" onclick="confirmAction('shutdown','Выключить ПК?')">
+            <span class="pc-btn-ico">⏻</span>
+            <span class="pc-btn-lbl">Выкл</span>
+          </button>
+          <button class="pc-btn warn" onclick="confirmAction('reboot','Перезагрузить ПК?')">
+            <span class="pc-btn-ico">↺</span>
+            <span class="pc-btn-lbl">Рестарт</span>
+          </button>
+          <button class="pc-btn blue" onclick="execCmd('sleep')">
+            <span class="pc-btn-ico">🌙</span>
+            <span class="pc-btn-lbl">Сон</span>
+          </button>
+          <button class="pc-btn accent" onclick="execCmd('lock')">
+            <span class="pc-btn-ico">🔒</span>
+            <span class="pc-btn-lbl">Блок</span>
+          </button>
+          <button class="pc-btn special" onclick="openWinlockMenu()">
+            <span class="pc-btn-ico">🔐</span>
+            <span class="pc-btn-lbl">WinLock</span>
+          </button>
+        </div>
       </div>
     </div>
+
+    <!-- Таймеры -->
+    <div class="slabel">
+      Таймеры
+      <button class="add-timer-btn" onclick="openTimerMenu()">+ Добавить</button>
+    </div>
+
+    <!-- Список активных таймеров -->
+    <div id="timersList"></div>
 
     <!-- Мониторинг -->
     <div class="slabel">Мониторинг</div>
@@ -104,7 +124,7 @@
       </div>
     </div>
 
-    <!-- WinLock -->
+    <!-- WinLock статус -->
     <div class="slabel">WinLock</div>
     <div class="card">
       <div class="card-body" style="padding:12px 14px">
@@ -129,7 +149,7 @@
 
   <!-- УПРАВЛЕНИЕ -->
   <div class="page" id="page-control">
-    
+
     <!-- Открыть сайт -->
     <div class="slabel">Браузер</div>
     <div class="card">
@@ -144,14 +164,57 @@
     </div>
 
     <!-- Приложения -->
-    <div class="slabel">Открытые окна</div>
+    <div class="slabel">
+      Открытые окна
+      <span id="winAutoRefreshBadge" class="auto-badge">авто</span>
+    </div>
     <div class="card">
       <div class="card-hdr">
         <div class="card-title">Приложения</div>
         <span class="chip" onclick="refreshWindows()">↻ Обновить</span>
       </div>
-      <div id="windowsList" style="max-height:200px;overflow-y:auto">
-        <div class="empty"><div class="empty-ico">🪟</div>Нажмите Обновить</div>
+      <div id="windowsList" style="max-height:400px;overflow-y:auto">
+        <div class="empty"><div class="empty-ico">🪟</div>Загрузка…</div>
+      </div>
+    </div>
+
+    <!-- Мышь -->
+    <div class="slabel">Мышь</div>
+    <div class="card">
+      <div class="card-body">
+        <!-- Красивая мышь -->
+        <div class="mouse-visual">
+          <div class="mouse-body">
+            <div class="mouse-btn-left"
+              onpointerdown="mouseDown('left')"
+              onpointerup="mouseUp('left')"
+              onpointerleave="mouseUp('left')">
+              <span>ЛКМ</span>
+            </div>
+            <div class="mouse-middle-col">
+              <div class="mouse-wheel" onclick="mouseScroll('up')">▲</div>
+              <div class="mouse-scroll-btn"
+                onpointerdown="mouseDown('middle')"
+                onpointerup="mouseUp('middle')"
+                onpointerleave="mouseUp('middle')">
+                ●
+              </div>
+              <div class="mouse-wheel" onclick="mouseScroll('down')">▼</div>
+            </div>
+            <div class="mouse-btn-right"
+              onpointerdown="mouseDown('right')"
+              onpointerup="mouseUp('right')"
+              onpointerleave="mouseUp('right')">
+              <span>ПКМ</span>
+            </div>
+          </div>
+          <div class="mouse-cable"></div>
+        </div>
+        <div class="mt8"></div>
+        <div class="grid g2">
+          <button class="btn blue" onclick="mouseScroll('up')">⬆️ Скролл вверх</button>
+          <button class="btn blue" onclick="mouseScroll('down')">⬇️ Скролл вниз</button>
+        </div>
       </div>
     </div>
 
@@ -159,7 +222,7 @@
     <div class="slabel">Клавиатура</div>
     <div class="card">
       <div class="card-body">
-        <!-- Модификаторы (зажимаемые) -->
+        <!-- Модификаторы -->
         <div class="mod-keys" id="modKeys">
           <button class="mod-key" id="mod-ctrl"  onclick="toggleMod('ctrl')">Ctrl</button>
           <button class="mod-key" id="mod-alt"   onclick="toggleMod('alt')">Alt</button>
@@ -172,8 +235,14 @@
           <button class="mod-clear" onclick="clearMods()">✕</button>
         </div>
         <div class="mt10"></div>
-        <div class="kb-grid-new" id="kbGrid"></div>
-        <div class="mt12"></div>
+
+        <!-- Быстрые клавиши -->
+        <div id="kbGrid"></div>
+
+        <div class="mt10"></div>
+        <button class="bprim" onclick="openFullKeyboard()">⌨️ Полная клавиатура</button>
+        <div class="mt10"></div>
+
         <div class="row">
           <input class="inp" id="customKey" placeholder="ctrl+c, alt+tab…"/>
           <button class="btn ok" style="min-width:80px;min-height:44px" onclick="pressCustomKey()">
@@ -187,37 +256,6 @@
       </div>
     </div>
 
-    <!-- Мышь -->
-    <div class="slabel">Мышь</div>
-    <div class="card">
-      <div class="card-body">
-        <div class="grid g3">
-          <button class="btn blue"
-            onpointerdown="mouseDown('left')"
-            onpointerup="mouseUp('left')"
-            onpointerleave="mouseUp('left')">
-            <span class="bi">🖱</span>ЛКМ
-          </button>
-          <button class="btn accent"
-            onpointerdown="mouseDown('right')"
-            onpointerup="mouseUp('right')"
-            onpointerleave="mouseUp('right')">
-            <span class="bi">🖱</span>ПКМ
-          </button>
-          <button class="btn ok"
-            onpointerdown="mouseDown('middle')"
-            onpointerup="mouseUp('middle')"
-            onpointerleave="mouseUp('middle')">
-            <span class="bi">🖱</span>СКМ
-          </button>
-        </div>
-        <div class="mt8"></div>
-        <div class="grid g2">
-          <button class="btn blue" onclick="mouseScroll('up')">⬆️ Вверх</button>
-          <button class="btn blue" onclick="mouseScroll('down')">⬇️ Вниз</button>
-        </div>
-      </div>
-    </div>
   </div>
 
   <!-- МЕДИА -->
@@ -292,6 +330,19 @@
           <button class="btn blue" onclick="openRecordPicker('camera')">
             <span class="bi">🎬</span>Видео
           </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Управление экраном -->
+    <div class="slabel">Управление экраном</div>
+    <div class="card">
+      <div class="card-body">
+        <button class="bprim" onclick="openScreenControl()">
+          🖥 Управление ПК (трансляция)
+        </button>
+        <div class="mt8" style="font-size:11px;color:var(--muted);text-align:center">
+          Живая трансляция экрана с управлением мышью
         </div>
       </div>
     </div>
@@ -381,7 +432,7 @@
             <span class="troll-label" id="lblCrazy">Сумасшедшая мышь</span>
             <span class="troll-badge off" id="badgeCrazy">ВЫКЛ</span>
           </button>
-          <button class="btn warn" onclick="execCmd('mouse_scroll', {direction:'up'});execCmd('mouse_scroll', {direction:'up'})">
+          <button class="btn warn" onclick="execCmd('mouse_scroll',{direction:'up'})">
             <span class="bi">🔀</span>Скролл спам
           </button>
         </div>
@@ -392,7 +443,7 @@
     <div class="card">
       <div class="card-body">
         <button class="btn danger" style="width:100%;margin-bottom:8px"
-          onclick="confirmAction('bsod','BSOD — синий экран? Несохранённые данные будут потеряны!')">
+          onclick="confirmAction('bsod','BSOD — синий экран?')">
           <span class="bi">💀</span>Синий экран (BSOD)
         </button>
         <button class="btn warn" style="width:100%"
@@ -428,6 +479,31 @@
   </button>
 </div>
 
+<!-- Полная клавиатура (landscape overlay) -->
+<div id="fullKbOverlay" class="fullkb-overlay">
+  <div class="fullkb-header">
+    <div id="fullKbCombo" class="fullkb-combo">—</div>
+    <button class="fullkb-exec" onclick="fullKbExecute()">▶ Выполнить</button>
+    <button class="fullkb-clear" onclick="fullKbClear()">✕ Сброс</button>
+    <button class="fullkb-close" onclick="closeFullKeyboard()">✕ Закрыть</button>
+  </div>
+  <div id="fullKbBody" class="fullkb-body"></div>
+</div>
+
+<!-- Управление экраном -->
+<div id="screenCtrlOverlay" class="screenctrl-overlay">
+  <div class="screenctrl-header">
+    <div class="screenctrl-fps" id="scFps">— fps</div>
+    <div class="screenctrl-ping" id="scPing">— ms</div>
+    <button class="screenctrl-close" onclick="closeScreenControl()">✕</button>
+  </div>
+  <div class="screenctrl-canvas-wrap" id="scCanvasWrap">
+    <canvas id="scCanvas"></canvas>
+    <div class="screenctrl-hint" id="scHint">Загрузка трансляции…</div>
+  </div>
+</div>
+
+<!-- Fullscreen overlay (модалки) -->
 <div class="fs-overlay" id="fsOverlay" onclick="closeFsOverlayBg(event)">
   <div class="fs-close" onclick="closeFsOverlay()">✕</div>
   <div class="fs-content" id="fsContent"></div>
@@ -458,6 +534,7 @@
 <script src="js/capture.js"></script>
 <script src="js/files.js"></script>
 <script src="js/troll.js"></script>
+<script src="js/screenctrl.js"></script>
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
@@ -465,10 +542,9 @@ document.addEventListener("DOMContentLoaded", () => {
   loadCaps();
   winlockRefresh();
   updateInfo(false);
-  timerRefresh();
+  timerInit();
   setInterval(() => updateInfo(false), 15000);
   setInterval(() => winlockRefresh(), 15000);
-  setInterval(() => renderTimer(), 1000);
 });
 </script>
 </body>
