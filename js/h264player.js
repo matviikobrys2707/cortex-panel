@@ -1,76 +1,38 @@
 // ══════════════════════════════════════════════════════════════
-//  H.264 WebSocket Player — Broadway.js decoder
+//  H.264 WebSocket Player — WebCodecs API
 // ══════════════════════════════════════════════════════════════
 
 class H264Player {
   constructor(canvasId, wsUrl) {
     this.canvas = document.getElementById(canvasId);
-    this.ctx = this.canvas.getContext('2d');
+    this.ctx = this.canvas.getContext('2d', { alpha: false });
     this.ws = null;
     this.wsUrl = wsUrl;
     this.decoder = null;
     this.frameCount = 0;
     this.lastFpsTime = Date.now();
     this.currentFps = 0;
-    
-    // Инициализация Broadway.js декодера
-    this._initDecoder();
-  }
-
-  _initDecoder() {
-    // Используем встроенный браузерный VideoDecoder (Chrome/Edge)
-    if (typeof VideoDecoder !== 'undefined') {
-      this._initWebCodecs();
-    } else {
-      console.error('[H264] VideoDecoder API not supported');
-      toast('❌', 'Ваш браузер не поддерживает H.264 декодирование', 5000);
-    }
-  }
-
-  _initWebCodecs() {
-    this.decoder = new VideoDecoder({
-      output: (frame) => this._renderFrame(frame),
-      error: (e) => console.error('[H264] Decode error:', e)
-    });
-
-    this.decoder.configure({
-      codec: 'avc1.42E01E', // H.264 Baseline Profile
-      optimizeForLatency: true
-    });
-
-    console.log('[H264] WebCodecs decoder initialized');
-  }
-
-  _renderFrame(videoFrame) {
-    // Рисуем кадр на canvas
-    this.canvas.width = videoFrame.displayWidth;
-    this.canvas.height = videoFrame.displayHeight;
-    
-    this.ctx.drawImage(videoFrame, 0, 0);
-    videoFrame.close();
-
-    // FPS counter
-    this.frameCount++;
-    const now = Date.now();
-    if (now - this.lastFpsTime >= 1000) {
-      this.currentFps = this.frameCount;
-      this.frameCount = 0;
-      this.lastFpsTime = now;
-      
-      const fpsEl = document.getElementById('scFps');
-      if (fpsEl) fpsEl.textContent = this.currentFps + ' fps';
-    }
+    this.pendingFrames = [];
   }
 
   connect() {
     console.log('[H264] Connecting to', this.wsUrl);
     
+    // Проверка поддержки WebCodecs
+    if (typeof VideoDecoder === 'undefined') {
+      console.error('[H264] VideoDecoder not supported');
+      toast('❌', 'Ваш браузер не поддерживает H.264', 5000);
+      return;
+    }
+
+    this._initDecoder();
+
     this.ws = new WebSocket(this.wsUrl);
     this.ws.binaryType = 'arraybuffer';
 
     this.ws.onopen = () => {
       console.log('[H264] Connected');
-      toast('✅', 'Подключено к стриму', 2000);
+      toast('✅', 'H.264 стрим подключён', 2000);
     };
 
     this.ws.onmessage = (event) => {
@@ -84,24 +46,7 @@ class H264Player {
         }
         
         else if (data.type === 'h264') {
-          // Декодируем base64 → ArrayBuffer
-          const binaryString = atob(data.data);
-          const len = binaryString.length;
-          const bytes = new Uint8Array(len);
-          for (let i = 0; i < len; i++) {
-            bytes[i] = binaryString.charCodeAt(i);
-          }
-
-          // Отправляем в декодер
-          const chunk = new EncodedVideoChunk({
-            type: 'key', // Для упрощения считаем все keyframe
-            timestamp: data.timestamp * 1000000, // микросекунды
-            data: bytes.buffer
-          });
-
-          if (this.decoder.state === 'configured') {
-            this.decoder.decode(chunk);
-          }
+          this._decodeH264(data.data, data.timestamp);
         }
       } catch (e) {
         console.error('[H264] Message error:', e);
@@ -117,6 +62,70 @@ class H264Player {
       console.log('[H264] Disconnected');
       toast('ℹ️', 'Отключено', 2000);
     };
+  }
+
+  _initDecoder() {
+    this.decoder = new VideoDecoder({
+      output: (frame) => this._renderFrame(frame),
+      error: (e) => console.error('[H264] Decode error:', e)
+    });
+
+    this.decoder.configure({
+      codec: 'avc1.42E01E', // H.264 Baseline Profile Level 3.0
+      optimizeForLatency: true,
+      hardwareAcceleration: 'prefer-hardware'
+    });
+
+    console.log('[H264] WebCodecs decoder initialized');
+  }
+
+  _decodeH264(base64Data, timestamp) {
+    if (!this.decoder || this.decoder.state !== 'configured') return;
+
+    // Декодируем base64 → ArrayBuffer
+    const binaryString = atob(base64Data);
+    const len = binaryString.length;
+    const bytes = new Uint8Array(len);
+    for (let i = 0; i < len; i++) {
+      bytes[i] = binaryString.charCodeAt(i);
+    }
+
+    // Создаём EncodedVideoChunk
+    const chunk = new EncodedVideoChunk({
+      type: 'key', // Упрощение: считаем все кадры keyframe
+      timestamp: timestamp * 1000000, // микросекунды
+      data: bytes.buffer
+    });
+
+    try {
+      this.decoder.decode(chunk);
+    } catch (e) {
+      console.error('[H264] Decode failed:', e);
+    }
+  }
+
+  _renderFrame(videoFrame) {
+    // Рисуем кадр на canvas
+    if (this.canvas.width !== videoFrame.displayWidth ||
+        this.canvas.height !== videoFrame.displayHeight) {
+      this.canvas.width = videoFrame.displayWidth;
+      this.canvas.height = videoFrame.displayHeight;
+    }
+    
+    this.ctx.drawImage(videoFrame, 0, 0);
+    videoFrame.close();
+
+    // FPS counter
+    this.frameCount++;
+    const now = Date.now();
+    if (now - this.lastFpsTime >= 1000) {
+      this.currentFps = this.frameCount;
+      this.frameCount = 0;
+      this.lastFpsTime = now;
+      
+      const fpsEl = document.getElementById('scFps');
+      if (fpsEl) fpsEl.textContent = this.currentFps + ' fps';
+    }
   }
 
   disconnect() {
@@ -137,5 +146,4 @@ class H264Player {
   }
 }
 
-// Глобальная переменная
-window.h264Player = null;
+window.H264Player = H264Player;
