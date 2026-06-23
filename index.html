@@ -30,91 +30,7 @@
   <!-- ГЛАВНАЯ -->
   <div class="page active" id="page-main">
     
-    <!-- Управление ПК -->
-    <div class="slabel">Управление ПК</div>
-    <div class="card">
-      <div class="card-body">
-        <div class="grid g2">
-          <button class="btn danger" onclick="confirmAction('shutdown','Выключить ПК?')">
-            <span class="bi">⏻</span>Выключить
-          </button>
-          <button class="btn warn" onclick="confirmAction('reboot','Перезагрузить ПК?')">
-            <span class="bi">↺</span>Перезагрузка
-          </button>
-          <button class="btn accent" onclick="execCmd('lock')">
-            <span class="bi">🔒</span>Блокировка
-          </button>
-          <button class="btn blue" onclick="execCmd('sleep')">
-            <span class="bi">🌙</span>Сон
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Таймер -->
-    <div class="slabel">Таймер</div>
-    <div class="card">
-      <div class="card-hdr">
-        <div class="card-title">Отложенное действие</div>
-        <div class="timer-status" id="timerStatus" style="display:none">
-          <div class="timer-badge">
-            <span id="timerAction">⏱</span>
-            <span id="timerTime">00:00</span>
-          </div>
-        </div>
-      </div>
-      <div class="card-body">
-        <div class="grid g2">
-          <button class="btn ok" onclick="openTimerMenu()">
-            <span class="bi">➕</span>Добавить
-          </button>
-          <button class="btn danger" onclick="confirmCancelTimer()">
-            <span class="bi">❌</span>Отменить
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- WinLock -->
-    <div class="slabel">WinLock</div>
-    <div class="card">
-      <div class="card-hdr">
-        <div class="card-title">Блокировка экрана</div>
-        <div class="lock-chip">
-          <div class="sdot" id="wlDot"></div>
-          <span id="wlStatus">…</span>
-        </div>
-      </div>
-      <div class="card-body">
-        <button class="btn danger" style="width:100%" onclick="openWinlockMenu()">
-          <span class="bi">🔒</span>Заблокировать
-        </button>
-      </div>
-    </div>
-
-    <!-- Система -->
-    <div class="slabel">Железо</div>
-    <div class="card">
-      <div class="stat-list">
-        <div class="stat-row">
-          <div class="stat-k"><div class="stat-ico">💻</div>ОС</div>
-          <div class="stat-v" id="osVal">—</div>
-        </div>
-        <div class="stat-row">
-          <div class="stat-k"><div class="stat-ico">🖥</div>ПК</div>
-          <div class="stat-v" id="pcVal">—</div>
-        </div>
-        <div class="stat-row">
-          <div class="stat-k"><div class="stat-ico">🧠</div>Процессор</div>
-          <div class="stat-v" id="cpuName">—</div>
-        </div>
-        <div class="stat-row">
-          <div class="stat-k"><div class="stat-ico">🎮</div>Видеокарта</div>
-          <div class="stat-v" id="gpuName">—</div>
-        </div>
-      </div>
-    </div>
-
+    <!-- Мониторинг (наверху) -->
     <div class="slabel">Мониторинг</div>
     <div class="card">
       <div class="card-hdr">
@@ -148,6 +64,91 @@
         </div>
       </div>
     </div>
+
+    <!-- Железо -->
+    <div class="slabel">Железо</div>
+    <div class="card">
+      <div class="stat-list">
+        <div class="stat-row">
+          <div class="stat-k"><div class="stat-ico">💻</div>ОС</div>
+          <div class="stat-v" id="osVal">—</div>
+        </div>
+        <div class="stat-row">
+          <div class="stat-k"><div class="stat-ico">🖥</div>ПК</div>
+          <div class="stat-v" id="pcVal">—</div>
+        </div>
+        <div class="stat-row">
+          <div class="stat-k"><div class="stat-ico">🧠</div>Процессор</div>
+          <div class="stat-v" id="cpuName">—</div>
+        </div>
+        <div class="stat-row">
+          <div class="stat-k"><div class="stat-ico">🎮</div>Видеокарта</div>
+          <div class="stat-v" id="gpuName">—</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Управление ПК -->
+    <div class="slabel">Управление ПК</div>
+    <div class="card">
+      <div class="card-body">
+        <div class="grid g2">
+          <button class="btn danger" onclick="confirmAction('shutdown','Выключить ПК?')">
+            <span class="bi">⏻</span>Выключить
+          </button>
+          <button class="btn warn" onclick="confirmAction('reboot','Перезагрузить ПК?')">
+            <span class="bi">↺</span>Перезагрузка
+          </button>
+          <button class="btn accent" onclick="execCmd('lock')">
+            <span class="bi">🔒</span>Блокировка
+          </button>
+          <button class="btn blue" onclick="execCmd('sleep')">
+            <span class="bi">🌙</span>Сон
+          </button>
+        </div>
+        <div class="mt8"></div>
+        <!-- WinLock -->
+        <div class="winlock-card">
+          <div class="winlock-hdr">
+            <div class="winlock-title">🔐 WinLock</div>
+            <div class="lock-chip">
+              <div class="sdot" id="wlDot"></div>
+              <span id="wlStatus">…</span>
+            </div>
+          </div>
+          <button class="btn danger" style="width:100%;margin-top:8px" onclick="openWinlockMenu()">
+            <span class="bi">🔒</span>Заблокировать
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Таймер -->
+    <div class="slabel">Таймер</div>
+    <div class="card">
+      <div class="card-hdr">
+        <div class="card-title">Отложенное действие</div>
+      </div>
+      <div class="card-body">
+        <div id="timerActive" style="display:none">
+          <div class="timer-active-card">
+            <div class="timer-active-icon" id="timerActiveIcon">⏱</div>
+            <div class="timer-active-body">
+              <div class="timer-active-action" id="timerActiveAction">Выключение</div>
+              <div class="timer-active-time" id="timerActiveTime">через 29:45</div>
+            </div>
+          </div>
+          <button class="btn danger" style="width:100%;margin-top:12px" onclick="confirmCancelTimer()">
+            <span class="bi">❌</span>Отменить таймер
+          </button>
+        </div>
+        <div id="timerInactive">
+          <button class="btn ok" style="width:100%" onclick="openTimerMenu()">
+            <span class="bi">➕</span>Добавить таймер
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- УПРАВЛЕНИЕ (Клавиши + Мышь) -->
@@ -155,12 +156,7 @@
     <div class="slabel">Клавиатура</div>
     <div class="card">
       <div class="card-body">
-        <div class="kb-cats">
-          <button class="kb-cat active" onclick="switchKbCat('nav',this)">Навигация</button>
-          <button class="kb-cat" onclick="switchKbCat('combo',this)">Комбинации</button>
-          <button class="kb-cat" onclick="switchKbCat('fn',this)">F-клавиши</button>
-        </div>
-        <div class="kb-grid" id="kbGrid"></div>
+        <div class="kb-grid-new" id="kbGrid"></div>
         <div class="mt12"></div>
         <div class="flabel">Свой ввод</div>
         <div class="row">
@@ -180,13 +176,13 @@
     <div class="card">
       <div class="card-body">
         <div class="grid g3">
-          <button class="btn blue" onclick="mouseClick('left')">
+          <button class="btn blue" onmousedown="mouseDown('left')" onmouseup="mouseUp('left')" ontouchstart="mouseDown('left')" ontouchend="mouseUp('left')">
             <span class="bi">🖱</span>ЛКМ
           </button>
-          <button class="btn accent" onclick="mouseClick('right')">
+          <button class="btn accent" onmousedown="mouseDown('right')" onmouseup="mouseUp('right')" ontouchstart="mouseDown('right')" ontouchend="mouseUp('right')">
             <span class="bi">🖱</span>ПКМ
           </button>
-          <button class="btn ok" onclick="mouseClick('middle')">
+          <button class="btn ok" onmousedown="mouseDown('middle')" onmouseup="mouseUp('middle')" ontouchstart="mouseDown('middle')" ontouchend="mouseUp('middle')">
             <span class="bi">🖱</span>СКМ
           </button>
         </div>
@@ -208,24 +204,16 @@
     <div class="slabel">Громкость</div>
     <div class="card">
       <div class="card-body">
-        <div class="vol-grid">
-          <button class="vol-btn" onclick="setVolume(0)">🔇<br>0%</button>
-          <button class="vol-btn" onclick="setVolume(10)">🔈<br>10%</button>
-          <button class="vol-btn" onclick="setVolume(20)">🔈<br>20%</button>
-          <button class="vol-btn" onclick="setVolume(30)">🔉<br>30%</button>
-          <button class="vol-btn" onclick="setVolume(40)">🔉<br>40%</button>
-          <button class="vol-btn" onclick="setVolume(50)">🔊<br>50%</button>
-          <button class="vol-btn" onclick="setVolume(60)">🔊<br>60%</button>
-          <button class="vol-btn" onclick="setVolume(70)">🔊<br>70%</button>
-          <button class="vol-btn" onclick="setVolume(80)">🔊<br>80%</button>
-          <button class="vol-btn" onclick="setVolume(90)">🔊<br>90%</button>
-          <button class="vol-btn" onclick="setVolume(100)">📢<br>100%</button>
-          <button class="vol-btn" onclick="openCustomVolumeInput()">⌨️<br>Ввод</button>
+        <div class="vol-display">
+          <div class="vol-icon" id="volIcon">🔊</div>
+          <div class="vol-percent" id="volPercent">50%</div>
         </div>
-        <div class="mt12"></div>
-        <button class="btn warn" style="width:100%" onclick="mediaControl('mute')">
-          <span class="bi">🔇</span>Mute / Unmute
-        </button>
+        <input type="range" class="vol-slider" id="volSlider" min="0" max="100" value="50" oninput="volSliderChange(this.value)"/>
+        <div class="vol-btns">
+          <button class="vol-quick-btn" onclick="setVolume(0)">0%</button>
+          <button class="vol-quick-btn" onclick="setVolume(100)">100%</button>
+          <button class="vol-quick-btn mute" onclick="toggleMute()">🔇 Mute</button>
+        </div>
       </div>
     </div>
 
@@ -249,6 +237,34 @@
 
   <!-- КАМЕРА -->
   <div class="page" id="page-camera">
+    <div class="slabel">Компьютер</div>
+    <div class="card">
+      <div class="card-body">
+        <div class="grid g2">
+          <button class="btn ok" onclick="execCmd('screenshot')">
+            <span class="bi">📸</span>Скриншот
+          </button>
+          <button class="btn blue" onclick="openRecordPicker('screen')">
+            <span class="bi">🎥</span>Запись экрана
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="slabel">Камера</div>
+    <div class="card">
+      <div class="card-body">
+        <div class="grid g2">
+          <button class="btn accent" onclick="execCmd('camera_photo')">
+            <span class="bi">📷</span>Фото
+          </button>
+          <button class="btn blue" onclick="openRecordPicker('camera')">
+            <span class="bi">🎬</span>Видео
+          </button>
+        </div>
+      </div>
+    </div>
+
     <div class="slabel">Галерея сессии</div>
     <div class="card" style="padding-bottom:0">
       <div class="card-hdr">
@@ -261,32 +277,6 @@
         <div class="empty-ico">🖼</div>Нет медиа
       </div>
     </div>
-
-    <div class="slabel">Скриншот</div>
-    <div class="card">
-      <div class="card-body">
-        <div class="grid g2">
-          <button class="btn ok" onclick="execCmd('screenshot')">
-            <span class="bi">📸</span>Скриншот
-          </button>
-          <button class="btn accent" onclick="execCmd('camera_photo')">
-            <span class="bi">📷</span>Фото
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <div class="slabel">Запись экрана</div>
-    <div class="card">
-      <div class="card-body">
-        <button class="btn blue" style="width:100%;margin-bottom:8px" onclick="openRecordPicker('screen')">
-          <span class="bi">🎥</span>Запись экрана
-        </button>
-        <button class="btn blue" style="width:100%" onclick="openRecordPicker('camera')">
-          <span class="bi">🎬</span>Запись с камеры
-        </button>
-      </div>
-    </div>
   </div>
 
   <!-- ФАЙЛЫ -->
@@ -294,13 +284,67 @@
     <div class="slabel">Файловый менеджер</div>
     <div class="card">
       <div class="fb-path" id="fbPath">Загрузка…</div>
+      <div class="fb-toolbar-top">
+        <button class="fb-tbtn ok" onclick="openUploadDialog()">📤 Загрузить</button>
+        <button class="fb-tbtn blue" onclick="fbCreateFolder()">📁 Создать папку</button>
+      </div>
       <div class="fb-search">
-        <input class="inp" id="fbSearch" placeholder="🔍 Поиск…" oninput="fbFilter(this.value)"/>
+        <input class="inp" id="fbSearch" placeholder="🔍 Поиск (рекурсивный)…" oninput="fbSearchInput(this.value)"/>
+        <button class="btn ok" style="min-width:70px;min-height:42px;margin-left:8px" onclick="fbSearchRun()">Найти</button>
       </div>
       <div class="fb-toolbar" id="fbToolbar"></div>
       <div class="fb-list" id="fbList"></div>
       <div class="empty" id="fbEmpty" style="display:none">
         <div class="empty-ico">📂</div>Папка пуста
+      </div>
+    </div>
+  </div>
+
+  <!-- ТРОЛЛИНГ -->
+  <div class="page" id="page-troll">
+    <div class="slabel">Дисплей</div>
+    <div class="card">
+      <div class="card-body">
+        <div class="grid g2">
+          <button class="btn warn" onclick="execCmd('monitor_off')">
+            <span class="bi">🖥</span>Выкл. монитор
+          </button>
+          <button class="btn ok" onclick="execCmd('monitor_on')">
+            <span class="bi">🖥</span>Вкл. монитор
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="slabel">Устройства ввода</div>
+    <div class="card">
+      <div class="card-body">
+        <div class="grid g2">
+          <button class="btn danger" onclick="execCmd('disable_keyboard')">
+            <span class="bi">⌨️</span>Откл. клавиатуру
+          </button>
+          <button class="btn ok" onclick="execCmd('enable_keyboard')">
+            <span class="bi">⌨️</span>Вкл. клавиатуру
+          </button>
+          <button class="btn danger" onclick="execCmd('disable_mouse')">
+            <span class="bi">🖱</span>Откл. мышь
+          </button>
+          <button class="btn ok" onclick="execCmd('enable_mouse')">
+            <span class="bi">🖱</span>Вкл. мышь
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="slabel">Экстрим</div>
+    <div class="card">
+      <div class="card-body">
+        <button class="btn warn" style="width:100%;margin-bottom:8px" onclick="execCmd('bsod')">
+          <span class="bi">💀</span>Синий экран смерти (BSOD)
+        </button>
+        <button class="btn danger" style="width:100%" onclick="execCmd('crazy_mouse')">
+          <span class="bi">🎲</span>Сумасшедшая мышь
+        </button>
       </div>
     </div>
   </div>
@@ -324,14 +368,18 @@
   <button class="tab" onclick="openTab('files',this)">
     <span class="tab-ico">📁</span>Файлы
   </button>
+  <button class="tab" onclick="openTab('troll',this)">
+    <span class="tab-ico">😈</span>Троллинг
+  </button>
 </div>
 
 <!-- Fullscreen overlay -->
-<div class="fs-overlay" id="fsOverlay" onclick="closeFsOverlay(event)">
+<div class="fs-overlay" id="fsOverlay" onclick="closeFsOverlayBg(event)">
+  <div class="fs-close" onclick="closeFsOverlay()">✕</div>
   <div class="fs-content" id="fsContent"></div>
 </div>
 
-<!-- Toast (убран снизу, теперь вверху) -->
+<!-- Toast -->
 <div class="toast-top" id="toastTop">
   <div class="toast-icon" id="toastIcon">✅</div>
   <div class="toast-text" id="toastText">Готово</div>
@@ -345,6 +393,9 @@
   <div class="rec-timer" id="recTimer">00</div>
   <div class="rec-bar-wrap"><div class="rec-bar" id="recBar"></div></div>
 </div>
+
+<!-- File upload (hidden input) -->
+<input type="file" id="fileUploadInput" style="display:none" onchange="handleFileUpload(this.files[0])"/>
 
 <!-- JS -->
 <script src="js/core.js"></script>
@@ -363,7 +414,7 @@ document.addEventListener("DOMContentLoaded", () => {
   winlockRefresh();
   updateInfo(false);
   timerRefresh();
-  setInterval(() => updateInfo(false), 10000); // Каждые 10 сек
+  setInterval(() => updateInfo(false), 10000);
   setInterval(() => winlockRefresh(), 10000);
   setInterval(() => renderTimers(), 1000);
 });
