@@ -1,5 +1,5 @@
 /*
-  Cortex WebApp — Full Redesign CSS
+  Cortex WebApp — Чистая версия БЕЗ трансляции
 */
 
 :root {
@@ -139,10 +139,9 @@ body::before {
 .chip:active { transform: scale(.95); }
 
 /* ══════════════════════════════════════════════
-   ГЛАВНАЯ — НОВЫЙ ДИЗАЙН
+   ГЛАВНАЯ
 ══════════════════════════════════════════════ */
 
-/* Section Card */
 .section-card {
   background: var(--card);
   border: 1px solid var(--border);
@@ -165,7 +164,6 @@ body::before {
 }
 .section-title-row .section-title { margin-bottom: 0; }
 
-/* Быстрые действия — 2×2 + 1 кнопка на всю ширину */
 .qa-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -185,7 +183,6 @@ body::before {
 }
 .qa-btn:active { transform: scale(.93); opacity: .85; }
 
-/* Кнопка на всю ширину (WinLock) */
 .qa-full {
   grid-column: 1 / -1;
   flex-direction: row;
@@ -212,7 +209,6 @@ body::before {
 .qa-btn.purple { background: rgba(124,110,250,.2); border-color: rgba(124,110,250,.5); }
 .qa-btn.purple .qa-lbl { color: #C4B5FD; font-size: 13px; }
 
-/* Кнопка добавить таймер */
 .add-btn {
   border: none; cursor: pointer; border-radius: 10px;
   padding: 6px 12px; gap: 6px;
@@ -224,7 +220,6 @@ body::before {
 .add-btn svg { width: 14px; height: 14px; }
 .add-btn:active { transform: scale(.93); }
 
-/* Timer empty */
 .empty-timer {
   display: flex; align-items: center; justify-content: center;
   gap: 10px; padding: 20px;
@@ -235,7 +230,6 @@ body::before {
 }
 .empty-timer-ico { font-size: 22px; opacity: .6; }
 
-/* Timer card */
 .timer-card {
   display: flex; align-items: center; gap: 12px;
   padding: 12px 0; border-bottom: 1px solid rgba(124,110,250,.1);
@@ -256,7 +250,6 @@ body::before {
 }
 .timer-card-del:active { transform: scale(.9); }
 
-/* Мониторинг */
 .monitor-grid { display: flex; flex-direction: column; gap: 0; }
 .monitor-row {
   display: flex; align-items: center; gap: 10px;
@@ -267,7 +260,6 @@ body::before {
 .monitor-key { flex: 1; font-size: 13px; font-weight: 700; color: var(--muted); }
 .monitor-val { font-size: 12px; font-weight: 900; color: var(--text); text-align: right; max-width: 55%; word-break: break-all; }
 
-/* Диски */
 .disk-row {
   display: flex; flex-direction: column; gap: 4px;
   padding: 10px 0; border-bottom: 1px solid rgba(124,110,250,.08);
@@ -379,7 +371,7 @@ body::before {
 .vol-quick-btn:active { transform: scale(.93); }
 
 /* ══════════════════════════════════════════════
-   МЫШЬ — НОВЫЙ ДИЗАЙН С ЗАЖАТИЕМ
+   МЫШЬ
 ══════════════════════════════════════════════ */
 .mouse-wrap { display: flex; flex-direction: column; align-items: center; gap: 0; }
 
@@ -403,11 +395,9 @@ body::before {
 .mouse-btn-left { border-right: 1px solid rgba(124,110,250,.22); border-radius: 80px 0 0 0; }
 .mouse-btn-right { border-left: 1px solid rgba(124,110,250,.22); border-radius: 0 80px 0 0; }
 
-/* Активное состояние при зажатии */
 .mouse-btn-left.holding  { background: rgba(90,175,255,.25) !important; color: var(--blue) !important; }
 .mouse-btn-right.holding { background: rgba(124,110,250,.25) !important; color: #A78BFA !important; }
 
-/* Индикатор зажатия (пульсирующий круг) */
 .mouse-hold-indicator {
   position: absolute; bottom: 20px;
   width: 8px; height: 8px; border-radius: 50%;
@@ -449,7 +439,6 @@ body::before {
   border-radius: 0 0 4px 4px;
 }
 
-/* Статус зажатия */
 .mouse-hold-status {
   display: flex; align-items: center; gap: 8px;
   padding: 10px 14px; border-radius: 12px; margin-top: 10px;
@@ -548,7 +537,7 @@ body::before {
 .troll-warning { padding: 12px; border-radius: 12px; background: rgba(251,191,36,.1); border: 1px solid rgba(251,191,36,.25); color: var(--warn); font-size: 11px; font-weight: 700; text-align: center; line-height: 1.5; margin-bottom: 14px; }
 
 /* ══════════════════════════════════════════════
-   ПОЛНАЯ КЛАВИАТУРА — ВСЕГДА ЦЕНТРИРОВАНА
+   ПОЛНАЯ КЛАВИАТУРА
 ══════════════════════════════════════════════ */
 .fullkb-overlay {
   position: fixed; inset: 0; z-index: 800;
@@ -581,13 +570,13 @@ body::before {
 .fullkb-body {
   flex: 1; overflow-y: auto; padding: 6px 4px;
   display: flex; flex-direction: column; gap: 3px;
-  align-items: center; /* ЦЕНТРИРОВАНИЕ */
+  align-items: center;
   -webkit-overflow-scrolling: touch;
 }
 
 .fkb-row {
   display: flex; gap: 2px; flex-shrink: 0;
-  width: 100%; max-width: 680px; /* Максимальная ширина */
+  width: 100%; max-width: 680px;
   padding: 0 4px;
 }
 
@@ -613,95 +602,6 @@ body::before {
   box-shadow: 0 0 14px rgba(124,110,250,.5); transform: scale(.95);
 }
 
-/* ══════════════════════════════════════════════
-   ТРАНСЛЯЦИЯ ЭКРАНА — МАКСИМАЛЬНОЕ КАЧЕСТВО
-══════════════════════════════════════════════ */
-.screenctrl-overlay {
-  position: fixed; inset: 0; z-index: 700;
-  background: #000; display: none; flex-direction: column;
-}
-.screenctrl-overlay.open { display: flex; }
-
-.screenctrl-header {
-  display: flex; align-items: center; gap: 8px;
-  padding: 8px 12px; flex-shrink: 0;
-  background: rgba(8,11,20,.95);
-  border-bottom: 1px solid rgba(124,110,250,.18);
-}
-.screenctrl-fps  { font-size: 13px; font-weight: 900; color: var(--ok); min-width: 56px; }
-.screenctrl-ping { font-size: 13px; font-weight: 900; color: var(--blue); min-width: 56px; }
-
-.sc-settings-btn {
-  border: none; border-radius: 10px; padding: 6px 10px;
-  background: rgba(124,110,250,.15); border: 1px solid rgba(124,110,250,.3);
-  color: #A78BFA; font-size: 16px; cursor: pointer;
-  touch-action: manipulation; flex-shrink: 0;
-}
-.sc-settings-btn:active { transform: scale(.93); }
-
-.sc-settings-panel {
-  background: rgba(12,16,30,.96); border-bottom: 1px solid rgba(124,110,250,.18);
-  padding: 10px 14px; display: flex; flex-direction: column; gap: 10px;
-  flex-shrink: 0;
-}
-.sc-setting-row {
-  display: flex; align-items: center; justify-content: space-between;
-  font-size: 13px; font-weight: 800; color: var(--text); gap: 10px;
-}
-.sc-setting-row select {
-  background: rgba(30,41,66,.8); border: 1px solid rgba(124,110,250,.3);
-  color: var(--text); border-radius: 8px; padding: 4px 8px; font-size: 12px;
-}
-.sc-setting-row input[type=checkbox] { width: 16px; height: 16px; accent-color: var(--accent); }
-
-.screenctrl-close {
-  margin-left: 0; border: none; border-radius: 10px; padding: 8px 12px;
-  background: rgba(255,77,109,.15); border: 1px solid rgba(255,77,109,.28);
-  color: var(--danger); font-weight: 900; cursor: pointer; font-size: 13px;
-  touch-action: manipulation;
-}
-.screenctrl-close:active { transform: scale(.93); }
-
-.screenctrl-canvas-wrap {
-  flex: 1; display: flex; align-items: center; justify-content: center;
-  overflow: hidden; position: relative; background: #040608;
-}
-
-#scCanvas {
-  display: block; cursor: crosshair; touch-action: none;
-  image-rendering: auto;
-  max-width: 100%; max-height: 100%;
-}
-
-.screenctrl-hint {
-  position: absolute; top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  color: var(--muted); font-size: 14px; font-weight: 800;
-  text-align: center; pointer-events: none;
-}
-
-/* ══ Джойстик ══ */
-.sc-joystick-wrap {
-  position: absolute; bottom: 30px; left: 24px;
-  z-index: 10; touch-action: none;
-}
-.sc-joystick {
-  width: 110px; height: 110px; border-radius: 50%;
-  background: rgba(0,0,0,.35); border: 2px solid rgba(255,255,255,.18);
-  backdrop-filter: blur(8px);
-  display: flex; align-items: center; justify-content: center;
-  position: relative; touch-action: none; user-select: none;
-}
-.sc-joystick-knob {
-  width: 44px; height: 44px; border-radius: 50%;
-  background: rgba(124,110,250,.75);
-  border: 2px solid rgba(255,255,255,.3);
-  box-shadow: 0 4px 16px rgba(124,110,250,.4);
-  position: absolute;
-  transition: none;
-  pointer-events: none;
-}
-
 /* ══ Overlays ══ */
 .fs-overlay {
   position: fixed; inset: 0; background: rgba(0,0,0,.9);
@@ -717,13 +617,11 @@ body::before {
 .fs-actions { display: flex; gap: 10px; margin-top: 16px; }
 .fs-actions .btn { flex: 1; min-height: 52px; }
 
-/* Toast */
 .toast-top { position: fixed; top: 70px; left: 50%; transform: translateX(-50%) translateY(-160%); opacity: 0; pointer-events: none; z-index: 999; display: flex; align-items: center; gap: 10px; padding: 11px 16px; border-radius: 14px; background: rgba(16,20,36,.97); border: 1px solid rgba(124,110,250,.24); backdrop-filter: blur(18px); transition: transform .22s ease, opacity .22s ease; max-width: calc(100vw - 28px); }
 .toast-top.show { transform: translateX(-50%) translateY(0); opacity: 1; }
 .toast-icon { font-size: 20px; flex-shrink: 0; }
 .toast-text { font-size: 13px; font-weight: 900; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-/* Record overlay */
 .rec-overlay { position: fixed; inset: 0; z-index: 900; background: rgba(8,11,20,.98); backdrop-filter: blur(16px); display: none; flex-direction: column; align-items: center; justify-content: center; gap: 16px; }
 .rec-overlay.show { display: flex; }
 .rec-pulse { width: 88px; height: 88px; border-radius: 50%; background: rgba(255,77,109,.16); border: 2px solid rgba(255,77,109,.6); display: flex; align-items: center; justify-content: center; font-size: 38px; }
@@ -732,164 +630,3 @@ body::before {
 .rec-timer { font-size: 58px; font-weight: 900; letter-spacing: -2px; font-variant-numeric: tabular-nums; background: linear-gradient(135deg, #FF4D6D, #FF8C69); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 .rec-bar-wrap { width: 220px; height: 5px; border-radius: 999px; background: rgba(255,255,255,.14); overflow: hidden; }
 .rec-bar { height: 100%; border-radius: 999px; background: rgba(255,77,109,.85); transition: width 1s linear; }
-/* Полноэкранный оверлей трансляции */
-.screenctrl-overlay {
-  background: #000;
-}
-
-.screenctrl-header {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  padding: 0 12px;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
-  z-index: 100;
-}
-
-.screenctrl-close {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  width: 40px;
-  height: 40px;
-  background: rgba(255,255,255,0.2);
-  border: none;
-  border-radius: 50%;
-  color: white;
-  font-size: 24px;
-  cursor: pointer;
-  z-index: 101;
-}
-
-.screenctrl-canvas-wrap {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
-
-#scCanvas {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-}
-
-/* Убираем джойстик */
-.sc-joystick-wrap {
-  display: none !important;
-}
-
-.sc-settings-panel {
-  display: none !important;
-}
-
-.sc-settings-btn {
-  display: none !important;
-}
-/* Полноэкранная трансляция */
-.screenctrl-overlay {
-  display: none;
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: #000;
-  z-index: 999999;
-}
-
-.screenctrl-close-fullscreen {
-  position: absolute;
-  top: 10px; right: 10px;
-  width: 44px; height: 44px;
-  background: rgba(255,255,255,0.15);
-  backdrop-filter: blur(10px);
-  border: none;
-  border-radius: 50%;
-  color: white;
-  font-size: 24px;
-  cursor: pointer;
-  z-index: 1000;
-  transition: all 0.2s;
-}
-
-.screenctrl-close-fullscreen:active {
-  transform: scale(0.95);
-  background: rgba(255,255,255,0.25);
-}
-
-.screenctrl-info {
-  position: absolute;
-  bottom: 20px; left: 20px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  color: white;
-  font-size: 14px;
-  font-weight: 500;
-  background: rgba(0,0,0,0.5);
-  backdrop-filter: blur(10px);
-  padding: 8px 16px;
-  border-radius: 20px;
-  z-index: 1000;
-}
-
-.sc-settings-panel {
-  position: absolute;
-  bottom: 70px; left: 20px;
-  background: rgba(0,0,0,0.95);
-  backdrop-filter: blur(20px);
-  padding: 20px;
-  border-radius: 12px;
-  min-width: 260px;
-  z-index: 1001;
-  color: white;
-}
-
-.sc-settings-panel h3 {
-  margin: 0 0 16px 0;
-  font-size: 16px;
-}
-
-.sc-settings-panel label {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 12px;
-}
-
-.sc-settings-panel select {
-  padding: 6px 10px;
-  border-radius: 6px;
-  border: 1px solid rgba(255,255,255,0.2);
-  background: rgba(255,255,255,0.1);
-  color: white;
-  font-size: 14px;
-}
-
-.screenctrl-canvas-wrap {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-#scCanvas {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-}
-
-.screenctrl-hint {
-  position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  color: white;
-  font-size: 16px;
-}
