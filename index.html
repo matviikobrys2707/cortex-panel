@@ -544,16 +544,23 @@
 
 <!-- ══ ТРАНСЛЯЦИЯ ЭКРАНА ══ -->
 <!-- ══ ТРАНСЛЯЦИЯ ЭКРАНА ══ -->
+<!-- ══ ТРАНСЛЯЦИЯ ЭКРАНА ══ -->
 <div id="screenCtrlOverlay" class="screenctrl-overlay">
   <div class="screenctrl-header">
     <div class="screenctrl-fps" id="scFps">— fps</div>
-    <div class="screenctrl-ping" id="scPing">— ms</div>
     <div style="flex:1"></div>
-    <button class="sc-settings-btn" id="scSettingsBtn" onclick="scToggleSettings()">⚙️</button>
+    
+    <!-- Кнопка поворота -->
+    <button id="scRotateBtn" 
+      style="background:rgba(255,255,255,0.15);border:none;color:white;
+             padding:6px 10px;border-radius:8px;margin-right:6px;font-size:16px;cursor:pointer"
+      onclick="scToggleRotation()">📱↕</button>
+    
+    <button class="sc-settings-btn" onclick="scToggleSettings()">⚙️</button>
     <button class="screenctrl-close" onclick="closeScreenControl()">✕</button>
   </div>
 
-  <!-- Панель настроек -->
+  <!-- Настройки -->
   <div class="sc-settings-panel" id="scSettingsPanel" style="display:none">
     <label class="sc-setting-row">
       <span>Качество</span>
@@ -564,20 +571,38 @@
       </select>
     </label>
     <label class="sc-setting-row">
-      <input type="checkbox" id="scJoystickEnabled" onchange="scToggleJoystick(this.checked)"/>
+      <input type="checkbox" id="scRotateCheck" 
+        checked onchange="_applyRotation(this.checked)"/>
+      <span>🔄 Повернуть 90°</span>
+    </label>
+    <label class="sc-setting-row">
+      <input type="checkbox" id="scJoystickEnabled" 
+        onchange="scToggleJoystick(this.checked)"/>
       <span>🕹 Джойстик мыши</span>
     </label>
   </div>
 
-  <div class="screenctrl-canvas-wrap" id="scCanvasWrap">
-    <!-- VIDEO элемент для WebRTC -->
-    <video id="scVideo" autoplay playsinline muted
-      style="width:100%;height:100%;object-fit:contain;background:#000;display:none"></video>
+  <div class="screenctrl-canvas-wrap" id="scCanvasWrap"
+    style="position:relative;flex:1;overflow:hidden;background:#000">
     
-    <div class="screenctrl-hint" id="scHint">
+    <video id="scVideo" autoplay playsinline muted
+      style="position:absolute;display:none;background:#000"></video>
+    
+    <div class="screenctrl-hint" id="scHint"
+      style="position:absolute;top:0;left:0;right:0;bottom:0;
+             display:flex;flex-direction:column;align-items:center;
+             justify-content:center;color:white;z-index:10">
       <div style="font-size:40px;margin-bottom:12px">🖥</div>
       Загрузка трансляции…
     </div>
+
+    <div class="sc-joystick-wrap" id="scJoystickWrap" style="display:none">
+      <div class="sc-joystick" id="scJoystick">
+        <div class="sc-joystick-knob" id="scJoystickKnob"></div>
+      </div>
+    </div>
+  </div>
+</div>
 
     <!-- Джойстик (опционально) -->
     <div class="sc-joystick-wrap" id="scJoystickWrap" style="display:none">
