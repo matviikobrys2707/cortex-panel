@@ -1,467 +1,158 @@
-// ══════════════════════════════════════════════════════
-//  Screen Control — Ручной ввод WSS URL (сохраняется)
-// ══════════════════════════════════════════════════════
+let _scPlayer  = null;
+let _scVideo   = null;
+let _scActive  = false;
 
-let _player = null;
-let _canvas = null;
-let _ctx = null;
-let _active = false;
-let _pcW = 1280;
-let _pcH = 720;
-
+// ── Открытие оверлея ──────────────────────────────────
 async function openScreenControl() {
-  _active = true;
-
   const overlay = document.getElementById('screenCtrlOverlay');
   overlay.style.display = 'flex';
+  _scActive = true;
 
-  overlay.style.position = 'fixed';
-  overlay.style.top = '0';
-  overlay.style.left = '0';
-  overlay.style.width = '100%';
-  overlay.style.height = '100%';
-  overlay.style.zIndex = '99999';
+  // Инициализируем видео-элемент
+  _scVideo = document.getElementById('scVideo');
+  
+  _showScHint('🔌 Установка WebRTC соединения…');
+  if (_scVideo) _scVideo.style.display = 'none';
 
-  _canvas = document.getElementById('scCanvas');
-  _ctx = _canvas.getContext('2d', { alpha: false, desynchronized: true });
-
-  _showHint('🔌 Получение URL...');
-  _updateStatus('connecting');
-
-  // Получаем WSS URL
-  let wsUrl = await _getWssUrl();
-
-  if (!wsUrl) {
-    _showHint('❌ Не удалось подключиться');
-    closeScreenControl();
-    return;
-  }
-
-  console.log('[SC] WSS URL:', wsUrl);
-  _startPlayer(wsUrl);
-  _bindInput();
-  _requestFullscreen();
-}
-
-// ══════════════════════════════════════════════════════
-//  Получение WSS URL — с вводом вручную
-// ══════════════════════════════════════════════════════
-
-async function _getWssUrl() {
-  // 1. Проверяем localStorage
-  let saved = localStorage.getItem('cortex_wss_url');
-  if (saved && saved.startsWith('wss://')) {
-    console.log('[SC] WSS из localStorage:', saved);
-    
-    // Проверяем что URL рабочий
-    if (await _testWssUrl(saved)) {
-      return saved;
-    } else {
-      console.warn('[SC] Сохранённый URL не работает');
-      localStorage.removeItem('cortex_wss_url');
-    }
-  }
-
-  // 2. Пробуем получить через API (если не GitHub Pages)
+  // Получаем WSS URL от сервера через API
+  let wsUrl = null;
   try {
-    const base = window._apiBase || '';
-    if (base && !base.includes('github')) {
-      const r = await fetch(base + '/api/ws_url', {
-        cache: 'no-store',
-        headers: { 'Cache-Control': 'no-cache' }
-      });
-      const j = await r.json();
-      if (j.ok && j.url && j.url.startsWith('wss://')) {
-        localStorage.setItem('cortex_wss_url', j.url);
-        return j.url;
-      }
+    const apiBase = window._apiBase || '';
+    const r = await fetch(apiBase + '/api/ws_url');
+    const j = await r.json();
+    if (j.ok && j.url) {
+      wsUrl = j.url;
     }
   } catch(e) {
-    console.warn('[SC] API недоступен:', e);
+    console.warn('[SC] Не удалось получить ws_url:', e);
   }
 
-  // 3. Запрашиваем у пользователя
-  return await _promptWssUrl();
-}
-
-async function _promptWssUrl() {
-  return new Promise((resolve) => {
-    // Создаём модальное окно для ввода
-    const modal = document.createElement('div');
-    modal.style.cssText = `
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.95);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      z-index: 999999;
-      padding: 20px;
-      box-sizing: border-box;
-    `;
-
-    modal.innerHTML = `
-      <div style="
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        padding: 30px;
-        border-radius: 16px;
-        max-width: 500px;
-        width: 100%;
-        box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-      ">
-        <h2 style="
-          margin: 0 0 20px 0;
-          color: white;
-          font-size: 24px;
-          text-align: center;
-        ">🔗 Введите WSS URL</h2>
-        
-        <p style="
-          color: rgba(255,255,255,0.9);
-          font-size: 14px;
-          margin-bottom: 20px;
-          line-height: 1.5;
-        ">
-          Запустите бота на ПК и скопируйте строку из консоли:<br>
-          <code style="background:rgba(0,0,0,0.3);padding:4px 8px;border-radius:4px;display:inline-block;margin-top:8px;">
-            [WS Tunnel] ✅ wss://...
-          </code>
-        </p>
-
-        <input 
-          type="text" 
-          id="wssInput" 
-          placeholder="wss://example.trycloudflare.com"
-          style="
-            width: 100%;
-            padding: 14px;
-            border: 2px solid rgba(255,255,255,0.3);
-            border-radius: 8px;
-            background: rgba(255,255,255,0.15);
-            color: white;
-            font-size: 14px;
-            box-sizing: border-box;
-            margin-bottom: 16px;
-            font-family: monospace;
-          "
-        />
-
-        <div style="display:flex;gap:12px;">
-          <button id="wssSubmit" style="
-            flex: 1;
-            padding: 14px;
-            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(56,239,125,0.3);
-          ">✓ Подключиться</button>
-          
-          <button id="wssCancel" style="
-            flex: 1;
-            padding: 14px;
-            background: rgba(255,255,255,0.2);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-          ">✕ Отмена</button>
-        </div>
-
-        <div id="wssError" style="
-          color: #ff6b6b;
-          font-size: 13px;
-          margin-top: 12px;
-          text-align: center;
-          display: none;
-        "></div>
-      </div>
-    `;
-
-    document.body.appendChild(modal);
-
-    const input = modal.querySelector('#wssInput');
-    const submit = modal.querySelector('#wssSubmit');
-    const cancel = modal.querySelector('#wssCancel');
-    const error = modal.querySelector('#wssError');
-
-    // Автофокус
-    setTimeout(() => input.focus(), 100);
-
-    // Enter = submit
-    input.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') submit.click();
-    });
-
-    submit.addEventListener('click', async () => {
-      const url = input.value.trim();
-
-      if (!url) {
-        error.textContent = '⚠️ Введите URL';
-        error.style.display = 'block';
-        return;
-      }
-
-      if (!url.startsWith('wss://')) {
-        error.textContent = '⚠️ URL должен начинаться с wss://';
-        error.style.display = 'block';
-        return;
-      }
-
-      // Проверка подключения
-      submit.disabled = true;
-      submit.textContent = '⏳ Проверка...';
-
-      const ok = await _testWssUrl(url);
-
-      if (ok) {
-        localStorage.setItem('cortex_wss_url', url);
-        document.body.removeChild(modal);
-        resolve(url);
-      } else {
-        submit.disabled = false;
-        submit.textContent = '✓ Подключиться';
-        error.textContent = '❌ Не удалось подключиться к этому URL';
-        error.style.display = 'block';
-      }
-    });
-
-    cancel.addEventListener('click', () => {
-      document.body.removeChild(modal);
-      resolve(null);
-    });
-  });
-}
-
-async function _testWssUrl(url) {
-  return new Promise((resolve) => {
-    try {
-      const ws = new WebSocket(url);
-      const timeout = setTimeout(() => {
-        ws.close();
-        resolve(false);
-      }, 5000);
-
-      ws.onopen = () => {
-        clearTimeout(timeout);
-        ws.close();
-        resolve(true);
-      };
-
-      ws.onerror = () => {
-        clearTimeout(timeout);
-        resolve(false);
-      };
-    } catch(e) {
-      resolve(false);
-    }
-  });
-}
-
-// ══════════════════════════════════════════════════════
-//  Остальной код (без изменений)
-// ══════════════════════════════════════════════════════
-
-function _requestFullscreen() {
-  const overlay = document.getElementById('screenCtrlOverlay');
-  if (!overlay) return;
-
-  try {
-    if (overlay.requestFullscreen) {
-      overlay.requestFullscreen();
-    } else if (overlay.webkitRequestFullscreen) {
-      overlay.webkitRequestFullscreen();
-    } else if (overlay.mozRequestFullScreen) {
-      overlay.mozRequestFullScreen();
-    }
-
-    if (screen.orientation && screen.orientation.lock) {
-      screen.orientation.lock('portrait').catch(() => {});
-    }
-  } catch (e) {}
-}
-
-function _startPlayer(wsUrl) {
-  if (_player) {
-    _player.disconnect();
-    _player = null;
+  // Фолбэк на localhost, если туннель не вернул адрес
+  if (!wsUrl) {
+    wsUrl = 'ws://127.0.0.1:8765';
+    console.warn('[SC] Используем локальный адрес WS:', wsUrl);
   }
 
-  _player = new MJPEGPlayer(wsUrl, {
-    onConnect() {
-      _hideHint();
-      _updateStatus('live');
-      toast('✅', 'Трансляция идёт', 2000);
-      _player.send('set_quality', { quality: 'low' });
-    },
-
-    onDisconnect() {
-      _showHint('🔄 Переподключение…');
-      _updateStatus('connecting');
-    },
-
-    onError(e) {
-      _showHint('❌ Ошибка подключения');
-      _updateStatus('error');
-    },
-
-    onFrame(bitmap, w, h) {
-      _pcW = w;
-      _pcH = h;
-
-      _canvas.width = h;
-      _canvas.height = w;
-
-      _ctx.save();
-      _ctx.translate(_canvas.width / 2, _canvas.height / 2);
-      _ctx.rotate(Math.PI / 2);
-      _ctx.drawImage(bitmap, -w / 2, -h / 2, w, h);
-      _ctx.restore();
-    },
-
-    onFps(fps) {
-      const el = document.getElementById('scFps');
-      if (el) el.textContent = fps + ' fps';
-    },
-
-    onConfig(cfg) {
-      _pcW = cfg.width || 1280;
-      _pcH = cfg.height || 720;
-    },
-  });
-
-  _player.connect();
+  console.log('[SC] Connecting via WebRTC to:', wsUrl);
+  _connectStream(wsUrl);
 }
 
+// ── Подключение WebRTC потока ──────────────────────────
+function _connectStream(wsUrl) {
+  if (_scPlayer) {
+    _scPlayer.disconnect();
+    _scPlayer = null;
+  }
+
+  // Создаем экземпляр нашего H.264 WebRTC плеера
+  _scPlayer = new WebRTCStreamPlayer(wsUrl, _scVideo, {
+    onConnect: () => { 
+      _hideScHint(); 
+      if (_scVideo) _scVideo.style.display = 'block';
+      if (typeof toast === 'function') toast('✅', 'Трансляция подключена', 2000); 
+    },
+    onDisconnect: () => { 
+      _showScHint('🔌 Отключено от ПК'); 
+      if (_scVideo) _scVideo.style.display = 'none';
+    }
+  });
+
+  _scPlayer.connect();
+  _setupVideoInput();
+}
+
+// ── Закрытие оверлея ──────────────────────────────────
 function closeScreenControl() {
-  _active = false;
-
-  try {
-    if (document.fullscreenElement) {
-      document.exitFullscreen();
-    } else if (document.webkitFullscreenElement) {
-      document.webkitExitFullscreen();
-    }
-
-    if (screen.orientation && screen.orientation.unlock) {
-      screen.orientation.unlock();
-    }
-  } catch (e) {}
-
+  _scActive = false;
   const overlay = document.getElementById('screenCtrlOverlay');
   overlay.style.display = 'none';
 
-  if (_player) {
-    _player.disconnect();
-    _player = null;
+  if (_scPlayer) {
+    _scPlayer.disconnect();
+    _scPlayer = null;
   }
-
-  _updateStatus('off');
+  if (_scVideo) {
+    _scVideo.style.display = 'none';
+  }
 }
 
-function _bindInput() {
-  const wrap = document.getElementById('scCanvasWrap');
-  if (!wrap || wrap._bound) return;
-  wrap._bound = true;
-
-  function toPC(cx, cy) {
-    const r = _canvas.getBoundingClientRect();
-    const rx = cx - r.left;
-    const ry = cy - r.top;
-    const px = Math.round((r.height - ry) / r.height * _pcW);
-    const py = Math.round(rx / r.width * _pcH);
-    return { x: px, y: py };
-  }
-
-  let lastTouch = null;
-  let touchTimer = null;
-
-  wrap.addEventListener('touchstart', e => {
-    e.preventDefault();
-    const t = e.touches[0];
-    lastTouch = t;
-    const p = toPC(t.clientX, t.clientY);
-
-    touchTimer = setTimeout(() => {
-      _player?.send('mouse_click', { ...p, button: 'right' });
-      touchTimer = null;
-    }, 500);
-
-    _player?.send('mouse_move', p);
-  }, { passive: false });
-
-  wrap.addEventListener('touchend', e => {
-    e.preventDefault();
-    if (touchTimer) {
-      clearTimeout(touchTimer);
-      touchTimer = null;
-      if (lastTouch) {
-        const p = toPC(lastTouch.clientX, lastTouch.clientY);
-        _player?.send('mouse_click', { ...p, button: 'left' });
-      }
-    }
-    lastTouch = null;
-  }, { passive: false });
-
-  wrap.addEventListener('touchmove', e => {
-    e.preventDefault();
-    const t = e.touches[0];
-    lastTouch = t;
-    if (touchTimer) {
-      clearTimeout(touchTimer);
-      touchTimer = null;
-    }
-    const p = toPC(t.clientX, t.clientY);
-    _player?.send('mouse_move', p);
-  }, { passive: false });
-
-  wrap.addEventListener('mousedown', e => {
-    const p = toPC(e.clientX, e.clientY);
-    const btn = e.button === 2 ? 'right' : 'left';
-    _player?.send('mouse_click', { ...p, button: btn });
-  });
-
-  wrap.addEventListener('mousemove', e => {
-    const p = toPC(e.clientX, e.clientY);
-    _player?.send('mouse_move', p);
-  });
-
-  wrap.addEventListener('contextmenu', e => {
-    e.preventDefault();
-  });
-}
-
-function _showHint(text) {
+// ── Хинты состояния ───────────────────────────────────
+function _showScHint(text) {
   const h = document.getElementById('scHint');
   if (!h) return;
   h.style.display = 'flex';
-  h.innerHTML = `<div style="font-size:36px;margin-bottom:12px">🖥</div>${text}`;
+  const lines = h.querySelectorAll('div,span');
+  if (lines.length > 1) lines[1].textContent = text;
+  else h.textContent = text;
 }
 
-function _hideHint() {
+function _hideScHint() {
   const h = document.getElementById('scHint');
   if (h) h.style.display = 'none';
 }
 
-function _updateStatus(state) {
-  const fps = document.getElementById('scFps');
-  const ping = document.getElementById('scPing');
-  if (state === 'live') {
-    if (fps) fps.style.color = '#4ade80';
-    if (ping) ping.style.color = '#4ade80';
-  } else {
-    if (fps) fps.style.color = '#888';
-    if (ping) ping.style.color = '#888';
-    if (fps) fps.textContent = '— fps';
-    if (ping) ping.textContent = '— ms';
+// ── Ввод координат с адаптацией под размер видео ──────
+function _setupVideoInput() {
+  const wrap = document.getElementById('scCanvasWrap');
+  if (!wrap || wrap._scInputBound) return;
+  wrap._scInputBound = true;
+
+  // Конвертирует клики по экрану телефона в реальное разрешение монитора ПК
+  function toPC(clientX, clientY) {
+    const rect = _scVideo.getBoundingClientRect();
+    const rx = clientX - rect.left;
+    const ry = clientY - rect.top;
+    
+    // Базовое разрешение твоего монитора для интерполяции (например, Full HD)
+    const pcWidth = 1920; 
+    const pcHeight = 1080;
+
+    const px = Math.round((rx / rect.width) * pcWidth);
+    const py = Math.round((ry / rect.height) * pcHeight);
+    
+    // Ограничиваем координаты границами экрана на всякий случай
+    return { 
+      x: Math.max(0, Math.min(pcWidth, px)), 
+      y: Math.max(0, Math.min(pcHeight, py)) 
+    };
   }
+
+  // Мышь
+  wrap.addEventListener('mousemove', (e) => {
+    if (!_scPlayer) return;
+    _scPlayer.send('mouse_move', toPC(e.clientX, e.clientY));
+  });
+
+  wrap.addEventListener('click', (e) => {
+    if (!_scPlayer) return;
+    _scPlayer.send('mouse_click', { ...toPC(e.clientX, e.clientY), button: 'left' });
+  });
+
+  wrap.addEventListener('contextmenu', (e) => {
+    e.preventDefault();
+    if (!_scPlayer) return;
+    _scPlayer.send('mouse_click', { ...toPC(e.clientX, e.clientY), button: 'right' });
+  });
+
+  // Тач-события для мобилок
+  wrap.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    if (!_scPlayer) return;
+    const t = e.touches[0];
+    _scPlayer.send('mouse_click', { ...toPC(t.clientX, t.clientY), button: 'left' });
+  }, { passive: false });
+
+  wrap.addEventListener('touchmove', (e) => {
+    e.preventDefault();
+    if (!_scPlayer) return;
+    const t = e.touches[0];
+    _scPlayer.send('mouse_move', toPC(t.clientX, t.clientY));
+  }, { passive: false });
+
+  wrap.addEventListener('wheel', (e) => {
+    if (!_scPlayer) return;
+    _scPlayer.send('mouse_scroll', { delta: e.deltaY > 0 ? -3 : 3 });
+  });
 }
 
 function scToggleSettings() {
@@ -469,19 +160,13 @@ function scToggleSettings() {
   if (p) p.style.display = p.style.display === 'none' ? 'block' : 'none';
 }
 
-function scSetQuality(val) {
-  if (_player) {
-    _player.send('set_quality', { quality: val });
-    toast('⚙️', `Качество: ${val}`, 2000);
-  }
+function scToggleJoystick(enabled) {
+  const w = document.getElementById('scJoystickWrap');
+  if (w) w.style.display = enabled ? 'flex' : 'none';
 }
 
-function scToggleJoystick() {}
-
-// ══════════════════════════════════════════════════════
-//  Сброс сохранённого URL (для разработки)
-// ══════════════════════════════════════════════════════
-function scResetUrl() {
-  localStorage.removeItem('cortex_wss_url');
-  toast('🔄', 'URL сброшен', 2000);
+function scSetQuality(val) {
+  if (_scPlayer) {
+    _scPlayer.send('set_quality', { quality: val });
+  }
 }
