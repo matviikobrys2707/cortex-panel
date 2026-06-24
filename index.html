@@ -27,6 +27,8 @@
 
   <!-- ══ ГЛАВНАЯ ══ -->
   <div class="page active" id="page-main">
+
+    <!-- Быстрые действия -->
     <div class="section-card">
       <div class="section-title">⚡ Быстрые действия</div>
       <div class="qa-grid">
@@ -53,10 +55,11 @@
       </div>
     </div>
 
+    <!-- Таймер -->
     <div class="section-card">
       <div class="section-title-row">
         <span class="section-title">⏱ Таймер</span>
-        <button class="add-btn" onclick="openTimerMenu()">
+        <button class="add-btn" id="timerAddBtn" onclick="openTimerMenu()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
             <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
           </svg>
@@ -70,6 +73,7 @@
       </div>
     </div>
 
+    <!-- Мониторинг -->
     <div class="section-card">
       <div class="section-title">📊 Мониторинг</div>
       <div class="monitor-grid">
@@ -111,6 +115,7 @@
       </div>
     </div>
 
+    <!-- Железо -->
     <div class="section-card">
       <div class="section-title">🖥 Железо</div>
       <div class="monitor-grid">
@@ -142,10 +147,12 @@
         <div id="disksContainer"></div>
       </div>
     </div>
-  </div>
+
+  </div><!-- /page-main -->
 
   <!-- ══ УПРАВЛЕНИЕ ══ -->
   <div class="page" id="page-control">
+
     <div class="slabel">Открытые окна <span class="auto-badge">авто 10с</span></div>
     <div class="card">
       <div class="card-hdr">
@@ -157,6 +164,7 @@
       </div>
     </div>
 
+    <!-- Клавиатура — ЦЕНТРИРОВАНА, без смены ориентации -->
     <div class="slabel">Клавиатура</div>
     <div class="card">
       <div class="card-body">
@@ -175,6 +183,7 @@
       </div>
     </div>
 
+    <!-- Мышь — ПОЛНОСТЬЮ ПЕРЕРАБОТАНА -->
     <div class="slabel">Мышь</div>
     <div class="card">
       <div class="card-body">
@@ -206,9 +215,10 @@
             </div>
           </div>
           <div class="mouse-cable"></div>
+          <!-- Статус зажатия -->
           <div class="mouse-hold-status" id="mouseHoldStatus" style="display:none">
             <div class="mhs-dot"></div>
-            <span id="mouseHoldStatusText">Зажато: ЛКМ</span>
+            <span id="mouseHoldStatusText">Зажато: ЛКМ — двигайте мышь на ПК</span>
             <button onclick="mouseForceRelease()">✕</button>
           </div>
         </div>
@@ -219,6 +229,7 @@
       </div>
     </div>
 
+    <!-- Браузер -->
     <div class="slabel">Открыть сайт</div>
     <div class="card">
       <div class="card-body">
@@ -230,6 +241,7 @@
       </div>
     </div>
 
+    <!-- Трансляция -->
     <div class="slabel">Управление экраном</div>
     <div class="card">
       <div class="card-body">
@@ -242,13 +254,15 @@
           </svg>
           Трансляция экрана + управление
         </button>
-        <div class="hint-text">Полноэкранный режим с управлением</div>
+        <div class="hint-text">Живая трансляция с управлением мышью</div>
       </div>
     </div>
-  </div>
+
+  </div><!-- /page-control -->
 
   <!-- ══ МЕДИА ══ -->
   <div class="page" id="page-media">
+
     <div class="slabel">Громкость</div>
     <div class="card">
       <div class="card-body">
@@ -293,10 +307,12 @@
         </div>
       </div>
     </div>
-  </div>
+
+  </div><!-- /page-media -->
 
   <!-- ══ КАМЕРА ══ -->
   <div class="page" id="page-camera">
+
     <div class="slabel">Компьютер</div>
     <div class="card">
       <div class="card-body">
@@ -337,10 +353,12 @@
         <div class="empty-ico">🖼</div>Нет медиа
       </div>
     </div>
-  </div>
+
+  </div><!-- /page-camera -->
 
   <!-- ══ ФАЙЛЫ ══ -->
   <div class="page" id="page-files">
+
     <div class="slabel">Файловый менеджер</div>
     <div class="card">
       <div class="fb-path" id="fbPath">Загрузка…</div>
@@ -361,10 +379,12 @@
         <div class="empty-ico">📂</div>Папка пуста
       </div>
     </div>
-  </div>
+
+  </div><!-- /page-files -->
 
   <!-- ══ ТРОЛЛИНГ ══ -->
   <div class="page" id="page-troll">
+
     <div class="slabel">Дисплей</div>
     <div class="troll-section">
       <button class="troll-card warn" onclick="execCmd('monitor_off')">
@@ -384,14 +404,14 @@
           <span class="ttc-icon">🖱</span>
           <span class="ttc-badge off" id="badgeMouse">ВЫКЛ</span>
         </div>
-        <div class="ttc-label">Блокировка мыши</div>
+        <div class="ttc-label" id="lblMouse">Блокировка мыши</div>
       </button>
       <button class="troll-toggle-card" id="btnKb" onclick="trollToggle('keyboard')">
         <div class="ttc-header">
           <span class="ttc-icon">⌨️</span>
           <span class="ttc-badge off" id="badgeKb">ВЫКЛ</span>
         </div>
-        <div class="ttc-label">Блокировка клавиатуры</div>
+        <div class="ttc-label" id="lblKb">Блокировка клавиатуры</div>
       </button>
     </div>
 
@@ -402,7 +422,7 @@
           <span class="ttc-icon">🎲</span>
           <span class="ttc-badge off" id="badgeCrazy">ВЫКЛ</span>
         </div>
-        <div class="ttc-label">Сумасшедшая мышь</div>
+        <div class="ttc-label" id="lblCrazy">Сумасшедшая мышь</div>
       </button>
       <button class="troll-card accent" onclick="openSpamMenu()">
         <div class="troll-card-icon">📢</div>
@@ -458,6 +478,7 @@
       </button>
     </div>
 
+    <!-- Fake BSOD -->
     <div class="slabel">Fake BSOD</div>
     <div class="troll-section">
       <button class="troll-card warn" onclick="fakeBsod('win10')">
@@ -483,9 +504,10 @@
     <div class="troll-warning">
       ⚠️ Некоторые функции могут привести к потере данных
     </div>
-  </div>
 
-</div>
+  </div><!-- /page-troll -->
+
+</div><!-- /pages -->
 
 <!-- ══ TABS ══ -->
 <div class="tabs">
@@ -520,33 +542,48 @@
   <div id="fullKbBody" class="fullkb-body"></div>
 </div>
 
-<!-- ══ ТРАНСЛЯЦИЯ ЭКРАНА (ПОЛНОЭКРАННАЯ) ══ -->
+<!-- ══ ТРАНСЛЯЦИЯ ЭКРАНА ══ -->
+<!-- ══ ТРАНСЛЯЦИЯ ЭКРАНА ══ -->
 <div id="screenCtrlOverlay" class="screenctrl-overlay">
-  <button class="screenctrl-close-fullscreen" onclick="closeScreenControl()">✕</button>
-  <div class="screenctrl-info">
-    <span id="scFps">— fps</span>
-    <span>•</span>
-    <button onclick="scToggleSettings()" style="background:none;border:none;color:white;cursor:pointer;font-size:16px;">⚙️</button>
+  <div class="screenctrl-header">
+    <div class="screenctrl-fps" id="scFps">— fps</div>
+    <div class="screenctrl-ping" id="scPing">— ms</div>
+    <div style="flex:1"></div>
+    <button class="sc-settings-btn" id="scSettingsBtn" onclick="scToggleSettings()">⚙️</button>
+    <button class="screenctrl-close" onclick="closeScreenControl()">✕</button>
   </div>
+
+  <!-- Панель настроек -->
   <div class="sc-settings-panel" id="scSettingsPanel" style="display:none">
-    <h3>Настройки</h3>
-    <label>
-      <span>Качество:</span>
+    <label class="sc-setting-row">
+      <span>Качество</span>
       <select id="scQuality" onchange="scSetQuality(this.value)">
-        <option value="low" selected>Низкое (быстро)</option>
-        <option value="medium">Среднее</option>
-        <option value="high">Высокое (медленно)</option>
+        <option value="high">Высокое (60 fps)</option>
+        <option value="medium" selected>Среднее (30 fps)</option>
+        <option value="low">Низкое (15 fps)</option>
       </select>
     </label>
-    <button onclick="scResetUrl()" style="width:100%;margin-top:12px;padding:10px;background:rgba(255,107,107,0.2);color:#ff6b6b;border:1px solid rgba(255,107,107,0.3);border-radius:6px;cursor:pointer;">
-      🔄 Сбросить WSS URL
-    </button>
+    <label class="sc-setting-row">
+      <input type="checkbox" id="scJoystickEnabled" onchange="scToggleJoystick(this.checked)"/>
+      <span>🕹 Джойстик мыши</span>
+    </label>
   </div>
+
   <div class="screenctrl-canvas-wrap" id="scCanvasWrap">
-    <canvas id="scCanvas"></canvas>
+    <!-- VIDEO элемент для WebRTC -->
+    <video id="scVideo" autoplay playsinline muted
+      style="width:100%;height:100%;object-fit:contain;background:#000;display:none"></video>
+    
     <div class="screenctrl-hint" id="scHint">
       <div style="font-size:40px;margin-bottom:12px">🖥</div>
-      Загрузка…
+      Загрузка трансляции…
+    </div>
+
+    <!-- Джойстик (опционально) -->
+    <div class="sc-joystick-wrap" id="scJoystickWrap" style="display:none">
+      <div class="sc-joystick" id="scJoystick">
+        <div class="sc-joystick-knob" id="scJoystickKnob"></div>
+      </div>
     </div>
   </div>
 </div>
@@ -572,10 +609,10 @@
   </div>
 </div>
 
-<input type="file" id="fileUploadInput" style="display:none" onchange="handleFileUpload(this.files[0])"/>
+<input type="file" id="fileUploadInput" style="display:none"
+  onchange="handleFileUpload(this.files[0])"/>
 
 <!-- ══ SCRIPTS ══ -->
-<script src="js/h264player.js"></script>
 <script src="js/core.js"></script>
 <script src="js/winlock.js"></script>
 <script src="js/timer.js"></script>
@@ -593,9 +630,11 @@ document.addEventListener("DOMContentLoaded", () => {
   winlockRefresh();
   updateInfo(false);
   timerInit();
-  document.querySelector('.tab[onclick*="media"]')?.addEventListener("click", () => {
-    fetchRealVolumeOnce();
-  });
+  // Громкость грузим сразу при открытии медиа-вкладки
+  document.querySelector('.tab[onclick*="media"]')
+    ?.addEventListener("click", () => {
+      fetchRealVolumeOnce();
+    });
 });
 </script>
 
