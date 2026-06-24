@@ -1,10 +1,13 @@
 // webapp/site/js/screenctrl.js
+// ПОЛНАЯ ВЕРСИЯ с поворотом, высоким качеством и правильным подключением
 
 let _scPlayer = null;
 let _scVideo = null;
 let _scActive = false;
 let _scFpsCounter = 0;
 let _scLastFpsTime = Date.now();
+let _scFpsInterval = null;
+let _scRotated = false;  // Состояние поворота
 
 // ══════════════════════════════════════════════════════
 //  Открытие оверлея трансляции
@@ -14,10 +17,8 @@ async function openScreenControl() {
   overlay.style.display = 'flex';
   _scActive = true;
 
-  // Находим video элемент
+  // Находим или создаем video элемент
   _scVideo = document.getElementById('scVideo');
-  
-  // Если нет — создаем динамически
   if (!_scVideo) {
     const wrap = document.getElementById('scCanvasWrap');
     _scVideo = document.createElement('video');
@@ -25,45 +26,66 @@ async function openScreenControl() {
     _scVideo.autoplay = true;
     _scVideo.playsinline = true;
     _scVideo.muted = true;
-    _scVideo.style.cssText = 'width:100%;height:100%;object-fit:contain;background:#000';
+    _scVideo.style.cssText = `
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      object-fit: contain;
+      background: #000;
+      display: none;
+    `;
     wrap.appendChild(_scVideo);
   }
-  
-  _showScHint('🔌 Подключение к WebRTC…');
+
+  _showScHint('🔌 Подключение…');
   _scVideo.style.display = 'none';
 
+  // Применяем поворот по умолчанию (вертикально)
+  _applyRotation(true);
+
   // Получаем WSS URL
-  let wsUrl = await _getWsUrl();
+  const wsUrl = await _getWsUrl();
+  console.log('[SC] Connecting to:', wsUrl);
   
-  console.log('[SC] WebRTC WebSocket URL:', wsUrl);
   _connectStream(wsUrl);
-  
-  // Счетчик FPS
   _startFpsCounter();
 }
 
 // ══════════════════════════════════════════════════════
-//  Получение WS URL от сервера
+//  Получение WS URL с ожиданием туннеля
 // ══════════════════════════════════════════════════════
 async function _getWsUrl() {
-  try {
-    const apiBase = window._apiBase || '';
-    const r = await fetch(apiBase + '/api/ws_url');
-    const j = await r.json();
-    
-    if (j.ok && j.url) {
-      return j.url;
+  const apiBase = window._apiBase || '';
+  
+  // Пробуем несколько раз (туннель может еще запускаться)
+  for (let attempt = 0; attempt < 10; attempt++) {
+    try {
+      const r = await fetch(apiBase + '/api/ws_url');
+      const j = await r.json();
+      
+      if (j.ok && j.url && j.url.includes('wss://')) {
+        console.log('[SC] Got WSS URL:', j.url);
+        return j.url;
+      }
+      
+      console.log(`[SC] WS URL not ready (attempt ${attempt + 1}), waiting...`);
+      _showScHint(`⏳ Ожидание туннеля… (${attempt + 1}/10)`);
+      
+    } catch (e) {
+      console.warn('[SC] Failed to get ws_url:', e);
     }
-  } catch (e) {
-    console.warn('[SC] Failed to get ws_url:', e);
+    
+    // Ждем 2 секунды перед следующей попыткой
+    await new Promise(r => setTimeout(r, 2000));
   }
   
-  // Фолбэк на localhost
+  // Фолбэк
+  console.warn('[SC] Using localhost fallback');
   return 'ws://127.0.0.1:8765';
 }
 
 // ══════════════════════════════════════════════════════
-//  Подключение WebRTC стрима
+//  Подключение стрима
 // ══════════════════════════════════════════════════════
 function _connectStream(wsUrl) {
   if (_scPlayer) {
@@ -72,19 +94,27 @@ function _connectStream(wsUrl) {
   }
 
   _scPlayer = new WebRTCStreamPlayer(wsUrl, _scVideo, {
-    onConnect: () => { 
+    onConnect: () => {
       _hideScHint();
       if (_scVideo) _scVideo.style.display = 'block';
-      if (typeof toast === 'function') {
-        toast('✅', 'Трансляция подключена', 2000);
+      if (typeof toast === 'function') toast('✅', 'Трансляция подключена', 2000);
+    },
+    onDisconnect: () => {
+      _showScHint('🔌 Отключено. Переподключение…');
+      if (_scVideo) _scVideo.style.display = 'none';
+      
+      // Автопереподключение через 3 сек
+      if (_scActive) {
+        setTimeout(async () => {
+          if (_scActive) {
+            const wsUrl = await _getWsUrl();
+            _connectStream(wsUrl);
+          }
+        }, 3000);
       }
     },
-    onDisconnect: () => { 
-      _showScHint('🔌 Отключено');
-      if (_scVideo) _scVideo.style.display = 'none';
-    },
-    onFrame: () => {
-      _scFpsCounter++;
+    onError: (e) => {
+      console.error('[SC] Stream error:', e);
     }
   });
 
@@ -93,10 +123,16 @@ function _connectStream(wsUrl) {
 }
 
 // ══════════════════════════════════════════════════════
-//  Закрытие оверлея
+//  Закрытие
 // ══════════════════════════════════════════════════════
 function closeScreenControl() {
   _scActive = false;
+  
+  if (_scFpsInterval) {
+    clearInterval(_scFpsInterval);
+    _scFpsInterval = null;
+  }
+  
   const overlay = document.getElementById('screenCtrlOverlay');
   overlay.style.display = 'none';
 
@@ -104,24 +140,65 @@ function closeScreenControl() {
     _scPlayer.disconnect();
     _scPlayer = null;
   }
+  
   if (_scVideo) {
+    _scVideo.srcObject = null;
     _scVideo.style.display = 'none';
   }
 }
 
 // ══════════════════════════════════════════════════════
-//  Хинты состояния
+//  ПОВОРОТ ВИДЕО
 // ══════════════════════════════════════════════════════
-function _showScHint(text) {
-  const h = document.getElementById('scHint');
-  if (!h) return;
-  h.style.display = 'flex';
-  h.innerHTML = `<div style="font-size:40px;margin-bottom:12px">🖥</div>${text}`;
+function _applyRotation(rotated) {
+  _scRotated = rotated;
+  
+  if (!_scVideo) return;
+  
+  const wrap = document.getElementById('scCanvasWrap');
+  
+  if (rotated) {
+    // Поворачиваем на 90 градусов (горизонтальный экран ПК → вертикально на телефоне)
+    _scVideo.style.cssText = `
+      position: absolute;
+      transform-origin: center center;
+      transform: rotate(90deg);
+      
+      /* Меняем размеры чтобы заполнить экран после поворота */
+      width: 100vh;
+      height: 100vw;
+      
+      /* Центрируем */
+      top: 50%;
+      left: 50%;
+      margin-top: -50vw;
+      margin-left: -50vh;
+      
+      object-fit: contain;
+      background: #000;
+      display: block;
+    `;
+    
+    if (wrap) wrap.style.overflow = 'hidden';
+  } else {
+    // Обычный режим
+    _scVideo.style.cssText = `
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      transform: none;
+      object-fit: contain;
+      background: #000;
+      display: block;
+    `;
+  }
 }
 
-function _hideScHint() {
-  const h = document.getElementById('scHint');
-  if (h) h.style.display = 'none';
+function scToggleRotation() {
+  _applyRotation(!_scRotated);
+  
+  const btn = document.getElementById('scRotateBtn');
+  if (btn) btn.textContent = _scRotated ? '📱↕' : '📱↔';
 }
 
 // ══════════════════════════════════════════════════════
@@ -129,62 +206,127 @@ function _hideScHint() {
 // ══════════════════════════════════════════════════════
 function _setupVideoInput() {
   const wrap = document.getElementById('scCanvasWrap');
-  if (!wrap || wrap._scInputBound) return;
-  wrap._scInputBound = true;
+  if (!wrap) return;
+  
+  // Сбрасываем предыдущие обработчики
+  const newWrap = wrap.cloneNode(true);
+  wrap.parentNode.replaceChild(newWrap, wrap);
+  
+  // Переназначаем video элемент после замены DOM
+  _scVideo = document.getElementById('scVideo');
 
   function toPC(clientX, clientY) {
+    if (!_scVideo) return { x: 0, y: 0 };
+    
     const rect = _scVideo.getBoundingClientRect();
-    const rx = clientX - rect.left;
-    const ry = clientY - rect.top;
     
-    const pcWidth = 1920;
-    const pcHeight = 1080;
-
-    const px = Math.round((rx / rect.width) * pcWidth);
-    const py = Math.round((ry / rect.height) * pcHeight);
+    let rx = clientX - rect.left;
+    let ry = clientY - rect.top;
     
-    return { 
-      x: Math.max(0, Math.min(pcWidth, px)), 
-      y: Math.max(0, Math.min(pcHeight, py)) 
+    let pcX, pcY;
+    
+    if (_scRotated) {
+      // При повороте на 90° координаты меняются местами
+      // Нужно пересчитать с учетом трансформации
+      const relX = rx / rect.width;
+      const relY = ry / rect.height;
+      
+      // При повороте +90°: новый X = старый Y, новый Y = (1 - старый X)
+      pcX = Math.round(relY * 1920);
+      pcY = Math.round((1 - relX) * 1080);
+    } else {
+      pcX = Math.round((rx / rect.width) * 1920);
+      pcY = Math.round((ry / rect.height) * 1080);
+    }
+    
+    return {
+      x: Math.max(0, Math.min(1920, pcX)),
+      y: Math.max(0, Math.min(1080, pcY))
     };
   }
 
-  // Mouse events
-  wrap.addEventListener('mousemove', (e) => {
+  // Mouse
+  newWrap.addEventListener('mousemove', (e) => {
     if (!_scPlayer) return;
     _scPlayer.send('mouse_move', toPC(e.clientX, e.clientY));
   });
 
-  wrap.addEventListener('click', (e) => {
+  newWrap.addEventListener('click', (e) => {
     if (!_scPlayer) return;
     _scPlayer.send('mouse_click', { ...toPC(e.clientX, e.clientY), button: 'left' });
   });
 
-  wrap.addEventListener('contextmenu', (e) => {
+  newWrap.addEventListener('contextmenu', (e) => {
     e.preventDefault();
     if (!_scPlayer) return;
     _scPlayer.send('mouse_click', { ...toPC(e.clientX, e.clientY), button: 'right' });
   });
 
-  // Touch events
-  wrap.addEventListener('touchstart', (e) => {
+  // Touch
+  let _lastTouch = null;
+  let _touchTimer = null;
+
+  newWrap.addEventListener('touchstart', (e) => {
     e.preventDefault();
-    if (!_scPlayer) return;
     const t = e.touches[0];
-    _scPlayer.send('mouse_click', { ...toPC(t.clientX, t.clientY), button: 'left' });
+    _lastTouch = { x: t.clientX, y: t.clientY, time: Date.now() };
+    
+    // Долгое нажатие = правая кнопка
+    _touchTimer = setTimeout(() => {
+      if (_scPlayer && _lastTouch) {
+        _scPlayer.send('mouse_click', { ...toPC(_lastTouch.x, _lastTouch.y), button: 'right' });
+        if (navigator.vibrate) navigator.vibrate(30);
+      }
+    }, 600);
+    
   }, { passive: false });
 
-  wrap.addEventListener('touchmove', (e) => {
+  newWrap.addEventListener('touchend', (e) => {
     e.preventDefault();
+    clearTimeout(_touchTimer);
+    
+    if (!_lastTouch || !_scPlayer) return;
+    
+    const now = Date.now();
+    const elapsed = now - _lastTouch.time;
+    
+    // Быстрый тап = левый клик
+    if (elapsed < 500) {
+      _scPlayer.send('mouse_click', { ...toPC(_lastTouch.x, _lastTouch.y), button: 'left' });
+    }
+    
+    _lastTouch = null;
+  }, { passive: false });
+
+  newWrap.addEventListener('touchmove', (e) => {
+    e.preventDefault();
+    clearTimeout(_touchTimer);
+    
     if (!_scPlayer) return;
     const t = e.touches[0];
+    _lastTouch = { x: t.clientX, y: t.clientY, time: _lastTouch?.time || Date.now() };
     _scPlayer.send('mouse_move', toPC(t.clientX, t.clientY));
   }, { passive: false });
 
-  wrap.addEventListener('wheel', (e) => {
+  newWrap.addEventListener('wheel', (e) => {
     if (!_scPlayer) return;
     _scPlayer.send('mouse_scroll', { delta: e.deltaY > 0 ? -3 : 3 });
   });
+}
+
+// ══════════════════════════════════════════════════════
+//  Хинты
+// ══════════════════════════════════════════════════════
+function _showScHint(text) {
+  const h = document.getElementById('scHint');
+  if (!h) return;
+  h.style.display = 'flex';
+  h.innerHTML = `<div style="font-size:32px;margin-bottom:10px">🖥</div><div>${text}</div>`;
+}
+
+function _hideScHint() {
+  const h = document.getElementById('scHint');
+  if (h) h.style.display = 'none';
 }
 
 // ══════════════════════════════════════════════════════
@@ -195,22 +337,27 @@ function scToggleSettings() {
   if (p) p.style.display = p.style.display === 'none' ? 'block' : 'none';
 }
 
-function scToggleJoystick(enabled) {
-  const w = document.getElementById('scJoystickWrap');
-  if (w) w.style.display = enabled ? 'flex' : 'none';
-}
-
 function scSetQuality(val) {
   if (_scPlayer) {
     _scPlayer.send('set_quality', { quality: val });
   }
 }
 
+function scToggleJoystick(enabled) {
+  const w = document.getElementById('scJoystickWrap');
+  if (w) w.style.display = enabled ? 'flex' : 'none';
+}
+
 // ══════════════════════════════════════════════════════
 //  FPS Counter
 // ══════════════════════════════════════════════════════
 function _startFpsCounter() {
-  setInterval(() => {
+  if (_scFpsInterval) clearInterval(_scFpsInterval);
+  
+  _scFpsCounter = 0;
+  _scLastFpsTime = Date.now();
+  
+  _scFpsInterval = setInterval(() => {
     if (!_scActive) return;
     
     const now = Date.now();
@@ -226,7 +373,7 @@ function _startFpsCounter() {
 }
 
 // ══════════════════════════════════════════════════════
-//  WebRTC Stream Player Class
+//  WebRTC Stream Player
 // ══════════════════════════════════════════════════════
 class WebRTCStreamPlayer {
   constructor(wsUrl, videoElement, callbacks = {}) {
@@ -235,25 +382,33 @@ class WebRTCStreamPlayer {
     this.callbacks = callbacks;
     this.ws = null;
     this.pc = null;
+    this._connected = false;
   }
 
   connect() {
     console.log('[WebRTC] Connecting to:', this.wsUrl);
-    this.ws = new WebSocket(this.wsUrl);
+    
+    try {
+      this.ws = new WebSocket(this.wsUrl);
+    } catch (e) {
+      console.error('[WebRTC] Failed to create WebSocket:', e);
+      this.callbacks.onError?.(e);
+      return;
+    }
 
     this.ws.onopen = () => {
-      console.log('[WebRTC] WebSocket connected');
+      console.log('[WebRTC] WS connected, initializing PeerConnection...');
       this._initPeerConnection();
     };
 
     this.ws.onmessage = async (ev) => {
       try {
         const msg = JSON.parse(ev.data);
+        console.log('[WebRTC] Message:', msg.type || msg);
         
         if (msg.type === 'answer') {
           await this.pc.setRemoteDescription(new RTCSessionDescription(msg));
-          console.log('[WebRTC] Answer received');
-          this.callbacks.onConnect?.();
+          console.log('[WebRTC] ✅ Remote description set');
         }
       } catch (e) {
         console.error('[WebRTC] Message error:', e);
@@ -261,42 +416,68 @@ class WebRTCStreamPlayer {
     };
 
     this.ws.onerror = (e) => {
-      console.error('[WebRTC] WS error', e);
+      console.error('[WebRTC] WS error:', e);
+      this.callbacks.onError?.(e);
     };
 
-    this.ws.onclose = () => {
-      console.log('[WebRTC] Connection closed');
+    this.ws.onclose = (e) => {
+      console.log('[WebRTC] WS closed:', e.code, e.reason);
       this.disconnect();
       this.callbacks.onDisconnect?.();
     };
   }
 
   async _initPeerConnection() {
-    this.pc = new RTCPeerConnection({ 
+    this.pc = new RTCPeerConnection({
       iceServers: [
-        { urls: 'stun:stun.l.google.com:19302' }
-      ] 
+        { urls: 'stun:stun.l.google.com:19302' },
+        { urls: 'stun:stun1.l.google.com:19302' }
+      ]
     });
 
+    // Получение видеотрека
     this.pc.ontrack = (event) => {
-      console.log('[WebRTC] Track received');
-      if (this.videoEl && event.streams && event.streams[0]) {
-        this.videoEl.srcObject = event.streams[0];
-        
-        // Обработка кадров для счетчика FPS
-        const stream = event.streams[0];
-        const track = stream.getVideoTracks()[0];
-        
-        if (track) {
-          const settings = track.getSettings();
-          console.log('[WebRTC] Video settings:', settings);
+      console.log('[WebRTC] ✅ Track received!', event.track.kind);
+      
+      if (event.streams && event.streams[0]) {
+        if (this.videoEl) {
+          this.videoEl.srcObject = event.streams[0];
+          
+          this.videoEl.onloadedmetadata = () => {
+            this.videoEl.play().then(() => {
+              console.log('[WebRTC] ✅ Video playing!');
+              this._connected = true;
+              this.callbacks.onConnect?.();
+            }).catch(e => {
+              console.error('[WebRTC] Play error:', e);
+            });
+          };
         }
       }
     };
 
+    // ICE candidates
     this.pc.onicecandidate = (event) => {
       if (event.candidate) {
-        console.log('[WebRTC] ICE candidate:', event.candidate);
+        console.log('[WebRTC] ICE candidate generated');
+      }
+    };
+
+    this.pc.oniceconnectionstatechange = () => {
+      console.log('[WebRTC] ICE state:', this.pc.iceConnectionState);
+      
+      if (this.pc.iceConnectionState === 'connected' || 
+          this.pc.iceConnectionState === 'completed') {
+        if (!this._connected) {
+          this._connected = true;
+          this.callbacks.onConnect?.();
+        }
+      }
+      
+      if (this.pc.iceConnectionState === 'failed' ||
+          this.pc.iceConnectionState === 'disconnected') {
+        console.warn('[WebRTC] ICE failed/disconnected');
+        this.callbacks.onDisconnect?.();
       }
     };
 
@@ -304,20 +485,22 @@ class WebRTCStreamPlayer {
       console.log('[WebRTC] Connection state:', this.pc.connectionState);
     };
 
-    // Добавляем transceiver для получения видео
+    // Указываем что хотим только получать видео
     this.pc.addTransceiver('video', { direction: 'recvonly' });
 
-    // Создаем Offer
-    const offer = await this.pc.createOffer();
+    // Создаем Offer с настройками качества
+    const offer = await this.pc.createOffer({
+      offerToReceiveVideo: true,
+      offerToReceiveAudio: false
+    });
+    
     await this.pc.setLocalDescription(offer);
-
-    // Отправляем Offer на сервер
+    
+    console.log('[WebRTC] Sending offer...');
     this.ws.send(JSON.stringify({
       type: offer.type,
       sdp: offer.sdp
     }));
-    
-    console.log('[WebRTC] Offer sent');
   }
 
   send(cmd, data = {}) {
@@ -327,14 +510,18 @@ class WebRTCStreamPlayer {
   }
 
   disconnect() {
+    this._connected = false;
+    
     if (this.pc) {
       this.pc.close();
       this.pc = null;
     }
-    if (this.ws) {
+    
+    if (this.ws && this.ws.readyState !== WebSocket.CLOSED) {
       this.ws.close();
       this.ws = null;
     }
+    
     if (this.videoEl) {
       this.videoEl.srcObject = null;
     }
