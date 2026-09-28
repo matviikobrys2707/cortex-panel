@@ -1,4 +1,4 @@
-PS C:\Users\Blazix\Desktop\Delta 1.21.11> ./gradlew build
+PS C:\Users\Blazix\Desktop\Delta 1.21.11> ./gradlew runclient
 Starting a Gradle Daemon (subsequent builds will be faster)
 
 > Configure project :
@@ -154,7 +154,7 @@ C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\render\Draw3DProce
                         ^
   symbol:   method setShaderColor(float,float,float,float)
   location: class RenderSystem
-C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\ui\shader\TextureShader.java:52: error: cannot find symbo
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\ui\shader\TextureShader.java:52: error: cannot find symbol
         return DefaultSkinHelper.getSkinTextures(uuid2).texture();
                                                        ^
   symbol:   method texture()
@@ -215,7 +215,7 @@ C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\autobuy\BatchProce
                                    ^
   symbol:   variable ShaderProgramKeys
   location: class BatchProcessor
-C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\autobuy\BatchProcessor.java:100: error: cannot find symbo
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\autobuy\BatchProcessor.java:100: error: cannot find symbol
                 RenderSystem.lineWidth(e.getKey().floatValue());
                             ^
   symbol:   method lineWidth(float)
@@ -324,7 +324,7 @@ C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\player\Fake
                                                                                                                                       ^
   symbol:   method getPos()
   location: variable player of type ClientPlayerEntity
-C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\player\FakeLags.java:111: error: cannot find symbo
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\player\FakeLags.java:111: error: cannot find symbol
         this.serverPosition = mc.player.getPos();
                                        ^
   symbol:   method getPos()
@@ -457,7 +457,7 @@ C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\render\Enti
                                                                                                                                             ^
   symbol:   method getPos()
   location: variable entity of type Entity
-C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\render\EntityBox.java:52: error: cannot find symbo
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\render\EntityBox.java:52: error: cannot find symbol
                     Box box = shouldRender(entity) ? entity.getBoundingBox().offset(MathUtil.a(entity, event.g()).subtract(entity.getPos())) : null;
                                                                                                                                  ^
   symbol:   method getPos()
@@ -691,12 +691,12 @@ C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\misc\AutoWa
                                              ^
   symbol:   method getPos()
   location: variable player of type PlayerEntity
-C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\misc\AutoWarden.java:783: error: cannot find symbo
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\misc\AutoWarden.java:783: error: cannot find symbol
             if (player != mc.player && player.getPos().squaredDistanceTo(Vec3d.ofCenter(pos)) < range * range) {
                                              ^
   symbol:   method getPos()
   location: variable player of type PlayerEntity
-C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\misc\AutoWarden.java:983: error: cannot find symbo
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\misc\AutoWarden.java:983: error: cannot find symbol
         return (item instanceof ArrowItem) || (item instanceof PickaxeItem) || (item instanceof AxeItem) || stack.isOf(Items.CHORUS_FRUIT) || stack.isOf(Items.DISC_FRAGMENT_5) || stack.isOf(Items.NAUTILUS_SHELL) || stack.isOf(Items.BOOKSHELF) || stack.isOf(Items.COOKED_MUTTON) || stack.isOf(Items.SKELETON_SPAWN_EGG) || stack.isOf(Items.CREEPER_SPAWN_EGG) || stack.isOf(Items.ZOMBIE_SPAWN_EGG) || stack.isOf(Items.VINDICATOR_SPAWN_EGG) || stack.isOf(Items.PIGLIN_SPAWN_EGG) || stack.isOf(Items.FIRE_CHARGE) || stack.isOf(Items.LEATHER) || stack.isOf(Items.SHULKER_SHELL) || stack.isOf(Items.EXPERIENCE_BOTTLE) || stack.isOf(Items.WITHER_ROSE) || stack.isOf(Items.EMERALD) || stack.isOf(Items.SUGAR) || hasCustomTag(stack, "potion-popper") || stack.contains(DataComponentTypes.JUKEBOX_PLAYABLE) || stack.isOf(Items.GHAST_TEAR) || stack.isOf(Items.DRAGON_BREATH) || stack.isOf(Items.VEX_SPAWN_EGG) || stack.isOf(Items.ENDERMITE_SPAWN_EGG) || stack.isOf(Items.CAT_SPAWN_EGG) || stack.isOf(Items.ENCHANTING_TABLE) || stack.isOf(Items.DIAMOND_HELMET) || stack.isOf(Items.DIAMOND_CHESTPLATE) || stack.isOf(Items.DIAMOND_LEGGINGS) || stack.isOf(Items.DIAMOND_BOOTS);
                                                                ^
   symbol:   class PickaxeItem
@@ -742,7 +742,7 @@ C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\ui\screen\RadialSc
                                        ^
   symbol:   method peek()
   location: class Matrix3x2fStack
-C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\ui\screen\RadialScreen.java:227: error: cannot find symbo
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\ui\screen\RadialScreen.java:227: error: cannot find symbol
         RenderSystem.setShader(ShaderProgramKeys.POSITION_COLOR);
                                ^
   symbol:   variable ShaderProgramKeys
@@ -826,12 +826,12 @@ C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\combat\Aura
                                 ^
   symbol:   method getPos()
   location: variable target of type LivingEntity
-C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\combat\AuraUtil.java:203: error: cannot find symbo
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\combat\AuraUtil.java:203: error: cannot find symbol
         if (mc.player == null || mc.player.getWorld() == null) {
                                           ^
   symbol:   method getWorld()
   location: variable player of type ClientPlayerEntity
-C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\combat\AuraUtil.java:206: error: cannot find symbo
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\combat\AuraUtil.java:206: error: cannot find symbol
         World world = mc.player.getWorld();
                                ^
   symbol:   method getWorld()
@@ -2016,9 +2016,7 @@ Execution failed for task ':compileJava' (registered by plugin class 'org.gradle
     symbol:   method getName()
     location: class GameProfile
   C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\ui\widget\StaffWidget.java:58: error: cannot find symbol
-                      event.getDraw2DProcessor().a(event.guiMatrices(), x + offsetX + 5.0f, drawY + 2.0f, 7.5f, 7.5f, 2.0f, ColorUtil.applyAlphaToColor(-1, animation), 0.125f, 0.125f, 0.125f, 0.125f, mc.getTextureManager().getTexture(entry.getSkin
-
-Textures().texture()).getGlId());
+                      event.getDraw2DProcessor().a(event.guiMatrices(), x + offsetX + 5.0f, drawY + 2.0f, 7.5f, 7.5f, 2.0f, ColorUtil.applyAlphaToColor(-1, animation), 0.125f, 0.125f, 0.125f, 0.125f, mc.getTextureManager().getTexture(entry.getSkinTextures().texture()).getGlId());
                                                                                                                                                                                                                                                                  ^
     symbol:   method texture()
     location: class SkinTextures
@@ -2063,6 +2061,6 @@ Textures().texture()).getGlId());
 > Check your code and dependencies to fix the compilation error(s)
 > Run with --scan to get full insights from a Build Scan (powered by Develocity).
 
-BUILD FAILED in 12m 25s
+BUILD FAILED in 7m 38s
 1 actionable task: 1 executed
 PS C:\Users\Blazix\Desktop\Delta 1.21.11>
