@@ -1,0 +1,2068 @@
+PS C:\Users\Blazix\Desktop\Delta 1.21.11> ./gradlew build
+Starting a Gradle Daemon (subsequent builds will be faster)
+
+> Configure project :
+Fabric Loom: 1.17.21
+
+Cannot remap modifiers because it does not exist in any of the targets [] or their parents.
+
+> Configure project :
+:remapping sources
+
+> Task :compileJava
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\ambience\Ambience.java:14: error: cannot find symbol
+import net.minecraft.client.render.FogShape;
+                                  ^
+  symbol:   class FogShape
+  location: package net.minecraft.client.render
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\event\AmbienceEvent.java:7: error: cannot find symbol
+import net.minecraft.client.render.Fog;
+                                  ^
+  symbol:   class Fog
+  location: package net.minecraft.client.render
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\event\AmbienceEvent.java:8: error: cannot find symbol
+import net.minecraft.client.render.FogShape;
+                                  ^
+  symbol:   class FogShape
+  location: package net.minecraft.client.render
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\event\AmbienceEvent.java:78: error: cannot find symbol
+        private Fog fog;
+                ^
+  symbol:   class Fog
+  location: class b
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\event\AmbienceEvent.java:80: error: cannot find symbol
+        public b(Camera camera, float viewDistance, Fog fog) {
+                                                    ^
+  symbol:   class Fog
+  location: class b
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\event\AmbienceEvent.java:90: error: cannot find symbol
+        public void setFog(Fog fog) {
+                           ^
+  symbol:   class Fog
+  location: class b
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\event\AmbienceEvent.java:106: error: cannot find symbol
+        public Fog d() {
+               ^
+  symbol:   class Fog
+  location: class b
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\event\AmbienceEvent.java:110: error: cannot find symbol
+        public void a(float start, float end, FogShape shape, float red, float green, float blue, float alpha) {
+                                              ^
+  symbol:   class FogShape
+  location: class b
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\ui\shader\NoiseShader.java:15: error: cannot find symbol
+import com.mojang.blaze3d.vertex.VertexFormats;
+                                ^
+  symbol:   class VertexFormats
+  location: package com.mojang.blaze3d.vertex
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\autobuy\BatchProcessor.java:13: error: cannot find symbol
+import net.minecraft.client.gl.ShaderProgramKeys;
+                              ^
+  symbol:   class ShaderProgramKeys
+  location: package net.minecraft.client.gl
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\render\Pointers.java:18: error: cannot find symbol
+import net.minecraft.client.gl.ShaderProgramKeys;
+                              ^
+  symbol:   class ShaderProgramKeys
+  location: package net.minecraft.client.gl
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\ui\screen\RadialScreen.java:21: error: cannot find symbol
+import net.minecraft.client.gl.ShaderProgramKeys;
+                              ^
+  symbol:   class ShaderProgramKeys
+  location: package net.minecraft.client.gl
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\combat\AuraHandler.java:22: error: cannot find symbol
+import net.minecraft.client.gl.ShaderProgramKeys;
+                              ^
+  symbol:   class ShaderProgramKeys
+  location: package net.minecraft.client.gl
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\cosmetic\Cosmetic.java:23: error: wrong number of type arguments; required 3
+    private final GeoObjectRenderer<Cosmetic> renderer;
+                                   ^
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\cosmetic\Cosmetic.java:67: error: wrong number of type arguments; required 3
+    public GeoObjectRenderer<Cosmetic> getRenderer() {
+                            ^
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\cosmetic\CosmeticsGeoModel.java:17: error: wrong number of type arguments; required 3
+    public Identifier getModelResource(Cosmetic cosmetic, GeoRenderer<Cosmetic> renderer) {
+                                                                     ^
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\cosmetic\CosmeticsGeoModel.java:22: error: wrong number of type arguments; required 3
+    public Identifier getTextureResource(Cosmetic cosmetic, GeoRenderer<Cosmetic> renderer) {
+                                                                       ^
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\render\GpuDraw.java:25: error: cannot find symbol
+import net.minecraft.client.texture.FilterMode;
+                                   ^
+  symbol:   class FilterMode
+  location: package net.minecraft.client.texture
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\platform\inject\mixin\BackgroundRendererMixin.java:9: error: cannot find symbol
+import net.minecraft.client.render.BackgroundRenderer;
+                                  ^
+  symbol:   class BackgroundRenderer
+  location: package net.minecraft.client.render
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\platform\inject\mixin\BackgroundRendererMixin.java:11: error: cannot find symbol
+import net.minecraft.client.render.Fog;
+                                  ^
+  symbol:   class Fog
+  location: package net.minecraft.client.render
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\platform\inject\mixin\BackgroundRendererMixin.java:44: error: cannot find symbol
+    private static Fog onApplyFog(Fog original, @Local(argsOnly = true) Camera camera, @Local(argsOnly = true, ordinal = 0) float viewDistance) {
+                                  ^
+  symbol:   class Fog
+  location: class BackgroundRendererMixin
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\platform\inject\mixin\BackgroundRendererMixin.java:44: error: cannot find symbol
+    private static Fog onApplyFog(Fog original, @Local(argsOnly = true) Camera camera, @Local(argsOnly = true, ordinal = 0) float viewDistance) {
+                   ^
+  symbol:   class Fog
+  location: class BackgroundRendererMixin
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\platform\inject\mixin\WorldRendererMixin.java:8: error: cannot find symbol
+import net.minecraft.client.render.Fog;
+                                  ^
+  symbol:   class Fog
+  location: package net.minecraft.client.render
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\platform\inject\mixin\WorldRendererMixin.java:21: error: cannot find symbol
+    private void onRenderWeather(FrameGraphBuilder frameGraphBuilder, Vec3d pos, float tickDelta, Fog fog, CallbackInfo ci) {
+                                                                                                  ^
+  symbol:   class Fog
+  location: class WorldRendererMixin
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\platform\inject\mixin\BackgroundRendererMixin.java:20: error: cannot find symbol
+@Mixin({BackgroundRenderer.class})
+        ^
+  symbol: class BackgroundRenderer
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\ambience\Ambience.java:89: error: cannot find symbol
+            FogShape shape = event.d().shape();
+            ^
+  symbol:   class FogShape
+  location: class Ambience
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\ambience\Ambience.java:91: error: cannot find symbol
+                shape = FogShape.SPHERE;
+                        ^
+  symbol:   variable FogShape
+  location: class Ambience
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\event\AmbienceEvent.java:111: error: cannot find symbol
+            this.fog = new Fog(start, end, shape, red, green, blue, alpha);
+                           ^
+  symbol:   class Fog
+  location: class b
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\render\Font.java:431: error: incompatible types: Matrix4f cannot be converted to Matrix3x2fStack
+        a(matrix, text, x, y, size, thickness, color, -1, -1.0f, 0.5f, 0.0f, -1, thickness);
+          ^
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\render\Draw3DProcessor.java:63: error: cannot find symbol
+            RenderSystem.setShaderColor(alpha, alpha, alpha, alpha);
+                        ^
+  symbol:   method setShaderColor(float,float,float,float)
+  location: class RenderSystem
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\render\Draw3DProcessor.java:68: error: cannot find symbol
+            RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
+                        ^
+  symbol:   method setShaderColor(float,float,float,float)
+  location: class RenderSystem
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\ui\shader\TextureShader.java:52: error: cannot find symbo
+        return DefaultSkinHelper.getSkinTextures(uuid2).texture();
+                                                       ^
+  symbol:   method texture()
+  location: class SkinTextures
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\ui\shader\BlurShader.java:132: error: cannot find symbol
+                .begin(mode, com.mojang.blaze3d.vertex.VertexFormats.POSITION);
+                                                      ^
+  symbol:   class VertexFormats
+  location: package com.mojang.blaze3d.vertex
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\ui\shader\NoiseShader.java:21: error: NoiseShader is not abstract and does not override abstract method pack() in Shader
+public class NoiseShader extends Shader implements Interface {
+       ^
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\ui\shader\NoiseShader.java:69: error: cannot find symbol
+        BufferBuilder b = Tessellator.getInstance().begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
+                                                                                       ^
+  symbol:   variable VertexFormats
+  location: class NoiseShader
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\render\FontBuilder.java:51: error: cannot find symbol
+        RenderSystem.recordRenderCall(() -> {
+                    ^
+  symbol:   method recordRenderCall(()->{ text[...]e); })
+  location: class RenderSystem
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\render\FontBuilder.java:52: error: cannot find symbol
+            texture.setFilter(true, false);
+                   ^
+  symbol:   method setFilter(boolean,boolean)
+  location: variable texture of type AbstractTexture
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\autobuy\AutoBuyEntry.java:233: error: cannot find symbol
+            gameProfile.getProperties().put("textures", new com.mojang.authlib.properties.Property("textures", string))
+                       ^
+  symbol:   method getProperties()
+  location: variable gameProfile of type GameProfile
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\autobuy\AutoBuyEntry.java:234: error: ProfileComponent is abstract; cannot be instantiated
+            stack.set(DataComponentTypes.PROFILE, new ProfileComponent(gameProfile));
+                                                  ^
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\config\NBTCondition.java:17: error: cannot find symbol
+        NbtElement nbt = stack.toNbt(Interface.mc.world.getRegistryManager());
+                              ^
+  symbol:   method toNbt(DynamicRegistryManager)
+  location: variable stack of type ItemStack
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\autobuy\BatchProcessor.java:57: error: cannot find symbol
+        RenderSystem.setShader(ShaderProgramKeys.POSITION_COLOR);
+                               ^
+  symbol:   variable ShaderProgramKeys
+  location: class BatchProcessor
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\autobuy\BatchProcessor.java:75: error: cannot find symbol
+        RenderSystem.blendFunc(GlConst.GL_SRC_ALPHA, GlConst.GL_ONE_MINUS_SRC_ALPHA);
+                    ^
+  symbol:   method blendFunc(int,int)
+  location: class RenderSystem
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\autobuy\BatchProcessor.java:80: error: cannot find symbol
+                RenderSystem.setShader(ShaderProgramKeys.POSITION_COLOR);
+                                       ^
+  symbol:   variable ShaderProgramKeys
+  location: class BatchProcessor
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\autobuy\BatchProcessor.java:98: error: cannot find symbol
+            RenderSystem.setShader(ShaderProgramKeys.RENDERTYPE_LINES);
+                                   ^
+  symbol:   variable ShaderProgramKeys
+  location: class BatchProcessor
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\autobuy\BatchProcessor.java:100: error: cannot find symbo
+                RenderSystem.lineWidth(e.getKey().floatValue());
+                            ^
+  symbol:   method lineWidth(float)
+  location: class RenderSystem
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\misc\Collector.java:106: error: cannot find symbol
+                mc.player.networkHandler.sendCommand("ah search " + this.h.j());
+                                        ^
+  symbol:   method sendCommand(String)
+  location: variable networkHandler of type ClientPlayNetworkHandler
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\misc\Collector.java:318: error: cannot find symbol
+        if (!(this.h.i() instanceof ArmorItem) || stack.get(DataComponentTypes.DAMAGE) == null || stack.getMaxDamage() <= 0) {
+                                    ^
+  symbol:   class ArmorItem
+  location: class Collector
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\command\BaseCommand.java:82: error: cannot find symbol
+                return entry.getProfile().getName();
+                                         ^
+  symbol:   method getName()
+  location: class GameProfile
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\command\BaseCommand.java:85: error: cannot find symbol
+                    return name.toLowerCase().startsWith(builder.getRemainingLowerCase() == null ? "" : builder.getRemainingLowerCase());
+                               ^
+  symbol:   method toLowerCase()
+  location: variable name of type Object
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\command\BaseCommand.java:83: error: incompatible types: Stream<Object> cannot be converted to Stream<String>
+            }).filter(name -> {
+                     ^
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\command\AHCommand.java:51: error: cannot find symbol
+            if (packet.getSyncId() != 0) {
+                      ^
+  symbol:   method getSyncId()
+  location: variable packet of type InventoryS2CPacket
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\command\AHCommand.java:52: error: cannot find symbol
+                    List<ItemStack> contents = packet.getContents();
+                                                     ^
+  symbol:   method getContents()
+  location: variable packet of type InventoryS2CPacket
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\command\AHCommand.java:82: error: cannot find symbol
+                mc.player.networkHandler.sendCommand(this.pendingCommand);
+                                        ^
+  symbol:   method sendCommand(String)
+  location: variable networkHandler of type ClientPlayNetworkHandler
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\command\CCCommand.java:37: error: cannot find symbol
+                    return listEntry.getProfile().getName().equalsIgnoreCase(constructor.a());
+                                                 ^
+  symbol:   method getName()
+  location: class GameProfile
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\command\CommandProcessor.java:40: error: constructor ClientCommandSource in class ClientCommandSource cannot be applied to given types;
+    private final ClientCommandSource commandSource = new ClientCommandSource(null, MinecraftClient.getInstance());
+                                                      ^
+  required: ClientPlayNetworkHandler,MinecraftClient,PermissionPredicate
+  found:    <null>,MinecraftClient
+  reason: actual and formal argument lists differ in length
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\command\WayCommand.java:63: error: cannot find symbol
+            a("me", mc.player.getPos());
+                             ^
+  symbol:   method getPos()
+  location: variable player of type ClientPlayerEntity
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\command\WayCommand.java:95: error: cannot find symbol
+            mc.player.networkHandler.sendCommand("event delay");
+                                    ^
+  symbol:   method sendCommand(String)
+  location: variable networkHandler of type ClientPlayNetworkHandler
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\command\WayCommand.java:217: error: no suitable method found for a(MatrixStack,Identifier,float,float,float,float,float,int)
+        event.getDraw2DProcessor().a(matrices, Identifier.of("delta", "pictures/triangle.png"), -7.0f, -7.0f, 14.0f, 14.0f, 0.0f, primary);
+                                  ^
+    method Draw2DProcessor.a(Matrix3x2fStack,float,float,float,float,float,float,int) is not applicable
+      (argument mismatch; MatrixStack cannot be converted to Matrix3x2fStack)
+    method Draw2DProcessor.a(Matrix3x2fStack,float,float,float,float,Vector4f,float,int) is not applicable
+      (argument mismatch; MatrixStack cannot be converted to Matrix3x2fStack)
+    method Draw2DProcessor.a(Matrix3x2fStack,Identifier,float,float,float,float,float,int) is not applicable
+      (argument mismatch; MatrixStack cannot be converted to Matrix3x2fStack)
+    method Draw2DProcessor.a(Matrix3x2fStack,float,float,float,float,float,int,float) is not applicable
+      (argument mismatch; MatrixStack cannot be converted to Matrix3x2fStack)
+    method Draw2DProcessor.a(Matrix4f,Identifier,float,float,float,float,float,int) is not applicable
+      (argument mismatch; MatrixStack cannot be converted to Matrix4f)
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\command\WayCommand.java:220: error: no suitable method found for a(MatrixStack,Text,float,float,float)
+        Fonts.d.a(matrices, text, cx - (Fonts.d.a(text, 7.0f) / 2.0f), cy + 7.0f + 2.0f, 7.0f);
+               ^
+    method Font.a(Matrix3x2fStack,Text,float,float,float) is not applicable
+      (argument mismatch; MatrixStack cannot be converted to Matrix3x2fStack)
+    method Font.a(Matrix4f,Text,float,float,float) is not applicable
+      (argument mismatch; MatrixStack cannot be converted to Matrix4f)
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\command\GPSCommand.java:39: error: cannot find symbol
+            mc.player.networkHandler.sendCommand("event delay");
+                                    ^
+  symbol:   method sendCommand(String)
+  location: variable networkHandler of type ClientPlayNetworkHandler
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\command\HClipCommand.java:62: error: cannot find symbol
+        Vec3d origin = mc.player.getPos();
+                                ^
+  symbol:   method getPos()
+  location: variable player of type ClientPlayerEntity
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\player\OpenWalls.java:30: error: cannot find symbo
+        return player.getWorld().raycast(new RaycastContext(start, end, RaycastContext.ShapeType.OUTLINE, RaycastContext.FluidHandling.NONE, player) {
+                     ^
+  symbol:   method getWorld()
+  location: variable player of type ClientPlayerEntity
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\movement\ScreenWalk.java:48: error: cannot find symbol
+                        if (click.getButton() == 1) {
+                                 ^
+  symbol:   method getButton()
+  location: variable click of type ClickSlotC2SPacket
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\player\FakeLags.java:97: error: cannot find symbol
+            event.getDraw3DProcessor().a(event.guiMatrices(), mc.player.getBoundingBox().offset(this.serverPosition.subtract(mc.player.getPos())), ColorUtil.convertToARGB(255, 255, 255, InterfaceC0020Opcode.aN), 0.75f);
+                                                                                                                                      ^
+  symbol:   method getPos()
+  location: variable player of type ClientPlayerEntity
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\player\FakeLags.java:111: error: cannot find symbo
+        this.serverPosition = mc.player.getPos();
+                                       ^
+  symbol:   method getPos()
+  location: variable player of type ClientPlayerEntity
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\movement\FreeCamera.java:46: error: cannot find symbol
+            this.playerPos = mc.player.getPos();
+                                      ^
+  symbol:   method getPos()
+  location: variable player of type ClientPlayerEntity
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\movement\AutoDodge.java:40: error: cannot find symbol
+        Vec3d position = potionEntity.getPos();
+                                     ^
+  symbol:   method getPos()
+  location: variable potionEntity of type PotionEntity
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\movement\AutoDodge.java:144: error: cannot find symbol
+            if (spawnPacket.getEntityType() != EntityType.POTION) {
+                                                         ^
+  symbol:   variable POTION
+  location: class EntityType
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\movement\AutoDodge.java:149: error: cannot find symbol
+            Vec3d spawnVelocity = new Vec3d(spawnPacket.getVelocityX(), spawnPacket.getVelocityY(), spawnPacket.getVelocityZ());
+                                                       ^
+  symbol:   method getVelocityX()
+  location: variable spawnPacket of type EntitySpawnS2CPacket
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\movement\AutoDodge.java:149: error: cannot find symbol
+            Vec3d spawnVelocity = new Vec3d(spawnPacket.getVelocityX(), spawnPacket.getVelocityY(), spawnPacket.getVelocityZ());
+                                                                                   ^
+  symbol:   method getVelocityY()
+  location: variable spawnPacket of type EntitySpawnS2CPacket
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\movement\AutoDodge.java:149: error: cannot find symbol
+            Vec3d spawnVelocity = new Vec3d(spawnPacket.getVelocityX(), spawnPacket.getVelocityY(), spawnPacket.getVelocityZ());
+                                                                                                               ^
+  symbol:   method getVelocityZ()
+  location: variable spawnPacket of type EntitySpawnS2CPacket
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\movement\AutoDodge.java:188: error: cannot find symbol
+                result.put(player.getName().getString(), new a(splashColor, player.getPos(), player.getRotationVec(1.0f)));
+                                                                                  ^
+  symbol:   method getPos()
+  location: variable player of type AbstractClientPlayerEntity
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\render\SoundESP.java:69: error: cannot find symbol
+                        int distance = (int) mc.player.getPos().distanceTo(new Vec3d(soundInfo.b().getX(), soundInfo.b().getY(), soundInfo.b().getZ()));
+                                                      ^
+  symbol:   method getPos()
+  location: variable player of type ClientPlayerEntity
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\movement\NoCrouch.java:19: error: cannot find symbol
+            mode = ClientCommandC2SPacket.Mode.PRESS_SHIFT_KEY;
+                                              ^
+  symbol:   variable PRESS_SHIFT_KEY
+  location: class Mode
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\movement\NoCrouch.java:21: error: cannot find symbol
+            mode = this.wasSneaking ? ClientCommandC2SPacket.Mode.RELEASE_SHIFT_KEY : null;
+                                                                 ^
+  symbol:   variable RELEASE_SHIFT_KEY
+  location: class Mode
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\misc\Communication.java:43: error: cannot find symbol
+            posObject.addProperty("x", Double.valueOf(mc.player.getPos().x));
+                                                               ^
+  symbol:   method getPos()
+  location: variable player of type ClientPlayerEntity
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\misc\Communication.java:44: error: cannot find symbol
+            posObject.addProperty("y", Double.valueOf(mc.player.getPos().y));
+                                                               ^
+  symbol:   method getPos()
+  location: variable player of type ClientPlayerEntity
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\misc\Communication.java:45: error: cannot find symbol
+            posObject.addProperty("z", Double.valueOf(mc.player.getPos().z));
+                                                               ^
+  symbol:   method getPos()
+  location: variable player of type ClientPlayerEntity
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\misc\Communication.java:117: error: incompatible types: Identifier cannot be converted to StyleSpriteSource
+                line.append(Text.literal(prefix.a()).setStyle(Style.EMPTY.withFont(Identifier.of("delta", "prefixes")))).append(Text.literal(StringUtils.a));
+                                                                                                ^
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\combat\Aura.java:226: error: cannot find symbol
+                    return Double.valueOf(pos.distanceTo(this.target.getPos()));
+                                                                    ^
+  symbol:   method getPos()
+  location: variable target of type LivingEntity
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\combat\Aura.java:227: error: cannot find symbol
+                }).orElse(Double.valueOf(33.0d)).doubleValue();
+                                                ^
+  symbol:   method doubleValue()
+  location: class Object
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\combat\Aura.java:462: error: cannot find symbol
+                            return Double.valueOf(pos.distanceTo(mc.player.getPos()));
+                                                                          ^
+  symbol:   method getPos()
+  location: variable player of type ClientPlayerEntity
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\combat\Aura.java:463: error: cannot find symbol
+                        }).orElse(Double.valueOf(0.0d)).doubleValue() > 2.0d
+                                                       ^
+  symbol:   method doubleValue()
+  location: class Object
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\misc\XRay.java:57: error: cannot find symbol
+                return mc.world.getBlockState(blockPos).getBlock().equals(Blocks.AIR) || blockPos.getSquaredDistance(mc.player.getPos()) >= 6400.0d || !mc.world.getChunkManager().isChunkLoaded(blockPos.getX() >> 4, blockPos.getZ() >> 4);
+                                                                                                                              ^
+  symbol:   method getPos()
+  location: variable player of type ClientPlayerEntity
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\movement\ElytraTarget.java:55: error: cannot find symbol
+        Vec3d start = mc.player.getPos();
+                               ^
+  symbol:   method getPos()
+  location: variable player of type ClientPlayerEntity
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\combat\MaceHelper.java:82: error: cannot find symbol
+                if (target == null || target.isBlocking() || mc.player.isOnGround() || MaceUtil.a() || this.e || mc.player.fallDistance <= 0.0f || !tasks.isEmpty() || !Delta.getInstance().getModuleProcessor().v().getInventoryHandler().a().isEmpty() || Math.hypot(target.getPos().x - mc.player.getPos().x, target.getPos().z - mc.player.getPos().z) > 6.0d) {
+                                                                                                                                                                                                                                                                             ^
+  symbol:   method getPos()
+  location: variable target of type LivingEntity
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\combat\MaceHelper.java:82: error: cannot find symbol
+                if (target == null || target.isBlocking() || mc.player.isOnGround() || MaceUtil.a() || this.e || mc.player.fallDistance <= 0.0f || !tasks.isEmpty() || !Delta.getInstance().getModuleProcessor().v().getInventoryHandler().a().isEmpty() || Math.hypot(target.getPos().x - mc.player.getPos().x, target.getPos().z - mc.player.getPos().z) > 6.0d) {
+                                                                                                                                                                                                                                                                                                    ^
+  symbol:   method getPos()
+  location: variable player of type ClientPlayerEntity
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\combat\MaceHelper.java:82: error: cannot find symbol
+                if (target == null || target.isBlocking() || mc.player.isOnGround() || MaceUtil.a() || this.e || mc.player.fallDistance <= 0.0f || !tasks.isEmpty() || !Delta.getInstance().getModuleProcessor().v().getInventoryHandler().a().isEmpty() || Math.hypot(target.getPos().x - mc.player.getPos().x, target.getPos().z - mc.player.getPos().z) > 6.0d) {
+                                                                                                                                                                                                                                                                                                                       ^
+  symbol:   method getPos()
+  location: variable target of type LivingEntity
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\combat\MaceHelper.java:82: error: cannot find symbol
+                if (target == null || target.isBlocking() || mc.player.isOnGround() || MaceUtil.a() || this.e || mc.player.fallDistance <= 0.0f || !tasks.isEmpty() || !Delta.getInstance().getModuleProcessor().v().getInventoryHandler().a().isEmpty() || Math.hypot(target.getPos().x - mc.player.getPos().x, target.getPos().z - mc.player.getPos().z) > 6.0d) {
+                                                                                                                                                                                                                                                                                                                                              ^
+  symbol:   method getPos()
+  location: variable player of type ClientPlayerEntity
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\player\AutoTool.java:72: error: cannot find symbol
+            return stack.getItem() instanceof PickaxeItem;
+                                              ^
+  symbol:   class PickaxeItem
+  location: class AutoTool
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\render\EntityBox.java:41: error: cannot find symbo
+                        event.getDraw3DProcessor().a(event.h(), entity.getBoundingBox().offset(MathUtil.a(entity, event.g()).subtract(entity.getPos())), this.colorSource.l("╨í╤é╨░╤é╨╕╤ç╨╜╤ï╨╣") ? this.colorSetting.c().intValue() : Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.PRIMARY).toIntColor(), 0.75f);
+                                                                                                                                            ^
+  symbol:   method getPos()
+  location: variable entity of type Entity
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\render\EntityBox.java:52: error: cannot find symbo
+                    Box box = shouldRender(entity) ? entity.getBoundingBox().offset(MathUtil.a(entity, event.g()).subtract(entity.getPos())) : null;
+                                                                                                                                 ^
+  symbol:   method getPos()
+  location: variable entity of type Entity
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\render\EntityBox.java:94: error: no suitable method found for a(MatrixStack,float,float,float,float,float,int)
+            draw.a(event.h(), barX - 0.5f, minY - 0.5f, 1.75f, height + 1.0f, 0.0f, outlineColor);
+                ^
+    method Draw2DProcessor.a(Matrix3x2fStack,float,float,float,float,float,int) is not applicable
+      (argument mismatch; MatrixStack cannot be converted to Matrix3x2fStack)
+    method Draw2DProcessor.a(Matrix3x2fStack,float,float,float,float,Vector4f,int) is not applicable
+      (argument mismatch; MatrixStack cannot be converted to Matrix3x2fStack)
+    method Draw2DProcessor.a(BufferBuilder,Matrix4f,float,float,float,float,int) is not applicable
+      (argument mismatch; MatrixStack cannot be converted to BufferBuilder)
+    method Draw2DProcessor.a(Matrix4f,float,float,float,float,float,int) is not applicable
+      (argument mismatch; MatrixStack cannot be converted to Matrix4f)
+    method Draw2DProcessor.a(Matrix4f,float,float,float,float,Vector4f,int) is not applicable
+      (argument mismatch; MatrixStack cannot be converted to Matrix4f)
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\render\EntityBox.java:95: error: no suitable method found for a(MatrixStack,float,float,float,float,float,int)
+            draw.a(event.h(), barX, minY + (height * (1.0f - healthPercent)), 0.75f, height * healthPercent, 0.0f, healthColor);
+                ^
+    method Draw2DProcessor.a(Matrix3x2fStack,float,float,float,float,float,int) is not applicable
+      (argument mismatch; MatrixStack cannot be converted to Matrix3x2fStack)
+    method Draw2DProcessor.a(Matrix3x2fStack,float,float,float,float,Vector4f,int) is not applicable
+      (argument mismatch; MatrixStack cannot be converted to Matrix3x2fStack)
+    method Draw2DProcessor.a(BufferBuilder,Matrix4f,float,float,float,float,int) is not applicable
+      (argument mismatch; MatrixStack cannot be converted to BufferBuilder)
+    method Draw2DProcessor.a(Matrix4f,float,float,float,float,float,int) is not applicable
+      (argument mismatch; MatrixStack cannot be converted to Matrix4f)
+    method Draw2DProcessor.a(Matrix4f,float,float,float,float,Vector4f,int) is not applicable
+      (argument mismatch; MatrixStack cannot be converted to Matrix4f)
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\render\EntityBox.java:111: error: no suitable method found for a(MatrixStack,float,float,float,float,float,int)
+        draw.a(event.h(), left - outlineOffset, top - outlineOffset, width + (outlineOffset * 2.0f), height + (outlineOffset * 2.0f), 0.0f, outlineColor);
+            ^
+    method Draw2DProcessor.a(Matrix3x2fStack,float,float,float,float,float,int) is not applicable
+      (argument mismatch; MatrixStack cannot be converted to Matrix3x2fStack)
+    method Draw2DProcessor.a(Matrix3x2fStack,float,float,float,float,Vector4f,int) is not applicable
+      (argument mismatch; MatrixStack cannot be converted to Matrix3x2fStack)
+    method Draw2DProcessor.a(BufferBuilder,Matrix4f,float,float,float,float,int) is not applicable
+      (argument mismatch; MatrixStack cannot be converted to BufferBuilder)
+    method Draw2DProcessor.a(Matrix4f,float,float,float,float,float,int) is not applicable
+      (argument mismatch; MatrixStack cannot be converted to Matrix4f)
+    method Draw2DProcessor.a(Matrix4f,float,float,float,float,Vector4f,int) is not applicable
+      (argument mismatch; MatrixStack cannot be converted to Matrix4f)
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\render\EntityBox.java:112: error: no suitable method found for a(MatrixStack,float,float,float,float,float,int)
+        draw.a(event.h(), left, top, width, height, 0.0f, color);
+            ^
+    method Draw2DProcessor.a(Matrix3x2fStack,float,float,float,float,float,int) is not applicable
+      (argument mismatch; MatrixStack cannot be converted to Matrix3x2fStack)
+    method Draw2DProcessor.a(Matrix3x2fStack,float,float,float,float,Vector4f,int) is not applicable
+      (argument mismatch; MatrixStack cannot be converted to Matrix3x2fStack)
+    method Draw2DProcessor.a(BufferBuilder,Matrix4f,float,float,float,float,int) is not applicable
+      (argument mismatch; MatrixStack cannot be converted to BufferBuilder)
+    method Draw2DProcessor.a(Matrix4f,float,float,float,float,float,int) is not applicable
+      (argument mismatch; MatrixStack cannot be converted to Matrix4f)
+    method Draw2DProcessor.a(Matrix4f,float,float,float,float,Vector4f,int) is not applicable
+      (argument mismatch; MatrixStack cannot be converted to Matrix4f)
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\combat\TriggerBot.java:123: error: cannot find symbol
+                return Double.valueOf(pos.distanceTo(this.target.getPos()));
+                                                                ^
+  symbol:   method getPos()
+  location: variable target of type LivingEntity
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\combat\TriggerBot.java:124: error: cannot find symbol
+            }).orElse(Double.valueOf(33.0d)).doubleValue();
+                                            ^
+  symbol:   method doubleValue()
+  location: class Object
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\combat\AimAssistant.java:76: error: cannot find symbol
+            float frame = mc.getRenderTickCounter().getLastFrameDuration();
+                                                   ^
+  symbol:   method getLastFrameDuration()
+  location: interface RenderTickCounter
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\combat\AntiBot.java:44: error: cannot find symbol
+                    boolean skin = entry != null && entry.getSkinTextures() != null && entry.getSkinTextures().textureUrl() != null;
+                                                                                                              ^
+  symbol:   method textureUrl()
+  location: class SkinTextures
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\combat\AntiBot.java:45: error: cannot find symbol
+                    boolean texture = entry != null && !entry.getProfile().getProperties().get("textures").isEmpty();
+                                                                          ^
+  symbol:   method getProperties()
+  location: class GameProfile
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\misc\ServerAssistant.java:194: error: cannot find symbol
+                    List<ItemStack> contents = packet.getContents();
+                                                     ^
+  symbol:   method getContents()
+  location: variable packet of type InventoryS2CPacket
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\misc\ServerAssistant.java:197: error: cannot find symbol
+                    if (chestSlots >= 44 && packet.getSyncId() != 0) {
+                                                  ^
+  symbol:   method getSyncId()
+  location: variable packet of type InventoryS2CPacket
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\misc\ServerAssistant.java:238: error: incompatible types: ClickSlotC2SPacketAccessor cannot be converted to ClickSlotC2SPacket
+            if (clickSlotC2SPacketAccessorD instanceof ClickSlotC2SPacket) {
+                ^
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\misc\ServerAssistant.java:285: error: cannot find symbol
+            if (item instanceof ArmorItem) {
+                                ^
+  symbol:   class ArmorItem
+  location: class ServerAssistant.a
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\misc\ServerAssistant.java:288: error: cannot find symbol
+            if (item instanceof SwordItem) {
+                                ^
+  symbol:   class SwordItem
+  location: class ServerAssistant.a
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\misc\ServerAssistant.java:291: error: cannot find symbol
+            if (item instanceof PickaxeItem) {
+                                ^
+  symbol:   class PickaxeItem
+  location: class ServerAssistant.a
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\misc\ServerAssistant.java:298: error: cannot find symbol
+            if (stack.getItem() instanceof ArmorItem) {
+                                           ^
+  symbol:   class ArmorItem
+  location: class ServerAssistant.a
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\misc\ServerAssistant.java:319: error: cannot find symbol
+            if (stack.getItem() instanceof SwordItem) {
+                                           ^
+  symbol:   class SwordItem
+  location: class ServerAssistant.a
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\misc\ServerAssistant.java:349: error: cannot find symbol
+            if (stack.getItem() instanceof PickaxeItem) {
+                                           ^
+  symbol:   class PickaxeItem
+  location: class ServerAssistant.a
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\movement\AirStuck.java:28: error: cannot find symbol
+            this.stuckPos = mc.player.getPos();
+                                     ^
+  symbol:   method getPos()
+  location: variable player of type ClientPlayerEntity
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\render\ShulkerPreview.java:32: error: cannot find symbol
+        if (event.guiMatrices() == ContainerEvent.Phase.POST && (hovered = ((platform.inject.accessors.HandledScreenAccessor) event.getScreen()).getFocusedSlot()) != null && hovered.getStack() != null && hovered.hasStack()) {
+                 ^
+  symbol:   method guiMatrices()
+  location: variable event of type ContainerEvent
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\render\ShulkerPreview.java:65: error: incompatible types: float cannot be converted to Matrix3x2f
+        matrices.translate(x, y, 500.0f);
+                                 ^
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\render\ShulkerPreview.java:67: error: invalid method reference
+        context.drawTexture(RenderLayer::getGuiTextured, Identifier.of("delta", "pictures/minecraft/3x9.png"), 0, 0, 0.0f, 0.0f, (int) this.b.x(), (int) this.b.y(), 256, 256, ColorUtil.combineColorWithAlpha(((BlockItem) itemStack.getItem()).getBlock().getDefaultMapColor().color, 255));
+                            ^
+  cannot find symbol
+    symbol:   method getGuiTextured()
+    location: class RenderLayer
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\render\ChinaHat.java:44: error: cannot find symbol
+                VertexConsumer buffer = event.getVertexConsumerProvider().getBuffer(RenderLayer.getDebugQuads());
+                                                                                               ^
+  symbol:   method getDebugQuads()
+  location: class RenderLayer
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\render\Predictions.java:151: error: incompatible types: Matrix3x2fStack cannot be converted to MatrixStack
+            MatrixStack matrices = event.i().getMatrices();
+                                                        ^
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\render\Predictions.java:156: error: no suitable method found for a(MatrixStack,float,float,float,float,float,int)
+            event.getDraw2DProcessor().a(matrices, x, y, width + 1.0f, height, 2.0f, ColorUtil.convertToARGB(0, 0, 0, (int) (130.0f * alpha)));
+                                      ^
+    method Draw2DProcessor.a(Matrix3x2fStack,float,float,float,float,float,int) is not applicable
+      (argument mismatch; MatrixStack cannot be converted to Matrix3x2fStack)
+    method Draw2DProcessor.a(Matrix3x2fStack,float,float,float,float,Vector4f,int) is not applicable
+      (argument mismatch; MatrixStack cannot be converted to Matrix3x2fStack)
+    method Draw2DProcessor.a(BufferBuilder,Matrix4f,float,float,float,float,int) is not applicable
+      (argument mismatch; MatrixStack cannot be converted to BufferBuilder)
+    method Draw2DProcessor.a(Matrix4f,float,float,float,float,float,int) is not applicable
+      (argument mismatch; MatrixStack cannot be converted to Matrix4f)
+    method Draw2DProcessor.a(Matrix4f,float,float,float,float,Vector4f,int) is not applicable
+      (argument mismatch; MatrixStack cannot be converted to Matrix4f)
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\render\Predictions.java:158: error: no suitable method found for a(MatrixStack,String,float,float,float,int,float)
+            Fonts.e.a(matrices, format, x + (2.0f * 2.0f) + iconSize, y + 2.0f, 7.25f, ColorUtil.applyAlphaToColor(-1, alpha), 0.0f);
+                   ^
+    method Font.a(Matrix3x2fStack,Text,float,float,float,float,float) is not applicable
+      (argument mismatch; MatrixStack cannot be converted to Matrix3x2fStack)
+    method Font.a(Matrix3x2fStack,String,float,float,float,int,float) is not applicable
+      (argument mismatch; MatrixStack cannot be converted to Matrix3x2fStack)
+    method Font.a(Matrix4f,Text,float,float,float,float,float) is not applicable
+      (argument mismatch; MatrixStack cannot be converted to Matrix4f)
+    method Font.a(Matrix4f,String,float,float,float,int,float) is not applicable
+      (argument mismatch; MatrixStack cannot be converted to Matrix4f)
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\render\Predictions.java:165: error: cannot find symbol
+        Vec3d pos = entity.getPos();
+                          ^
+  symbol:   method getPos()
+  location: variable entity of type Entity
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\player\CaptchaSolver.java:55: error: cannot find symbol
+        World world = origin.getWorld();
+                            ^
+  symbol:   method getWorld()
+  location: variable origin of type ItemFrameEntity
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\render\Pointers.java:78: error: no suitable method found for a(MatrixStack,Identifier,float,float,float,float,float,int)
+                        event.getDraw2DProcessor().a(stack, Identifier.of("delta", "pictures/pointer.png"), (-this.c.c().floatValue()) / 2.0f, (-this.c.c().floatValue()) / 2.0f, this.c.c().floatValue(), this.c.c().floatValue(), 0.0f, isFriend ? ColorUtil.convertToARGB(85, 255, 85, InterfaceC0020Opcode.aL) : ColorUtil.convertToARGB(255, 255, 255, InterfaceC0020Opcode.aL));
+                                                  ^
+    method Draw2DProcessor.a(Matrix3x2fStack,float,float,float,float,float,float,int) is not applicable
+      (argument mismatch; MatrixStack cannot be converted to Matrix3x2fStack)
+    method Draw2DProcessor.a(Matrix3x2fStack,float,float,float,float,Vector4f,float,int) is not applicable
+      (argument mismatch; MatrixStack cannot be converted to Matrix3x2fStack)
+    method Draw2DProcessor.a(Matrix3x2fStack,Identifier,float,float,float,float,float,int) is not applicable
+      (argument mismatch; MatrixStack cannot be converted to Matrix3x2fStack)
+    method Draw2DProcessor.a(Matrix3x2fStack,float,float,float,float,float,int,float) is not applicable
+      (argument mismatch; MatrixStack cannot be converted to Matrix3x2fStack)
+    method Draw2DProcessor.a(Matrix4f,Identifier,float,float,float,float,float,int) is not applicable
+      (argument mismatch; MatrixStack cannot be converted to Matrix4f)
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\render\Pointers.java:88: error: cannot find symbol
+        RenderSystem.blendFunc(GlConst.GL_SRC_ALPHA, GlConst.GL_ONE_MINUS_SRC_ALPHA);
+                    ^
+  symbol:   method blendFunc(int,int)
+  location: class RenderSystem
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\render\Pointers.java:91: error: cannot find symbol
+        RenderSystem.setShader(ShaderProgramKeys.POSITION_COLOR);
+                               ^
+  symbol:   variable ShaderProgramKeys
+  location: class Pointers
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\render\Pointers.java:97: error: cannot find symbol
+            GpuDraw.drawCustom(buffer, DeltaPipelines.WORLD_DEBUG_LINES, java.util.Map.of(), java.util.Map.of());
+                                       ^
+  symbol:   variable DeltaPipelines
+  location: class Pointers
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\movement\Scaffold.java:164: error: cannot find symbol
+            Vec3d at = mc.player.getPos().add(this.d.multiply(i));
+                                ^
+  symbol:   method getPos()
+  location: variable player of type ClientPlayerEntity
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\movement\Scaffold.java:171: error: cannot find symbol
+            return pos2.getSquaredDistance(mc.player.getPos());
+                                                    ^
+  symbol:   method getPos()
+  location: variable player of type ClientPlayerEntity
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\movement\Scaffold.java:254: error: cannot find symbol
+        Vec3d feet = mc.player.getPos();
+                              ^
+  symbol:   method getPos()
+  location: variable player of type ClientPlayerEntity
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\misc\AutoWarden.java:771: error: cannot find symbo
+            if (player != mc.player && player.getPos().squaredDistanceTo(Vec3d.ofCenter(pos)) < 20.0d && Stream.of(EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET).anyMatch(slot -> {
+                                             ^
+  symbol:   method getPos()
+  location: variable player of type PlayerEntity
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\misc\AutoWarden.java:783: error: cannot find symbo
+            if (player != mc.player && player.getPos().squaredDistanceTo(Vec3d.ofCenter(pos)) < range * range) {
+                                             ^
+  symbol:   method getPos()
+  location: variable player of type PlayerEntity
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\misc\AutoWarden.java:983: error: cannot find symbo
+        return (item instanceof ArrowItem) || (item instanceof PickaxeItem) || (item instanceof AxeItem) || stack.isOf(Items.CHORUS_FRUIT) || stack.isOf(Items.DISC_FRAGMENT_5) || stack.isOf(Items.NAUTILUS_SHELL) || stack.isOf(Items.BOOKSHELF) || stack.isOf(Items.COOKED_MUTTON) || stack.isOf(Items.SKELETON_SPAWN_EGG) || stack.isOf(Items.CREEPER_SPAWN_EGG) || stack.isOf(Items.ZOMBIE_SPAWN_EGG) || stack.isOf(Items.VINDICATOR_SPAWN_EGG) || stack.isOf(Items.PIGLIN_SPAWN_EGG) || stack.isOf(Items.FIRE_CHARGE) || stack.isOf(Items.LEATHER) || stack.isOf(Items.SHULKER_SHELL) || stack.isOf(Items.EXPERIENCE_BOTTLE) || stack.isOf(Items.WITHER_ROSE) || stack.isOf(Items.EMERALD) || stack.isOf(Items.SUGAR) || hasCustomTag(stack, "potion-popper") || stack.contains(DataComponentTypes.JUKEBOX_PLAYABLE) || stack.isOf(Items.GHAST_TEAR) || stack.isOf(Items.DRAGON_BREATH) || stack.isOf(Items.VEX_SPAWN_EGG) || stack.isOf(Items.ENDERMITE_SPAWN_EGG) || stack.isOf(Items.CAT_SPAWN_EGG) || stack.isOf(Items.ENCHANTING_TABLE) || stack.isOf(Items.DIAMOND_HELMET) || stack.isOf(Items.DIAMOND_CHESTPLATE) || stack.isOf(Items.DIAMOND_LEGGINGS) || stack.isOf(Items.DIAMOND_BOOTS);
+                                                               ^
+  symbol:   class PickaxeItem
+  location: class AutoWarden
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\misc\AutoWarden.java:993: error: cannot find symbol
+        return data != null && id.equals(data.copyNbt().getCompound("PublicBukkitValues").getString("minecraft:ftid"));
+                                                                                         ^
+  symbol:   method getString(String)
+  location: class Optional<NbtCompound>
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\misc\AutoBuy.java:78: error: cannot find symbol
+            mc.player.networkHandler.sendCommand("ah");
+                                    ^
+  symbol:   method sendCommand(String)
+  location: variable networkHandler of type ClientPlayNetworkHandler
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\misc\AutoBuy.java:154: error: cannot find symbol
+                    if (inventoryPacket.getContents().size() == 90 && this.tickCounter >= 7) {
+                                       ^
+  symbol:   method getContents()
+  location: variable inventoryPacket of type InventoryS2CPacket
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\misc\AutoBuy.java:216: error: invalid method reference
+                    context.drawGuiTexture(RenderLayer::getGuiTextured, Identifier.ofVanilla("container/slot"), x, slotY, 18, 18);
+                                           ^
+  cannot find symbol
+    symbol:   method getGuiTextured()
+    location: class RenderLayer
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\misc\AutoBuy.java:221: error: cannot find symbol
+                            context.fillGradient(RenderLayer.getGuiOverlay(), x + 1, slotY + 1, x + 17, slotY + 17, -2130706433, -2130706433, 0);
+                                                            ^
+  symbol:   method getGuiOverlay()
+  location: class RenderLayer
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\combat\Velocity.java:62: error: cannot find symbol
+                    this.e = new Vec3d(packet.getVelocityX(), 0.0d, packet.getVelocityZ());
+                                             ^
+  symbol:   method getVelocityX()
+  location: variable packet of type EntityVelocityUpdateS2CPacket
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\combat\Velocity.java:62: error: cannot find symbol
+                    this.e = new Vec3d(packet.getVelocityX(), 0.0d, packet.getVelocityZ());
+                                                                          ^
+  symbol:   method getVelocityZ()
+  location: variable packet of type EntityVelocityUpdateS2CPacket
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\ui\screen\RadialScreen.java:133: error: cannot find symbo
+                a(context.getMatrices().peek().getPositionMatrix(), cx + offsetX, cy + offsetY, this.c, this.d, drawStart, drawEnd, fillColor);
+                                       ^
+  symbol:   method peek()
+  location: class Matrix3x2fStack
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\ui\screen\RadialScreen.java:227: error: cannot find symbo
+        RenderSystem.setShader(ShaderProgramKeys.POSITION_COLOR);
+                               ^
+  symbol:   variable ShaderProgramKeys
+  location: class RadialScreen
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\network\AccountConstructor.java:55: error: cannot find symbol
+        return DefaultSkinHelper.getSkinTextures(uuid).texture();
+                                                      ^
+  symbol:   method texture()
+  location: class SkinTextures
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\combat\AuraHandler.java:92: error: cannot find symbol
+        RenderSystem.setShader(ShaderProgramKeys.POSITION_COLOR);
+                               ^
+  symbol:   variable ShaderProgramKeys
+  location: class AuraHandler
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\combat\AuraHandler.java:93: error: cannot find symbol
+        RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
+                    ^
+  symbol:   method setShaderColor(float,float,float,float)
+  location: class RenderSystem
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\combat\AuraHandler.java:96: error: cannot find symbol
+        Vec3d targetCenter = this.target.getPos().add(0.0d, ((double) this.target.getHeight()) / 2.0d, 0.0d);
+                                        ^
+  symbol:   method getPos()
+  location: variable target of type LivingEntity
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\combat\AuraHandler.java:166: error: cannot find symbol
+        RenderSystem.setShader(ShaderProgramKeys.POSITION_COLOR);
+                               ^
+  symbol:   variable ShaderProgramKeys
+  location: class AuraHandler
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\combat\AuraHandler.java:167: error: cannot find symbol
+        RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
+                    ^
+  symbol:   method setShaderColor(float,float,float,float)
+  location: class RenderSystem
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\combat\AuraHandler.java:207: error: cannot find symbol
+        RenderSystem.blendFunc(GlConst.GL_SRC_ALPHA, GlConst.GL_ONE);
+                    ^
+  symbol:   method blendFunc(int,int)
+  location: class RenderSystem
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\handler\ANFindHandler.java:74: error: cannot find symbol
+                    mc.getSoundManager().play(PositionedSoundInstance.master(SoundEvents.UI_BUTTON_CLICK, 1.0f));
+                                                                     ^
+  symbol:   method master(Reference<SoundEvent>,float)
+  location: class PositionedSoundInstance
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\handler\ANFindHandler.java:168: error: incompatible types: possible lossy conversion from int to short
+                mc.player.networkHandler.sendPacket(new ClickSlotC2SPacket(screen.getScreenHandler().syncId, screen.getScreenHandler().getRevision(), slot.id, 0, SlotActionType.PICKUP, screen.getScreenHandler().getCursorStack().copy(), Int2ObjectMaps.emptyMap()));
+                                                                                                                                                          ^
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\handler\MainHandler.java:62: error: cannot find symbol
+                    if (component.getString().contains("╨ƒ╨╛╨┤╤Ç╨╛╨▒╨╜╨╡╨╡") && (hover = component.getStyle().getHoverEvent()) != null && hover.getAction() == HoverEvent.Action.SHOW_TEXT && (hoverText = hover.getValue(HoverEvent.Action.SHOW_TEXT)) != null) {
+                                                                                                                                                                                                       ^
+  symbol:   method getValue(Action)
+  location: variable hover of type HoverEvent
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\cosmetic\Cosmetic.java:110: error: cannot infer type arguments for AnimationController<>
+            controllers.add(new AnimationController<>(this, "main", 0, state -> {
+                            ^
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\cosmetic\Cosmetic.java:121: error: method does not override or implement a method from a supertype
+    @Override
+    ^
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\cosmetic\Cosmetic.java:123: error: cannot find symbol
+        return RenderUtil.getCurrentTick();
+                         ^
+  symbol:   method getCurrentTick()
+  location: class RenderUtil
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\cosmetic\CosmeticsGeoModel.java:9: error: CosmeticsGeoModel is not abstract and does not override abstract method getTextureResource(GeoRenderState) in GeoModel
+public class CosmeticsGeoModel extends GeoModel<Cosmetic> {
+       ^
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\cosmetic\CosmeticsGeoModel.java:16: error: method does not override or implement a method from a supertype
+    @Override
+    ^
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\cosmetic\CosmeticsGeoModel.java:21: error: method does not override or implement a method from a supertype
+    @Override
+    ^
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\cosmetic\CosmeticsGeoModel.java:36: error: method does not override or implement a method from a supertype
+    @Override
+    ^
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\cosmetic\CosmeticsRenderer.java:15: error: CosmeticsRenderer is not abstract and does not override abstract method render(MatrixStack,OrderedRenderCommandQueue,int,PlayerEntityRenderState,float,float) in FeatureRenderer
+public class CosmeticsRenderer extends FeatureRenderer<PlayerEntityRenderState, PlayerEntityModel> implements Interface {
+       ^
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\combat\AuraUtil.java:129: error: cannot find symbo
+        Vec3d targetEye = target.getPos().add(0.0d, target.getStandingEyeHeight(), 0.0d);
+                                ^
+  symbol:   method getPos()
+  location: variable target of type LivingEntity
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\combat\AuraUtil.java:203: error: cannot find symbo
+        if (mc.player == null || mc.player.getWorld() == null) {
+                                          ^
+  symbol:   method getWorld()
+  location: variable player of type ClientPlayerEntity
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\combat\AuraUtil.java:206: error: cannot find symbo
+        World world = mc.player.getWorld();
+                               ^
+  symbol:   method getWorld()
+  location: variable player of type ClientPlayerEntity
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\combat\MaceUtil.java:62: error: cannot find symbol
+                return Optional.of(player.getPos().add(ox + allowed.x, oy + allowed.y, oz + allowed.z));
+                                         ^
+  symbol:   method getPos()
+  location: variable player of type ClientPlayerEntity
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\combat\MaceUtil.java:68: error: cannot find symbol
+                return Optional.of(player.getPos().add(ox, oy, oz));
+                                         ^
+  symbol:   method getPos()
+  location: variable player of type ClientPlayerEntity
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\render\DeltaPipelines.java:33: error: cannot find symbol
+            .withBlend(RenderPipelines.GUI_OVERLAY.getBlendFunction())
+                                      ^
+  symbol:   variable GUI_OVERLAY
+  location: class RenderPipelines
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\render\DeltaPipelines.java:44: error: cannot find symbol
+            .withBlend(RenderPipelines.GUI_OVERLAY.getBlendFunction())
+                                      ^
+  symbol:   variable GUI_OVERLAY
+  location: class RenderPipelines
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\render\DeltaPipelines.java:56: error: cannot find symbol
+            .withBlend(RenderPipelines.GUI_OVERLAY.getBlendFunction())
+                                      ^
+  symbol:   variable GUI_OVERLAY
+  location: class RenderPipelines
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\render\DeltaPipelines.java:68: error: cannot find symbol
+            .withBlend(RenderPipelines.GUI_OVERLAY.getBlendFunction())
+                                      ^
+  symbol:   variable GUI_OVERLAY
+  location: class RenderPipelines
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\render\DeltaPipelines.java:79: error: cannot find symbol
+            .withBlend(RenderPipelines.GUI_OVERLAY.getBlendFunction())
+                                      ^
+  symbol:   variable GUI_OVERLAY
+  location: class RenderPipelines
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\render\DeltaPipelines.java:93: error: incompatible types: Optional<BlendFunction> cannot be converted to BlendFunction
+            .withBlend(RenderPipelines.GUI.getBlendFunction())
+                                                           ^
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\render\GpuDraw.java:162: error: cannot find symbol
+            RenderSystem.ShapeIndexBuffer shape = RenderSystem.getSequentialBuffer(format.drawMode());
+                                                                                         ^
+  symbol:   method drawMode()
+  location: variable format of type VertexFormat
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\render\GpuDraw.java:192: error: cannot find symbol
+            GpuSampler sampler = RenderSystem.getSamplerCache().get(FilterMode.LINEAR);
+                                                                    ^
+  symbol:   variable FilterMode
+  location: class GpuDraw
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\render\GpuDraw.java:228: error: cannot find symbol
+            built.release();
+                 ^
+  symbol:   method release()
+  location: variable built of type BuiltBuffer
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\render\ScaleUtil.java:16: error: incompatible types: possible lossy conversion from double to int
+        window.setScaleFactor(target);
+                              ^
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\render\ScissorUtil.java:32: error: cannot find symbol
+        b.popMatrix();
+         ^
+  symbol:   method popMatrix()
+  location: variable b of type Deque<intersect>
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\ui\screen\AltScreen.java:223: error: cannot find symbol
+                                Delta.getInstance().getModuleProcessor().guiMatrices().save();
+                                                                        ^
+  symbol:   method guiMatrices()
+  location: class Processor
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\ui\screen\AltScreen.java:290: error: cannot find symbol
+        AccountConstructor selected = Delta.getInstance().getModuleProcessor().guiMatrices().a();
+                                                                              ^
+  symbol:   method guiMatrices()
+  location: class Processor
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\ui\screen\AltScreen.java:300: error: cannot find symbol
+        AccountConstructor selected = Delta.getInstance().getModuleProcessor().guiMatrices().a();
+                                                                              ^
+  symbol:   method guiMatrices()
+  location: class Processor
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\ui\screen\AltScreen.java:397: error: cannot find symbol
+        return Delta.getInstance().getModuleProcessor().guiMatrices().e();
+                                                       ^
+  symbol:   method guiMatrices()
+  location: class Processor
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\ui\screen\AltScreen.java:404: error: cannot find symbol
+        Delta.getInstance().getModuleProcessor().guiMatrices().save();
+                                                ^
+  symbol:   method guiMatrices()
+  location: class Processor
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\ui\screen\AltScreen.java:452: error: cannot find symbol
+        Delta.getInstance().getModuleProcessor().guiMatrices().save();
+                                                ^
+  symbol:   method guiMatrices()
+  location: class Processor
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\ui\screen\AltScreen.java:462: error: cannot find symbol
+        Delta.getInstance().getModuleProcessor().guiMatrices().save();
+                                                ^
+  symbol:   method guiMatrices()
+  location: class Processor
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\ui\screen\AltScreen.java:493: error: cannot find symbol
+        Delta.getInstance().getModuleProcessor().guiMatrices().save();
+                                                ^
+  symbol:   method guiMatrices()
+  location: class Processor
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\ui\screen\MainScreen.java:213: error: cannot find symbol
+        matrices.multiply(new Quaternionf().rotateZ((float) Math.toRadians((-90.0f) + (180.0f * this.i))));
+                ^
+  symbol:   method multiply(Quaternionf)
+  location: variable matrices of type Matrix3x2fStack
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\ui\widget\ArmorWidget.java:38: error: invalid method reference
+                event.i().drawGuiTexture(RenderLayer::getGuiTextured, Identifier.ofVanilla("hud/hotbar"), InterfaceC0020Opcode.bJ, 22, 0, 0, epta, startY, (count * 20) + 1, 22);
+                                         ^
+  cannot find symbol
+    symbol:   method getGuiTextured()
+    location: class RenderLayer
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\ui\widget\EnvironmentWidget.java:137: error: cannot find symbol
+                0.125f, 0.125f, 0.125f, mc.getTextureManager().getTexture(data.e).getGlId());
+                                                                                 ^
+  symbol:   method getGlId()
+  location: class AbstractTexture
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\ui\widget\EnvironmentWidget.java:286: error: cannot find symbol
+                class_2960VarComp_1626 = client.getSkinTextures().texture();
+                                               ^
+  symbol:   method getSkinTextures()
+  location: variable client of type AbstractClientPlayerEntity
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\ui\widget\EnvironmentWidget.java:288: error: cannot find symbol
+                class_2960VarComp_1626 = DefaultSkinHelper.getSkinTextures(this.a).texture();
+                                                                                  ^
+  symbol:   method texture()
+  location: class SkinTextures
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\ui\widget\StaffWidget.java:55: error: cannot find symbol
+                    return e.getProfile().getName().equalsIgnoreCase(staff2.a());
+                                         ^
+  symbol:   method getName()
+  location: class GameProfile
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\ui\widget\StaffWidget.java:58: error: cannot find symbol
+                    event.getDraw2DProcessor().a(event.guiMatrices(), x + offsetX + 5.0f, drawY + 2.0f, 7.5f, 7.5f, 2.0f, ColorUtil.applyAlphaToColor(-1, animation), 0.125f, 0.125f, 0.125f, 0.125f, mc.getTextureManager().getTexture(entry.getSkinTextures().texture()).getGlId());
+                                                                                                                                                                                                                                                               ^
+  symbol:   method texture()
+  location: class SkinTextures
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\ui\widget\StaffWidget.java:77: error: cannot find symbol
+                return e.getProfile().getName().equalsIgnoreCase(staff.a());
+                                     ^
+  symbol:   method getName()
+  location: class GameProfile
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\ui\widget\TargetWidget.java:55: error: cannot find symbol
+                event.getDraw2DProcessor().a(event.guiMatrices(), x + 5.0f, headY, headSize, headSize, 2.0f, ColorUtil.applyAlphaToColor(-1, a()), 0.125f, 0.125f, 0.125f, 0.125f, Interface.mc.getTextureManager().getTexture(player.getSkinTextures().texture()).getGlId());
+                                                                                                                                                                                                                                     ^
+  symbol:   method getSkinTextures()
+  location: variable player of type AbstractClientPlayerEntity
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\util\ChatUtil.java:52: error: HoverEvent is abstract; cannot be instantiated
+        return Text.literal(rawMessage.replace('&', (char) 167)).setStyle(Style.EMPTY.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, hover.copy())));
+                                                                                                     ^
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\util\MathUtil.java:71: error: cannot find symbol
+        float delta = mc.getRenderTickCounter().getLastFrameDuration();
+                                               ^
+  symbol:   method getLastFrameDuration()
+  location: interface RenderTickCounter
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\platform\inject\mixin\GameMenuScreenMixin.java:80: error: method disconnect in class ClientWorld cannot be applied to given types;
+                        Interface.mc.world.disconnect();
+                                          ^
+  required: Text
+  found:    no arguments
+  reason: actual and formal argument lists differ in length
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\platform\inject\mixin\HandledScreenMixin.java:168: error: method matchesKey in class KeyBinding cannot be applied to given types;
+        if (Interface.mc.options.dropKey == null || !Interface.mc.options.dropKey.matchesKey(keyCode, scanCode) || (modifiers & 2) == 0 || (modifiers & 1) == 0 || (focusedSlot = ((HandledScreenAccessor) this).getFocusedSlot()) == null || !focusedSlot.hasStack()) {
+                                                                                 ^
+  required: KeyInput
+  found:    int,int
+  reason: actual and formal argument lists differ in length
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\platform\inject\mixin\InGameHudMixin.java:60: error: cannot find symbol
+                context.draw();
+                       ^
+  symbol:   method draw()
+  location: variable context of type DrawContext
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\platform\inject\mixin\InGameHudMixin.java:164: error: incompatible types: void cannot be converted to int
+        return context.drawText(textRenderer, event.b(), x, y, color, shadow);
+                               ^
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\platform\inject\mixin\InventoryScreenMixin.java:39: error: cannot find symbol
+        context.getMatrices().loadIdentity();
+                             ^
+  symbol:   method loadIdentity()
+  location: class Matrix3x2fStack
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\platform\inject\mixin\PlayerListHudMixin.java:29: error: cannot find symbol
+        if (Interface.mc.player != null && w < list.size() && Interface.mc.player.getUuid().equals(list.get(w).getProfile().getId())) {
+                                                                                                                           ^
+  symbol:   method getId()
+  location: class GameProfile
+C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\platform\inject\mixin\RenderSystemMixin.java:20: error: cannot find symbol
+            GlStateManager._clearColor(event.getRed(), event.getGreen(), event.getBlue(), event.getAlpha());
+                          ^
+  symbol:   method _clearColor(float,float,float,float)
+  location: class GlStateManager
+Note: Some messages have been simplified; recompile with -Xdiags:verbose to get full output
+199 errors
+
+> Task :compileJava FAILED
+
+[Incubating] Problems report is available at: file:///C:/Users/Blazix/Desktop/Delta%201.21.11/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':compileJava' (registered by plugin class 'org.gradle.api.plugins.JavaBasePlugin').
+> Compilation failed; see the compiler output below.
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\command\CommandProcessor.java:40: error: constructor ClientCommandSource in class ClientCommandSource cannot be applied to given types;
+      private final ClientCommandSource commandSource = new ClientCommandSource(null, MinecraftClient.getInstance());
+                                                        ^
+    required: ClientPlayNetworkHandler,MinecraftClient,PermissionPredicate
+    found:    <null>,MinecraftClient
+    reason: actual and formal argument lists differ in length
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\platform\inject\mixin\GameMenuScreenMixin.java:80: error: method disconnect in class ClientWorld cannot be applied to given types;
+                          Interface.mc.world.disconnect();
+                                            ^
+    required: Text
+    found:    no arguments
+    reason: actual and formal argument lists differ in length
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\platform\inject\mixin\HandledScreenMixin.java:168: error: method matchesKey in class KeyBinding cannot be applied to given types;
+          if (Interface.mc.options.dropKey == null || !Interface.mc.options.dropKey.matchesKey(keyCode, scanCode) || (modifiers & 2) == 0 || (modifiers & 1) == 0 || (focusedSlot = ((HandledScreenAccessor) this).getFocusedSlot()) == null || !focusedSlot.hasStack()) {
+                                                                                   ^
+    required: KeyInput
+    found:    int,int
+    reason: actual and formal argument lists differ in length
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\command\WayCommand.java:217: error: no suitable method found for a(MatrixStack,Identifier,float,float,float,float,float,int)
+          event.getDraw2DProcessor().a(matrices, Identifier.of("delta", "pictures/triangle.png"), -7.0f, -7.0f, 14.0f, 14.0f, 0.0f, primary);
+                                    ^
+      method Draw2DProcessor.a(Matrix3x2fStack,float,float,float,float,float,float,int) is not applicable
+        (argument mismatch; MatrixStack cannot be converted to Matrix3x2fStack)
+      method Draw2DProcessor.a(Matrix3x2fStack,float,float,float,float,Vector4f,float,int) is not applicable
+        (argument mismatch; MatrixStack cannot be converted to Matrix3x2fStack)
+      method Draw2DProcessor.a(Matrix3x2fStack,Identifier,float,float,float,float,float,int) is not applicable
+        (argument mismatch; MatrixStack cannot be converted to Matrix3x2fStack)
+      method Draw2DProcessor.a(Matrix3x2fStack,float,float,float,float,float,int,float) is not applicable
+        (argument mismatch; MatrixStack cannot be converted to Matrix3x2fStack)
+      method Draw2DProcessor.a(Matrix4f,Identifier,float,float,float,float,float,int) is not applicable
+        (argument mismatch; MatrixStack cannot be converted to Matrix4f)
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\command\WayCommand.java:220: error: no suitable method found for a(MatrixStack,Text,float,float,float)
+          Fonts.d.a(matrices, text, cx - (Fonts.d.a(text, 7.0f) / 2.0f), cy + 7.0f + 2.0f, 7.0f);
+                 ^
+      method Font.a(Matrix3x2fStack,Text,float,float,float) is not applicable
+        (argument mismatch; MatrixStack cannot be converted to Matrix3x2fStack)
+      method Font.a(Matrix4f,Text,float,float,float) is not applicable
+        (argument mismatch; MatrixStack cannot be converted to Matrix4f)
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\render\EntityBox.java:94: error: no suitable method found for a(MatrixStack,float,float,float,float,float,int)
+              draw.a(event.h(), barX - 0.5f, minY - 0.5f, 1.75f, height + 1.0f, 0.0f, outlineColor);
+                  ^
+      method Draw2DProcessor.a(Matrix3x2fStack,float,float,float,float,float,int) is not applicable
+        (argument mismatch; MatrixStack cannot be converted to Matrix3x2fStack)
+      method Draw2DProcessor.a(Matrix3x2fStack,float,float,float,float,Vector4f,int) is not applicable
+        (argument mismatch; MatrixStack cannot be converted to Matrix3x2fStack)
+      method Draw2DProcessor.a(BufferBuilder,Matrix4f,float,float,float,float,int) is not applicable
+        (argument mismatch; MatrixStack cannot be converted to BufferBuilder)
+      method Draw2DProcessor.a(Matrix4f,float,float,float,float,float,int) is not applicable
+        (argument mismatch; MatrixStack cannot be converted to Matrix4f)
+      method Draw2DProcessor.a(Matrix4f,float,float,float,float,Vector4f,int) is not applicable
+        (argument mismatch; MatrixStack cannot be converted to Matrix4f)
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\render\EntityBox.java:95: error: no suitable method found for a(MatrixStack,float,float,float,float,float,int)
+              draw.a(event.h(), barX, minY + (height * (1.0f - healthPercent)), 0.75f, height * healthPercent, 0.0f, healthColor);
+                  ^
+      method Draw2DProcessor.a(Matrix3x2fStack,float,float,float,float,float,int) is not applicable
+        (argument mismatch; MatrixStack cannot be converted to Matrix3x2fStack)
+      method Draw2DProcessor.a(Matrix3x2fStack,float,float,float,float,Vector4f,int) is not applicable
+        (argument mismatch; MatrixStack cannot be converted to Matrix3x2fStack)
+      method Draw2DProcessor.a(BufferBuilder,Matrix4f,float,float,float,float,int) is not applicable
+        (argument mismatch; MatrixStack cannot be converted to BufferBuilder)
+      method Draw2DProcessor.a(Matrix4f,float,float,float,float,float,int) is not applicable
+        (argument mismatch; MatrixStack cannot be converted to Matrix4f)
+      method Draw2DProcessor.a(Matrix4f,float,float,float,float,Vector4f,int) is not applicable
+        (argument mismatch; MatrixStack cannot be converted to Matrix4f)
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\render\EntityBox.java:111: error: no suitable method found for a(MatrixStack,float,float,float,float,float,int)
+          draw.a(event.h(), left - outlineOffset, top - outlineOffset, width + (outlineOffset * 2.0f), height + (outlineOffset * 2.0f), 0.0f, outlineColor);
+              ^
+      method Draw2DProcessor.a(Matrix3x2fStack,float,float,float,float,float,int) is not applicable
+        (argument mismatch; MatrixStack cannot be converted to Matrix3x2fStack)
+      method Draw2DProcessor.a(Matrix3x2fStack,float,float,float,float,Vector4f,int) is not applicable
+        (argument mismatch; MatrixStack cannot be converted to Matrix3x2fStack)
+      method Draw2DProcessor.a(BufferBuilder,Matrix4f,float,float,float,float,int) is not applicable
+        (argument mismatch; MatrixStack cannot be converted to BufferBuilder)
+      method Draw2DProcessor.a(Matrix4f,float,float,float,float,float,int) is not applicable
+        (argument mismatch; MatrixStack cannot be converted to Matrix4f)
+      method Draw2DProcessor.a(Matrix4f,float,float,float,float,Vector4f,int) is not applicable
+        (argument mismatch; MatrixStack cannot be converted to Matrix4f)
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\render\EntityBox.java:112: error: no suitable method found for a(MatrixStack,float,float,float,float,float,int)
+          draw.a(event.h(), left, top, width, height, 0.0f, color);
+              ^
+      method Draw2DProcessor.a(Matrix3x2fStack,float,float,float,float,float,int) is not applicable
+        (argument mismatch; MatrixStack cannot be converted to Matrix3x2fStack)
+      method Draw2DProcessor.a(Matrix3x2fStack,float,float,float,float,Vector4f,int) is not applicable
+        (argument mismatch; MatrixStack cannot be converted to Matrix3x2fStack)
+      method Draw2DProcessor.a(BufferBuilder,Matrix4f,float,float,float,float,int) is not applicable
+        (argument mismatch; MatrixStack cannot be converted to BufferBuilder)
+      method Draw2DProcessor.a(Matrix4f,float,float,float,float,float,int) is not applicable
+        (argument mismatch; MatrixStack cannot be converted to Matrix4f)
+      method Draw2DProcessor.a(Matrix4f,float,float,float,float,Vector4f,int) is not applicable
+        (argument mismatch; MatrixStack cannot be converted to Matrix4f)
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\render\Predictions.java:156: error: no suitable method found for a(MatrixStack,float,float,float,float,float,int)
+              event.getDraw2DProcessor().a(matrices, x, y, width + 1.0f, height, 2.0f, ColorUtil.convertToARGB(0, 0, 0, (int) (130.0f * alpha)));
+                                        ^
+      method Draw2DProcessor.a(Matrix3x2fStack,float,float,float,float,float,int) is not applicable
+        (argument mismatch; MatrixStack cannot be converted to Matrix3x2fStack)
+      method Draw2DProcessor.a(Matrix3x2fStack,float,float,float,float,Vector4f,int) is not applicable
+        (argument mismatch; MatrixStack cannot be converted to Matrix3x2fStack)
+      method Draw2DProcessor.a(BufferBuilder,Matrix4f,float,float,float,float,int) is not applicable
+        (argument mismatch; MatrixStack cannot be converted to BufferBuilder)
+      method Draw2DProcessor.a(Matrix4f,float,float,float,float,float,int) is not applicable
+        (argument mismatch; MatrixStack cannot be converted to Matrix4f)
+      method Draw2DProcessor.a(Matrix4f,float,float,float,float,Vector4f,int) is not applicable
+        (argument mismatch; MatrixStack cannot be converted to Matrix4f)
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\render\Predictions.java:158: error: no suitable method found for a(MatrixStack,String,float,float,float,int,float)
+              Fonts.e.a(matrices, format, x + (2.0f * 2.0f) + iconSize, y + 2.0f, 7.25f, ColorUtil.applyAlphaToColor(-1, alpha), 0.0f);
+                     ^
+      method Font.a(Matrix3x2fStack,Text,float,float,float,float,float) is not applicable
+        (argument mismatch; MatrixStack cannot be converted to Matrix3x2fStack)
+      method Font.a(Matrix3x2fStack,String,float,float,float,int,float) is not applicable
+        (argument mismatch; MatrixStack cannot be converted to Matrix3x2fStack)
+      method Font.a(Matrix4f,Text,float,float,float,float,float) is not applicable
+        (argument mismatch; MatrixStack cannot be converted to Matrix4f)
+      method Font.a(Matrix4f,String,float,float,float,int,float) is not applicable
+        (argument mismatch; MatrixStack cannot be converted to Matrix4f)
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\render\Pointers.java:78: error: no suitable method found for a(MatrixStack,Identifier,float,float,float,float,float,int)
+                          event.getDraw2DProcessor().a(stack, Identifier.of("delta", "pictures/pointer.png"), (-this.c.c().floatValue()) / 2.0f, (-this.c.c().floatValue()) / 2.0f, this.c.c().floatValue(), this.c.c().floatValue(), 0.0f, isFriend ? ColorUtil.convertToARGB(85, 255, 85, InterfaceC0020Opcode.aL) : ColorUtil.convertToARGB(255, 255, 255, InterfaceC0020Opcode.aL));
+                                                    ^
+      method Draw2DProcessor.a(Matrix3x2fStack,float,float,float,float,float,float,int) is not applicable
+        (argument mismatch; MatrixStack cannot be converted to Matrix3x2fStack)
+      method Draw2DProcessor.a(Matrix3x2fStack,float,float,float,float,Vector4f,float,int) is not applicable
+        (argument mismatch; MatrixStack cannot be converted to Matrix3x2fStack)
+      method Draw2DProcessor.a(Matrix3x2fStack,Identifier,float,float,float,float,float,int) is not applicable
+        (argument mismatch; MatrixStack cannot be converted to Matrix3x2fStack)
+      method Draw2DProcessor.a(Matrix3x2fStack,float,float,float,float,float,int,float) is not applicable
+        (argument mismatch; MatrixStack cannot be converted to Matrix3x2fStack)
+      method Draw2DProcessor.a(Matrix4f,Identifier,float,float,float,float,float,int) is not applicable
+        (argument mismatch; MatrixStack cannot be converted to Matrix4f)
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\autobuy\AutoBuyEntry.java:234: error: ProfileComponent is abstract; cannot be instantiated
+              stack.set(DataComponentTypes.PROFILE, new ProfileComponent(gameProfile));
+                                                    ^
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\util\ChatUtil.java:52: error: HoverEvent is abstract; cannot be instantiated
+          return Text.literal(rawMessage.replace('&', (char) 167)).setStyle(Style.EMPTY.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, hover.copy())));
+                                                                                                       ^
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\render\ShulkerPreview.java:67: error: invalid method reference
+          context.drawTexture(RenderLayer::getGuiTextured, Identifier.of("delta", "pictures/minecraft/3x9.png"), 0, 0, 0.0f, 0.0f, (int) this.b.x(), (int) this.b.y(), 256, 256, ColorUtil.combineColorWithAlpha(((BlockItem) itemStack.getItem()).getBlock().getDefaultMapColor().color, 255));
+                              ^
+    cannot find symbol
+      symbol:   method getGuiTextured()
+      location: class RenderLayer
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\misc\AutoBuy.java:216: error: invalid method reference
+                      context.drawGuiTexture(RenderLayer::getGuiTextured, Identifier.ofVanilla("container/slot"), x, slotY, 18, 18);
+                                             ^
+    cannot find symbol
+      symbol:   method getGuiTextured()
+      location: class RenderLayer
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\ui\widget\ArmorWidget.java:38: error: invalid method reference
+                  event.i().drawGuiTexture(RenderLayer::getGuiTextured, Identifier.ofVanilla("hud/hotbar"), InterfaceC0020Opcode.bJ, 22, 0, 0, epta, startY, (count * 20) + 1, 22);
+                                           ^
+    cannot find symbol
+      symbol:   method getGuiTextured()
+      location: class RenderLayer
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\ui\shader\NoiseShader.java:21: error: NoiseShader is not abstract and does not override abstract method pack() in Shader
+  public class NoiseShader extends Shader implements Interface {
+         ^
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\cosmetic\CosmeticsGeoModel.java:9: error: CosmeticsGeoModel is not abstract and does not override abstract method getTextureResource(GeoRenderState) in GeoModel
+  public class CosmeticsGeoModel extends GeoModel<Cosmetic> {
+         ^
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\cosmetic\CosmeticsRenderer.java:15: error: CosmeticsRenderer is not abstract and does not override abstract method render(MatrixStack,OrderedRenderCommandQueue,int,PlayerEntityRenderState,float,float) in FeatureRenderer
+  public class CosmeticsRenderer extends FeatureRenderer<PlayerEntityRenderState, PlayerEntityModel> implements Interface {
+         ^
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\render\Font.java:431: error: incompatible types: Matrix4f cannot be converted to Matrix3x2fStack
+          a(matrix, text, x, y, size, thickness, color, -1, -1.0f, 0.5f, 0.0f, -1, thickness);
+            ^
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\command\BaseCommand.java:83: error: incompatible types: Stream<Object> cannot be converted to Stream<String>
+              }).filter(name -> {
+                       ^
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\misc\Communication.java:117: error: incompatible types: Identifier cannot be converted to StyleSpriteSource
+                  line.append(Text.literal(prefix.a()).setStyle(Style.EMPTY.withFont(Identifier.of("delta", "prefixes")))).append(Text.literal(StringUtils.a));
+                                                                                                  ^
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\misc\ServerAssistant.java:238: error: incompatible types: ClickSlotC2SPacketAccessor cannot be converted to ClickSlotC2SPacket
+              if (clickSlotC2SPacketAccessorD instanceof ClickSlotC2SPacket) {
+                  ^
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\render\ShulkerPreview.java:65: error: incompatible types: float cannot be converted to Matrix3x2f
+          matrices.translate(x, y, 500.0f);
+                                   ^
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\render\Predictions.java:151: error: incompatible types: Matrix3x2fStack cannot be converted to MatrixStack
+              MatrixStack matrices = event.i().getMatrices();
+                                                          ^
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\handler\ANFindHandler.java:168: error: incompatible types: possible lossy conversion from int to short
+                  mc.player.networkHandler.sendPacket(new ClickSlotC2SPacket(screen.getScreenHandler().syncId, screen.getScreenHandler().getRevision(), slot.id, 0, SlotActionType.PICKUP, screen.getScreenHandler().getCursorStack().copy(), Int2ObjectMaps.emptyMap()));
+                                                                                                                                                            ^
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\render\DeltaPipelines.java:93: error: incompatible types: Optional<BlendFunction> cannot be converted to BlendFunction
+              .withBlend(RenderPipelines.GUI.getBlendFunction())
+                                                             ^
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\render\ScaleUtil.java:16: error: incompatible types: possible lossy conversion from double to int
+          window.setScaleFactor(target);
+                                ^
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\platform\inject\mixin\InGameHudMixin.java:164: error: incompatible types: void cannot be converted to int
+          return context.drawText(textRenderer, event.b(), x, y, color, shadow);
+                                 ^
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\cosmetic\Cosmetic.java:23: error: wrong number of type arguments; required 3
+      private final GeoObjectRenderer<Cosmetic> renderer;
+                                     ^
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\cosmetic\Cosmetic.java:67: error: wrong number of type arguments; required 3
+      public GeoObjectRenderer<Cosmetic> getRenderer() {
+                              ^
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\cosmetic\CosmeticsGeoModel.java:17: error: wrong number of type arguments; required 3
+      public Identifier getModelResource(Cosmetic cosmetic, GeoRenderer<Cosmetic> renderer) {
+                                                                       ^
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\cosmetic\CosmeticsGeoModel.java:22: error: wrong number of type arguments; required 3
+      public Identifier getTextureResource(Cosmetic cosmetic, GeoRenderer<Cosmetic> renderer) {
+                                                                         ^
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\ambience\Ambience.java:14: error: cannot find symbol
+  import net.minecraft.client.render.FogShape;
+                                    ^
+    symbol:   class FogShape
+    location: package net.minecraft.client.render
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\event\AmbienceEvent.java:7: error: cannot find symbol
+  import net.minecraft.client.render.Fog;
+                                    ^
+    symbol:   class Fog
+    location: package net.minecraft.client.render
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\event\AmbienceEvent.java:8: error: cannot find symbol
+  import net.minecraft.client.render.FogShape;
+                                    ^
+    symbol:   class FogShape
+    location: package net.minecraft.client.render
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\event\AmbienceEvent.java:78: error: cannot find symbol
+          private Fog fog;
+                  ^
+    symbol:   class Fog
+    location: class b
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\event\AmbienceEvent.java:80: error: cannot find symbol
+          public b(Camera camera, float viewDistance, Fog fog) {
+                                                      ^
+    symbol:   class Fog
+    location: class b
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\event\AmbienceEvent.java:90: error: cannot find symbol
+          public void setFog(Fog fog) {
+                             ^
+    symbol:   class Fog
+    location: class b
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\event\AmbienceEvent.java:106: error: cannot find symbol
+          public Fog d() {
+                 ^
+    symbol:   class Fog
+    location: class b
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\event\AmbienceEvent.java:110: error: cannot find symbol
+          public void a(float start, float end, FogShape shape, float red, float green, float blue, float alpha) {
+                                                ^
+    symbol:   class FogShape
+    location: class b
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\ui\shader\NoiseShader.java:15: error: cannot find symbol
+  import com.mojang.blaze3d.vertex.VertexFormats;
+                                  ^
+    symbol:   class VertexFormats
+    location: package com.mojang.blaze3d.vertex
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\autobuy\BatchProcessor.java:13: error: cannot find symbol
+  import net.minecraft.client.gl.ShaderProgramKeys;
+                                ^
+    symbol:   class ShaderProgramKeys
+    location: package net.minecraft.client.gl
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\render\Pointers.java:18: error: cannot find symbol
+  import net.minecraft.client.gl.ShaderProgramKeys;
+                                ^
+    symbol:   class ShaderProgramKeys
+    location: package net.minecraft.client.gl
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\ui\screen\RadialScreen.java:21: error: cannot find symbol
+  import net.minecraft.client.gl.ShaderProgramKeys;
+                                ^
+    symbol:   class ShaderProgramKeys
+    location: package net.minecraft.client.gl
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\combat\AuraHandler.java:22: error: cannot find symbol
+  import net.minecraft.client.gl.ShaderProgramKeys;
+                                ^
+    symbol:   class ShaderProgramKeys
+    location: package net.minecraft.client.gl
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\render\GpuDraw.java:25: error: cannot find symbol
+  import net.minecraft.client.texture.FilterMode;
+                                     ^
+    symbol:   class FilterMode
+    location: package net.minecraft.client.texture
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\platform\inject\mixin\BackgroundRendererMixin.java:9: error: cannot find symbol
+  import net.minecraft.client.render.BackgroundRenderer;
+                                    ^
+    symbol:   class BackgroundRenderer
+    location: package net.minecraft.client.render
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\platform\inject\mixin\BackgroundRendererMixin.java:11: error: cannot find symbol
+  import net.minecraft.client.render.Fog;
+                                    ^
+    symbol:   class Fog
+    location: package net.minecraft.client.render
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\platform\inject\mixin\BackgroundRendererMixin.java:44: error: cannot find symbol
+      private static Fog onApplyFog(Fog original, @Local(argsOnly = true) Camera camera, @Local(argsOnly = true, ordinal = 0) float viewDistance) {
+                                    ^
+    symbol:   class Fog
+    location: class BackgroundRendererMixin
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\platform\inject\mixin\BackgroundRendererMixin.java:44: error: cannot find symbol
+      private static Fog onApplyFog(Fog original, @Local(argsOnly = true) Camera camera, @Local(argsOnly = true, ordinal = 0) float viewDistance) {
+                     ^
+    symbol:   class Fog
+    location: class BackgroundRendererMixin
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\platform\inject\mixin\WorldRendererMixin.java:8: error: cannot find symbol
+  import net.minecraft.client.render.Fog;
+                                    ^
+    symbol:   class Fog
+    location: package net.minecraft.client.render
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\platform\inject\mixin\WorldRendererMixin.java:21: error: cannot find symbol
+      private void onRenderWeather(FrameGraphBuilder frameGraphBuilder, Vec3d pos, float tickDelta, Fog fog, CallbackInfo ci) {
+                                                                                                    ^
+    symbol:   class Fog
+    location: class WorldRendererMixin
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\ambience\Ambience.java:89: error: cannot find symbol
+              FogShape shape = event.d().shape();
+              ^
+    symbol:   class FogShape
+    location: class Ambience
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\ambience\Ambience.java:91: error: cannot find symbol
+                  shape = FogShape.SPHERE;
+                          ^
+    symbol:   variable FogShape
+    location: class Ambience
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\event\AmbienceEvent.java:111: error: cannot find symbol
+              this.fog = new Fog(start, end, shape, red, green, blue, alpha);
+                             ^
+    symbol:   class Fog
+    location: class b
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\ui\shader\BlurShader.java:132: error: cannot find symbol
+                  .begin(mode, com.mojang.blaze3d.vertex.VertexFormats.POSITION);
+                                                        ^
+    symbol:   class VertexFormats
+    location: package com.mojang.blaze3d.vertex
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\ui\shader\NoiseShader.java:69: error: cannot find symbol
+          BufferBuilder b = Tessellator.getInstance().begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
+                                                                                         ^
+    symbol:   variable VertexFormats
+    location: class NoiseShader
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\autobuy\BatchProcessor.java:57: error: cannot find symbol
+          RenderSystem.setShader(ShaderProgramKeys.POSITION_COLOR);
+                                 ^
+    symbol:   variable ShaderProgramKeys
+    location: class BatchProcessor
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\autobuy\BatchProcessor.java:80: error: cannot find symbol
+                  RenderSystem.setShader(ShaderProgramKeys.POSITION_COLOR);
+                                         ^
+    symbol:   variable ShaderProgramKeys
+    location: class BatchProcessor
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\autobuy\BatchProcessor.java:98: error: cannot find symbol
+              RenderSystem.setShader(ShaderProgramKeys.RENDERTYPE_LINES);
+                                     ^
+    symbol:   variable ShaderProgramKeys
+    location: class BatchProcessor
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\misc\Collector.java:318: error: cannot find symbol
+          if (!(this.h.i() instanceof ArmorItem) || stack.get(DataComponentTypes.DAMAGE) == null || stack.getMaxDamage() <= 0) {
+                                      ^
+    symbol:   class ArmorItem
+    location: class Collector
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\movement\AutoDodge.java:144: error: cannot find symbol
+              if (spawnPacket.getEntityType() != EntityType.POTION) {
+                                                           ^
+    symbol:   variable POTION
+    location: class EntityType
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\movement\NoCrouch.java:19: error: cannot find symbol
+              mode = ClientCommandC2SPacket.Mode.PRESS_SHIFT_KEY;
+                                                ^
+    symbol:   variable PRESS_SHIFT_KEY
+    location: class Mode
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\movement\NoCrouch.java:21: error: cannot find symbol
+              mode = this.wasSneaking ? ClientCommandC2SPacket.Mode.RELEASE_SHIFT_KEY : null;
+                                                                   ^
+    symbol:   variable RELEASE_SHIFT_KEY
+    location: class Mode
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\player\AutoTool.java:72: error: cannot find symbol
+              return stack.getItem() instanceof PickaxeItem;
+                                                ^
+    symbol:   class PickaxeItem
+    location: class AutoTool
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\misc\ServerAssistant.java:285: error: cannot find symbol
+              if (item instanceof ArmorItem) {
+                                  ^
+    symbol:   class ArmorItem
+    location: class ServerAssistant.a
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\misc\ServerAssistant.java:288: error: cannot find symbol
+              if (item instanceof SwordItem) {
+                                  ^
+    symbol:   class SwordItem
+    location: class ServerAssistant.a
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\misc\ServerAssistant.java:291: error: cannot find symbol
+              if (item instanceof PickaxeItem) {
+                                  ^
+    symbol:   class PickaxeItem
+    location: class ServerAssistant.a
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\misc\ServerAssistant.java:298: error: cannot find symbol
+              if (stack.getItem() instanceof ArmorItem) {
+                                             ^
+    symbol:   class ArmorItem
+    location: class ServerAssistant.a
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\misc\ServerAssistant.java:319: error: cannot find symbol
+              if (stack.getItem() instanceof SwordItem) {
+                                             ^
+    symbol:   class SwordItem
+    location: class ServerAssistant.a
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\misc\ServerAssistant.java:349: error: cannot find symbol
+              if (stack.getItem() instanceof PickaxeItem) {
+                                             ^
+    symbol:   class PickaxeItem
+    location: class ServerAssistant.a
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\render\Pointers.java:91: error: cannot find symbol
+          RenderSystem.setShader(ShaderProgramKeys.POSITION_COLOR);
+                                 ^
+    symbol:   variable ShaderProgramKeys
+    location: class Pointers
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\render\Pointers.java:97: error: cannot find symbol
+              GpuDraw.drawCustom(buffer, DeltaPipelines.WORLD_DEBUG_LINES, java.util.Map.of(), java.util.Map.of());
+                                         ^
+    symbol:   variable DeltaPipelines
+    location: class Pointers
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\misc\AutoWarden.java:983: error: cannot find symbol
+          return (item instanceof ArrowItem) || (item instanceof PickaxeItem) || (item instanceof AxeItem) || stack.isOf(Items.CHORUS_FRUIT) || stack.isOf(Items.DISC_FRAGMENT_5) || stack.isOf(Items.NAUTILUS_SHELL) || stack.isOf(Items.BOOKSHELF) || stack.isOf(Items.COOKED_MUTTON) || stack.isOf(Items.SKELETON_SPAWN_EGG) || stack.isOf(Items.CREEPER_SPAWN_EGG) || stack.isOf(Items.ZOMBIE_SPAWN_EGG) || stack.isOf(Items.VINDICATOR_SPAWN_EGG) || stack.isOf(Items.PIGLIN_SPAWN_EGG) || stack.isOf(Items.FIRE_CHARGE) || stack.isOf(Items.LEATHER) || stack.isOf(Items.SHULKER_SHELL) || stack.isOf(Items.EXPERIENCE_BOTTLE) || stack.isOf(Items.WITHER_ROSE) || stack.isOf(Items.EMERALD) || stack.isOf(Items.SUGAR) || hasCustomTag(stack, "potion-popper") || stack.contains(DataComponentTypes.JUKEBOX_PLAYABLE) || stack.isOf(Items.GHAST_TEAR) || stack.isOf(Items.DRAGON_BREATH) || stack.isOf(Items.VEX_SPAWN_EGG) || stack.isOf(Items.ENDERMITE_SPAWN_EGG) || stack.isOf(Items.CAT_SPAWN_EGG) || stack.isOf(Items.ENCHANTING_TABLE) || stack.isOf(Items.DIAMOND_HELMET) || stack.isOf(Items.DIAMOND_CHESTPLATE) || stack.isOf(Items.DIAMOND_LEGGINGS) || stack.isOf(Items.DIAMOND_BOOTS);
+                                                                 ^
+    symbol:   class PickaxeItem
+    location: class AutoWarden
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\ui\screen\RadialScreen.java:227: error: cannot find symbol
+          RenderSystem.setShader(ShaderProgramKeys.POSITION_COLOR);
+                                 ^
+    symbol:   variable ShaderProgramKeys
+    location: class RadialScreen
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\combat\AuraHandler.java:92: error: cannot find symbol
+          RenderSystem.setShader(ShaderProgramKeys.POSITION_COLOR);
+                                 ^
+    symbol:   variable ShaderProgramKeys
+    location: class AuraHandler
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\combat\AuraHandler.java:166: error: cannot find symbol
+          RenderSystem.setShader(ShaderProgramKeys.POSITION_COLOR);
+                                 ^
+    symbol:   variable ShaderProgramKeys
+    location: class AuraHandler
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\render\DeltaPipelines.java:33: error: cannot find symbol
+              .withBlend(RenderPipelines.GUI_OVERLAY.getBlendFunction())
+                                        ^
+    symbol:   variable GUI_OVERLAY
+    location: class RenderPipelines
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\render\DeltaPipelines.java:44: error: cannot find symbol
+              .withBlend(RenderPipelines.GUI_OVERLAY.getBlendFunction())
+                                        ^
+    symbol:   variable GUI_OVERLAY
+    location: class RenderPipelines
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\render\DeltaPipelines.java:56: error: cannot find symbol
+              .withBlend(RenderPipelines.GUI_OVERLAY.getBlendFunction())
+                                        ^
+    symbol:   variable GUI_OVERLAY
+    location: class RenderPipelines
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\render\DeltaPipelines.java:68: error: cannot find symbol
+              .withBlend(RenderPipelines.GUI_OVERLAY.getBlendFunction())
+                                        ^
+    symbol:   variable GUI_OVERLAY
+    location: class RenderPipelines
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\render\DeltaPipelines.java:79: error: cannot find symbol
+              .withBlend(RenderPipelines.GUI_OVERLAY.getBlendFunction())
+                                        ^
+    symbol:   variable GUI_OVERLAY
+    location: class RenderPipelines
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\render\GpuDraw.java:192: error: cannot find symbol
+              GpuSampler sampler = RenderSystem.getSamplerCache().get(FilterMode.LINEAR);
+                                                                      ^
+    symbol:   variable FilterMode
+    location: class GpuDraw
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\cosmetic\Cosmetic.java:121: error: method does not override or implement a method from a supertype
+      @Override
+      ^
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\cosmetic\CosmeticsGeoModel.java:16: error: method does not override or implement a method from a supertype
+      @Override
+      ^
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\cosmetic\CosmeticsGeoModel.java:21: error: method does not override or implement a method from a supertype
+      @Override
+      ^
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\cosmetic\CosmeticsGeoModel.java:36: error: method does not override or implement a method from a supertype
+      @Override
+      ^
+  Note: Some messages have been simplified; recompile with -Xdiags:verbose to get full output
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\cosmetic\Cosmetic.java:110: error: cannot infer type arguments for AnimationController<>
+              controllers.add(new AnimationController<>(this, "main", 0, state -> {
+                              ^
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\platform\inject\mixin\BackgroundRendererMixin.java:20: error: cannot find symbol
+  @Mixin({BackgroundRenderer.class})
+          ^
+    symbol: class BackgroundRenderer
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\render\Draw3DProcessor.java:63: error: cannot find symbol
+              RenderSystem.setShaderColor(alpha, alpha, alpha, alpha);
+                          ^
+    symbol:   method setShaderColor(float,float,float,float)
+    location: class RenderSystem
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\render\Draw3DProcessor.java:68: error: cannot find symbol
+              RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
+                          ^
+    symbol:   method setShaderColor(float,float,float,float)
+    location: class RenderSystem
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\ui\shader\TextureShader.java:52: error: cannot find symbol
+          return DefaultSkinHelper.getSkinTextures(uuid2).texture();
+                                                         ^
+    symbol:   method texture()
+    location: class SkinTextures
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\render\FontBuilder.java:51: error: cannot find symbol
+          RenderSystem.recordRenderCall(() -> {
+                      ^
+    symbol:   method recordRenderCall(()->{ text[...]e); })
+    location: class RenderSystem
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\render\FontBuilder.java:52: error: cannot find symbol
+              texture.setFilter(true, false);
+                     ^
+    symbol:   method setFilter(boolean,boolean)
+    location: variable texture of type AbstractTexture
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\autobuy\AutoBuyEntry.java:233: error: cannot find symbol
+              gameProfile.getProperties().put("textures", new com.mojang.authlib.properties.Property("textures", string));
+                         ^
+    symbol:   method getProperties()
+    location: variable gameProfile of type GameProfile
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\config\NBTCondition.java:17: error: cannot find symbol
+          NbtElement nbt = stack.toNbt(Interface.mc.world.getRegistryManager());
+                                ^
+    symbol:   method toNbt(DynamicRegistryManager)
+    location: variable stack of type ItemStack
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\autobuy\BatchProcessor.java:75: error: cannot find symbol
+          RenderSystem.blendFunc(GlConst.GL_SRC_ALPHA, GlConst.GL_ONE_MINUS_SRC_ALPHA);
+                      ^
+    symbol:   method blendFunc(int,int)
+    location: class RenderSystem
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\autobuy\BatchProcessor.java:100: error: cannot find symbol
+                  RenderSystem.lineWidth(e.getKey().floatValue());
+                              ^
+    symbol:   method lineWidth(float)
+    location: class RenderSystem
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\misc\Collector.java:106: error: cannot find symbol
+                  mc.player.networkHandler.sendCommand("ah search " + this.h.j());
+                                          ^
+    symbol:   method sendCommand(String)
+    location: variable networkHandler of type ClientPlayNetworkHandler
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\command\BaseCommand.java:82: error: cannot find symbol
+                  return entry.getProfile().getName();
+                                           ^
+    symbol:   method getName()
+    location: class GameProfile
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\command\BaseCommand.java:85: error: cannot find symbol
+                      return name.toLowerCase().startsWith(builder.getRemainingLowerCase() == null ? "" : builder.getRemainingLowerCase());
+                                 ^
+    symbol:   method toLowerCase()
+    location: variable name of type Object
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\command\AHCommand.java:51: error: cannot find symbol
+              if (packet.getSyncId() != 0) {
+                        ^
+    symbol:   method getSyncId()
+    location: variable packet of type InventoryS2CPacket
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\command\AHCommand.java:52: error: cannot find symbol
+                      List<ItemStack> contents = packet.getContents();
+                                                       ^
+    symbol:   method getContents()
+    location: variable packet of type InventoryS2CPacket
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\command\AHCommand.java:82: error: cannot find symbol
+                  mc.player.networkHandler.sendCommand(this.pendingCommand);
+                                          ^
+    symbol:   method sendCommand(String)
+    location: variable networkHandler of type ClientPlayNetworkHandler
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\command\CCCommand.java:37: error: cannot find symbol
+                      return listEntry.getProfile().getName().equalsIgnoreCase(constructor.a());
+                                                   ^
+    symbol:   method getName()
+    location: class GameProfile
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\command\WayCommand.java:63: error: cannot find symbol
+              a("me", mc.player.getPos());
+                               ^
+    symbol:   method getPos()
+    location: variable player of type ClientPlayerEntity
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\command\WayCommand.java:95: error: cannot find symbol
+              mc.player.networkHandler.sendCommand("event delay");
+                                      ^
+    symbol:   method sendCommand(String)
+    location: variable networkHandler of type ClientPlayNetworkHandler
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\command\GPSCommand.java:39: error: cannot find symbol
+              mc.player.networkHandler.sendCommand("event delay");
+                                      ^
+    symbol:   method sendCommand(String)
+    location: variable networkHandler of type ClientPlayNetworkHandler
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\command\HClipCommand.java:62: error: cannot find symbol
+          Vec3d origin = mc.player.getPos();
+                                  ^
+    symbol:   method getPos()
+    location: variable player of type ClientPlayerEntity
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\player\OpenWalls.java:30: error: cannot find symbol
+          return player.getWorld().raycast(new RaycastContext(start, end, RaycastContext.ShapeType.OUTLINE, RaycastContext.FluidHandling.NONE, player) {
+                       ^
+    symbol:   method getWorld()
+    location: variable player of type ClientPlayerEntity
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\movement\ScreenWalk.java:48: error: cannot find symbol
+                          if (click.getButton() == 1) {
+                                   ^
+    symbol:   method getButton()
+    location: variable click of type ClickSlotC2SPacket
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\player\FakeLags.java:97: error: cannot find symbol
+              event.getDraw3DProcessor().a(event.guiMatrices(), mc.player.getBoundingBox().offset(this.serverPosition.subtract(mc.player.getPos())), ColorUtil.convertToARGB(255, 255, 255, InterfaceC0020Opcode.aN), 0.75f);
+                                                                                                                                        ^
+    symbol:   method getPos()
+    location: variable player of type ClientPlayerEntity
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\player\FakeLags.java:111: error: cannot find symbol
+          this.serverPosition = mc.player.getPos();
+                                         ^
+    symbol:   method getPos()
+    location: variable player of type ClientPlayerEntity
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\movement\FreeCamera.java:46: error: cannot find symbol
+              this.playerPos = mc.player.getPos();
+                                        ^
+    symbol:   method getPos()
+    location: variable player of type ClientPlayerEntity
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\movement\AutoDodge.java:40: error: cannot find symbol
+          Vec3d position = potionEntity.getPos();
+                                       ^
+    symbol:   method getPos()
+    location: variable potionEntity of type PotionEntity
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\movement\AutoDodge.java:149: error: cannot find symbol
+              Vec3d spawnVelocity = new Vec3d(spawnPacket.getVelocityX(), spawnPacket.getVelocityY(), spawnPacket.getVelocityZ());
+                                                         ^
+    symbol:   method getVelocityX()
+    location: variable spawnPacket of type EntitySpawnS2CPacket
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\movement\AutoDodge.java:149: error: cannot find symbol
+              Vec3d spawnVelocity = new Vec3d(spawnPacket.getVelocityX(), spawnPacket.getVelocityY(), spawnPacket.getVelocityZ());
+                                                                                     ^
+    symbol:   method getVelocityY()
+    location: variable spawnPacket of type EntitySpawnS2CPacket
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\movement\AutoDodge.java:149: error: cannot find symbol
+              Vec3d spawnVelocity = new Vec3d(spawnPacket.getVelocityX(), spawnPacket.getVelocityY(), spawnPacket.getVelocityZ());
+                                                                                                                 ^
+    symbol:   method getVelocityZ()
+    location: variable spawnPacket of type EntitySpawnS2CPacket
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\movement\AutoDodge.java:188: error: cannot find symbol
+                  result.put(player.getName().getString(), new a(splashColor, player.getPos(), player.getRotationVec(1.0f)));
+                                                                                    ^
+    symbol:   method getPos()
+    location: variable player of type AbstractClientPlayerEntity
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\render\SoundESP.java:69: error: cannot find symbol
+                          int distance = (int) mc.player.getPos().distanceTo(new Vec3d(soundInfo.b().getX(), soundInfo.b().getY(), soundInfo.b().getZ()));
+                                                        ^
+    symbol:   method getPos()
+    location: variable player of type ClientPlayerEntity
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\misc\Communication.java:43: error: cannot find symbol
+              posObject.addProperty("x", Double.valueOf(mc.player.getPos().x));
+                                                                 ^
+    symbol:   method getPos()
+    location: variable player of type ClientPlayerEntity
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\misc\Communication.java:44: error: cannot find symbol
+              posObject.addProperty("y", Double.valueOf(mc.player.getPos().y));
+                                                                 ^
+    symbol:   method getPos()
+    location: variable player of type ClientPlayerEntity
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\misc\Communication.java:45: error: cannot find symbol
+              posObject.addProperty("z", Double.valueOf(mc.player.getPos().z));
+                                                                 ^
+    symbol:   method getPos()
+    location: variable player of type ClientPlayerEntity
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\combat\Aura.java:226: error: cannot find symbol
+                      return Double.valueOf(pos.distanceTo(this.target.getPos()));
+                                                                      ^
+    symbol:   method getPos()
+    location: variable target of type LivingEntity
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\combat\Aura.java:227: error: cannot find symbol
+                  }).orElse(Double.valueOf(33.0d)).doubleValue();
+                                                  ^
+    symbol:   method doubleValue()
+    location: class Object
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\combat\Aura.java:462: error: cannot find symbol
+                              return Double.valueOf(pos.distanceTo(mc.player.getPos()));
+                                                                            ^
+    symbol:   method getPos()
+    location: variable player of type ClientPlayerEntity
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\combat\Aura.java:463: error: cannot find symbol
+                          }).orElse(Double.valueOf(0.0d)).doubleValue() > 2.0d
+                                                         ^
+    symbol:   method doubleValue()
+    location: class Object
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\misc\XRay.java:57: error: cannot find symbol
+                  return mc.world.getBlockState(blockPos).getBlock().equals(Blocks.AIR) || blockPos.getSquaredDistance(mc.player.getPos()) >= 6400.0d || !mc.world.getChunkManager().isChunkLoaded(blockPos.getX() >> 4, blockPos.getZ() >> 4);
+                                                                                                                                ^
+    symbol:   method getPos()
+    location: variable player of type ClientPlayerEntity
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\movement\ElytraTarget.java:55: error: cannot find symbol
+          Vec3d start = mc.player.getPos();
+                                 ^
+    symbol:   method getPos()
+    location: variable player of type ClientPlayerEntity
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\combat\MaceHelper.java:82: error: cannot find symbol
+                  if (target == null || target.isBlocking() || mc.player.isOnGround() || MaceUtil.a() || this.e || mc.player.fallDistance <= 0.0f || !tasks.isEmpty() || !Delta.getInstance().getModuleProcessor().v().getInventoryHandler().a().isEmpty() || Math.hypot(target.getPos().x - mc.player.getPos().x, target.getPos().z - mc.player.getPos().z) > 6.0d) {
+                                                                                                                                                                                                                                                                               ^
+    symbol:   method getPos()
+    location: variable target of type LivingEntity
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\combat\MaceHelper.java:82: error: cannot find symbol
+                  if (target == null || target.isBlocking() || mc.player.isOnGround() || MaceUtil.a() || this.e || mc.player.fallDistance <= 0.0f || !tasks.isEmpty() || !Delta.getInstance().getModuleProcessor().v().getInventoryHandler().a().isEmpty() || Math.hypot(target.getPos().x - mc.player.getPos().x, target.getPos().z - mc.player.getPos().z) > 6.0d) {
+                                                                                                                                                                                                                                                                                                      ^
+    symbol:   method getPos()
+    location: variable player of type ClientPlayerEntity
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\combat\MaceHelper.java:82: error: cannot find symbol
+                  if (target == null || target.isBlocking() || mc.player.isOnGround() || MaceUtil.a() || this.e || mc.player.fallDistance <= 0.0f || !tasks.isEmpty() || !Delta.getInstance().getModuleProcessor().v().getInventoryHandler().a().isEmpty() || Math.hypot(target.getPos().x - mc.player.getPos().x, target.getPos().z - mc.player.getPos().z) > 6.0d) {
+                                                                                                                                                                                                                                                                                                                         ^
+    symbol:   method getPos()
+    location: variable target of type LivingEntity
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\combat\MaceHelper.java:82: error: cannot find symbol
+                  if (target == null || target.isBlocking() || mc.player.isOnGround() || MaceUtil.a() || this.e || mc.player.fallDistance <= 0.0f || !tasks.isEmpty() || !Delta.getInstance().getModuleProcessor().v().getInventoryHandler().a().isEmpty() || Math.hypot(target.getPos().x - mc.player.getPos().x, target.getPos().z - mc.player.getPos().z) > 6.0d) {
+                                                                                                                                                                                                                                                                                                                                                ^
+    symbol:   method getPos()
+    location: variable player of type ClientPlayerEntity
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\render\EntityBox.java:41: error: cannot find symbol
+                          event.getDraw3DProcessor().a(event.h(), entity.getBoundingBox().offset(MathUtil.a(entity, event.g()).subtract(entity.getPos())), this.colorSource.l("╨í╤é╨░╤é╨╕╤ç╨╜╤ï╨╣") ? this.colorSetting.c().intValue() : Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.PRIMARY).toIntColor(), 0.75f);
+                                                                                                                                              ^
+    symbol:   method getPos()
+    location: variable entity of type Entity
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\render\EntityBox.java:52: error: cannot find symbol
+                      Box box = shouldRender(entity) ? entity.getBoundingBox().offset(MathUtil.a(entity, event.g()).subtract(entity.getPos())) : null;
+                                                                                                                                   ^
+    symbol:   method getPos()
+    location: variable entity of type Entity
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\combat\TriggerBot.java:123: error: cannot find symbol
+                  return Double.valueOf(pos.distanceTo(this.target.getPos()));
+                                                                  ^
+    symbol:   method getPos()
+    location: variable target of type LivingEntity
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\combat\TriggerBot.java:124: error: cannot find symbol
+              }).orElse(Double.valueOf(33.0d)).doubleValue();
+                                              ^
+    symbol:   method doubleValue()
+    location: class Object
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\combat\AimAssistant.java:76: error: cannot find symbol
+              float frame = mc.getRenderTickCounter().getLastFrameDuration();
+                                                     ^
+    symbol:   method getLastFrameDuration()
+    location: interface RenderTickCounter
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\combat\AntiBot.java:44: error: cannot find symbol
+                      boolean skin = entry != null && entry.getSkinTextures() != null && entry.getSkinTextures().textureUrl() != null;
+                                                                                                                ^
+    symbol:   method textureUrl()
+    location: class SkinTextures
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\combat\AntiBot.java:45: error: cannot find symbol
+                      boolean texture = entry != null && !entry.getProfile().getProperties().get("textures").isEmpty();
+                                                                            ^
+    symbol:   method getProperties()
+    location: class GameProfile
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\misc\ServerAssistant.java:194: error: cannot find symbol
+                      List<ItemStack> contents = packet.getContents();
+                                                       ^
+    symbol:   method getContents()
+    location: variable packet of type InventoryS2CPacket
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\misc\ServerAssistant.java:197: error: cannot find symbol
+                      if (chestSlots >= 44 && packet.getSyncId() != 0) {
+                                                    ^
+    symbol:   method getSyncId()
+    location: variable packet of type InventoryS2CPacket
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\movement\AirStuck.java:28: error: cannot find symbol
+              this.stuckPos = mc.player.getPos();
+                                       ^
+    symbol:   method getPos()
+    location: variable player of type ClientPlayerEntity
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\render\ShulkerPreview.java:32: error: cannot find symbol
+          if (event.guiMatrices() == ContainerEvent.Phase.POST && (hovered = ((platform.inject.accessors.HandledScreenAccessor) event.getScreen()).getFocusedSlot()) != null && hovered.getStack() != null && hovered.hasStack()) {
+                   ^
+    symbol:   method guiMatrices()
+    location: variable event of type ContainerEvent
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\render\ChinaHat.java:44: error: cannot find symbol
+                  VertexConsumer buffer = event.getVertexConsumerProvider().getBuffer(RenderLayer.getDebugQuads());
+                                                                                                 ^
+    symbol:   method getDebugQuads()
+    location: class RenderLayer
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\render\Predictions.java:165: error: cannot find symbol
+          Vec3d pos = entity.getPos();
+                            ^
+    symbol:   method getPos()
+    location: variable entity of type Entity
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\player\CaptchaSolver.java:55: error: cannot find symbol
+          World world = origin.getWorld();
+                              ^
+    symbol:   method getWorld()
+    location: variable origin of type ItemFrameEntity
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\render\Pointers.java:88: error: cannot find symbol
+          RenderSystem.blendFunc(GlConst.GL_SRC_ALPHA, GlConst.GL_ONE_MINUS_SRC_ALPHA);
+                      ^
+    symbol:   method blendFunc(int,int)
+    location: class RenderSystem
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\movement\Scaffold.java:164: error: cannot find symbol
+              Vec3d at = mc.player.getPos().add(this.d.multiply(i));
+                                  ^
+    symbol:   method getPos()
+    location: variable player of type ClientPlayerEntity
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\movement\Scaffold.java:171: error: cannot find symbol
+              return pos2.getSquaredDistance(mc.player.getPos());
+                                                      ^
+    symbol:   method getPos()
+    location: variable player of type ClientPlayerEntity
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\movement\Scaffold.java:254: error: cannot find symbol
+          Vec3d feet = mc.player.getPos();
+                                ^
+    symbol:   method getPos()
+    location: variable player of type ClientPlayerEntity
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\misc\AutoWarden.java:771: error: cannot find symbol
+              if (player != mc.player && player.getPos().squaredDistanceTo(Vec3d.ofCenter(pos)) < 20.0d && Stream.of(EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET).anyMatch(slot -> {
+                                               ^
+    symbol:   method getPos()
+    location: variable player of type PlayerEntity
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\misc\AutoWarden.java:783: error: cannot find symbol
+              if (player != mc.player && player.getPos().squaredDistanceTo(Vec3d.ofCenter(pos)) < range * range) {
+                                               ^
+    symbol:   method getPos()
+    location: variable player of type PlayerEntity
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\misc\AutoWarden.java:993: error: cannot find symbol
+          return data != null && id.equals(data.copyNbt().getCompound("PublicBukkitValues").getString("minecraft:ftid"));
+                                                                                           ^
+    symbol:   method getString(String)
+    location: class Optional<NbtCompound>
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\misc\AutoBuy.java:78: error: cannot find symbol
+              mc.player.networkHandler.sendCommand("ah");
+                                      ^
+    symbol:   method sendCommand(String)
+    location: variable networkHandler of type ClientPlayNetworkHandler
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\misc\AutoBuy.java:154: error: cannot find symbol
+                      if (inventoryPacket.getContents().size() == 90 && this.tickCounter >= 7) {
+                                         ^
+    symbol:   method getContents()
+    location: variable inventoryPacket of type InventoryS2CPacket
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\misc\AutoBuy.java:221: error: cannot find symbol
+                              context.fillGradient(RenderLayer.getGuiOverlay(), x + 1, slotY + 1, x + 17, slotY + 17, -2130706433, -2130706433, 0);
+                                                              ^
+    symbol:   method getGuiOverlay()
+    location: class RenderLayer
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\combat\Velocity.java:62: error: cannot find symbol
+                      this.e = new Vec3d(packet.getVelocityX(), 0.0d, packet.getVelocityZ());
+                                               ^
+    symbol:   method getVelocityX()
+    location: variable packet of type EntityVelocityUpdateS2CPacket
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\combat\Velocity.java:62: error: cannot find symbol
+                      this.e = new Vec3d(packet.getVelocityX(), 0.0d, packet.getVelocityZ());
+                                                                            ^
+    symbol:   method getVelocityZ()
+    location: variable packet of type EntityVelocityUpdateS2CPacket
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\ui\screen\RadialScreen.java:133: error: cannot find symbol
+                  a(context.getMatrices().peek().getPositionMatrix(), cx + offsetX, cy + offsetY, this.c, this.d, drawStart, drawEnd, fillColor);
+                                         ^
+    symbol:   method peek()
+    location: class Matrix3x2fStack
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\network\AccountConstructor.java:55: error: cannot find symbol
+          return DefaultSkinHelper.getSkinTextures(uuid).texture();
+                                                        ^
+    symbol:   method texture()
+    location: class SkinTextures
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\combat\AuraHandler.java:93: error: cannot find symbol
+          RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
+                      ^
+    symbol:   method setShaderColor(float,float,float,float)
+    location: class RenderSystem
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\combat\AuraHandler.java:96: error: cannot find symbol
+          Vec3d targetCenter = this.target.getPos().add(0.0d, ((double) this.target.getHeight()) / 2.0d, 0.0d);
+                                          ^
+    symbol:   method getPos()
+    location: variable target of type LivingEntity
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\combat\AuraHandler.java:167: error: cannot find symbol
+          RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
+                      ^
+    symbol:   method setShaderColor(float,float,float,float)
+    location: class RenderSystem
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\combat\AuraHandler.java:207: error: cannot find symbol
+          RenderSystem.blendFunc(GlConst.GL_SRC_ALPHA, GlConst.GL_ONE);
+                      ^
+    symbol:   method blendFunc(int,int)
+    location: class RenderSystem
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\handler\ANFindHandler.java:74: error: cannot find symbol
+                      mc.getSoundManager().play(PositionedSoundInstance.master(SoundEvents.UI_BUTTON_CLICK, 1.0f));
+                                                                       ^
+    symbol:   method master(Reference<SoundEvent>,float)
+    location: class PositionedSoundInstance
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\handler\MainHandler.java:62: error: cannot find symbol
+                      if (component.getString().contains("╨ƒ╨╛╨┤╤Ç╨╛╨▒╨╜╨╡╨╡") && (hover = component.getStyle().getHoverEvent()) != null && hover.getAction() == HoverEvent.Action.SHOW_TEXT && (hoverText = hover.getValue(HoverEvent.Action.SHOW_TEXT)) != null) {
+                                                                                                                                                                                                         ^
+    symbol:   method getValue(Action)
+    location: variable hover of type HoverEvent
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\cosmetic\Cosmetic.java:123: error: cannot find symbol
+          return RenderUtil.getCurrentTick();
+                           ^
+    symbol:   method getCurrentTick()
+    location: class RenderUtil
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\combat\AuraUtil.java:129: error: cannot find symbol
+          Vec3d targetEye = target.getPos().add(0.0d, target.getStandingEyeHeight(), 0.0d);
+                                  ^
+    symbol:   method getPos()
+    location: variable target of type LivingEntity
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\combat\AuraUtil.java:203: error: cannot find symbol
+          if (mc.player == null || mc.player.getWorld() == null) {
+                                            ^
+    symbol:   method getWorld()
+    location: variable player of type ClientPlayerEntity
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\combat\AuraUtil.java:206: error: cannot find symbol
+          World world = mc.player.getWorld();
+                                 ^
+    symbol:   method getWorld()
+    location: variable player of type ClientPlayerEntity
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\combat\MaceUtil.java:62: error: cannot find symbol
+                  return Optional.of(player.getPos().add(ox + allowed.x, oy + allowed.y, oz + allowed.z));
+                                           ^
+    symbol:   method getPos()
+    location: variable player of type ClientPlayerEntity
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\module\combat\MaceUtil.java:68: error: cannot find symbol
+                  return Optional.of(player.getPos().add(ox, oy, oz));
+                                           ^
+    symbol:   method getPos()
+    location: variable player of type ClientPlayerEntity
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\render\GpuDraw.java:162: error: cannot find symbol
+              RenderSystem.ShapeIndexBuffer shape = RenderSystem.getSequentialBuffer(format.drawMode());
+                                                                                           ^
+    symbol:   method drawMode()
+    location: variable format of type VertexFormat
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\render\GpuDraw.java:228: error: cannot find symbol
+              built.release();
+                   ^
+    symbol:   method release()
+    location: variable built of type BuiltBuffer
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\render\ScissorUtil.java:32: error: cannot find symbol
+          b.popMatrix();
+           ^
+    symbol:   method popMatrix()
+    location: variable b of type Deque<intersect>
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\ui\screen\AltScreen.java:223: error: cannot find symbol
+                                  Delta.getInstance().getModuleProcessor().guiMatrices().save();
+                                                                          ^
+    symbol:   method guiMatrices()
+    location: class Processor
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\ui\screen\AltScreen.java:290: error: cannot find symbol
+          AccountConstructor selected = Delta.getInstance().getModuleProcessor().guiMatrices().a();
+                                                                                ^
+    symbol:   method guiMatrices()
+    location: class Processor
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\ui\screen\AltScreen.java:300: error: cannot find symbol
+          AccountConstructor selected = Delta.getInstance().getModuleProcessor().guiMatrices().a();
+                                                                                ^
+    symbol:   method guiMatrices()
+    location: class Processor
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\ui\screen\AltScreen.java:397: error: cannot find symbol
+          return Delta.getInstance().getModuleProcessor().guiMatrices().e();
+                                                         ^
+    symbol:   method guiMatrices()
+    location: class Processor
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\ui\screen\AltScreen.java:404: error: cannot find symbol
+          Delta.getInstance().getModuleProcessor().guiMatrices().save();
+                                                  ^
+    symbol:   method guiMatrices()
+    location: class Processor
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\ui\screen\AltScreen.java:452: error: cannot find symbol
+          Delta.getInstance().getModuleProcessor().guiMatrices().save();
+                                                  ^
+    symbol:   method guiMatrices()
+    location: class Processor
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\ui\screen\AltScreen.java:462: error: cannot find symbol
+          Delta.getInstance().getModuleProcessor().guiMatrices().save();
+                                                  ^
+    symbol:   method guiMatrices()
+    location: class Processor
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\ui\screen\AltScreen.java:493: error: cannot find symbol
+          Delta.getInstance().getModuleProcessor().guiMatrices().save();
+                                                  ^
+    symbol:   method guiMatrices()
+    location: class Processor
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\ui\screen\MainScreen.java:213: error: cannot find symbol
+          matrices.multiply(new Quaternionf().rotateZ((float) Math.toRadians((-90.0f) + (180.0f * this.i))));
+                  ^
+    symbol:   method multiply(Quaternionf)
+    location: variable matrices of type Matrix3x2fStack
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\ui\widget\EnvironmentWidget.java:137: error: cannot find symbol
+                  0.125f, 0.125f, 0.125f, mc.getTextureManager().getTexture(data.e).getGlId());
+                                                                                   ^
+    symbol:   method getGlId()
+    location: class AbstractTexture
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\ui\widget\EnvironmentWidget.java:286: error: cannot find symbol
+                  class_2960VarComp_1626 = client.getSkinTextures().texture();
+                                                 ^
+    symbol:   method getSkinTextures()
+    location: variable client of type AbstractClientPlayerEntity
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\ui\widget\EnvironmentWidget.java:288: error: cannot find symbol
+                  class_2960VarComp_1626 = DefaultSkinHelper.getSkinTextures(this.a).texture();
+                                                                                    ^
+    symbol:   method texture()
+    location: class SkinTextures
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\ui\widget\StaffWidget.java:55: error: cannot find symbol
+                      return e.getProfile().getName().equalsIgnoreCase(staff2.a());
+                                           ^
+    symbol:   method getName()
+    location: class GameProfile
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\ui\widget\StaffWidget.java:58: error: cannot find symbol
+                      event.getDraw2DProcessor().a(event.guiMatrices(), x + offsetX + 5.0f, drawY + 2.0f, 7.5f, 7.5f, 2.0f, ColorUtil.applyAlphaToColor(-1, animation), 0.125f, 0.125f, 0.125f, 0.125f, mc.getTextureManager().getTexture(entry.getSkin
+
+Textures().texture()).getGlId());
+                                                                                                                                                                                                                                                                 ^
+    symbol:   method texture()
+    location: class SkinTextures
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\ui\widget\StaffWidget.java:77: error: cannot find symbol
+                  return e.getProfile().getName().equalsIgnoreCase(staff.a());
+                                       ^
+    symbol:   method getName()
+    location: class GameProfile
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\ui\widget\TargetWidget.java:55: error: cannot find symbol
+                  event.getDraw2DProcessor().a(event.guiMatrices(), x + 5.0f, headY, headSize, headSize, 2.0f, ColorUtil.applyAlphaToColor(-1, a()), 0.125f, 0.125f, 0.125f, 0.125f, Interface.mc.getTextureManager().getTexture(player.getSkinTextures().texture()).getGlId());
+                                                                                                                                                                                                                                       ^
+    symbol:   method getSkinTextures()
+    location: variable player of type AbstractClientPlayerEntity
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\aethereal\util\MathUtil.java:71: error: cannot find symbol
+          float delta = mc.getRenderTickCounter().getLastFrameDuration();
+                                                 ^
+    symbol:   method getLastFrameDuration()
+    location: interface RenderTickCounter
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\platform\inject\mixin\InGameHudMixin.java:60: error: cannot find symbol
+                  context.draw();
+                         ^
+    symbol:   method draw()
+    location: variable context of type DrawContext
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\platform\inject\mixin\InventoryScreenMixin.java:39: error: cannot find symbol
+          context.getMatrices().loadIdentity();
+                               ^
+    symbol:   method loadIdentity()
+    location: class Matrix3x2fStack
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\platform\inject\mixin\PlayerListHudMixin.java:29: error: cannot find symbol
+          if (Interface.mc.player != null && w < list.size() && Interface.mc.player.getUuid().equals(list.get(w).getProfile().getId())) {
+                                                                                                                             ^
+    symbol:   method getId()
+    location: class GameProfile
+  C:\Users\Blazix\Desktop\Delta 1.21.11\src\main\java\platform\inject\mixin\RenderSystemMixin.java:20: error: cannot find symbol
+              GlStateManager._clearColor(event.getRed(), event.getGreen(), event.getBlue(), event.getAlpha());
+                            ^
+    symbol:   method _clearColor(float,float,float,float)
+    location: class GlStateManager
+  199 errors
+
+* Try:
+> Check your code and dependencies to fix the compilation error(s)
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+
+BUILD FAILED in 12m 25s
+1 actionable task: 1 executed
+PS C:\Users\Blazix\Desktop\Delta 1.21.11>
